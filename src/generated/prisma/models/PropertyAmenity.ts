@@ -158,15 +158,15 @@ export type PropertyAmenityWhereInput = {
   NOT?: Prisma.PropertyAmenityWhereInput | Prisma.PropertyAmenityWhereInput[]
   propertyId?: Prisma.StringFilter<"PropertyAmenity"> | string
   amenityId?: Prisma.StringFilter<"PropertyAmenity"> | string
-  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   amenity?: Prisma.XOR<Prisma.AmenityScalarRelationFilter, Prisma.AmenityWhereInput>
+  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
 }
 
 export type PropertyAmenityOrderByWithRelationInput = {
   propertyId?: Prisma.SortOrder
   amenityId?: Prisma.SortOrder
-  property?: Prisma.PropertyOrderByWithRelationInput
   amenity?: Prisma.AmenityOrderByWithRelationInput
+  property?: Prisma.PropertyOrderByWithRelationInput
 }
 
 export type PropertyAmenityWhereUniqueInput = Prisma.AtLeast<{
@@ -176,8 +176,8 @@ export type PropertyAmenityWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PropertyAmenityWhereInput | Prisma.PropertyAmenityWhereInput[]
   propertyId?: Prisma.StringFilter<"PropertyAmenity"> | string
   amenityId?: Prisma.StringFilter<"PropertyAmenity"> | string
-  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   amenity?: Prisma.XOR<Prisma.AmenityScalarRelationFilter, Prisma.AmenityWhereInput>
+  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
 }, "propertyId_amenityId">
 
 export type PropertyAmenityOrderByWithAggregationInput = {
@@ -197,8 +197,8 @@ export type PropertyAmenityScalarWhereWithAggregatesInput = {
 }
 
 export type PropertyAmenityCreateInput = {
-  property: Prisma.PropertyCreateNestedOneWithoutAmenitiesInput
   amenity: Prisma.AmenityCreateNestedOneWithoutPropertiesInput
+  property: Prisma.PropertyCreateNestedOneWithoutAmenitiesInput
 }
 
 export type PropertyAmenityUncheckedCreateInput = {
@@ -207,8 +207,8 @@ export type PropertyAmenityUncheckedCreateInput = {
 }
 
 export type PropertyAmenityUpdateInput = {
-  property?: Prisma.PropertyUpdateOneRequiredWithoutAmenitiesNestedInput
   amenity?: Prisma.AmenityUpdateOneRequiredWithoutPropertiesNestedInput
+  property?: Prisma.PropertyUpdateOneRequiredWithoutAmenitiesNestedInput
 }
 
 export type PropertyAmenityUncheckedUpdateInput = {
@@ -457,22 +457,22 @@ export type PropertyAmenityUncheckedUpdateManyWithoutAmenityInput = {
 export type PropertyAmenitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   propertyId?: boolean
   amenityId?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   amenity?: boolean | Prisma.AmenityDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["propertyAmenity"]>
 
 export type PropertyAmenitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   propertyId?: boolean
   amenityId?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   amenity?: boolean | Prisma.AmenityDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["propertyAmenity"]>
 
 export type PropertyAmenitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   propertyId?: boolean
   amenityId?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   amenity?: boolean | Prisma.AmenityDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["propertyAmenity"]>
 
 export type PropertyAmenitySelectScalar = {
@@ -482,23 +482,23 @@ export type PropertyAmenitySelectScalar = {
 
 export type PropertyAmenityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"propertyId" | "amenityId", ExtArgs["result"]["propertyAmenity"]>
 export type PropertyAmenityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   amenity?: boolean | Prisma.AmenityDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }
 export type PropertyAmenityIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   amenity?: boolean | Prisma.AmenityDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }
 export type PropertyAmenityIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   amenity?: boolean | Prisma.AmenityDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
 }
 
 export type $PropertyAmenityPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PropertyAmenity"
   objects: {
-    property: Prisma.$PropertyPayload<ExtArgs>
     amenity: Prisma.$AmenityPayload<ExtArgs>
+    property: Prisma.$PropertyPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     propertyId: string
@@ -897,8 +897,8 @@ readonly fields: PropertyAmenityFieldRefs;
  */
 export interface Prisma__PropertyAmenityClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  property<T extends Prisma.PropertyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PropertyDefaultArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   amenity<T extends Prisma.AmenityDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AmenityDefaultArgs<ExtArgs>>): Prisma.Prisma__AmenityClient<runtime.Types.Result.GetResult<Prisma.$AmenityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  property<T extends Prisma.PropertyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PropertyDefaultArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

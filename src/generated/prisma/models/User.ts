@@ -222,11 +222,11 @@ export type UserWhereInput = {
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  professionalProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   leads?: Prisma.LeadListRelationFilter
+  professionalProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   favorites?: Prisma.FavoriteListRelationFilter
-  searchAlerts?: Prisma.SearchAlertListRelationFilter
   priceAlerts?: Prisma.PriceAlertListRelationFilter
+  searchAlerts?: Prisma.SearchAlertListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -240,11 +240,11 @@ export type UserOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  professionalProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
   leads?: Prisma.LeadOrderByRelationAggregateInput
+  professionalProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
   favorites?: Prisma.FavoriteOrderByRelationAggregateInput
-  searchAlerts?: Prisma.SearchAlertOrderByRelationAggregateInput
   priceAlerts?: Prisma.PriceAlertOrderByRelationAggregateInput
+  searchAlerts?: Prisma.SearchAlertOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -261,11 +261,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  professionalProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   leads?: Prisma.LeadListRelationFilter
+  professionalProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   favorites?: Prisma.FavoriteListRelationFilter
-  searchAlerts?: Prisma.SearchAlertListRelationFilter
   priceAlerts?: Prisma.PriceAlertListRelationFilter
+  searchAlerts?: Prisma.SearchAlertListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -311,11 +311,11 @@ export type UserCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -329,11 +329,11 @@ export type UserUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -347,11 +347,11 @@ export type UserUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -365,11 +365,11 @@ export type UserUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -508,20 +508,6 @@ export type UserUpdateOneRequiredWithoutFavoritesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFavoritesInput, Prisma.UserUpdateWithoutFavoritesInput>, Prisma.UserUncheckedUpdateWithoutFavoritesInput>
 }
 
-export type UserCreateNestedOneWithoutSearchAlertsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSearchAlertsInput, Prisma.UserUncheckedCreateWithoutSearchAlertsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSearchAlertsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutSearchAlertsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutSearchAlertsInput, Prisma.UserUncheckedCreateWithoutSearchAlertsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSearchAlertsInput
-  upsert?: Prisma.UserUpsertWithoutSearchAlertsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSearchAlertsInput, Prisma.UserUpdateWithoutSearchAlertsInput>, Prisma.UserUncheckedUpdateWithoutSearchAlertsInput>
-}
-
 export type UserCreateNestedOneWithoutPriceAlertsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutPriceAlertsInput, Prisma.UserUncheckedCreateWithoutPriceAlertsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutPriceAlertsInput
@@ -534,6 +520,20 @@ export type UserUpdateOneRequiredWithoutPriceAlertsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutPriceAlertsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPriceAlertsInput, Prisma.UserUpdateWithoutPriceAlertsInput>, Prisma.UserUncheckedUpdateWithoutPriceAlertsInput>
+}
+
+export type UserCreateNestedOneWithoutSearchAlertsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSearchAlertsInput, Prisma.UserUncheckedCreateWithoutSearchAlertsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSearchAlertsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSearchAlertsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSearchAlertsInput, Prisma.UserUncheckedCreateWithoutSearchAlertsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSearchAlertsInput
+  upsert?: Prisma.UserUpsertWithoutSearchAlertsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSearchAlertsInput, Prisma.UserUpdateWithoutSearchAlertsInput>, Prisma.UserUncheckedUpdateWithoutSearchAlertsInput>
 }
 
 export type UserCreateNestedOneWithoutLeadsInput = {
@@ -565,8 +565,8 @@ export type UserCreateWithoutProfessionalProfileInput = {
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutUserInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfessionalProfileInput = {
@@ -582,8 +582,8 @@ export type UserUncheckedCreateWithoutProfessionalProfileInput = {
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfessionalProfileInput = {
@@ -615,8 +615,8 @@ export type UserUpdateWithoutProfessionalProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfessionalProfileInput = {
@@ -632,8 +632,8 @@ export type UserUncheckedUpdateWithoutProfessionalProfileInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFavoritesInput = {
@@ -647,10 +647,10 @@ export type UserCreateWithoutFavoritesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -664,10 +664,10 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -697,10 +697,10 @@ export type UserUpdateWithoutFavoritesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -714,94 +714,10 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateWithoutSearchAlertsInput = {
-  id?: string
-  email: string
-  passwordHash: string
-  firstName: string
-  lastName?: string | null
-  phone?: string | null
-  role?: $Enums.Role
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
-  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutSearchAlertsInput = {
-  id?: string
-  email: string
-  passwordHash: string
-  firstName: string
-  lastName?: string | null
-  phone?: string | null
-  role?: $Enums.Role
-  isActive?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutSearchAlertsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutSearchAlertsInput, Prisma.UserUncheckedCreateWithoutSearchAlertsInput>
-}
-
-export type UserUpsertWithoutSearchAlertsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutSearchAlertsInput, Prisma.UserUncheckedUpdateWithoutSearchAlertsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutSearchAlertsInput, Prisma.UserUncheckedCreateWithoutSearchAlertsInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutSearchAlertsInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutSearchAlertsInput, Prisma.UserUncheckedUpdateWithoutSearchAlertsInput>
-}
-
-export type UserUpdateWithoutSearchAlertsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutSearchAlertsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  firstName?: Prisma.StringFieldUpdateOperationsInput | string
-  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPriceAlertsInput = {
@@ -815,8 +731,8 @@ export type UserCreateWithoutPriceAlertsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
@@ -832,8 +748,8 @@ export type UserUncheckedCreateWithoutPriceAlertsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
@@ -865,8 +781,8 @@ export type UserUpdateWithoutPriceAlertsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
@@ -882,10 +798,94 @@ export type UserUncheckedUpdateWithoutPriceAlertsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSearchAlertsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName?: string | null
+  phone?: string | null
+  role?: $Enums.Role
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSearchAlertsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName?: string | null
+  phone?: string | null
+  role?: $Enums.Role
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSearchAlertsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSearchAlertsInput, Prisma.UserUncheckedCreateWithoutSearchAlertsInput>
+}
+
+export type UserUpsertWithoutSearchAlertsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSearchAlertsInput, Prisma.UserUncheckedUpdateWithoutSearchAlertsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSearchAlertsInput, Prisma.UserUncheckedCreateWithoutSearchAlertsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSearchAlertsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSearchAlertsInput, Prisma.UserUncheckedUpdateWithoutSearchAlertsInput>
+}
+
+export type UserUpdateWithoutSearchAlertsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSearchAlertsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLeadsInput = {
@@ -901,8 +901,8 @@ export type UserCreateWithoutLeadsInput = {
   updatedAt?: Date | string
   professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLeadsInput = {
@@ -918,8 +918,8 @@ export type UserUncheckedCreateWithoutLeadsInput = {
   updatedAt?: Date | string
   professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLeadsInput = {
@@ -951,8 +951,8 @@ export type UserUpdateWithoutLeadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeadsInput = {
@@ -968,8 +968,8 @@ export type UserUncheckedUpdateWithoutLeadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -980,15 +980,15 @@ export type UserUncheckedUpdateWithoutLeadsInput = {
 export type UserCountOutputType = {
   leads: number
   favorites: number
-  searchAlerts: number
   priceAlerts: number
+  searchAlerts: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   leads?: boolean | UserCountOutputTypeCountLeadsArgs
   favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
-  searchAlerts?: boolean | UserCountOutputTypeCountSearchAlertsArgs
   priceAlerts?: boolean | UserCountOutputTypeCountPriceAlertsArgs
+  searchAlerts?: boolean | UserCountOutputTypeCountSearchAlertsArgs
 }
 
 /**
@@ -1018,15 +1018,15 @@ export type UserCountOutputTypeCountFavoritesArgs<ExtArgs extends runtime.Types.
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountSearchAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SearchAlertWhereInput
+export type UserCountOutputTypeCountPriceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PriceAlertWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountPriceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PriceAlertWhereInput
+export type UserCountOutputTypeCountSearchAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SearchAlertWhereInput
 }
 
 
@@ -1041,11 +1041,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  professionalProfile?: boolean | Prisma.User$professionalProfileArgs<ExtArgs>
   leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
+  professionalProfile?: boolean | Prisma.User$professionalProfileArgs<ExtArgs>
   favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
-  searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
   priceAlerts?: boolean | Prisma.User$priceAlertsArgs<ExtArgs>
+  searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1090,11 +1090,11 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "firstName" | "lastName" | "phone" | "role" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  professionalProfile?: boolean | Prisma.User$professionalProfileArgs<ExtArgs>
   leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
+  professionalProfile?: boolean | Prisma.User$professionalProfileArgs<ExtArgs>
   favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
-  searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
   priceAlerts?: boolean | Prisma.User$priceAlertsArgs<ExtArgs>
+  searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1103,11 +1103,11 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    professionalProfile: Prisma.$ProfessionalProfilePayload<ExtArgs> | null
     leads: Prisma.$LeadPayload<ExtArgs>[]
+    professionalProfile: Prisma.$ProfessionalProfilePayload<ExtArgs> | null
     favorites: Prisma.$FavoritePayload<ExtArgs>[]
-    searchAlerts: Prisma.$SearchAlertPayload<ExtArgs>[]
     priceAlerts: Prisma.$PriceAlertPayload<ExtArgs>[]
+    searchAlerts: Prisma.$SearchAlertPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1514,11 +1514,11 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  professionalProfile<T extends Prisma.User$professionalProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$professionalProfileArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   leads<T extends Prisma.User$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  professionalProfile<T extends Prisma.User$professionalProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$professionalProfileArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   favorites<T extends Prisma.User$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  searchAlerts<T extends Prisma.User$searchAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$searchAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SearchAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   priceAlerts<T extends Prisma.User$priceAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$priceAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  searchAlerts<T extends Prisma.User$searchAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$searchAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SearchAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1951,25 +1951,6 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.professionalProfile
- */
-export type User$professionalProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProfessionalProfile
-   */
-  select?: Prisma.ProfessionalProfileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProfessionalProfile
-   */
-  omit?: Prisma.ProfessionalProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProfessionalProfileInclude<ExtArgs> | null
-  where?: Prisma.ProfessionalProfileWhereInput
-}
-
-/**
  * User.leads
  */
 export type User$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1991,6 +1972,25 @@ export type User$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+}
+
+/**
+ * User.professionalProfile
+ */
+export type User$professionalProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfessionalProfile
+   */
+  select?: Prisma.ProfessionalProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProfessionalProfile
+   */
+  omit?: Prisma.ProfessionalProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfessionalProfileInclude<ExtArgs> | null
+  where?: Prisma.ProfessionalProfileWhereInput
 }
 
 /**
@@ -2018,30 +2018,6 @@ export type User$favoritesArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.searchAlerts
- */
-export type User$searchAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SearchAlert
-   */
-  select?: Prisma.SearchAlertSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the SearchAlert
-   */
-  omit?: Prisma.SearchAlertOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SearchAlertInclude<ExtArgs> | null
-  where?: Prisma.SearchAlertWhereInput
-  orderBy?: Prisma.SearchAlertOrderByWithRelationInput | Prisma.SearchAlertOrderByWithRelationInput[]
-  cursor?: Prisma.SearchAlertWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SearchAlertScalarFieldEnum | Prisma.SearchAlertScalarFieldEnum[]
-}
-
-/**
  * User.priceAlerts
  */
 export type User$priceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2063,6 +2039,30 @@ export type User$priceAlertsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.PriceAlertScalarFieldEnum | Prisma.PriceAlertScalarFieldEnum[]
+}
+
+/**
+ * User.searchAlerts
+ */
+export type User$searchAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SearchAlert
+   */
+  select?: Prisma.SearchAlertSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SearchAlert
+   */
+  omit?: Prisma.SearchAlertOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SearchAlertInclude<ExtArgs> | null
+  where?: Prisma.SearchAlertWhereInput
+  orderBy?: Prisma.SearchAlertOrderByWithRelationInput | Prisma.SearchAlertOrderByWithRelationInput[]
+  cursor?: Prisma.SearchAlertWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SearchAlertScalarFieldEnum | Prisma.SearchAlertScalarFieldEnum[]
 }
 
 /**

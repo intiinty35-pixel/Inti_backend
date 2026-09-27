@@ -50,25 +50,25 @@ export type User = Prisma.UserModel
  */
 export type ProfessionalProfile = Prisma.ProfessionalProfileModel
 /**
- * Model Property
- * 
- */
-export type Property = Prisma.PropertyModel
-/**
  * Model Favorite
  * 
  */
 export type Favorite = Prisma.FavoriteModel
+/**
+ * Model PriceAlert
+ * 
+ */
+export type PriceAlert = Prisma.PriceAlertModel
 /**
  * Model SearchAlert
  * 
  */
 export type SearchAlert = Prisma.SearchAlertModel
 /**
- * Model PriceAlert
+ * Model Property
  * 
  */
-export type PriceAlert = Prisma.PriceAlertModel
+export type Property = Prisma.PropertyModel
 /**
  * Model PropertyLocation
  * 

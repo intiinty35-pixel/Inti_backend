@@ -222,8 +222,8 @@ export type LeadWhereInput = {
   message?: Prisma.StringFilter<"Lead"> | string
   source?: Prisma.EnumLeadSourceFilter<"Lead"> | $Enums.LeadSource
   createdAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
-  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileScalarRelationFilter, Prisma.ProfessionalProfileWhereInput>
+  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
@@ -238,8 +238,8 @@ export type LeadOrderByWithRelationInput = {
   message?: Prisma.SortOrder
   source?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  property?: Prisma.PropertyOrderByWithRelationInput
   agentProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
+  property?: Prisma.PropertyOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -257,8 +257,8 @@ export type LeadWhereUniqueInput = Prisma.AtLeast<{
   message?: Prisma.StringFilter<"Lead"> | string
   source?: Prisma.EnumLeadSourceFilter<"Lead"> | $Enums.LeadSource
   createdAt?: Prisma.DateTimeFilter<"Lead"> | Date | string
-  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileScalarRelationFilter, Prisma.ProfessionalProfileWhereInput>
+  property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id">
 
@@ -302,8 +302,8 @@ export type LeadCreateInput = {
   message: string
   source: $Enums.LeadSource
   createdAt?: Date | string
-  property: Prisma.PropertyCreateNestedOneWithoutLeadsInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutLeadsInput
+  property: Prisma.PropertyCreateNestedOneWithoutLeadsInput
   user?: Prisma.UserCreateNestedOneWithoutLeadsInput
 }
 
@@ -328,8 +328,8 @@ export type LeadUpdateInput = {
   message?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  property?: Prisma.PropertyUpdateOneRequiredWithoutLeadsNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutLeadsNestedInput
+  property?: Prisma.PropertyUpdateOneRequiredWithoutLeadsNestedInput
   user?: Prisma.UserUpdateOneWithoutLeadsNestedInput
 }
 
@@ -569,8 +569,8 @@ export type LeadCreateWithoutUserInput = {
   message: string
   source: $Enums.LeadSource
   createdAt?: Date | string
-  property: Prisma.PropertyCreateNestedOneWithoutLeadsInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutLeadsInput
+  property: Prisma.PropertyCreateNestedOneWithoutLeadsInput
 }
 
 export type LeadUncheckedCreateWithoutUserInput = {
@@ -747,8 +747,8 @@ export type LeadUpdateWithoutUserInput = {
   message?: Prisma.StringFieldUpdateOperationsInput | string
   source?: Prisma.EnumLeadSourceFieldUpdateOperationsInput | $Enums.LeadSource
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  property?: Prisma.PropertyUpdateOneRequiredWithoutLeadsNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutLeadsNestedInput
+  property?: Prisma.PropertyUpdateOneRequiredWithoutLeadsNestedInput
 }
 
 export type LeadUncheckedUpdateWithoutUserInput = {
@@ -884,8 +884,8 @@ export type LeadSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   message?: boolean
   source?: boolean
   createdAt?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Lead$userArgs<ExtArgs>
 }, ExtArgs["result"]["lead"]>
 
@@ -900,8 +900,8 @@ export type LeadSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   message?: boolean
   source?: boolean
   createdAt?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Lead$userArgs<ExtArgs>
 }, ExtArgs["result"]["lead"]>
 
@@ -916,8 +916,8 @@ export type LeadSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   message?: boolean
   source?: boolean
   createdAt?: boolean
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Lead$userArgs<ExtArgs>
 }, ExtArgs["result"]["lead"]>
 
@@ -936,26 +936,26 @@ export type LeadSelectScalar = {
 
 export type LeadOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "propertyId" | "agentProfileId" | "userId" | "name" | "email" | "phone" | "message" | "source" | "createdAt", ExtArgs["result"]["lead"]>
 export type LeadInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Lead$userArgs<ExtArgs>
 }
 export type LeadIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Lead$userArgs<ExtArgs>
 }
 export type LeadIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
+  property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Lead$userArgs<ExtArgs>
 }
 
 export type $LeadPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Lead"
   objects: {
-    property: Prisma.$PropertyPayload<ExtArgs>
     agentProfile: Prisma.$ProfessionalProfilePayload<ExtArgs>
+    property: Prisma.$PropertyPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1363,8 +1363,8 @@ readonly fields: LeadFieldRefs;
  */
 export interface Prisma__LeadClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  property<T extends Prisma.PropertyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PropertyDefaultArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   agentProfile<T extends Prisma.ProfessionalProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfessionalProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  property<T extends Prisma.PropertyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PropertyDefaultArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.Lead$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Lead$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.

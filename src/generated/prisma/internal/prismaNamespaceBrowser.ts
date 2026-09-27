@@ -53,10 +53,10 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   ProfessionalProfile: 'ProfessionalProfile',
-  Property: 'Property',
   Favorite: 'Favorite',
-  SearchAlert: 'SearchAlert',
   PriceAlert: 'PriceAlert',
+  SearchAlert: 'SearchAlert',
+  Property: 'Property',
   PropertyLocation: 'PropertyLocation',
   PropertyDetails: 'PropertyDetails',
   Amenity: 'Amenity',
@@ -101,7 +101,6 @@ export const ProfessionalProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   type: 'type',
-  slug: 'slug',
   status: 'status',
   dni: 'dni',
   ruc: 'ruc',
@@ -112,11 +111,47 @@ export const ProfessionalProfileScalarFieldEnum = {
   address: 'address',
   website: 'website',
   socialLinks: 'socialLinks',
+  slug: 'slug',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ProfessionalProfileScalarFieldEnum = (typeof ProfessionalProfileScalarFieldEnum)[keyof typeof ProfessionalProfileScalarFieldEnum]
+
+
+export const FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  propertyId: 'propertyId',
+  createdAt: 'createdAt'
+} as const
+
+export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
+
+
+export const PriceAlertScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  propertyId: 'propertyId',
+  targetPrice: 'targetPrice',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+} as const
+
+export type PriceAlertScalarFieldEnum = (typeof PriceAlertScalarFieldEnum)[keyof typeof PriceAlertScalarFieldEnum]
+
+
+export const SearchAlertScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  filters: 'filters',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SearchAlertScalarFieldEnum = (typeof SearchAlertScalarFieldEnum)[keyof typeof SearchAlertScalarFieldEnum]
 
 
 export const PropertyScalarFieldEnum = {
@@ -143,41 +178,6 @@ export const PropertyScalarFieldEnum = {
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
-
-
-export const FavoriteScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  propertyId: 'propertyId',
-  createdAt: 'createdAt'
-} as const
-
-export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
-
-
-export const SearchAlertScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  name: 'name',
-  filters: 'filters',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type SearchAlertScalarFieldEnum = (typeof SearchAlertScalarFieldEnum)[keyof typeof SearchAlertScalarFieldEnum]
-
-
-export const PriceAlertScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  propertyId: 'propertyId',
-  targetPrice: 'targetPrice',
-  isActive: 'isActive',
-  createdAt: 'createdAt'
-} as const
-
-export type PriceAlertScalarFieldEnum = (typeof PriceAlertScalarFieldEnum)[keyof typeof PriceAlertScalarFieldEnum]
 
 
 export const PropertyLocationScalarFieldEnum = {

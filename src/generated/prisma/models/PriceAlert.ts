@@ -224,8 +224,8 @@ export type PriceAlertWhereInput = {
   targetPrice?: Prisma.DecimalNullableFilter<"PriceAlert"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFilter<"PriceAlert"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PriceAlert"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type PriceAlertOrderByWithRelationInput = {
@@ -235,8 +235,8 @@ export type PriceAlertOrderByWithRelationInput = {
   targetPrice?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
   property?: Prisma.PropertyOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type PriceAlertWhereUniqueInput = Prisma.AtLeast<{
@@ -250,8 +250,8 @@ export type PriceAlertWhereUniqueInput = Prisma.AtLeast<{
   targetPrice?: Prisma.DecimalNullableFilter<"PriceAlert"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFilter<"PriceAlert"> | boolean
   createdAt?: Prisma.DateTimeFilter<"PriceAlert"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   property?: Prisma.XOR<Prisma.PropertyScalarRelationFilter, Prisma.PropertyWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId_propertyId">
 
 export type PriceAlertOrderByWithAggregationInput = {
@@ -285,8 +285,8 @@ export type PriceAlertCreateInput = {
   targetPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: boolean
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPriceAlertsInput
   property: Prisma.PropertyCreateNestedOneWithoutPriceAlertsInput
+  user: Prisma.UserCreateNestedOneWithoutPriceAlertsInput
 }
 
 export type PriceAlertUncheckedCreateInput = {
@@ -303,8 +303,8 @@ export type PriceAlertUpdateInput = {
   targetPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPriceAlertsNestedInput
   property?: Prisma.PropertyUpdateOneRequiredWithoutPriceAlertsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutPriceAlertsNestedInput
 }
 
 export type PriceAlertUncheckedUpdateInput = {
@@ -431,6 +431,14 @@ export type PriceAlertUncheckedUpdateManyWithoutUserNestedInput = {
   update?: Prisma.PriceAlertUpdateWithWhereUniqueWithoutUserInput | Prisma.PriceAlertUpdateWithWhereUniqueWithoutUserInput[]
   updateMany?: Prisma.PriceAlertUpdateManyWithWhereWithoutUserInput | Prisma.PriceAlertUpdateManyWithWhereWithoutUserInput[]
   deleteMany?: Prisma.PriceAlertScalarWhereInput | Prisma.PriceAlertScalarWhereInput[]
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type PriceAlertCreateNestedManyWithoutPropertyInput = {
@@ -644,8 +652,8 @@ export type PriceAlertSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   targetPrice?: boolean
   isActive?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["priceAlert"]>
 
 export type PriceAlertSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -655,8 +663,8 @@ export type PriceAlertSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   targetPrice?: boolean
   isActive?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["priceAlert"]>
 
 export type PriceAlertSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -666,8 +674,8 @@ export type PriceAlertSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   targetPrice?: boolean
   isActive?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["priceAlert"]>
 
 export type PriceAlertSelectScalar = {
@@ -681,23 +689,23 @@ export type PriceAlertSelectScalar = {
 
 export type PriceAlertOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "propertyId" | "targetPrice" | "isActive" | "createdAt", ExtArgs["result"]["priceAlert"]>
 export type PriceAlertInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type PriceAlertIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type PriceAlertIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   property?: boolean | Prisma.PropertyDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $PriceAlertPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PriceAlert"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
     property: Prisma.$PropertyPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1100,8 +1108,8 @@ readonly fields: PriceAlertFieldRefs;
  */
 export interface Prisma__PriceAlertClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   property<T extends Prisma.PropertyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PropertyDefaultArgs<ExtArgs>>): Prisma.Prisma__PropertyClient<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

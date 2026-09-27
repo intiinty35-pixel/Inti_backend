@@ -399,10 +399,10 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   ProfessionalProfile: 'ProfessionalProfile',
-  Property: 'Property',
   Favorite: 'Favorite',
-  SearchAlert: 'SearchAlert',
   PriceAlert: 'PriceAlert',
+  SearchAlert: 'SearchAlert',
+  Property: 'Property',
   PropertyLocation: 'PropertyLocation',
   PropertyDetails: 'PropertyDetails',
   Amenity: 'Amenity',
@@ -424,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "professionalProfile" | "property" | "favorite" | "searchAlert" | "priceAlert" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "lead"
+    modelProps: "user" | "professionalProfile" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "lead"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -576,80 +576,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Property: {
-      payload: Prisma.$PropertyPayload<ExtArgs>
-      fields: Prisma.PropertyFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.PropertyFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.PropertyFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
-        }
-        findFirst: {
-          args: Prisma.PropertyFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.PropertyFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
-        }
-        findMany: {
-          args: Prisma.PropertyFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>[]
-        }
-        create: {
-          args: Prisma.PropertyCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
-        }
-        createMany: {
-          args: Prisma.PropertyCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.PropertyCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>[]
-        }
-        delete: {
-          args: Prisma.PropertyDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
-        }
-        update: {
-          args: Prisma.PropertyUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
-        }
-        deleteMany: {
-          args: Prisma.PropertyDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.PropertyUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.PropertyUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>[]
-        }
-        upsert: {
-          args: Prisma.PropertyUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
-        }
-        aggregate: {
-          args: Prisma.PropertyAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateProperty>
-        }
-        groupBy: {
-          args: Prisma.PropertyGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PropertyGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.PropertyCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PropertyCountAggregateOutputType> | number
-        }
-      }
-    }
     Favorite: {
       payload: Prisma.$FavoritePayload<ExtArgs>
       fields: Prisma.FavoriteFieldRefs
@@ -721,6 +647,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.FavoriteCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.FavoriteCountAggregateOutputType> | number
+        }
+      }
+    }
+    PriceAlert: {
+      payload: Prisma.$PriceAlertPayload<ExtArgs>
+      fields: Prisma.PriceAlertFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PriceAlertFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PriceAlertFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+        }
+        findFirst: {
+          args: Prisma.PriceAlertFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PriceAlertFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+        }
+        findMany: {
+          args: Prisma.PriceAlertFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>[]
+        }
+        create: {
+          args: Prisma.PriceAlertCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+        }
+        createMany: {
+          args: Prisma.PriceAlertCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PriceAlertCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>[]
+        }
+        delete: {
+          args: Prisma.PriceAlertDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+        }
+        update: {
+          args: Prisma.PriceAlertUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+        }
+        deleteMany: {
+          args: Prisma.PriceAlertDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PriceAlertUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PriceAlertUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>[]
+        }
+        upsert: {
+          args: Prisma.PriceAlertUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+        }
+        aggregate: {
+          args: Prisma.PriceAlertAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePriceAlert>
+        }
+        groupBy: {
+          args: Prisma.PriceAlertGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PriceAlertGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PriceAlertCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PriceAlertCountAggregateOutputType> | number
         }
       }
     }
@@ -798,77 +798,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    PriceAlert: {
-      payload: Prisma.$PriceAlertPayload<ExtArgs>
-      fields: Prisma.PriceAlertFieldRefs
+    Property: {
+      payload: Prisma.$PropertyPayload<ExtArgs>
+      fields: Prisma.PropertyFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.PriceAlertFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload> | null
+          args: Prisma.PropertyFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.PriceAlertFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+          args: Prisma.PropertyFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
         }
         findFirst: {
-          args: Prisma.PriceAlertFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload> | null
+          args: Prisma.PropertyFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.PriceAlertFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+          args: Prisma.PropertyFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
         }
         findMany: {
-          args: Prisma.PriceAlertFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>[]
+          args: Prisma.PropertyFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>[]
         }
         create: {
-          args: Prisma.PriceAlertCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+          args: Prisma.PropertyCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
         }
         createMany: {
-          args: Prisma.PriceAlertCreateManyArgs<ExtArgs>
+          args: Prisma.PropertyCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.PriceAlertCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>[]
+          args: Prisma.PropertyCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>[]
         }
         delete: {
-          args: Prisma.PriceAlertDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+          args: Prisma.PropertyDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
         }
         update: {
-          args: Prisma.PriceAlertUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+          args: Prisma.PropertyUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
         }
         deleteMany: {
-          args: Prisma.PriceAlertDeleteManyArgs<ExtArgs>
+          args: Prisma.PropertyDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.PriceAlertUpdateManyArgs<ExtArgs>
+          args: Prisma.PropertyUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.PriceAlertUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>[]
+          args: Prisma.PropertyUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>[]
         }
         upsert: {
-          args: Prisma.PriceAlertUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$PriceAlertPayload>
+          args: Prisma.PropertyUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PropertyPayload>
         }
         aggregate: {
-          args: Prisma.PriceAlertAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregatePriceAlert>
+          args: Prisma.PropertyAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProperty>
         }
         groupBy: {
-          args: Prisma.PriceAlertGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PriceAlertGroupByOutputType>[]
+          args: Prisma.PropertyGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PropertyGroupByOutputType>[]
         }
         count: {
-          args: Prisma.PriceAlertCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.PriceAlertCountAggregateOutputType> | number
+          args: Prisma.PropertyCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PropertyCountAggregateOutputType> | number
         }
       }
     }
@@ -1375,7 +1375,6 @@ export const ProfessionalProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   type: 'type',
-  slug: 'slug',
   status: 'status',
   dni: 'dni',
   ruc: 'ruc',
@@ -1386,11 +1385,47 @@ export const ProfessionalProfileScalarFieldEnum = {
   address: 'address',
   website: 'website',
   socialLinks: 'socialLinks',
+  slug: 'slug',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ProfessionalProfileScalarFieldEnum = (typeof ProfessionalProfileScalarFieldEnum)[keyof typeof ProfessionalProfileScalarFieldEnum]
+
+
+export const FavoriteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  propertyId: 'propertyId',
+  createdAt: 'createdAt'
+} as const
+
+export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
+
+
+export const PriceAlertScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  propertyId: 'propertyId',
+  targetPrice: 'targetPrice',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+} as const
+
+export type PriceAlertScalarFieldEnum = (typeof PriceAlertScalarFieldEnum)[keyof typeof PriceAlertScalarFieldEnum]
+
+
+export const SearchAlertScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  filters: 'filters',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SearchAlertScalarFieldEnum = (typeof SearchAlertScalarFieldEnum)[keyof typeof SearchAlertScalarFieldEnum]
 
 
 export const PropertyScalarFieldEnum = {
@@ -1417,41 +1452,6 @@ export const PropertyScalarFieldEnum = {
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
-
-
-export const FavoriteScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  propertyId: 'propertyId',
-  createdAt: 'createdAt'
-} as const
-
-export type FavoriteScalarFieldEnum = (typeof FavoriteScalarFieldEnum)[keyof typeof FavoriteScalarFieldEnum]
-
-
-export const SearchAlertScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  name: 'name',
-  filters: 'filters',
-  isActive: 'isActive',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type SearchAlertScalarFieldEnum = (typeof SearchAlertScalarFieldEnum)[keyof typeof SearchAlertScalarFieldEnum]
-
-
-export const PriceAlertScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  propertyId: 'propertyId',
-  targetPrice: 'targetPrice',
-  isActive: 'isActive',
-  createdAt: 'createdAt'
-} as const
-
-export type PriceAlertScalarFieldEnum = (typeof PriceAlertScalarFieldEnum)[keyof typeof PriceAlertScalarFieldEnum]
 
 
 export const PropertyLocationScalarFieldEnum = {
@@ -1672,6 +1672,34 @@ export type ListEnumApprovalStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'OperationType'
  */
 export type EnumOperationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OperationType'>
@@ -1700,20 +1728,6 @@ export type ListEnumPropertyTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
-    
-
-
-/**
  * Reference to a field of type 'Currency'
  */
 export type EnumCurrencyFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Currency'>
@@ -1738,20 +1752,6 @@ export type EnumPropertyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'PropertyStatus[]'
  */
 export type ListEnumPropertyStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PropertyStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -1991,10 +1991,10 @@ export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaC
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   professionalProfile?: Prisma.ProfessionalProfileOmit
-  property?: Prisma.PropertyOmit
   favorite?: Prisma.FavoriteOmit
-  searchAlert?: Prisma.SearchAlertOmit
   priceAlert?: Prisma.PriceAlertOmit
+  searchAlert?: Prisma.SearchAlertOmit
+  property?: Prisma.PropertyOmit
   propertyLocation?: Prisma.PropertyLocationOmit
   propertyDetails?: Prisma.PropertyDetailsOmit
   amenity?: Prisma.AmenityOmit

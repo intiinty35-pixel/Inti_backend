@@ -340,12 +340,12 @@ export type PropertyWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
-  agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileScalarRelationFilter, Prisma.ProfessionalProfileWhereInput>
-  location?: Prisma.XOR<Prisma.PropertyLocationNullableScalarRelationFilter, Prisma.PropertyLocationWhereInput> | null
-  details?: Prisma.XOR<Prisma.PropertyDetailsNullableScalarRelationFilter, Prisma.PropertyDetailsWhereInput> | null
-  amenities?: Prisma.PropertyAmenityListRelationFilter
-  media?: Prisma.PropertyMediaListRelationFilter
   leads?: Prisma.LeadListRelationFilter
+  agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileScalarRelationFilter, Prisma.ProfessionalProfileWhereInput>
+  amenities?: Prisma.PropertyAmenityListRelationFilter
+  details?: Prisma.XOR<Prisma.PropertyDetailsNullableScalarRelationFilter, Prisma.PropertyDetailsWhereInput> | null
+  location?: Prisma.XOR<Prisma.PropertyLocationNullableScalarRelationFilter, Prisma.PropertyLocationWhereInput> | null
+  media?: Prisma.PropertyMediaListRelationFilter
   favorites?: Prisma.FavoriteListRelationFilter
   priceAlerts?: Prisma.PriceAlertListRelationFilter
 }
@@ -371,12 +371,12 @@ export type PropertyOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  agentProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
-  location?: Prisma.PropertyLocationOrderByWithRelationInput
-  details?: Prisma.PropertyDetailsOrderByWithRelationInput
-  amenities?: Prisma.PropertyAmenityOrderByRelationAggregateInput
-  media?: Prisma.PropertyMediaOrderByRelationAggregateInput
   leads?: Prisma.LeadOrderByRelationAggregateInput
+  agentProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
+  amenities?: Prisma.PropertyAmenityOrderByRelationAggregateInput
+  details?: Prisma.PropertyDetailsOrderByWithRelationInput
+  location?: Prisma.PropertyLocationOrderByWithRelationInput
+  media?: Prisma.PropertyMediaOrderByRelationAggregateInput
   favorites?: Prisma.FavoriteOrderByRelationAggregateInput
   priceAlerts?: Prisma.PriceAlertOrderByRelationAggregateInput
 }
@@ -405,12 +405,12 @@ export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
-  agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileScalarRelationFilter, Prisma.ProfessionalProfileWhereInput>
-  location?: Prisma.XOR<Prisma.PropertyLocationNullableScalarRelationFilter, Prisma.PropertyLocationWhereInput> | null
-  details?: Prisma.XOR<Prisma.PropertyDetailsNullableScalarRelationFilter, Prisma.PropertyDetailsWhereInput> | null
-  amenities?: Prisma.PropertyAmenityListRelationFilter
-  media?: Prisma.PropertyMediaListRelationFilter
   leads?: Prisma.LeadListRelationFilter
+  agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileScalarRelationFilter, Prisma.ProfessionalProfileWhereInput>
+  amenities?: Prisma.PropertyAmenityListRelationFilter
+  details?: Prisma.XOR<Prisma.PropertyDetailsNullableScalarRelationFilter, Prisma.PropertyDetailsWhereInput> | null
+  location?: Prisma.XOR<Prisma.PropertyLocationNullableScalarRelationFilter, Prisma.PropertyLocationWhereInput> | null
+  media?: Prisma.PropertyMediaListRelationFilter
   favorites?: Prisma.FavoriteListRelationFilter
   priceAlerts?: Prisma.PriceAlertListRelationFilter
 }, "id" | "slug">
@@ -489,12 +489,12 @@ export type PropertyCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
-  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
+  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
@@ -520,11 +520,11 @@ export type PropertyUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
@@ -549,12 +549,12 @@ export type PropertyUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
-  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
+  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
@@ -580,11 +580,11 @@ export type PropertyUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
@@ -667,6 +667,11 @@ export type PropertyOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type PropertyScalarRelationFilter = {
+  is?: Prisma.PropertyWhereInput
+  isNot?: Prisma.PropertyWhereInput
+}
+
 export type PropertyCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   agentProfileId?: Prisma.SortOrder
@@ -746,11 +751,6 @@ export type PropertySumOrderByAggregateInput = {
   maintenanceFee?: Prisma.SortOrder
 }
 
-export type PropertyScalarRelationFilter = {
-  is?: Prisma.PropertyWhereInput
-  isNot?: Prisma.PropertyWhereInput
-}
-
 export type PropertyCreateNestedManyWithoutAgentProfileInput = {
   create?: Prisma.XOR<Prisma.PropertyCreateWithoutAgentProfileInput, Prisma.PropertyUncheckedCreateWithoutAgentProfileInput> | Prisma.PropertyCreateWithoutAgentProfileInput[] | Prisma.PropertyUncheckedCreateWithoutAgentProfileInput[]
   connectOrCreate?: Prisma.PropertyCreateOrConnectWithoutAgentProfileInput | Prisma.PropertyCreateOrConnectWithoutAgentProfileInput[]
@@ -793,42 +793,6 @@ export type PropertyUncheckedUpdateManyWithoutAgentProfileNestedInput = {
   deleteMany?: Prisma.PropertyScalarWhereInput | Prisma.PropertyScalarWhereInput[]
 }
 
-export type EnumOperationTypeFieldUpdateOperationsInput = {
-  set?: $Enums.OperationType
-}
-
-export type EnumPropertyTypeFieldUpdateOperationsInput = {
-  set?: $Enums.PropertyType
-}
-
-export type DecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type EnumCurrencyFieldUpdateOperationsInput = {
-  set?: $Enums.Currency
-}
-
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type EnumPropertyStatusFieldUpdateOperationsInput = {
-  set?: $Enums.PropertyStatus
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type PropertyCreateNestedOneWithoutFavoritesInput = {
   create?: Prisma.XOR<Prisma.PropertyCreateWithoutFavoritesInput, Prisma.PropertyUncheckedCreateWithoutFavoritesInput>
   connectOrCreate?: Prisma.PropertyCreateOrConnectWithoutFavoritesInput
@@ -855,6 +819,34 @@ export type PropertyUpdateOneRequiredWithoutPriceAlertsNestedInput = {
   upsert?: Prisma.PropertyUpsertWithoutPriceAlertsInput
   connect?: Prisma.PropertyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PropertyUpdateToOneWithWhereWithoutPriceAlertsInput, Prisma.PropertyUpdateWithoutPriceAlertsInput>, Prisma.PropertyUncheckedUpdateWithoutPriceAlertsInput>
+}
+
+export type EnumOperationTypeFieldUpdateOperationsInput = {
+  set?: $Enums.OperationType
+}
+
+export type EnumPropertyTypeFieldUpdateOperationsInput = {
+  set?: $Enums.PropertyType
+}
+
+export type DecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type EnumCurrencyFieldUpdateOperationsInput = {
+  set?: $Enums.Currency
+}
+
+export type EnumPropertyStatusFieldUpdateOperationsInput = {
+  set?: $Enums.PropertyStatus
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type PropertyCreateNestedOneWithoutLocationInput = {
@@ -947,11 +939,11 @@ export type PropertyCreateWithoutAgentProfileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
@@ -976,11 +968,11 @@ export type PropertyUncheckedCreateWithoutAgentProfileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
@@ -1057,12 +1049,12 @@ export type PropertyCreateWithoutFavoritesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
-  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
+  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
@@ -1087,11 +1079,11 @@ export type PropertyUncheckedCreateWithoutFavoritesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
@@ -1131,12 +1123,12 @@ export type PropertyUpdateWithoutFavoritesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
-  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
+  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
@@ -1161,11 +1153,11 @@ export type PropertyUncheckedUpdateWithoutFavoritesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
@@ -1189,12 +1181,12 @@ export type PropertyCreateWithoutPriceAlertsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
-  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
+  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
 }
 
@@ -1219,11 +1211,11 @@ export type PropertyUncheckedCreateWithoutPriceAlertsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
 }
 
@@ -1263,12 +1255,12 @@ export type PropertyUpdateWithoutPriceAlertsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
-  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
+  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
 }
 
@@ -1293,11 +1285,11 @@ export type PropertyUncheckedUpdateWithoutPriceAlertsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
@@ -1321,11 +1313,11 @@ export type PropertyCreateWithoutLocationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
-  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
+  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
@@ -1351,10 +1343,10 @@ export type PropertyUncheckedCreateWithoutLocationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
@@ -1395,11 +1387,11 @@ export type PropertyUpdateWithoutLocationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
-  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
+  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
@@ -1425,10 +1417,10 @@ export type PropertyUncheckedUpdateWithoutLocationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
@@ -1453,11 +1445,11 @@ export type PropertyCreateWithoutDetailsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
-  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
+  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
+  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
@@ -1483,10 +1475,10 @@ export type PropertyUncheckedCreateWithoutDetailsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
-  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
+  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
@@ -1527,11 +1519,11 @@ export type PropertyUpdateWithoutDetailsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
-  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
+  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
@@ -1557,10 +1549,10 @@ export type PropertyUncheckedUpdateWithoutDetailsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
@@ -1585,11 +1577,11 @@ export type PropertyCreateWithoutAmenitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
-  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
-  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
+  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
@@ -1615,10 +1607,10 @@ export type PropertyUncheckedCreateWithoutAmenitiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
-  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
+  media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
@@ -1659,11 +1651,11 @@ export type PropertyUpdateWithoutAmenitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
-  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
+  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
@@ -1689,10 +1681,10 @@ export type PropertyUncheckedUpdateWithoutAmenitiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
@@ -1717,11 +1709,11 @@ export type PropertyCreateWithoutMediaInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
-  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
+  amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
@@ -1747,10 +1739,10 @@ export type PropertyUncheckedCreateWithoutMediaInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
-  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
@@ -1791,11 +1783,11 @@ export type PropertyUpdateWithoutMediaInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
-  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
+  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
@@ -1821,10 +1813,10 @@ export type PropertyUncheckedUpdateWithoutMediaInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
@@ -1850,9 +1842,9 @@ export type PropertyCreateWithoutLeadsInput = {
   updatedAt?: Date | string
   publishedAt?: Date | string | null
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
-  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
@@ -1879,9 +1871,9 @@ export type PropertyUncheckedCreateWithoutLeadsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
+  details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
+  location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
@@ -1924,9 +1916,9 @@ export type PropertyUpdateWithoutLeadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
-  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
@@ -1953,9 +1945,9 @@ export type PropertyUncheckedUpdateWithoutLeadsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
@@ -2003,11 +1995,11 @@ export type PropertyUpdateWithoutAgentProfileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
@@ -2032,11 +2024,11 @@ export type PropertyUncheckedUpdateWithoutAgentProfileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
-  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
-  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
+  details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
+  location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
+  media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
@@ -2069,17 +2061,17 @@ export type PropertyUncheckedUpdateManyWithoutAgentProfileInput = {
  */
 
 export type PropertyCountOutputType = {
+  leads: number
   amenities: number
   media: number
-  leads: number
   favorites: number
   priceAlerts: number
 }
 
 export type PropertyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  leads?: boolean | PropertyCountOutputTypeCountLeadsArgs
   amenities?: boolean | PropertyCountOutputTypeCountAmenitiesArgs
   media?: boolean | PropertyCountOutputTypeCountMediaArgs
-  leads?: boolean | PropertyCountOutputTypeCountLeadsArgs
   favorites?: boolean | PropertyCountOutputTypeCountFavoritesArgs
   priceAlerts?: boolean | PropertyCountOutputTypeCountPriceAlertsArgs
 }
@@ -2097,6 +2089,13 @@ export type PropertyCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * PropertyCountOutputType without action
  */
+export type PropertyCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadWhereInput
+}
+
+/**
+ * PropertyCountOutputType without action
+ */
 export type PropertyCountOutputTypeCountAmenitiesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PropertyAmenityWhereInput
 }
@@ -2106,13 +2105,6 @@ export type PropertyCountOutputTypeCountAmenitiesArgs<ExtArgs extends runtime.Ty
  */
 export type PropertyCountOutputTypeCountMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PropertyMediaWhereInput
-}
-
-/**
- * PropertyCountOutputType without action
- */
-export type PropertyCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadWhereInput
 }
 
 /**
@@ -2151,12 +2143,12 @@ export type PropertySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
-  agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
-  location?: boolean | Prisma.Property$locationArgs<ExtArgs>
-  details?: boolean | Prisma.Property$detailsArgs<ExtArgs>
-  amenities?: boolean | Prisma.Property$amenitiesArgs<ExtArgs>
-  media?: boolean | Prisma.Property$mediaArgs<ExtArgs>
   leads?: boolean | Prisma.Property$leadsArgs<ExtArgs>
+  agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
+  amenities?: boolean | Prisma.Property$amenitiesArgs<ExtArgs>
+  details?: boolean | Prisma.Property$detailsArgs<ExtArgs>
+  location?: boolean | Prisma.Property$locationArgs<ExtArgs>
+  media?: boolean | Prisma.Property$mediaArgs<ExtArgs>
   favorites?: boolean | Prisma.Property$favoritesArgs<ExtArgs>
   priceAlerts?: boolean | Prisma.Property$priceAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.PropertyCountOutputTypeDefaultArgs<ExtArgs>
@@ -2235,12 +2227,12 @@ export type PropertySelectScalar = {
 
 export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "operationType" | "propertyType" | "slug" | "title" | "description" | "price" | "currency" | "negotiable" | "maintenanceFee" | "status" | "featured" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "createdAt" | "updatedAt" | "publishedAt", ExtArgs["result"]["property"]>
 export type PropertyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
-  location?: boolean | Prisma.Property$locationArgs<ExtArgs>
-  details?: boolean | Prisma.Property$detailsArgs<ExtArgs>
-  amenities?: boolean | Prisma.Property$amenitiesArgs<ExtArgs>
-  media?: boolean | Prisma.Property$mediaArgs<ExtArgs>
   leads?: boolean | Prisma.Property$leadsArgs<ExtArgs>
+  agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
+  amenities?: boolean | Prisma.Property$amenitiesArgs<ExtArgs>
+  details?: boolean | Prisma.Property$detailsArgs<ExtArgs>
+  location?: boolean | Prisma.Property$locationArgs<ExtArgs>
+  media?: boolean | Prisma.Property$mediaArgs<ExtArgs>
   favorites?: boolean | Prisma.Property$favoritesArgs<ExtArgs>
   priceAlerts?: boolean | Prisma.Property$priceAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.PropertyCountOutputTypeDefaultArgs<ExtArgs>
@@ -2255,12 +2247,12 @@ export type PropertyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Property"
   objects: {
-    agentProfile: Prisma.$ProfessionalProfilePayload<ExtArgs>
-    location: Prisma.$PropertyLocationPayload<ExtArgs> | null
-    details: Prisma.$PropertyDetailsPayload<ExtArgs> | null
-    amenities: Prisma.$PropertyAmenityPayload<ExtArgs>[]
-    media: Prisma.$PropertyMediaPayload<ExtArgs>[]
     leads: Prisma.$LeadPayload<ExtArgs>[]
+    agentProfile: Prisma.$ProfessionalProfilePayload<ExtArgs>
+    amenities: Prisma.$PropertyAmenityPayload<ExtArgs>[]
+    details: Prisma.$PropertyDetailsPayload<ExtArgs> | null
+    location: Prisma.$PropertyLocationPayload<ExtArgs> | null
+    media: Prisma.$PropertyMediaPayload<ExtArgs>[]
     favorites: Prisma.$FavoritePayload<ExtArgs>[]
     priceAlerts: Prisma.$PriceAlertPayload<ExtArgs>[]
   }
@@ -2679,12 +2671,12 @@ readonly fields: PropertyFieldRefs;
  */
 export interface Prisma__PropertyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  agentProfile<T extends Prisma.ProfessionalProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfessionalProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  location<T extends Prisma.Property$locationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$locationArgs<ExtArgs>>): Prisma.Prisma__PropertyLocationClient<runtime.Types.Result.GetResult<Prisma.$PropertyLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  details<T extends Prisma.Property$detailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$detailsArgs<ExtArgs>>): Prisma.Prisma__PropertyDetailsClient<runtime.Types.Result.GetResult<Prisma.$PropertyDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  amenities<T extends Prisma.Property$amenitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$amenitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyAmenityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  media<T extends Prisma.Property$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leads<T extends Prisma.Property$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  agentProfile<T extends Prisma.ProfessionalProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfessionalProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  amenities<T extends Prisma.Property$amenitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$amenitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyAmenityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  details<T extends Prisma.Property$detailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$detailsArgs<ExtArgs>>): Prisma.Prisma__PropertyDetailsClient<runtime.Types.Result.GetResult<Prisma.$PropertyDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  location<T extends Prisma.Property$locationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$locationArgs<ExtArgs>>): Prisma.Prisma__PropertyLocationClient<runtime.Types.Result.GetResult<Prisma.$PropertyLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  media<T extends Prisma.Property$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   favorites<T extends Prisma.Property$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   priceAlerts<T extends Prisma.Property$priceAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$priceAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -3137,41 +3129,27 @@ export type PropertyDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
- * Property.location
+ * Property.leads
  */
-export type Property$locationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Property$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the PropertyLocation
+   * Select specific fields to fetch from the Lead
    */
-  select?: Prisma.PropertyLocationSelect<ExtArgs> | null
+  select?: Prisma.LeadSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the PropertyLocation
+   * Omit specific fields from the Lead
    */
-  omit?: Prisma.PropertyLocationOmit<ExtArgs> | null
+  omit?: Prisma.LeadOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.PropertyLocationInclude<ExtArgs> | null
-  where?: Prisma.PropertyLocationWhereInput
-}
-
-/**
- * Property.details
- */
-export type Property$detailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PropertyDetails
-   */
-  select?: Prisma.PropertyDetailsSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PropertyDetails
-   */
-  omit?: Prisma.PropertyDetailsOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PropertyDetailsInclude<ExtArgs> | null
-  where?: Prisma.PropertyDetailsWhereInput
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
+  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
+  cursor?: Prisma.LeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
 }
 
 /**
@@ -3199,6 +3177,44 @@ export type Property$amenitiesArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Property.details
+ */
+export type Property$detailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PropertyDetails
+   */
+  select?: Prisma.PropertyDetailsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PropertyDetails
+   */
+  omit?: Prisma.PropertyDetailsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PropertyDetailsInclude<ExtArgs> | null
+  where?: Prisma.PropertyDetailsWhereInput
+}
+
+/**
+ * Property.location
+ */
+export type Property$locationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PropertyLocation
+   */
+  select?: Prisma.PropertyLocationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PropertyLocation
+   */
+  omit?: Prisma.PropertyLocationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PropertyLocationInclude<ExtArgs> | null
+  where?: Prisma.PropertyLocationWhereInput
+}
+
+/**
  * Property.media
  */
 export type Property$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3220,30 +3236,6 @@ export type Property$mediaArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.PropertyMediaScalarFieldEnum | Prisma.PropertyMediaScalarFieldEnum[]
-}
-
-/**
- * Property.leads
- */
-export type Property$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Lead
-   */
-  select?: Prisma.LeadSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Lead
-   */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
-  cursor?: Prisma.LeadWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
 }
 
 /**
