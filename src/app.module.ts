@@ -15,6 +15,7 @@ import { FavoritesModule } from './modules/favorites/favorites.module';
 import { LeadsModule } from './modules/leads/leads.module';
 import { MediaModule } from './modules/media/media.module';
 import { PropertiesModule } from './modules/properties/properties.module';
+import { ProfessionalsModule } from './modules/professionals/professionals.module';
 import { UsersModule } from './modules/users/users.module';
 
 @Module({
@@ -37,6 +38,7 @@ import { UsersModule } from './modules/users/users.module';
     PropertiesModule,
     LeadsModule,
     MediaModule,
+    ProfessionalsModule,
   ],
   controllers: [AppController],
   providers: [
