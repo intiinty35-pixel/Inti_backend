@@ -1,0 +1,257 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                  String               @id @default(uuid())
+  email               String               @unique
+  passwordHash        String
+  firstName           String
+  lastName            String?
+  phone               String?
+  role                Role                 @default(USER)
+  isActive            Boolean              @default(true)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  leads               Lead[]
+  professionalProfile ProfessionalProfile?
+
+  @@map("users")
+}
+
+model ProfessionalProfile {
+  id           String           @id @default(uuid())
+  userId       String           @unique
+  type         ProfessionalType
+  status       ApprovalStatus   @default(PENDING)
+  dni          String?
+  ruc          String?
+  businessName String?
+  whatsapp     String?
+  city         String
+  districts    String?
+  address      String?
+  website      String?
+  socialLinks  String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  leads        Lead[]
+  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  properties   Property[]
+
+  @@map("professional_profiles")
+}
+
+model Property {
+  id              String              @id @default(uuid())
+  agentProfileId  String
+  operationType   OperationType
+  propertyType    PropertyType
+  slug            String              @unique
+  title           String
+  description     String
+  price           Decimal             @db.Decimal(14, 2)
+  currency        Currency
+  negotiable      Boolean             @default(false)
+  maintenanceFee  Decimal?            @db.Decimal(12, 2)
+  status          PropertyStatus      @default(DRAFT)
+  featured        Boolean             @default(false)
+  contactName     String?
+  contactEmail    String?
+  contactPhone    String?
+  contactWhatsapp String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  publishedAt     DateTime?
+  leads           Lead[]
+  agentProfile    ProfessionalProfile @relation(fields: [agentProfileId], references: [id])
+  amenities       PropertyAmenity[]
+  details         PropertyDetails?
+  location        PropertyLocation?
+  media           PropertyMedia[]
+
+  @@index([status, featured, publishedAt])
+  @@index([operationType, propertyType, status])
+  @@map("properties")
+}
+
+model PropertyLocation {
+  id                  String   @id @default(uuid())
+  propertyId          String   @unique
+  country             String   @default("PE")
+  department          String
+  province            String
+  district            String
+  address             String
+  number              String?
+  sector              String?
+  reference           String?
+  latitude            Decimal? @db.Decimal(10, 7)
+  longitude           Decimal? @db.Decimal(10, 7)
+  approximateLocation Boolean  @default(true)
+  property            Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([department, province, district])
+  @@map("property_locations")
+}
+
+model PropertyDetails {
+  id                 String              @id @default(uuid())
+  propertyId         String              @unique
+  totalArea          Decimal?            @db.Decimal(10, 2)
+  constructedArea    Decimal?            @db.Decimal(10, 2)
+  bedrooms           Int?
+  bathrooms          Int?
+  halfBathrooms      Int?
+  parkingSpaces      Int?
+  floor              Int?
+  floors             Int?
+  constructionYear   Int?
+  conservationStatus ConservationStatus?
+  specificDetails    Json?
+  property           Property            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@map("property_details")
+}
+
+model Amenity {
+  id         String            @id @default(uuid())
+  code       String            @unique
+  name       String
+  category   AmenityCategory
+  properties PropertyAmenity[]
+
+  @@map("amenities")
+}
+
+model PropertyAmenity {
+  propertyId String
+  amenityId  String
+  amenity    Amenity  @relation(fields: [amenityId], references: [id])
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@id([propertyId, amenityId])
+  @@map("property_amenities")
+}
+
+model PropertyMedia {
+  id         String    @id @default(uuid())
+  propertyId String
+  type       MediaType @default(IMAGE)
+  url        String
+  publicId   String?
+  position   Int       @default(0)
+  isCover    Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  property   Property  @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([propertyId, position])
+  @@map("property_media")
+}
+
+model Lead {
+  id             String              @id @default(uuid())
+  propertyId     String
+  agentProfileId String
+  userId         String?
+  name           String
+  email          String
+  phone          String?
+  message        String
+  source         LeadSource
+  createdAt      DateTime            @default(now())
+  agentProfile   ProfessionalProfile @relation(fields: [agentProfileId], references: [id])
+  property       Property            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  user           User?               @relation(fields: [userId], references: [id])
+
+  @@index([propertyId, createdAt])
+  @@index([agentProfileId, createdAt])
+  @@map("leads")
+}
+
+enum Role {
+  ADMIN
+  USER
+  REAL_ESTATE
+}
+
+enum ProfessionalType {
+  INDEPENDENT_AGENT
+  REAL_ESTATE_AGENCY
+  DEVELOPER
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum OperationType {
+  SALE
+  RENT
+  TEMPORARY_RENT
+  TRANSFER
+}
+
+enum PropertyType {
+  APARTMENT
+  HOUSE
+  LAND
+  OFFICE
+  COMMERCIAL
+  WAREHOUSE
+  ROOM
+}
+
+enum Currency {
+  PEN
+  USD
+}
+
+enum PropertyStatus {
+  DRAFT
+  PENDING_REVIEW
+  PUBLISHED
+  PAUSED
+  SOLD
+  RENTED
+  REJECTED
+  ARCHIVED
+}
+
+enum ConservationStatus {
+  NEW
+  EXCELLENT
+  GOOD
+  REMODELED
+  TO_REMODEL
+  UNDER_CONSTRUCTION
+}
+
+enum AmenityCategory {
+  INTERIOR
+  SERVICES
+  EXTERIOR
+  BUILDING
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+  TOUR
+  FLOOR_PLAN
+}
+
+enum LeadSource {
+  PROPERTY_FORM
+  WHATSAPP
+  QUICK_QUESTION
+  PHONE
+}

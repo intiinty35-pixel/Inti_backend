@@ -1,0 +1,36 @@
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Query,
+} from '@nestjs/common';
+import { ParseEnumPipe } from '@nestjs/common';
+import { Roles } from '../../common/decorators/roles.decorator';
+import { ApprovalStatus, Role } from '../../generated/prisma/enums';
+import { UpdateProfessionalStatusDto } from './dto/update-professional-status.dto';
+import { UsersService } from './users.service';
+
+@Roles(Role.ADMIN)
+@Controller('admin/professionals')
+export class UsersController {
+  constructor(private readonly users: UsersService) {}
+
+  @Get()
+  list(
+    @Query('status', new ParseEnumPipe(ApprovalStatus, { optional: true }))
+    status?: ApprovalStatus,
+  ) {
+    return this.users.listProfessionals(status);
+  }
+
+  @Patch(':id/status')
+  setStatus(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateProfessionalStatusDto,
+  ) {
+    return this.users.setProfessionalStatus(id, dto.status);
+  }
+}
