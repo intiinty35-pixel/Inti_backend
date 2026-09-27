@@ -473,14 +473,6 @@ export type EnumMediaTypeFieldUpdateOperationsInput = {
   set?: $Enums.MediaType
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type PropertyMediaCreateWithoutPropertyInput = {
   id?: string
   type?: $Enums.MediaType

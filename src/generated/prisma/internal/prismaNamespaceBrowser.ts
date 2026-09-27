@@ -53,6 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   ProfessionalProfile: 'ProfessionalProfile',
+  Plan: 'Plan',
+  PlanSubscription: 'PlanSubscription',
   Favorite: 'Favorite',
   PriceAlert: 'PriceAlert',
   SearchAlert: 'SearchAlert',
@@ -117,6 +119,44 @@ export const ProfessionalProfileScalarFieldEnum = {
 } as const
 
 export type ProfessionalProfileScalarFieldEnum = (typeof ProfessionalProfileScalarFieldEnum)[keyof typeof ProfessionalProfileScalarFieldEnum]
+
+
+export const PlanScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  price: 'price',
+  currency: 'currency',
+  durationDays: 'durationDays',
+  propertyLimit: 'propertyLimit',
+  projectLimit: 'projectLimit',
+  features: 'features',
+  isFree: 'isFree',
+  isDefault: 'isDefault',
+  highlight: 'highlight',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
+
+
+export const PlanSubscriptionScalarFieldEnum = {
+  id: 'id',
+  agentProfileId: 'agentProfileId',
+  planId: 'planId',
+  status: 'status',
+  receiptUrl: 'receiptUrl',
+  rejectionReason: 'rejectionReason',
+  reviewedAt: 'reviewedAt',
+  startedAt: 'startedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlanSubscriptionScalarFieldEnum = (typeof PlanSubscriptionScalarFieldEnum)[keyof typeof PlanSubscriptionScalarFieldEnum]
 
 
 export const FavoriteScalarFieldEnum = {

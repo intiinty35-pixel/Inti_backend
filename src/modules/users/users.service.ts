@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { ApprovalStatus } from '../../generated/prisma/enums';
+import { PlansService } from '../plans/plans.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly plans: PlansService,
+  ) {}
 
   listProfessionals(status?: ApprovalStatus) {
     return this.prisma.professionalProfile.findMany({
@@ -24,9 +28,15 @@ export class UsersService {
       select: { id: true },
     });
     if (!profile) throw new NotFoundException('Perfil profesional no encontrado');
-    return this.prisma.professionalProfile.update({
+    const updated = await this.prisma.professionalProfile.update({
       where: { id: profileId },
       data: { status },
     });
+
+    if (status === ApprovalStatus.APPROVED) {
+      await this.plans.assignDefaultPlanIfNone(profileId);
+    }
+
+    return updated;
   }
 }

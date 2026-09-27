@@ -28,6 +28,16 @@ export type User = Prisma.UserModel
  */
 export type ProfessionalProfile = Prisma.ProfessionalProfileModel
 /**
+ * Model Plan
+ * 
+ */
+export type Plan = Prisma.PlanModel
+/**
+ * Model PlanSubscription
+ * 
+ */
+export type PlanSubscription = Prisma.PlanSubscriptionModel
+/**
  * Model Favorite
  * 
  */

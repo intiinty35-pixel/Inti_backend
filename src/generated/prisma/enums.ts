@@ -9,6 +9,16 @@
 * 🟢 You can import this file directly.
 */
 
+export const SubscriptionStatus = {
+  PENDING_PAYMENT: 'PENDING_PAYMENT',
+  ACTIVE: 'ACTIVE',
+  REJECTED: 'REJECTED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
+
+
 export const Role = {
   ADMIN: 'ADMIN',
   USER: 'USER',

@@ -10,6 +10,8 @@
  */
 export type * from './models/User.js'
 export type * from './models/ProfessionalProfile.js'
+export type * from './models/Plan.js'
+export type * from './models/PlanSubscription.js'
 export type * from './models/Favorite.js'
 export type * from './models/PriceAlert.js'
 export type * from './models/SearchAlert.js'

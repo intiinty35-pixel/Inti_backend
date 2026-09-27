@@ -45,11 +45,61 @@ model ProfessionalProfile {
   slug         String?          @unique
   createdAt    DateTime         @default(now())
   updatedAt    DateTime         @updatedAt
-  leads        Lead[]
-  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  properties   Property[]
+  leads         Lead[]
+  user          User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  properties    Property[]
+  subscriptions PlanSubscription[]
 
   @@map("professional_profiles")
+}
+
+model Plan {
+  id            String   @id @default(uuid())
+  name          String
+  slug          String   @unique
+  price         Decimal  @db.Decimal(10, 2)
+  currency      Currency @default(PEN)
+  durationDays  Int
+  propertyLimit Int
+  projectLimit  Int      @default(0)
+  features      String[] @default([])
+  isFree        Boolean  @default(false)
+  isDefault     Boolean  @default(false)
+  highlight     Boolean  @default(false)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  subscriptions PlanSubscription[]
+
+  @@map("plans")
+}
+
+enum SubscriptionStatus {
+  PENDING_PAYMENT
+  ACTIVE
+  REJECTED
+  EXPIRED
+}
+
+model PlanSubscription {
+  id              String              @id @default(uuid())
+  agentProfileId  String
+  agentProfile    ProfessionalProfile @relation(fields: [agentProfileId], references: [id], onDelete: Cascade)
+  planId          String
+  plan            Plan                @relation(fields: [planId], references: [id])
+  status          SubscriptionStatus  @default(PENDING_PAYMENT)
+  receiptUrl      String?
+  rejectionReason String?
+  reviewedAt      DateTime?
+  startedAt       DateTime?
+  expiresAt       DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([agentProfileId, status])
+  @@index([status, createdAt])
+  @@map("plan_subscriptions")
 }
 
 model Favorite {
