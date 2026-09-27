@@ -15,6 +15,7 @@ import {
 import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
+import { OwnerPropertyQueryDto } from './dto/owner-property-query.dto';
 import { PropertyQueryDto, PropertySort } from './dto/property-query.dto';
 
 const PROPERTY_INCLUDE = {
@@ -70,20 +71,44 @@ export class PropertiesService {
     return this.toDetail(property);
   }
 
-  async listMine(user: AuthUser) {
+  async listMine(user: AuthUser, query: OwnerPropertyQueryDto = {}) {
     const agent = await this.prisma.professionalProfile.findUnique({
       where: { userId: user.id },
       select: { id: true },
     });
-    if (!agent) return [];
+    if (!agent) return query.page ? { items: [], total: 0, page: 1, pageSize: query.pageSize ?? 9, hasMore: false } : [];
 
-    const properties = await this.prisma.property.findMany({
-      where: { agentProfileId: agent.id },
-      orderBy: [{ updatedAt: 'desc' }],
-      include: PROPERTY_INCLUDE,
-    });
+    if (!query.page) {
+      const properties = await this.prisma.property.findMany({
+        where: { agentProfileId: agent.id },
+        orderBy: [{ updatedAt: 'desc' }],
+        include: PROPERTY_INCLUDE,
+      });
+      return properties.map((property) => this.toDetail(property));
+    }
 
-    return properties.map((property) => this.toDetail(property));
+    const page = query.page;
+    const pageSize = Math.min(query.pageSize ?? 9, 50);
+    const where = { agentProfileId: agent.id };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.property.findMany({
+        where,
+        orderBy: [{ updatedAt: 'desc' }],
+        include: PROPERTY_INCLUDE,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.prisma.property.count({ where }),
+    ]);
+
+    return {
+      items: items.map((property) => this.toDetail(property)),
+      total,
+      page,
+      pageSize,
+      hasMore: page * pageSize < total,
+    };
   }
 
   async createDraft(user: AuthUser, dto: CreatePropertyDto) {

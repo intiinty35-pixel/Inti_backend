@@ -3,6 +3,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Public } from '../../common/decorators/public.decorator';
 import type { AuthUser } from '../../common/types/auth-user';
 import { CreatePropertyDto } from './dto/create-property.dto';
+import { OwnerPropertyQueryDto } from './dto/owner-property-query.dto';
 import { PropertyQueryDto } from './dto/property-query.dto';
 import { PropertiesService } from './properties.service';
 
@@ -17,8 +18,8 @@ export class PropertiesController {
   }
 
   @Get('owner/me')
-  mine(@CurrentUser() user: AuthUser) {
-    return this.properties.listMine(user);
+  mine(@CurrentUser() user: AuthUser, @Query() query: OwnerPropertyQueryDto) {
+    return this.properties.listMine(user, query);
   }
 
   @Public()

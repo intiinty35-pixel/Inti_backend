@@ -3,12 +3,13 @@ import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { PropertyStatus } from '../../generated/prisma/enums';
 import { CreateLeadDto } from './dto/create-lead.dto';
+import { OwnerLeadQueryDto } from './dto/owner-lead-query.dto';
 
 @Injectable()
 export class LeadsService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async listMine(user: AuthUser) {
+  async listMine(user: AuthUser, query: OwnerLeadQueryDto = {}) {
     const agent = await this.prisma.professionalProfile.findUnique({
       where: { userId: user.id },
       select: { id: true },
@@ -17,11 +18,30 @@ export class LeadsService {
       throw new ForbiddenException('Tu cuenta no tiene un perfil profesional');
     }
 
-    return this.prisma.lead.findMany({
-      where: { agentProfileId: agent.id },
-      orderBy: { createdAt: 'desc' },
-      include: { property: { select: { id: true, slug: true, title: true } } },
-    });
+    if (!query.page) {
+      return this.prisma.lead.findMany({
+        where: { agentProfileId: agent.id },
+        orderBy: { createdAt: 'desc' },
+        include: { property: { select: { id: true, slug: true, title: true } } },
+      });
+    }
+
+    const page = query.page;
+    const pageSize = Math.min(query.pageSize ?? 10, 50);
+    const where = { agentProfileId: agent.id };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.lead.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include: { property: { select: { id: true, slug: true, title: true } } },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.prisma.lead.count({ where }),
+    ]);
+
+    return { items, total, page, pageSize, hasMore: page * pageSize < total };
   }
 
   async create(dto: CreateLeadDto, user?: AuthUser) {
