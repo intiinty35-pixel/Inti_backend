@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma/prisma.service';
-import { SubscriptionStatus } from '../../generated/prisma/enums';
+import { PropertyStatus, SubscriptionStatus } from '../../generated/prisma/enums';
 import { RequestPlanDto } from './dto/request-plan.dto';
 import { ReviewSubscriptionDto } from './dto/review-subscription.dto';
 import { UpsertPlanDto } from './dto/upsert-plan.dto';
@@ -95,6 +95,8 @@ export class PlansService {
 
   async getMySubscription(userId: string) {
     const agent = await this.requireAgent(userId);
+    await this.expireMemberships(agent.id);
+
     return this.prisma.planSubscription.findFirst({
       where: { agentProfileId: agent.id, status: { in: [SubscriptionStatus.ACTIVE, SubscriptionStatus.PENDING_PAYMENT] } },
       orderBy: { createdAt: 'desc' },
@@ -150,7 +152,9 @@ export class PlansService {
     });
   }
 
-  listPendingSubscriptions() {
+  async listPendingSubscriptions() {
+    await this.expireMemberships();
+
     return this.prisma.planSubscription.findMany({
       where: { status: SubscriptionStatus.PENDING_PAYMENT },
       orderBy: { createdAt: 'asc' },
@@ -164,6 +168,8 @@ export class PlansService {
   }
 
   async reviewSubscription(id: string, dto: ReviewSubscriptionDto) {
+    await this.expireMemberships();
+
     const subscription = await this.prisma.planSubscription.findUnique({
       where: { id },
       include: { plan: true },
@@ -187,5 +193,36 @@ export class PlansService {
             : null,
       },
     });
+  }
+
+  async expireMemberships(agentProfileId?: string) {
+    const now = new Date();
+    const expiredSubscriptions = await this.prisma.planSubscription.findMany({
+      where: {
+        agentProfileId,
+        status: SubscriptionStatus.ACTIVE,
+        expiresAt: { lt: now },
+      },
+      select: { id: true, agentProfileId: true },
+    });
+
+    if (expiredSubscriptions.length === 0) return;
+
+    const subscriptionIds = expiredSubscriptions.map((subscription) => subscription.id);
+    const agentIds = [...new Set(expiredSubscriptions.map((subscription) => subscription.agentProfileId))];
+
+    await this.prisma.$transaction([
+      this.prisma.planSubscription.updateMany({
+        where: { id: { in: subscriptionIds } },
+        data: { status: SubscriptionStatus.EXPIRED },
+      }),
+      this.prisma.property.updateMany({
+        where: {
+          agentProfileId: { in: agentIds },
+          status: PropertyStatus.PUBLISHED,
+        },
+        data: { status: PropertyStatus.PAUSED },
+      }),
+    ]);
   }
 }

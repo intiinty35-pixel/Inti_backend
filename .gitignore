@@ -10,6 +10,15 @@ build/
 .env.local
 .env.*.local
 
+# Volcados de base de datos: contienen datos personales de clientes
+*.dump
+*.sql.gz
+backup*_db.sql
+
+# Cuentas de servicio: claves privadas de Firebase Admin
+firebase-service-account*.json
+*-service-account.json
+
 # Logs
 *.log
 npm-debug.log*

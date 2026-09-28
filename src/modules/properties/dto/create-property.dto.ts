@@ -8,6 +8,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
   Max,
@@ -115,6 +116,10 @@ export class PropertyDetailsDto {
   @IsOptional()
   @IsEnum(ConservationStatus)
   conservationStatus?: ConservationStatus;
+
+  @IsOptional()
+  @IsObject()
+  specificDetails?: Record<string, unknown>;
 }
 
 export class PropertyMediaDto {

@@ -63,7 +63,8 @@ export const PropertyType = {
   OFFICE: 'OFFICE',
   COMMERCIAL: 'COMMERCIAL',
   WAREHOUSE: 'WAREHOUSE',
-  ROOM: 'ROOM'
+  ROOM: 'ROOM',
+  PARKING: 'PARKING'
 } as const
 
 export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]

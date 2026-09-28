@@ -2,6 +2,8 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Logger,
+  ServiceUnavailableException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -14,6 +16,8 @@ import { toAuthUser } from '../types/to-auth-user';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
+  private readonly logger = new Logger(JwtAuthGuard.name);
+
   constructor(
     private readonly reflector: Reflector,
     private readonly jwt: JwtService,
@@ -40,10 +44,28 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException('Sesión inválida o expirada');
     }
 
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      include: { professionalProfile: true },
-    });
+    // Un fallo de red con la base de datos no es un problema de sesión: si se
+    // propaga como error crudo el cliente recibe un 500 opaco y el log apunta
+    // al guard en lugar de a la causa real. Se separa para devolver 503.
+    let user: Awaited<ReturnType<typeof this.prisma.user.findUnique>>;
+    try {
+      user = await this.prisma.user.findUnique({
+        where: { id: userId },
+        include: { professionalProfile: true },
+      });
+    } catch (error) {
+      const code = (error as { code?: string }).code;
+      if (code === 'P1001' || code === 'P1002' || code === 'P1017') {
+        this.logger.error(
+          `Base de datos inalcanzable al validar la sesión (${code}).`,
+        );
+        throw new ServiceUnavailableException(
+          'Servicio temporalmente no disponible. Inténtalo de nuevo en unos segundos.',
+        );
+      }
+      throw error;
+    }
+
     if (!user || !user.isActive) {
       throw new UnauthorizedException('Sesión inválida o expirada');
     }

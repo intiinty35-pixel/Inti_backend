@@ -11,6 +11,7 @@ import {
   OperationType,
   PropertyStatus,
   PropertyType,
+  SubscriptionStatus,
 } from '../../generated/prisma/enums';
 import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
@@ -37,6 +38,8 @@ export class PropertiesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async listPublic(query: PropertyQueryDto) {
+    await this.expireMembershipIfNeeded();
+
     const page = query.page ?? 1;
     const pageSize = Math.min(query.pageSize ?? 20, 50);
     const where = this.buildPublicWhere(query);
@@ -63,6 +66,8 @@ export class PropertiesService {
   }
 
   async getPublicBySlug(slug: string) {
+    await this.expireMembershipIfNeeded();
+
     const property = await this.prisma.property.findFirst({
       where: { slug, status: PropertyStatus.PUBLISHED },
       include: PROPERTY_INCLUDE,
@@ -133,7 +138,21 @@ export class PropertiesService {
         contactPhone: dto.contactPhone,
         contactWhatsapp: dto.contactWhatsapp,
         location: { create: dto.location },
-        details: { create: dto.details },
+        details: {
+          create: {
+            totalArea: dto.details.totalArea,
+            constructedArea: dto.details.constructedArea,
+            bedrooms: dto.details.bedrooms,
+            bathrooms: dto.details.bathrooms,
+            halfBathrooms: dto.details.halfBathrooms,
+            parkingSpaces: dto.details.parkingSpaces,
+            floor: dto.details.floor,
+            floors: dto.details.floors,
+            constructionYear: dto.details.constructionYear,
+            conservationStatus: dto.details.conservationStatus,
+            specificDetails: dto.details.specificDetails as Prisma.InputJsonValue | undefined,
+          },
+        },
         media: {
           create: dto.media.map((media, index) => ({
             url: media.url,
@@ -180,6 +199,9 @@ export class PropertiesService {
     if (!property.location || !property.details || property.media.length === 0) {
       throw new BadRequestException('Falta completar ubicación, características o fotos');
     }
+
+    await this.expireMembershipIfNeeded(property.agentProfile.id);
+    await this.ensureCanPublish(property.agentProfile.id, property.id);
 
     const updated = await this.prisma.property.update({
       where: { id },
@@ -229,6 +251,65 @@ export class PropertiesService {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
     return agent;
+  }
+
+  private async expireMembershipIfNeeded(agentProfileId?: string) {
+    const now = new Date();
+    const expiredSubscriptions = await this.prisma.planSubscription.findMany({
+      where: {
+        agentProfileId,
+        status: SubscriptionStatus.ACTIVE,
+        expiresAt: { lt: now },
+      },
+      select: { id: true, agentProfileId: true },
+    });
+
+    if (expiredSubscriptions.length === 0) return;
+
+    await this.prisma.$transaction([
+      this.prisma.planSubscription.updateMany({
+        where: { id: { in: expiredSubscriptions.map((subscription) => subscription.id) } },
+        data: { status: SubscriptionStatus.EXPIRED },
+      }),
+      this.prisma.property.updateMany({
+        where: {
+          agentProfileId: { in: [...new Set(expiredSubscriptions.map((subscription) => subscription.agentProfileId))] },
+          status: PropertyStatus.PUBLISHED,
+        },
+        data: { status: PropertyStatus.PAUSED },
+      }),
+    ]);
+  }
+
+  private async ensureCanPublish(agentProfileId: string, propertyId: string) {
+    const now = new Date();
+    const subscription = await this.prisma.planSubscription.findFirst({
+      where: {
+        agentProfileId,
+        status: SubscriptionStatus.ACTIVE,
+        expiresAt: { gt: now },
+      },
+      orderBy: { createdAt: 'desc' },
+      include: { plan: true },
+    });
+
+    if (!subscription) {
+      throw new ForbiddenException('Necesitas una membresia activa para publicar propiedades');
+    }
+
+    const publishedCount = await this.prisma.property.count({
+      where: {
+        agentProfileId,
+        id: { not: propertyId },
+        status: PropertyStatus.PUBLISHED,
+      },
+    });
+
+    if (publishedCount >= subscription.plan.propertyLimit) {
+      throw new BadRequestException(
+        `Tu paquete permite publicar hasta ${subscription.plan.propertyLimit} propiedades activas`,
+      );
+    }
   }
 
   private validateProperty(dto: CreatePropertyDto) {
@@ -334,6 +415,7 @@ export class PropertiesService {
       [PropertyType.COMMERCIAL]: 'commercial',
       [PropertyType.WAREHOUSE]: 'commercial',
       [PropertyType.ROOM]: 'apartments',
+      [PropertyType.PARKING]: 'commercial',
     } as const;
     return map[type];
   }

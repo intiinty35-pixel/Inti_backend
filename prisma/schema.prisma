@@ -306,6 +306,7 @@ enum PropertyType {
   COMMERCIAL
   WAREHOUSE
   ROOM
+  PARKING
 }
 
 enum Currency {
