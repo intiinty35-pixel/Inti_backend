@@ -11,6 +11,7 @@ import {
   LotMode,
   LotStatus,
   MediaType,
+  ProfessionalType,
   ProjectCategory,
   ProjectStatus,
   PropertyStatus,
@@ -152,6 +153,7 @@ export class ProjectsService {
 
   async createDraft(user: AuthUser, dto: CreateProjectDto) {
     const agent = await this.requireApprovedAgent(user.id);
+    this.ensureCanManageProjects(agent.type);
     this.validateProject(dto);
 
     const slug = this.createUniqueSlug(dto.name);
@@ -237,6 +239,7 @@ export class ProjectsService {
     if (project.agentProfile.status !== ApprovalStatus.APPROVED) {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
+    this.ensureCanManageProjects(project.agentProfile.type);
     if (
       !project.location ||
       project.lots.length === 0 ||
@@ -285,6 +288,12 @@ export class ProjectsService {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
     return agent;
+  }
+
+  private ensureCanManageProjects(type: ProfessionalType) {
+    if (type === ProfessionalType.INDEPENDENT_AGENT) {
+      throw new ForbiddenException('Los agentes inmobiliarios solo pueden publicar propiedades.');
+    }
   }
 
   private async expireMembershipIfNeeded(agentProfileId?: string) {
