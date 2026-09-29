@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Roles } from '../../common/decorators/roles.decorator';
 import type { AuthUser } from '../../common/types/auth-user';
 import { Role } from '../../generated/prisma/enums';
+import { PageQueryDto } from './dto/page-query.dto';
 import { RequestPlanDto } from './dto/request-plan.dto';
 import { UpsertPlanDto } from './dto/upsert-plan.dto';
 import { PlansService } from './plans.service';
@@ -38,8 +39,8 @@ export class AdminPlansController {
   constructor(private readonly plans: PlansService) {}
 
   @Get()
-  list() {
-    return this.plans.listAll();
+  list(@Query() query: PageQueryDto) {
+    return this.plans.listAll(query.page, query.pageSize);
   }
 
   @Post()

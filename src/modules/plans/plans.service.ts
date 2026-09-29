@@ -40,8 +40,22 @@ export class PlansService {
     });
   }
 
-  listAll() {
-    return this.prisma.plan.findMany({ orderBy: { price: 'asc' } });
+  async listAll(page?: number, pageSize?: number) {
+    if (!page) {
+      return this.prisma.plan.findMany({ orderBy: { price: 'asc' } });
+    }
+
+    const size = Math.min(pageSize ?? 10, 50);
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.plan.findMany({
+        orderBy: { price: 'asc' },
+        skip: (page - 1) * size,
+        take: size,
+      }),
+      this.prisma.plan.count(),
+    ]);
+
+    return { items, total, page, pageSize: size, hasMore: page * size < total };
   }
 
   async createPlan(dto: UpsertPlanDto) {
@@ -173,19 +187,38 @@ export class PlansService {
     });
   }
 
-  async listPendingSubscriptions() {
+  async listPendingSubscriptions(page?: number, pageSize?: number) {
     await this.expireMemberships();
 
-    return this.prisma.planSubscription.findMany({
-      where: { status: SubscriptionStatus.PENDING_PAYMENT },
-      orderBy: { createdAt: 'asc' },
-      include: {
-        plan: true,
-        agentProfile: {
-          include: { user: { select: { firstName: true, lastName: true, email: true } } },
-        },
+    const where = { status: SubscriptionStatus.PENDING_PAYMENT };
+    const include = {
+      plan: true,
+      agentProfile: {
+        include: { user: { select: { firstName: true, lastName: true, email: true } } },
       },
-    });
+    };
+
+    if (!page) {
+      return this.prisma.planSubscription.findMany({
+        where,
+        orderBy: { createdAt: 'asc' },
+        include,
+      });
+    }
+
+    const size = Math.min(pageSize ?? 10, 50);
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.planSubscription.findMany({
+        where,
+        orderBy: { createdAt: 'asc' },
+        include,
+        skip: (page - 1) * size,
+        take: size,
+      }),
+      this.prisma.planSubscription.count({ where }),
+    ]);
+
+    return { items, total, page, pageSize: size, hasMore: page * size < total };
   }
 
   async reviewSubscription(id: string, dto: ReviewSubscriptionDto) {
