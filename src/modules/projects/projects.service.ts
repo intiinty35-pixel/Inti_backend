@@ -322,7 +322,7 @@ export class ProjectsService {
 
   private async ensureCanPublish(agentProfileId: string, projectId: string) {
     const now = new Date();
-    const subscription = await this.prisma.planSubscription.findFirst({
+    const subscriptions = await this.prisma.planSubscription.findMany({
       where: {
         agentProfileId,
         status: SubscriptionStatus.ACTIVE,
@@ -332,8 +332,10 @@ export class ProjectsService {
       include: { plan: true },
     });
 
-    if (!subscription) {
-      throw new ForbiddenException('Necesitas una membresia activa para publicar proyectos');
+    if (subscriptions.length === 0) {
+      throw new ForbiddenException(
+        'No tienes una suscripción activa con crédito disponible para publicar. Solicita una nueva suscripción al administrador.',
+      );
     }
 
     const publishedCount = await this.prisma.project.count({
@@ -344,9 +346,14 @@ export class ProjectsService {
       },
     });
 
-    if (publishedCount >= subscription.plan.projectLimit) {
-      throw new BadRequestException(
-        `Tu paquete permite publicar hasta ${subscription.plan.projectLimit} proyectos activos`,
+    const hasAvailableCredit = subscriptions.some(
+      (subscription) => publishedCount < subscription.plan.projectLimit,
+    );
+
+    if (!hasAvailableCredit) {
+      const maxProjectLimit = Math.max(...subscriptions.map(({ plan }) => plan.projectLimit));
+      throw new ForbiddenException(
+        `No tienes crédito disponible para publicar otro proyecto. Tus suscripciones activas permiten hasta ${maxProjectLimit} proyectos activos. Solicita una nueva suscripción al administrador.`,
       );
     }
   }
