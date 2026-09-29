@@ -1,7 +1,12 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
-import { PropertyStatus } from '../../generated/prisma/enums';
+import { ProjectStatus, PropertyStatus } from '../../generated/prisma/enums';
 import { MailService } from '../mail/mail.service';
 import { CreateLeadDto } from './dto/create-lead.dto';
 import { OwnerLeadQueryDto } from './dto/owner-lead-query.dto';
@@ -26,7 +31,10 @@ export class LeadsService {
       return this.prisma.lead.findMany({
         where: { agentProfileId: agent.id },
         orderBy: { createdAt: 'desc' },
-        include: { property: { select: { id: true, slug: true, title: true } } },
+        include: {
+          property: { select: { id: true, slug: true, title: true } },
+          project: { select: { id: true, slug: true, name: true } },
+        },
       });
     }
 
@@ -38,7 +46,10 @@ export class LeadsService {
       this.prisma.lead.findMany({
         where,
         orderBy: { createdAt: 'desc' },
-        include: { property: { select: { id: true, slug: true, title: true } } },
+        include: {
+          property: { select: { id: true, slug: true, title: true } },
+          project: { select: { id: true, slug: true, name: true } },
+        },
         skip: (page - 1) * pageSize,
         take: pageSize,
       }),
@@ -49,29 +60,73 @@ export class LeadsService {
   }
 
   async create(dto: CreateLeadDto, user?: AuthUser) {
-    const property = await this.prisma.property.findFirst({
-      where: { id: dto.propertyId, status: PropertyStatus.PUBLISHED },
-      select: {
-        id: true,
-        slug: true,
-        title: true,
-        agentProfileId: true,
-        contactEmail: true,
-        contactName: true,
-        agentProfile: {
+    if (Boolean(dto.propertyId) === Boolean(dto.projectId)) {
+      throw new BadRequestException(
+        'Indica una propiedad o un proyecto para enviar la consulta',
+      );
+    }
+
+    const target = dto.propertyId
+      ? await this.prisma.property.findFirst({
+          where: { id: dto.propertyId, status: PropertyStatus.PUBLISHED },
           select: {
-            businessName: true,
-            user: { select: { email: true, firstName: true, lastName: true } },
+            id: true,
+            slug: true,
+            title: true,
+            agentProfileId: true,
+            contactEmail: true,
+            contactName: true,
+            agentProfile: {
+              select: {
+                businessName: true,
+                user: {
+                  select: { email: true, firstName: true, lastName: true },
+                },
+              },
+            },
           },
-        },
-      },
-    });
-    if (!property) throw new NotFoundException('Propiedad no encontrada');
+        })
+      : await this.prisma.project.findFirst({
+          where: { id: dto.projectId!, status: ProjectStatus.PUBLISHED },
+          select: {
+            id: true,
+            slug: true,
+            name: true,
+            agentProfileId: true,
+            contactEmail: true,
+            contactName: true,
+            agentProfile: {
+              select: {
+                businessName: true,
+                user: {
+                  select: { email: true, firstName: true, lastName: true },
+                },
+              },
+            },
+          },
+        });
+    if (!target) {
+      throw new NotFoundException(
+        dto.propertyId ? 'Propiedad no encontrada' : 'Proyecto no encontrado',
+      );
+    }
+
+    const publicationTitle = 'title' in target ? target.title : target.name;
+    const publicationType = dto.projectId ? 'proyecto' : 'propiedad';
+    const publicationUrl = dto.projectId
+      ? `/project/${target.slug}`
+      : `/propiedades/${target.slug}`;
+    const ownerEmail = target.contactEmail ?? target.agentProfile.user.email;
+    const ownerName =
+      target.contactName ??
+      target.agentProfile.businessName ??
+      `${target.agentProfile.user.firstName} ${target.agentProfile.user.lastName ?? ''}`.trim();
 
     const lead = await this.prisma.lead.create({
       data: {
-        propertyId: property.id,
-        agentProfileId: property.agentProfileId,
+        propertyId: dto.propertyId ?? null,
+        projectId: dto.projectId ?? null,
+        agentProfileId: target.agentProfileId,
         userId: user?.id,
         name: dto.name,
         email: dto.email,
@@ -81,17 +136,12 @@ export class LeadsService {
       },
     });
 
-    const ownerEmail = property.contactEmail ?? property.agentProfile.user.email;
-    const ownerName =
-      property.contactName ??
-      property.agentProfile.businessName ??
-      `${property.agentProfile.user.firstName} ${property.agentProfile.user.lastName ?? ''}`.trim();
-
     void this.mail.sendLeadNotification({
       ownerEmail,
       ownerName,
-      propertyTitle: property.title,
-      propertyUrl: `/propiedades/${property.slug}`,
+      publicationType,
+      publicationTitle,
+      publicationUrl,
       leadName: dto.name,
       leadEmail: dto.email,
       leadPhone: dto.phone,

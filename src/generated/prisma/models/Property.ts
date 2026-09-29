@@ -751,6 +751,11 @@ export type PropertySumOrderByAggregateInput = {
   maintenanceFee?: Prisma.SortOrder
 }
 
+export type PropertyNullableScalarRelationFilter = {
+  is?: Prisma.PropertyWhereInput | null
+  isNot?: Prisma.PropertyWhereInput | null
+}
+
 export type PropertyCreateNestedManyWithoutAgentProfileInput = {
   create?: Prisma.XOR<Prisma.PropertyCreateWithoutAgentProfileInput, Prisma.PropertyUncheckedCreateWithoutAgentProfileInput> | Prisma.PropertyCreateWithoutAgentProfileInput[] | Prisma.PropertyUncheckedCreateWithoutAgentProfileInput[]
   connectOrCreate?: Prisma.PropertyCreateOrConnectWithoutAgentProfileInput | Prisma.PropertyCreateOrConnectWithoutAgentProfileInput[]
@@ -895,10 +900,12 @@ export type PropertyCreateNestedOneWithoutLeadsInput = {
   connect?: Prisma.PropertyWhereUniqueInput
 }
 
-export type PropertyUpdateOneRequiredWithoutLeadsNestedInput = {
+export type PropertyUpdateOneWithoutLeadsNestedInput = {
   create?: Prisma.XOR<Prisma.PropertyCreateWithoutLeadsInput, Prisma.PropertyUncheckedCreateWithoutLeadsInput>
   connectOrCreate?: Prisma.PropertyCreateOrConnectWithoutLeadsInput
   upsert?: Prisma.PropertyUpsertWithoutLeadsInput
+  disconnect?: Prisma.PropertyWhereInput | boolean
+  delete?: Prisma.PropertyWhereInput | boolean
   connect?: Prisma.PropertyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.PropertyUpdateToOneWithWhereWithoutLeadsInput, Prisma.PropertyUpdateWithoutLeadsInput>, Prisma.PropertyUncheckedUpdateWithoutLeadsInput>
 }

@@ -127,6 +127,7 @@ export type MediaType = (typeof MediaType)[keyof typeof MediaType]
 
 export const LeadSource = {
   PROPERTY_FORM: 'PROPERTY_FORM',
+  PROJECT_FORM: 'PROJECT_FORM',
   WHATSAPP: 'WHATSAPP',
   QUICK_QUESTION: 'QUICK_QUESTION',
   PHONE: 'PHONE'

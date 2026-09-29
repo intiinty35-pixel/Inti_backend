@@ -296,6 +296,7 @@ model Project {
   lots              ProjectLot[]
   milestones        ProjectMilestone[]
   media             ProjectMedia[]
+  leads             Lead[]
 
   @@index([status, featured, publishedAt])
   @@index([category, stage, status])
@@ -368,7 +369,8 @@ model ProjectMedia {
 
 model Lead {
   id             String              @id @default(uuid())
-  propertyId     String
+  propertyId     String?
+  projectId      String?
   agentProfileId String
   userId         String?
   name           String
@@ -378,10 +380,12 @@ model Lead {
   source         LeadSource
   createdAt      DateTime            @default(now())
   agentProfile   ProfessionalProfile @relation(fields: [agentProfileId], references: [id])
-  property       Property            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  property       Property?           @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  project        Project?            @relation(fields: [projectId], references: [id], onDelete: Cascade)
   user           User?               @relation(fields: [userId], references: [id])
 
   @@index([propertyId, createdAt])
+  @@index([projectId, createdAt])
   @@index([agentProfileId, createdAt])
   @@map("leads")
 }
@@ -464,6 +468,7 @@ enum MediaType {
 
 enum LeadSource {
   PROPERTY_FORM
+  PROJECT_FORM
   WHATSAPP
   QUICK_QUESTION
   PHONE
