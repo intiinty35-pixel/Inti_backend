@@ -10,6 +10,7 @@ import {
 import { ParseEnumPipe } from '@nestjs/common';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { ApprovalStatus, Role } from '../../generated/prisma/enums';
+import { ListProfessionalsQueryDto } from './dto/list-professionals-query.dto';
 import { UpdateProfessionalStatusDto } from './dto/update-professional-status.dto';
 import { UsersService } from './users.service';
 
@@ -21,9 +22,10 @@ export class UsersController {
   @Get()
   list(
     @Query('status', new ParseEnumPipe(ApprovalStatus, { optional: true }))
-    status?: ApprovalStatus,
+    status: ApprovalStatus | undefined,
+    @Query() query: ListProfessionalsQueryDto,
   ) {
-    return this.users.listProfessionals(status);
+    return this.users.listProfessionals(status, query.page, query.pageSize);
   }
 
   @Patch(':id/status')

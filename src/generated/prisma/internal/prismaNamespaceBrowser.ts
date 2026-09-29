@@ -400,6 +400,7 @@ export type ProjectMediaScalarFieldEnum = (typeof ProjectMediaScalarFieldEnum)[k
 export const LeadScalarFieldEnum = {
   id: 'id',
   propertyId: 'propertyId',
+  projectId: 'projectId',
   agentProfileId: 'agentProfileId',
   userId: 'userId',
   name: 'name',

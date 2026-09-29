@@ -1,9 +1,22 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 import { LeadSource } from '../../../generated/prisma/enums';
 
 export class CreateLeadDto {
+  @IsOptional()
   @IsUUID()
-  propertyId!: string;
+  propertyId?: string;
+
+  @IsOptional()
+  @IsUUID()
+  projectId?: string;
 
   @IsString()
   @IsNotEmpty()

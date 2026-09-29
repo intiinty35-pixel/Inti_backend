@@ -16,8 +16,9 @@ interface SendMailInput {
 interface LeadNotificationInput {
   ownerEmail: string;
   ownerName: string;
-  propertyTitle: string;
-  propertyUrl: string;
+  publicationType: 'propiedad' | 'proyecto';
+  publicationTitle: string;
+  publicationUrl: string;
   leadName: string;
   leadEmail: string;
   leadPhone?: string | null;
@@ -66,13 +67,13 @@ export class MailService {
     return this.send({
       to: [{ email: input.ownerEmail, name: input.ownerName }],
       replyTo: { email: input.leadEmail, name: input.leadName },
-      subject: `Nueva consulta por ${input.propertyTitle}`,
+      subject: `Nueva consulta por ${input.publicationTitle}`,
       html: this.layout({
         preheader: 'Tienes una nueva consulta desde ARIZ.',
-        title: 'Nueva consulta por tu propiedad',
-        intro: `Hola ${this.escape(input.ownerName)}, alguien quiere comunicarse por tu publicacion.`,
+        title: `Nueva consulta por tu ${input.publicationType}`,
+        intro: `Hola ${this.escape(input.ownerName)}, alguien quiere comunicarse por tu publicación.`,
         content: `
-          ${this.infoRow('Propiedad', input.propertyTitle)}
+          ${this.infoRow(input.publicationType === 'proyecto' ? 'Proyecto' : 'Propiedad', input.publicationTitle)}
           ${this.infoRow('Interesado', input.leadName)}
           ${this.infoRow('Correo', input.leadEmail)}
           ${input.leadPhone ? this.infoRow('Telefono', input.leadPhone) : ''}
@@ -80,7 +81,13 @@ export class MailService {
             ${this.escape(input.message).replace(/\n/g, '<br>')}
           </div>
         `,
-        button: { label: 'Ver propiedad', url: this.absoluteUrl(input.propertyUrl) },
+        button: {
+          label:
+            input.publicationType === 'proyecto'
+              ? 'Ver proyecto'
+              : 'Ver propiedad',
+          url: this.absoluteUrl(input.publicationUrl),
+        },
       }),
     });
   }

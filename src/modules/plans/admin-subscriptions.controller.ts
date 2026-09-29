@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, ParseUUIDPipe, Patch } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseUUIDPipe, Patch, Query } from '@nestjs/common';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { Role } from '../../generated/prisma/enums';
+import { PageQueryDto } from './dto/page-query.dto';
 import { ReviewSubscriptionDto } from './dto/review-subscription.dto';
 import { PlansService } from './plans.service';
 
@@ -10,8 +11,8 @@ export class AdminSubscriptionsController {
   constructor(private readonly plans: PlansService) {}
 
   @Get('pending')
-  pending() {
-    return this.plans.listPendingSubscriptions();
+  pending(@Query() query: PageQueryDto) {
+    return this.plans.listPendingSubscriptions(query.page, query.pageSize);
   }
 
   @Patch(':id/review')

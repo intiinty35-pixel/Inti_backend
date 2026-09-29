@@ -485,13 +485,15 @@ export class ProjectsService {
       agent: {
         id: project.agentProfile.id,
         name:
+          project.contactName ??
+          project.businessName ??
           project.agentProfile.businessName ??
           `${project.agentProfile.user.firstName} ${project.agentProfile.user.lastName ?? ''}`.trim(),
         type: project.agentProfile.type,
         status: project.agentProfile.status,
-        whatsapp: project.agentProfile.whatsapp,
-        phone: project.agentProfile.user.phone,
-        email: project.agentProfile.user.email,
+        whatsapp: project.contactWhatsapp ?? project.agentProfile.whatsapp,
+        phone: project.contactPhone ?? project.agentProfile.user.phone,
+        email: project.contactEmail ?? project.agentProfile.user.email,
       },
       createdAt: project.createdAt.toISOString(),
       updatedAt: project.updatedAt.toISOString(),

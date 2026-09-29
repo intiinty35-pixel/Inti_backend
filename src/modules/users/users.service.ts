@@ -10,16 +10,35 @@ export class UsersService {
     private readonly plans: PlansService,
   ) {}
 
-  listProfessionals(status?: ApprovalStatus) {
-    return this.prisma.professionalProfile.findMany({
-      where: status ? { status } : undefined,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        user: {
-          select: { id: true, email: true, firstName: true, lastName: true, phone: true },
-        },
+  async listProfessionals(status?: ApprovalStatus, page?: number, pageSize?: number) {
+    const where = status ? { status } : undefined;
+    const include = {
+      user: {
+        select: { id: true, email: true, firstName: true, lastName: true, phone: true },
       },
-    });
+    };
+
+    if (!page) {
+      return this.prisma.professionalProfile.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include,
+      });
+    }
+
+    const size = Math.min(pageSize ?? 10, 50);
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.professionalProfile.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include,
+        skip: (page - 1) * size,
+        take: size,
+      }),
+      this.prisma.professionalProfile.count({ where }),
+    ]);
+
+    return { items, total, page, pageSize: size, hasMore: page * size < total };
   }
 
   async setProfessionalStatus(profileId: string, status: ApprovalStatus) {
