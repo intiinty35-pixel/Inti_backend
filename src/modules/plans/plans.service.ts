@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { PropertyStatus, SubscriptionStatus } from '../../generated/prisma/enums';
+import { MailService } from '../mail/mail.service';
 import { RequestPlanDto } from './dto/request-plan.dto';
 import { ReviewSubscriptionDto } from './dto/review-subscription.dto';
 import { UpsertPlanDto } from './dto/upsert-plan.dto';
@@ -21,7 +22,10 @@ function slugify(value: string): string {
 
 @Injectable()
 export class PlansService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mail: MailService,
+  ) {}
 
   private async requireAgent(userId: string) {
     const agent = await this.prisma.professionalProfile.findUnique({ where: { userId } });
@@ -115,7 +119,7 @@ export class PlansService {
     }
 
     const now = new Date();
-    return this.prisma.planSubscription.create({
+    const subscription = await this.prisma.planSubscription.create({
       data: {
         agentProfileId: agent.id,
         planId: plan.id,
@@ -126,6 +130,23 @@ export class PlansService {
       },
       include: { plan: true },
     });
+
+    if (isFree) {
+      const owner = await this.prisma.professionalProfile.findUnique({
+        where: { id: agent.id },
+        include: { user: { select: { email: true, firstName: true, lastName: true } } },
+      });
+      if (owner) {
+        void this.mail.sendMembershipApproved({
+          email: owner.user.email,
+          name: owner.businessName ?? `${owner.user.firstName} ${owner.user.lastName ?? ''}`.trim(),
+          planName: plan.name,
+          expiresAt: subscription.expiresAt,
+        });
+      }
+    }
+
+    return subscription;
   }
 
   async assignDefaultPlanIfNone(agentProfileId: string) {
@@ -172,7 +193,12 @@ export class PlansService {
 
     const subscription = await this.prisma.planSubscription.findUnique({
       where: { id },
-      include: { plan: true },
+      include: {
+        plan: true,
+        agentProfile: {
+          include: { user: { select: { email: true, firstName: true, lastName: true } } },
+        },
+      },
     });
     if (!subscription) throw new NotFoundException('Solicitud no encontrada');
     if (subscription.status !== SubscriptionStatus.PENDING_PAYMENT) {
@@ -180,7 +206,7 @@ export class PlansService {
     }
 
     const now = new Date();
-    return this.prisma.planSubscription.update({
+    const updated = await this.prisma.planSubscription.update({
       where: { id },
       data: {
         status: dto.status,
@@ -193,6 +219,19 @@ export class PlansService {
             : null,
       },
     });
+
+    if (dto.status === 'ACTIVE') {
+      void this.mail.sendMembershipApproved({
+        email: subscription.agentProfile.user.email,
+        name:
+          subscription.agentProfile.businessName ??
+          `${subscription.agentProfile.user.firstName} ${subscription.agentProfile.user.lastName ?? ''}`.trim(),
+        planName: subscription.plan.name,
+        expiresAt: updated.expiresAt,
+      });
+    }
+
+    return updated;
   }
 
   async expireMemberships(agentProfileId?: string) {

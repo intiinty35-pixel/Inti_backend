@@ -14,6 +14,7 @@ import { AgentsModule } from './modules/agents/agents.module';
 import { AlertsModule } from './modules/alerts/alerts.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
 import { LeadsModule } from './modules/leads/leads.module';
+import { MailModule } from './modules/mail/mail.module';
 import { MediaModule } from './modules/media/media.module';
 import { PropertiesModule } from './modules/properties/properties.module';
 import { ProfessionalsModule } from './modules/professionals/professionals.module';
@@ -39,6 +40,7 @@ import { UsersModule } from './modules/users/users.module';
     UsersModule,
     PropertiesModule,
     LeadsModule,
+    MailModule,
     MediaModule,
     ProfessionalsModule,
     PlansModule,

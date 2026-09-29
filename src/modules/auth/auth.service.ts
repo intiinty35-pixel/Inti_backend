@@ -10,6 +10,7 @@ import { toAuthUser } from '../../common/types/to-auth-user';
 import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { ProfessionalType, Role } from '../../generated/prisma/enums';
+import { MailService } from '../mail/mail.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterCustomerDto } from './dto/register-customer.dto';
 import { RegisterProfessionalDto } from './dto/register-professional.dto';
@@ -31,6 +32,7 @@ export class AuthService {
     private readonly jwt: JwtService,
     private readonly config: ConfigService,
     private readonly firebase: FirebaseAdminService,
+    private readonly mail: MailService,
   ) {}
 
   async registerCustomer(dto: RegisterCustomerDto): Promise<AuthResult> {
@@ -45,6 +47,10 @@ export class AuthService {
         role: Role.USER,
       },
       include: { professionalProfile: true },
+    });
+    void this.mail.sendWelcome({
+      email: user.email,
+      name: `${user.firstName} ${user.lastName ?? ''}`.trim(),
     });
     return this.issue(toAuthUser(user), false);
   }
@@ -77,6 +83,11 @@ export class AuthService {
         },
       },
       include: { professionalProfile: true },
+    });
+    void this.mail.sendWelcome({
+      email: user.email,
+      name: `${user.firstName} ${user.lastName ?? ''}`.trim(),
+      isProfessional: true,
     });
     return this.issue(toAuthUser(user), false);
   }
@@ -123,6 +134,13 @@ export class AuthService {
       },
       include: { professionalProfile: true },
     });
+
+    if (user.createdAt.getTime() === user.updatedAt.getTime()) {
+      void this.mail.sendWelcome({
+        email: user.email,
+        name: `${user.firstName} ${user.lastName ?? ''}`.trim(),
+      });
+    }
 
     return this.issue(toAuthUser(user), true);
   }

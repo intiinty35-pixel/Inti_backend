@@ -2,12 +2,16 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { PropertyStatus } from '../../generated/prisma/enums';
+import { MailService } from '../mail/mail.service';
 import { CreateLeadDto } from './dto/create-lead.dto';
 import { OwnerLeadQueryDto } from './dto/owner-lead-query.dto';
 
 @Injectable()
 export class LeadsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly mail: MailService,
+  ) {}
 
   async listMine(user: AuthUser, query: OwnerLeadQueryDto = {}) {
     const agent = await this.prisma.professionalProfile.findUnique({
@@ -47,11 +51,24 @@ export class LeadsService {
   async create(dto: CreateLeadDto, user?: AuthUser) {
     const property = await this.prisma.property.findFirst({
       where: { id: dto.propertyId, status: PropertyStatus.PUBLISHED },
-      select: { id: true, agentProfileId: true },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        agentProfileId: true,
+        contactEmail: true,
+        contactName: true,
+        agentProfile: {
+          select: {
+            businessName: true,
+            user: { select: { email: true, firstName: true, lastName: true } },
+          },
+        },
+      },
     });
     if (!property) throw new NotFoundException('Propiedad no encontrada');
 
-    return this.prisma.lead.create({
+    const lead = await this.prisma.lead.create({
       data: {
         propertyId: property.id,
         agentProfileId: property.agentProfileId,
@@ -63,5 +80,24 @@ export class LeadsService {
         source: dto.source,
       },
     });
+
+    const ownerEmail = property.contactEmail ?? property.agentProfile.user.email;
+    const ownerName =
+      property.contactName ??
+      property.agentProfile.businessName ??
+      `${property.agentProfile.user.firstName} ${property.agentProfile.user.lastName ?? ''}`.trim();
+
+    void this.mail.sendLeadNotification({
+      ownerEmail,
+      ownerName,
+      propertyTitle: property.title,
+      propertyUrl: `/propiedades/${property.slug}`,
+      leadName: dto.name,
+      leadEmail: dto.email,
+      leadPhone: dto.phone,
+      message: dto.message,
+    });
+
+    return lead;
   }
 }
