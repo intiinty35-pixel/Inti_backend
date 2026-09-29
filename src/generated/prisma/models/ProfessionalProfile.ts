@@ -273,6 +273,7 @@ export type ProfessionalProfileWhereInput = {
   leads?: Prisma.LeadListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   properties?: Prisma.PropertyListRelationFilter
+  projects?: Prisma.ProjectListRelationFilter
   subscriptions?: Prisma.PlanSubscriptionListRelationFilter
 }
 
@@ -296,6 +297,7 @@ export type ProfessionalProfileOrderByWithRelationInput = {
   leads?: Prisma.LeadOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
   properties?: Prisma.PropertyOrderByRelationAggregateInput
+  projects?: Prisma.ProjectOrderByRelationAggregateInput
   subscriptions?: Prisma.PlanSubscriptionOrderByRelationAggregateInput
 }
 
@@ -322,6 +324,7 @@ export type ProfessionalProfileWhereUniqueInput = Prisma.AtLeast<{
   leads?: Prisma.LeadListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   properties?: Prisma.PropertyListRelationFilter
+  projects?: Prisma.ProjectListRelationFilter
   subscriptions?: Prisma.PlanSubscriptionListRelationFilter
 }, "id" | "userId" | "slug">
 
@@ -388,6 +391,7 @@ export type ProfessionalProfileCreateInput = {
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
   user: Prisma.UserCreateNestedOneWithoutProfessionalProfileInput
   properties?: Prisma.PropertyCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutAgentProfileInput
   subscriptions?: Prisma.PlanSubscriptionCreateNestedManyWithoutAgentProfileInput
 }
 
@@ -410,6 +414,7 @@ export type ProfessionalProfileUncheckedCreateInput = {
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutAgentProfileInput
   subscriptions?: Prisma.PlanSubscriptionUncheckedCreateNestedManyWithoutAgentProfileInput
 }
 
@@ -432,6 +437,7 @@ export type ProfessionalProfileUpdateInput = {
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProfessionalProfileNestedInput
   properties?: Prisma.PropertyUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutAgentProfileNestedInput
   subscriptions?: Prisma.PlanSubscriptionUpdateManyWithoutAgentProfileNestedInput
 }
 
@@ -454,6 +460,7 @@ export type ProfessionalProfileUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutAgentProfileNestedInput
   subscriptions?: Prisma.PlanSubscriptionUncheckedUpdateManyWithoutAgentProfileNestedInput
 }
 
@@ -648,6 +655,20 @@ export type ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProfessionalProfileUpdateToOneWithWhereWithoutPropertiesInput, Prisma.ProfessionalProfileUpdateWithoutPropertiesInput>, Prisma.ProfessionalProfileUncheckedUpdateWithoutPropertiesInput>
 }
 
+export type ProfessionalProfileCreateNestedOneWithoutProjectsInput = {
+  create?: Prisma.XOR<Prisma.ProfessionalProfileCreateWithoutProjectsInput, Prisma.ProfessionalProfileUncheckedCreateWithoutProjectsInput>
+  connectOrCreate?: Prisma.ProfessionalProfileCreateOrConnectWithoutProjectsInput
+  connect?: Prisma.ProfessionalProfileWhereUniqueInput
+}
+
+export type ProfessionalProfileUpdateOneRequiredWithoutProjectsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfessionalProfileCreateWithoutProjectsInput, Prisma.ProfessionalProfileUncheckedCreateWithoutProjectsInput>
+  connectOrCreate?: Prisma.ProfessionalProfileCreateOrConnectWithoutProjectsInput
+  upsert?: Prisma.ProfessionalProfileUpsertWithoutProjectsInput
+  connect?: Prisma.ProfessionalProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfessionalProfileUpdateToOneWithWhereWithoutProjectsInput, Prisma.ProfessionalProfileUpdateWithoutProjectsInput>, Prisma.ProfessionalProfileUncheckedUpdateWithoutProjectsInput>
+}
+
 export type ProfessionalProfileCreateNestedOneWithoutLeadsInput = {
   create?: Prisma.XOR<Prisma.ProfessionalProfileCreateWithoutLeadsInput, Prisma.ProfessionalProfileUncheckedCreateWithoutLeadsInput>
   connectOrCreate?: Prisma.ProfessionalProfileCreateOrConnectWithoutLeadsInput
@@ -680,6 +701,7 @@ export type ProfessionalProfileCreateWithoutUserInput = {
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
   properties?: Prisma.PropertyCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutAgentProfileInput
   subscriptions?: Prisma.PlanSubscriptionCreateNestedManyWithoutAgentProfileInput
 }
 
@@ -701,6 +723,7 @@ export type ProfessionalProfileUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutAgentProfileInput
   subscriptions?: Prisma.PlanSubscriptionUncheckedCreateNestedManyWithoutAgentProfileInput
 }
 
@@ -738,6 +761,7 @@ export type ProfessionalProfileUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
   properties?: Prisma.PropertyUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutAgentProfileNestedInput
   subscriptions?: Prisma.PlanSubscriptionUpdateManyWithoutAgentProfileNestedInput
 }
 
@@ -759,6 +783,7 @@ export type ProfessionalProfileUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutAgentProfileNestedInput
   subscriptions?: Prisma.PlanSubscriptionUncheckedUpdateManyWithoutAgentProfileNestedInput
 }
 
@@ -781,6 +806,7 @@ export type ProfessionalProfileCreateWithoutSubscriptionsInput = {
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
   user: Prisma.UserCreateNestedOneWithoutProfessionalProfileInput
   properties?: Prisma.PropertyCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutAgentProfileInput
 }
 
 export type ProfessionalProfileUncheckedCreateWithoutSubscriptionsInput = {
@@ -802,6 +828,7 @@ export type ProfessionalProfileUncheckedCreateWithoutSubscriptionsInput = {
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutAgentProfileInput
 }
 
 export type ProfessionalProfileCreateOrConnectWithoutSubscriptionsInput = {
@@ -839,6 +866,7 @@ export type ProfessionalProfileUpdateWithoutSubscriptionsInput = {
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProfessionalProfileNestedInput
   properties?: Prisma.PropertyUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutAgentProfileNestedInput
 }
 
 export type ProfessionalProfileUncheckedUpdateWithoutSubscriptionsInput = {
@@ -860,6 +888,7 @@ export type ProfessionalProfileUncheckedUpdateWithoutSubscriptionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutAgentProfileNestedInput
 }
 
 export type ProfessionalProfileCreateWithoutPropertiesInput = {
@@ -880,6 +909,7 @@ export type ProfessionalProfileCreateWithoutPropertiesInput = {
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
   user: Prisma.UserCreateNestedOneWithoutProfessionalProfileInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutAgentProfileInput
   subscriptions?: Prisma.PlanSubscriptionCreateNestedManyWithoutAgentProfileInput
 }
 
@@ -901,6 +931,7 @@ export type ProfessionalProfileUncheckedCreateWithoutPropertiesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutAgentProfileInput
   subscriptions?: Prisma.PlanSubscriptionUncheckedCreateNestedManyWithoutAgentProfileInput
 }
 
@@ -938,6 +969,7 @@ export type ProfessionalProfileUpdateWithoutPropertiesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProfessionalProfileNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutAgentProfileNestedInput
   subscriptions?: Prisma.PlanSubscriptionUpdateManyWithoutAgentProfileNestedInput
 }
 
@@ -959,6 +991,111 @@ export type ProfessionalProfileUncheckedUpdateWithoutPropertiesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutAgentProfileNestedInput
+  subscriptions?: Prisma.PlanSubscriptionUncheckedUpdateManyWithoutAgentProfileNestedInput
+}
+
+export type ProfessionalProfileCreateWithoutProjectsInput = {
+  id?: string
+  type: $Enums.ProfessionalType
+  status?: $Enums.ApprovalStatus
+  dni?: string | null
+  ruc?: string | null
+  businessName?: string | null
+  whatsapp?: string | null
+  city: string
+  districts?: string | null
+  address?: string | null
+  website?: string | null
+  socialLinks?: string | null
+  slug?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
+  user: Prisma.UserCreateNestedOneWithoutProfessionalProfileInput
+  properties?: Prisma.PropertyCreateNestedManyWithoutAgentProfileInput
+  subscriptions?: Prisma.PlanSubscriptionCreateNestedManyWithoutAgentProfileInput
+}
+
+export type ProfessionalProfileUncheckedCreateWithoutProjectsInput = {
+  id?: string
+  userId: string
+  type: $Enums.ProfessionalType
+  status?: $Enums.ApprovalStatus
+  dni?: string | null
+  ruc?: string | null
+  businessName?: string | null
+  whatsapp?: string | null
+  city: string
+  districts?: string | null
+  address?: string | null
+  website?: string | null
+  socialLinks?: string | null
+  slug?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
+  properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgentProfileInput
+  subscriptions?: Prisma.PlanSubscriptionUncheckedCreateNestedManyWithoutAgentProfileInput
+}
+
+export type ProfessionalProfileCreateOrConnectWithoutProjectsInput = {
+  where: Prisma.ProfessionalProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfessionalProfileCreateWithoutProjectsInput, Prisma.ProfessionalProfileUncheckedCreateWithoutProjectsInput>
+}
+
+export type ProfessionalProfileUpsertWithoutProjectsInput = {
+  update: Prisma.XOR<Prisma.ProfessionalProfileUpdateWithoutProjectsInput, Prisma.ProfessionalProfileUncheckedUpdateWithoutProjectsInput>
+  create: Prisma.XOR<Prisma.ProfessionalProfileCreateWithoutProjectsInput, Prisma.ProfessionalProfileUncheckedCreateWithoutProjectsInput>
+  where?: Prisma.ProfessionalProfileWhereInput
+}
+
+export type ProfessionalProfileUpdateToOneWithWhereWithoutProjectsInput = {
+  where?: Prisma.ProfessionalProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfessionalProfileUpdateWithoutProjectsInput, Prisma.ProfessionalProfileUncheckedUpdateWithoutProjectsInput>
+}
+
+export type ProfessionalProfileUpdateWithoutProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumProfessionalTypeFieldUpdateOperationsInput | $Enums.ProfessionalType
+  status?: Prisma.EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+  dni?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ruc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  districts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutProfessionalProfileNestedInput
+  properties?: Prisma.PropertyUpdateManyWithoutAgentProfileNestedInput
+  subscriptions?: Prisma.PlanSubscriptionUpdateManyWithoutAgentProfileNestedInput
+}
+
+export type ProfessionalProfileUncheckedUpdateWithoutProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumProfessionalTypeFieldUpdateOperationsInput | $Enums.ProfessionalType
+  status?: Prisma.EnumApprovalStatusFieldUpdateOperationsInput | $Enums.ApprovalStatus
+  dni?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ruc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  whatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  districts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
+  properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgentProfileNestedInput
   subscriptions?: Prisma.PlanSubscriptionUncheckedUpdateManyWithoutAgentProfileNestedInput
 }
 
@@ -980,6 +1117,7 @@ export type ProfessionalProfileCreateWithoutLeadsInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfessionalProfileInput
   properties?: Prisma.PropertyCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectCreateNestedManyWithoutAgentProfileInput
   subscriptions?: Prisma.PlanSubscriptionCreateNestedManyWithoutAgentProfileInput
 }
 
@@ -1001,6 +1139,7 @@ export type ProfessionalProfileUncheckedCreateWithoutLeadsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgentProfileInput
+  projects?: Prisma.ProjectUncheckedCreateNestedManyWithoutAgentProfileInput
   subscriptions?: Prisma.PlanSubscriptionUncheckedCreateNestedManyWithoutAgentProfileInput
 }
 
@@ -1038,6 +1177,7 @@ export type ProfessionalProfileUpdateWithoutLeadsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfessionalProfileNestedInput
   properties?: Prisma.PropertyUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUpdateManyWithoutAgentProfileNestedInput
   subscriptions?: Prisma.PlanSubscriptionUpdateManyWithoutAgentProfileNestedInput
 }
 
@@ -1059,6 +1199,7 @@ export type ProfessionalProfileUncheckedUpdateWithoutLeadsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgentProfileNestedInput
+  projects?: Prisma.ProjectUncheckedUpdateManyWithoutAgentProfileNestedInput
   subscriptions?: Prisma.PlanSubscriptionUncheckedUpdateManyWithoutAgentProfileNestedInput
 }
 
@@ -1070,12 +1211,14 @@ export type ProfessionalProfileUncheckedUpdateWithoutLeadsInput = {
 export type ProfessionalProfileCountOutputType = {
   leads: number
   properties: number
+  projects: number
   subscriptions: number
 }
 
 export type ProfessionalProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   leads?: boolean | ProfessionalProfileCountOutputTypeCountLeadsArgs
   properties?: boolean | ProfessionalProfileCountOutputTypeCountPropertiesArgs
+  projects?: boolean | ProfessionalProfileCountOutputTypeCountProjectsArgs
   subscriptions?: boolean | ProfessionalProfileCountOutputTypeCountSubscriptionsArgs
 }
 
@@ -1106,6 +1249,13 @@ export type ProfessionalProfileCountOutputTypeCountPropertiesArgs<ExtArgs extend
 /**
  * ProfessionalProfileCountOutputType without action
  */
+export type ProfessionalProfileCountOutputTypeCountProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectWhereInput
+}
+
+/**
+ * ProfessionalProfileCountOutputType without action
+ */
 export type ProfessionalProfileCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PlanSubscriptionWhereInput
 }
@@ -1131,6 +1281,7 @@ export type ProfessionalProfileSelect<ExtArgs extends runtime.Types.Extensions.I
   leads?: boolean | Prisma.ProfessionalProfile$leadsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   properties?: boolean | Prisma.ProfessionalProfile$propertiesArgs<ExtArgs>
+  projects?: boolean | Prisma.ProfessionalProfile$projectsArgs<ExtArgs>
   subscriptions?: boolean | Prisma.ProfessionalProfile$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfessionalProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["professionalProfile"]>
@@ -1199,6 +1350,7 @@ export type ProfessionalProfileInclude<ExtArgs extends runtime.Types.Extensions.
   leads?: boolean | Prisma.ProfessionalProfile$leadsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   properties?: boolean | Prisma.ProfessionalProfile$propertiesArgs<ExtArgs>
+  projects?: boolean | Prisma.ProfessionalProfile$projectsArgs<ExtArgs>
   subscriptions?: boolean | Prisma.ProfessionalProfile$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.ProfessionalProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1215,6 +1367,7 @@ export type $ProfessionalProfilePayload<ExtArgs extends runtime.Types.Extensions
     leads: Prisma.$LeadPayload<ExtArgs>[]
     user: Prisma.$UserPayload<ExtArgs>
     properties: Prisma.$PropertyPayload<ExtArgs>[]
+    projects: Prisma.$ProjectPayload<ExtArgs>[]
     subscriptions: Prisma.$PlanSubscriptionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1631,6 +1784,7 @@ export interface Prisma__ProfessionalProfileClient<T, Null = never, ExtArgs exte
   leads<T extends Prisma.ProfessionalProfile$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfessionalProfile$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   properties<T extends Prisma.ProfessionalProfile$propertiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfessionalProfile$propertiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  projects<T extends Prisma.ProfessionalProfile$projectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfessionalProfile$projectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.ProfessionalProfile$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfessionalProfile$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlanSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2123,6 +2277,30 @@ export type ProfessionalProfile$propertiesArgs<ExtArgs extends runtime.Types.Ext
   take?: number
   skip?: number
   distinct?: Prisma.PropertyScalarFieldEnum | Prisma.PropertyScalarFieldEnum[]
+}
+
+/**
+ * ProfessionalProfile.projects
+ */
+export type ProfessionalProfile$projectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Project
+   */
+  select?: Prisma.ProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Project
+   */
+  omit?: Prisma.ProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectInclude<ExtArgs> | null
+  where?: Prisma.ProjectWhereInput
+  orderBy?: Prisma.ProjectOrderByWithRelationInput | Prisma.ProjectOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProjectScalarFieldEnum | Prisma.ProjectScalarFieldEnum[]
 }
 
 /**

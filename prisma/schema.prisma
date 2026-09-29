@@ -29,25 +29,26 @@ model User {
 }
 
 model ProfessionalProfile {
-  id           String           @id @default(uuid())
-  userId       String           @unique
-  type         ProfessionalType
-  status       ApprovalStatus   @default(PENDING)
-  dni          String?
-  ruc          String?
-  businessName String?
-  whatsapp     String?
-  city         String
-  districts    String?
-  address      String?
-  website      String?
-  socialLinks  String?
-  slug         String?          @unique
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  id            String             @id @default(uuid())
+  userId        String             @unique
+  type          ProfessionalType
+  status        ApprovalStatus     @default(PENDING)
+  dni           String?
+  ruc           String?
+  businessName  String?
+  whatsapp      String?
+  city          String
+  districts     String?
+  address       String?
+  website       String?
+  socialLinks   String?
+  slug          String?            @unique
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
   leads         Lead[]
-  user          User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   properties    Property[]
+  projects      Project[]
   subscriptions PlanSubscription[]
 
   @@map("professional_profiles")
@@ -253,6 +254,118 @@ model PropertyMedia {
   @@map("property_media")
 }
 
+model Project {
+  id                String              @id @default(uuid())
+  agentProfileId    String
+  category          ProjectCategory     @default(LOTIZACION)
+  stage             ProjectStage
+  slug              String              @unique
+  name              String
+  description       String
+  currency          Currency
+  priceFrom         Decimal             @db.Decimal(14, 2)
+  priceTo           Decimal             @db.Decimal(14, 2)
+  ruc               String?
+  businessName      String?
+  downPayment       Decimal?            @db.Decimal(14, 2)
+  monthlyPayment    Decimal?            @db.Decimal(14, 2)
+  financing         String[]            @default([])
+  totalBlocks       Int?
+  totalLots         Int?
+  social            Json?
+  services          String[]            @default([])
+  urbanizationName  String?
+  registryEntry     String?
+  amenities         String[]            @default([])
+  lotMode           LotMode
+  constructionStart DateTime?
+  estimatedDelivery DateTime
+  certifications    String[]            @default([])
+  status            ProjectStatus       @default(DRAFT)
+  featured          Boolean             @default(false)
+  tourUrl           String?
+  contactName       String?
+  contactEmail      String?
+  contactPhone      String?
+  contactWhatsapp   String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  publishedAt       DateTime?
+  agentProfile      ProfessionalProfile @relation(fields: [agentProfileId], references: [id])
+  location          ProjectLocation?
+  lots              ProjectLot[]
+  milestones        ProjectMilestone[]
+  media             ProjectMedia[]
+
+  @@index([status, featured, publishedAt])
+  @@index([category, stage, status])
+  @@map("projects")
+}
+
+model ProjectLocation {
+  id           String   @id @default(uuid())
+  projectId    String   @unique
+  country      String   @default("PE")
+  department   String
+  province     String
+  district     String
+  zone         String?
+  street       String
+  streetNumber String
+  latitude     Decimal? @db.Decimal(10, 7)
+  longitude    Decimal? @db.Decimal(10, 7)
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([department, province, district])
+  @@map("project_locations")
+}
+
+model ProjectLot {
+  id           String    @id @default(uuid())
+  projectId    String
+  lotNumber    String
+  block        String?
+  areaM2       Decimal   @db.Decimal(10, 2)
+  frontM       Decimal?  @db.Decimal(10, 2)
+  price        Decimal   @db.Decimal(14, 2)
+  status       LotStatus @default(AVAILABLE)
+  planLocation String?
+  lotCount     Int?
+  position     Int       @default(0)
+  project      Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, position])
+  @@map("project_lots")
+}
+
+model ProjectMilestone {
+  id        String   @id @default(uuid())
+  projectId String
+  title     String
+  date      DateTime
+  note      String?
+  position  Int      @default(0)
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, position])
+  @@map("project_milestones")
+}
+
+model ProjectMedia {
+  id        String    @id @default(uuid())
+  projectId String
+  type      MediaType @default(IMAGE)
+  url       String
+  publicId  String?
+  position  Int       @default(0)
+  isCover   Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  project   Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, position])
+  @@map("project_media")
+}
+
 model Lead {
   id             String              @id @default(uuid())
   propertyId     String
@@ -346,6 +459,7 @@ enum MediaType {
   VIDEO
   TOUR
   FLOOR_PLAN
+  RENDER
 }
 
 enum LeadSource {
@@ -353,4 +467,36 @@ enum LeadSource {
   WHATSAPP
   QUICK_QUESTION
   PHONE
+}
+
+enum ProjectCategory {
+  LOTIZACION
+}
+
+enum ProjectStage {
+  PRE_SALE
+  UNDER_CONSTRUCTION
+  DELIVERED
+}
+
+enum LotMode {
+  INDIVIDUAL
+  GROUP
+}
+
+enum LotStatus {
+  AVAILABLE
+  RESERVED
+  SOLD
+  BLOCKED
+}
+
+enum ProjectStatus {
+  DRAFT
+  PENDING_REVIEW
+  PUBLISHED
+  PAUSED
+  SOLD
+  REJECTED
+  ARCHIVED
 }

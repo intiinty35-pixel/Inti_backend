@@ -64,6 +64,11 @@ export const ModelName = {
   Amenity: 'Amenity',
   PropertyAmenity: 'PropertyAmenity',
   PropertyMedia: 'PropertyMedia',
+  Project: 'Project',
+  ProjectLocation: 'ProjectLocation',
+  ProjectLot: 'ProjectLot',
+  ProjectMilestone: 'ProjectMilestone',
+  ProjectMedia: 'ProjectMedia',
   Lead: 'Lead'
 } as const
 
@@ -288,6 +293,108 @@ export const PropertyMediaScalarFieldEnum = {
 } as const
 
 export type PropertyMediaScalarFieldEnum = (typeof PropertyMediaScalarFieldEnum)[keyof typeof PropertyMediaScalarFieldEnum]
+
+
+export const ProjectScalarFieldEnum = {
+  id: 'id',
+  agentProfileId: 'agentProfileId',
+  category: 'category',
+  stage: 'stage',
+  slug: 'slug',
+  name: 'name',
+  description: 'description',
+  currency: 'currency',
+  priceFrom: 'priceFrom',
+  priceTo: 'priceTo',
+  ruc: 'ruc',
+  businessName: 'businessName',
+  downPayment: 'downPayment',
+  monthlyPayment: 'monthlyPayment',
+  financing: 'financing',
+  totalBlocks: 'totalBlocks',
+  totalLots: 'totalLots',
+  social: 'social',
+  services: 'services',
+  urbanizationName: 'urbanizationName',
+  registryEntry: 'registryEntry',
+  amenities: 'amenities',
+  lotMode: 'lotMode',
+  constructionStart: 'constructionStart',
+  estimatedDelivery: 'estimatedDelivery',
+  certifications: 'certifications',
+  status: 'status',
+  featured: 'featured',
+  tourUrl: 'tourUrl',
+  contactName: 'contactName',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  contactWhatsapp: 'contactWhatsapp',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  publishedAt: 'publishedAt'
+} as const
+
+export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const ProjectLocationScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  country: 'country',
+  department: 'department',
+  province: 'province',
+  district: 'district',
+  zone: 'zone',
+  street: 'street',
+  streetNumber: 'streetNumber',
+  latitude: 'latitude',
+  longitude: 'longitude'
+} as const
+
+export type ProjectLocationScalarFieldEnum = (typeof ProjectLocationScalarFieldEnum)[keyof typeof ProjectLocationScalarFieldEnum]
+
+
+export const ProjectLotScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  lotNumber: 'lotNumber',
+  block: 'block',
+  areaM2: 'areaM2',
+  frontM: 'frontM',
+  price: 'price',
+  status: 'status',
+  planLocation: 'planLocation',
+  lotCount: 'lotCount',
+  position: 'position'
+} as const
+
+export type ProjectLotScalarFieldEnum = (typeof ProjectLotScalarFieldEnum)[keyof typeof ProjectLotScalarFieldEnum]
+
+
+export const ProjectMilestoneScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  title: 'title',
+  date: 'date',
+  note: 'note',
+  position: 'position'
+} as const
+
+export type ProjectMilestoneScalarFieldEnum = (typeof ProjectMilestoneScalarFieldEnum)[keyof typeof ProjectMilestoneScalarFieldEnum]
+
+
+export const ProjectMediaScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  type: 'type',
+  url: 'url',
+  publicId: 'publicId',
+  position: 'position',
+  isCover: 'isCover',
+  createdAt: 'createdAt'
+} as const
+
+export type ProjectMediaScalarFieldEnum = (typeof ProjectMediaScalarFieldEnum)[keyof typeof ProjectMediaScalarFieldEnum]
 
 
 export const LeadScalarFieldEnum = {

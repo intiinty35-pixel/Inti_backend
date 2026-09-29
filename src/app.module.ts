@@ -17,6 +17,7 @@ import { LeadsModule } from './modules/leads/leads.module';
 import { MailModule } from './modules/mail/mail.module';
 import { MediaModule } from './modules/media/media.module';
 import { PropertiesModule } from './modules/properties/properties.module';
+import { ProjectsModule } from './modules/projects/projects.module';
 import { ProfessionalsModule } from './modules/professionals/professionals.module';
 import { PlansModule } from './modules/plans/plans.module';
 import { UsersModule } from './modules/users/users.module';
@@ -39,6 +40,7 @@ import { UsersModule } from './modules/users/users.module';
     FavoritesModule,
     UsersModule,
     PropertiesModule,
+    ProjectsModule,
     LeadsModule,
     MailModule,
     MediaModule,

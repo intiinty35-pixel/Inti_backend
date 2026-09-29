@@ -9,6 +9,7 @@ import {
   ApprovalStatus,
   AmenityCategory,
   OperationType,
+  ProjectStatus,
   PropertyStatus,
   PropertyType,
   SubscriptionStatus,
@@ -277,6 +278,13 @@ export class PropertiesService {
           status: PropertyStatus.PUBLISHED,
         },
         data: { status: PropertyStatus.PAUSED },
+      }),
+      this.prisma.project.updateMany({
+        where: {
+          agentProfileId: { in: [...new Set(expiredSubscriptions.map((subscription) => subscription.agentProfileId))] },
+          status: ProjectStatus.PUBLISHED,
+        },
+        data: { status: ProjectStatus.PAUSED },
       }),
     ]);
   }

@@ -1,0 +1,500 @@
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { Prisma } from '../../generated/prisma/client';
+import {
+  ApprovalStatus,
+  Currency,
+  LotMode,
+  LotStatus,
+  MediaType,
+  ProjectCategory,
+  ProjectStatus,
+  PropertyStatus,
+  SubscriptionStatus,
+} from '../../generated/prisma/enums';
+import type { AuthUser } from '../../common/types/auth-user';
+import { PrismaService } from '../../database/prisma/prisma.service';
+import { CreateProjectDto } from './dto/create-project.dto';
+import { OwnerProjectQueryDto } from './dto/owner-project-query.dto';
+import { ProjectQueryDto, ProjectSort } from './dto/project-query.dto';
+
+const PROJECT_INCLUDE = {
+  location: true,
+  lots: { orderBy: { position: 'asc' } },
+  milestones: { orderBy: { position: 'asc' } },
+  media: { orderBy: [{ isCover: 'desc' }, { position: 'asc' }] },
+  agentProfile: {
+    include: {
+      user: { select: { id: true, firstName: true, lastName: true, email: true, phone: true } },
+    },
+  },
+} satisfies Prisma.ProjectInclude;
+
+type ProjectWithRelations = Prisma.ProjectGetPayload<{ include: typeof PROJECT_INCLUDE }>;
+
+@Injectable()
+export class ProjectsService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async listPublic(query: ProjectQueryDto) {
+    await this.expireMembershipIfNeeded();
+
+    const page = query.page ?? 1;
+    const pageSize = Math.min(query.pageSize ?? 20, 50);
+    const where = this.buildPublicWhere(query);
+    const orderBy = this.buildOrderBy(query.sort);
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where,
+        orderBy,
+        include: PROJECT_INCLUDE,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.prisma.project.count({ where }),
+    ]);
+
+    return {
+      items: items.map((project) => this.toSummary(project)),
+      total,
+      page,
+      pageSize,
+      hasMore: page * pageSize < total,
+    };
+  }
+
+  async getPublicBySlug(slug: string) {
+    await this.expireMembershipIfNeeded();
+
+    const project = await this.prisma.project.findFirst({
+      where: { slug, status: ProjectStatus.PUBLISHED },
+      include: PROJECT_INCLUDE,
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    return this.toDetail(project);
+  }
+
+  async listMine(user: AuthUser, query: OwnerProjectQueryDto = {}) {
+    const agent = await this.prisma.professionalProfile.findUnique({
+      where: { userId: user.id },
+      select: { id: true },
+    });
+    if (!agent) {
+      return query.page
+        ? { items: [], total: 0, page: 1, pageSize: query.pageSize ?? 9, hasMore: false }
+        : [];
+    }
+
+    if (!query.page) {
+      const projects = await this.prisma.project.findMany({
+        where: { agentProfileId: agent.id },
+        orderBy: [{ updatedAt: 'desc' }],
+        include: PROJECT_INCLUDE,
+      });
+      return projects.map((project) => this.toDetail(project));
+    }
+
+    const page = query.page;
+    const pageSize = Math.min(query.pageSize ?? 9, 50);
+    const where = { agentProfileId: agent.id };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where,
+        orderBy: [{ updatedAt: 'desc' }],
+        include: PROJECT_INCLUDE,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.prisma.project.count({ where }),
+    ]);
+
+    return {
+      items: items.map((project) => this.toDetail(project)),
+      total,
+      page,
+      pageSize,
+      hasMore: page * pageSize < total,
+    };
+  }
+
+  /** El inventario del proyecto se expone como "unidades" para el listado público. */
+  async listUnits(slugOrId: string) {
+    const project = await this.prisma.project.findFirst({
+      where: { OR: [{ id: slugOrId }, { slug: slugOrId }] },
+      select: { id: true },
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+
+    const lots = await this.prisma.projectLot.findMany({
+      where: { projectId: project.id },
+      orderBy: { position: 'asc' },
+    });
+
+    return lots.map((lot) => ({
+      id: lot.id,
+      projectId: lot.projectId,
+      label: lot.block ? `Mza. ${lot.block} · Lote ${lot.lotNumber}` : `Lote ${lot.lotNumber}`,
+      operation: 'buy',
+      price: { amount: Number(lot.price), currency: 'PEN', period: 'total' },
+      bedrooms: 0,
+      bathrooms: 0,
+      areaM2: Number(lot.areaM2),
+      lotCount: lot.lotCount,
+      status: this.toFrontendLotStatus(lot.status),
+    }));
+  }
+
+  async createDraft(user: AuthUser, dto: CreateProjectDto) {
+    const agent = await this.requireApprovedAgent(user.id);
+    this.validateProject(dto);
+
+    const slug = this.createUniqueSlug(dto.name);
+    const project = await this.prisma.project.create({
+      data: {
+        agentProfileId: agent.id,
+        category: dto.category ?? ProjectCategory.LOTIZACION,
+        stage: dto.stage,
+        slug,
+        name: dto.name,
+        description: dto.description,
+        currency: dto.currency ?? Currency.PEN,
+        priceFrom: dto.priceFrom,
+        priceTo: dto.priceTo,
+        ruc: dto.ruc,
+        businessName: dto.businessName,
+        downPayment: dto.downPayment,
+        monthlyPayment: dto.monthlyPayment,
+        financing: dto.financing ?? [],
+        totalBlocks: dto.totalBlocks,
+        totalLots: dto.totalLots,
+        social: dto.social as Prisma.InputJsonValue | undefined,
+        services: dto.services ?? [],
+        urbanizationName: dto.urbanizationName,
+        registryEntry: dto.registryEntry,
+        amenities: dto.amenities ?? [],
+        lotMode: dto.lotMode,
+        constructionStart: dto.constructionStart ? new Date(dto.constructionStart) : undefined,
+        estimatedDelivery: new Date(dto.estimatedDelivery),
+        certifications: dto.certifications ?? [],
+        tourUrl: dto.tourUrl,
+        contactName: dto.contactName,
+        contactEmail: dto.contactEmail,
+        contactPhone: dto.contactPhone,
+        contactWhatsapp: dto.contactWhatsapp,
+        location: { create: dto.location },
+        lots: {
+          create: dto.lots.map((lot, index) => ({
+            lotNumber: lot.lotNumber,
+            block: lot.block,
+            areaM2: lot.areaM2,
+            frontM: lot.frontM,
+            price: lot.price,
+            status: lot.status,
+            planLocation: lot.planLocation,
+            lotCount: dto.lotMode === LotMode.GROUP ? lot.lotCount : null,
+            position: index,
+          })),
+        },
+        milestones: {
+          create: (dto.milestones ?? []).map((milestone, index) => ({
+            title: milestone.title,
+            date: new Date(milestone.date),
+            note: milestone.note,
+            position: index,
+          })),
+        },
+        media: {
+          create: dto.media.map((media, index) => ({
+            type: media.type,
+            url: media.url,
+            publicId: media.publicId,
+            position: media.position ?? index,
+            isCover: media.isCover ?? false,
+          })),
+        },
+      },
+      include: PROJECT_INCLUDE,
+    });
+
+    return this.toDetail(project);
+  }
+
+  async publish(user: AuthUser, id: string) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { agentProfile: true, location: true, lots: true, media: true },
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    if (project.agentProfile.userId !== user.id && user.role !== 'ADMIN') {
+      throw new ForbiddenException('No puedes publicar este proyecto');
+    }
+    if (project.agentProfile.status !== ApprovalStatus.APPROVED) {
+      throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
+    }
+    if (
+      !project.location ||
+      project.lots.length === 0 ||
+      !project.media.some((media) => media.type === MediaType.IMAGE)
+    ) {
+      throw new BadRequestException('Falta completar ubicación, lotes o imágenes del proyecto');
+    }
+
+    await this.expireMembershipIfNeeded(project.agentProfile.id);
+    await this.ensureCanPublish(project.agentProfile.id, project.id);
+
+    const updated = await this.prisma.project.update({
+      where: { id },
+      data: { status: ProjectStatus.PUBLISHED, publishedAt: new Date() },
+      include: PROJECT_INCLUDE,
+    });
+    return this.toDetail(updated);
+  }
+
+  private buildPublicWhere(query: ProjectQueryDto): Prisma.ProjectWhereInput {
+    return {
+      status: ProjectStatus.PUBLISHED,
+      category: query.category,
+      stage: query.stage,
+      currency: query.currency,
+      priceFrom: { gte: query.priceMin, lte: query.priceMax },
+      location: {
+        department: query.department,
+        province: query.province,
+        district: query.district,
+      },
+    };
+  }
+
+  private buildOrderBy(sort?: ProjectSort): Prisma.ProjectOrderByWithRelationInput[] {
+    if (sort === ProjectSort.PRICE_ASC) return [{ priceFrom: 'asc' }];
+    if (sort === ProjectSort.PRICE_DESC) return [{ priceFrom: 'desc' }];
+    if (sort === ProjectSort.FEATURED) return [{ featured: 'desc' }, { publishedAt: 'desc' }];
+    return [{ publishedAt: 'desc' }, { createdAt: 'desc' }];
+  }
+
+  private async requireApprovedAgent(userId: string) {
+    const agent = await this.prisma.professionalProfile.findUnique({ where: { userId } });
+    if (!agent) throw new ForbiddenException('Completa tu perfil anunciante para publicar');
+    if (agent.status !== ApprovalStatus.APPROVED) {
+      throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
+    }
+    return agent;
+  }
+
+  private async expireMembershipIfNeeded(agentProfileId?: string) {
+    const now = new Date();
+    const expiredSubscriptions = await this.prisma.planSubscription.findMany({
+      where: {
+        agentProfileId,
+        status: SubscriptionStatus.ACTIVE,
+        expiresAt: { lt: now },
+      },
+      select: { id: true, agentProfileId: true },
+    });
+
+    if (expiredSubscriptions.length === 0) return;
+
+    const agentIds = [
+      ...new Set(expiredSubscriptions.map((subscription) => subscription.agentProfileId)),
+    ];
+
+    await this.prisma.$transaction([
+      this.prisma.planSubscription.updateMany({
+        where: { id: { in: expiredSubscriptions.map((subscription) => subscription.id) } },
+        data: { status: SubscriptionStatus.EXPIRED },
+      }),
+      this.prisma.property.updateMany({
+        where: { agentProfileId: { in: agentIds }, status: PropertyStatus.PUBLISHED },
+        data: { status: PropertyStatus.PAUSED },
+      }),
+      this.prisma.project.updateMany({
+        where: { agentProfileId: { in: agentIds }, status: ProjectStatus.PUBLISHED },
+        data: { status: ProjectStatus.PAUSED },
+      }),
+    ]);
+  }
+
+  private async ensureCanPublish(agentProfileId: string, projectId: string) {
+    const now = new Date();
+    const subscription = await this.prisma.planSubscription.findFirst({
+      where: {
+        agentProfileId,
+        status: SubscriptionStatus.ACTIVE,
+        expiresAt: { gt: now },
+      },
+      orderBy: { createdAt: 'desc' },
+      include: { plan: true },
+    });
+
+    if (!subscription) {
+      throw new ForbiddenException('Necesitas una membresia activa para publicar proyectos');
+    }
+
+    const publishedCount = await this.prisma.project.count({
+      where: {
+        agentProfileId,
+        id: { not: projectId },
+        status: ProjectStatus.PUBLISHED,
+      },
+    });
+
+    if (publishedCount >= subscription.plan.projectLimit) {
+      throw new BadRequestException(
+        `Tu paquete permite publicar hasta ${subscription.plan.projectLimit} proyectos activos`,
+      );
+    }
+  }
+
+  private validateProject(dto: CreateProjectDto) {
+    if (dto.priceTo < dto.priceFrom) {
+      throw new BadRequestException('El precio hasta no puede ser menor que el precio desde');
+    }
+    if (dto.media.filter((media) => media.isCover).length > 1) {
+      throw new BadRequestException('Solo una imagen puede ser portada');
+    }
+    if (!dto.media.some((media) => media.type === MediaType.IMAGE)) {
+      throw new BadRequestException('Agrega al menos una imagen del proyecto');
+    }
+    if (dto.lotMode === LotMode.GROUP && dto.lots.some((lot) => !lot.lotCount)) {
+      throw new BadRequestException('Cada grupo debe indicar cuántos lotes cubre');
+    }
+    const numbers = dto.lots.map((lot) => lot.lotNumber.trim().toLowerCase());
+    if (new Set(numbers).size !== numbers.length) {
+      throw new BadRequestException('Hay números de lote repetidos en el inventario');
+    }
+  }
+
+  private createUniqueSlug(name: string) {
+    const base = name
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 80);
+    const suffix = Math.random().toString(36).slice(2, 8);
+    return `${base || 'proyecto'}-${suffix}`;
+  }
+
+  private toSummary(project: ProjectWithRelations) {
+    const cover = project.media.find((media) => media.isCover) ?? project.media[0];
+    const lotPrices = project.lots.map((lot) => Number(lot.price));
+    const lotAreas = project.lots.map((lot) => Number(lot.areaM2));
+    return {
+      id: project.id,
+      slug: project.slug,
+      name: project.name,
+      description: project.description,
+      category: project.category,
+      stage: project.stage,
+      lotMode: project.lotMode,
+      currency: project.currency,
+      priceFrom: Number(project.priceFrom),
+      priceTo: Number(project.priceTo),
+      totalLots: project.totalLots,
+      lotsCount: project.lots.length,
+      cheapestLotPrice: lotPrices.length ? Math.min(...lotPrices) : undefined,
+      areaRange: {
+        min: lotAreas.length ? Math.min(...lotAreas) : 0,
+        max: lotAreas.length ? Math.max(...lotAreas) : 0,
+      },
+      developer:
+        project.agentProfile.businessName ??
+        `${project.agentProfile.user.firstName} ${project.agentProfile.user.lastName ?? ''}`.trim(),
+      estimatedDelivery: project.estimatedDelivery.toISOString(),
+      location: project.location
+        ? {
+            department: project.location.department,
+            province: project.location.province,
+            district: project.location.district,
+            lat: project.location.latitude ? Number(project.location.latitude) : undefined,
+            lng: project.location.longitude ? Number(project.location.longitude) : undefined,
+          }
+        : { department: '', province: '', district: '' },
+      coverImage: cover?.url,
+      images: project.media.filter((media) => media.type === MediaType.IMAGE).map((media) => media.url),
+      status: project.status,
+      featured: project.featured,
+      publishedAt: project.publishedAt?.toISOString() ?? project.createdAt.toISOString(),
+    };
+  }
+
+  private toDetail(project: ProjectWithRelations) {
+    return {
+      ...this.toSummary(project),
+      ruc: project.ruc,
+      businessName: project.businessName,
+      downPayment: project.downPayment ? Number(project.downPayment) : null,
+      monthlyPayment: project.monthlyPayment ? Number(project.monthlyPayment) : null,
+      financing: project.financing,
+      totalBlocks: project.totalBlocks,
+      social: project.social,
+      services: project.services,
+      urbanizationName: project.urbanizationName,
+      registryEntry: project.registryEntry,
+      amenities: project.amenities,
+      tourUrl: project.tourUrl,
+      constructionStart: project.constructionStart?.toISOString() ?? null,
+      estimatedDelivery: project.estimatedDelivery.toISOString(),
+      certifications: project.certifications,
+      location: project.location
+        ? {
+            ...project.location,
+            latitude: project.location.latitude ? Number(project.location.latitude) : null,
+            longitude: project.location.longitude ? Number(project.location.longitude) : null,
+          }
+        : null,
+      lots: project.lots.map((lot) => ({
+        id: lot.id,
+        lotNumber: lot.lotNumber,
+        block: lot.block,
+        areaM2: Number(lot.areaM2),
+        frontM: lot.frontM ? Number(lot.frontM) : null,
+        price: Number(lot.price),
+        status: lot.status,
+        planLocation: lot.planLocation,
+        lotCount: lot.lotCount,
+      })),
+      milestones: project.milestones.map((milestone) => ({
+        id: milestone.id,
+        title: milestone.title,
+        date: milestone.date.toISOString(),
+        note: milestone.note,
+      })),
+      media: project.media.map((media) => ({
+        id: media.id,
+        type: media.type,
+        url: media.url,
+        publicId: media.publicId,
+        position: media.position,
+        isCover: media.isCover,
+      })),
+      agent: {
+        id: project.agentProfile.id,
+        name:
+          project.agentProfile.businessName ??
+          `${project.agentProfile.user.firstName} ${project.agentProfile.user.lastName ?? ''}`.trim(),
+        type: project.agentProfile.type,
+        status: project.agentProfile.status,
+        whatsapp: project.agentProfile.whatsapp,
+        phone: project.agentProfile.user.phone,
+        email: project.agentProfile.user.email,
+      },
+      createdAt: project.createdAt.toISOString(),
+      updatedAt: project.updatedAt.toISOString(),
+    };
+  }
+
+  private toFrontendLotStatus(status: LotStatus) {
+    if (status === LotStatus.RESERVED) return 'reservado';
+    if (status === LotStatus.SOLD) return 'vendido';
+    if (status === LotStatus.BLOCKED) return 'bloqueado';
+    return 'disponible';
+  }
+}

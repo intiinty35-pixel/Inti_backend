@@ -118,7 +118,8 @@ export const MediaType = {
   IMAGE: 'IMAGE',
   VIDEO: 'VIDEO',
   TOUR: 'TOUR',
-  FLOOR_PLAN: 'FLOOR_PLAN'
+  FLOOR_PLAN: 'FLOOR_PLAN',
+  RENDER: 'RENDER'
 } as const
 
 export type MediaType = (typeof MediaType)[keyof typeof MediaType]
@@ -132,3 +133,50 @@ export const LeadSource = {
 } as const
 
 export type LeadSource = (typeof LeadSource)[keyof typeof LeadSource]
+
+
+export const ProjectCategory = {
+  LOTIZACION: 'LOTIZACION'
+} as const
+
+export type ProjectCategory = (typeof ProjectCategory)[keyof typeof ProjectCategory]
+
+
+export const ProjectStage = {
+  PRE_SALE: 'PRE_SALE',
+  UNDER_CONSTRUCTION: 'UNDER_CONSTRUCTION',
+  DELIVERED: 'DELIVERED'
+} as const
+
+export type ProjectStage = (typeof ProjectStage)[keyof typeof ProjectStage]
+
+
+export const LotMode = {
+  INDIVIDUAL: 'INDIVIDUAL',
+  GROUP: 'GROUP'
+} as const
+
+export type LotMode = (typeof LotMode)[keyof typeof LotMode]
+
+
+export const LotStatus = {
+  AVAILABLE: 'AVAILABLE',
+  RESERVED: 'RESERVED',
+  SOLD: 'SOLD',
+  BLOCKED: 'BLOCKED'
+} as const
+
+export type LotStatus = (typeof LotStatus)[keyof typeof LotStatus]
+
+
+export const ProjectStatus = {
+  DRAFT: 'DRAFT',
+  PENDING_REVIEW: 'PENDING_REVIEW',
+  PUBLISHED: 'PUBLISHED',
+  PAUSED: 'PAUSED',
+  SOLD: 'SOLD',
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]

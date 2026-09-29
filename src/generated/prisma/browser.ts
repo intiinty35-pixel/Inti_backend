@@ -83,6 +83,31 @@ export type PropertyAmenity = Prisma.PropertyAmenityModel
  */
 export type PropertyMedia = Prisma.PropertyMediaModel
 /**
+ * Model Project
+ * 
+ */
+export type Project = Prisma.ProjectModel
+/**
+ * Model ProjectLocation
+ * 
+ */
+export type ProjectLocation = Prisma.ProjectLocationModel
+/**
+ * Model ProjectLot
+ * 
+ */
+export type ProjectLot = Prisma.ProjectLotModel
+/**
+ * Model ProjectMilestone
+ * 
+ */
+export type ProjectMilestone = Prisma.ProjectMilestoneModel
+/**
+ * Model ProjectMedia
+ * 
+ */
+export type ProjectMedia = Prisma.ProjectMediaModel
+/**
  * Model Lead
  * 
  */

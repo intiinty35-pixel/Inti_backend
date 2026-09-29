@@ -545,6 +545,91 @@ export type EnumMediaTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumMediaTypeFilter<$PrismaModel>
 }
 
+export type EnumProjectCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCategory | Prisma.EnumProjectCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectCategory[] | Prisma.ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectCategory[] | Prisma.ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectCategoryFilter<$PrismaModel> | $Enums.ProjectCategory
+}
+
+export type EnumProjectStageFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStage | Prisma.EnumProjectStageFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectStage[] | Prisma.ListEnumProjectStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectStage[] | Prisma.ListEnumProjectStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectStageFilter<$PrismaModel> | $Enums.ProjectStage
+}
+
+export type EnumLotModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.LotMode | Prisma.EnumLotModeFieldRefInput<$PrismaModel>
+  in?: $Enums.LotMode[] | Prisma.ListEnumLotModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LotMode[] | Prisma.ListEnumLotModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLotModeFilter<$PrismaModel> | $Enums.LotMode
+}
+
+export type EnumProjectStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectStatus[] | Prisma.ListEnumProjectStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectStatus[] | Prisma.ListEnumProjectStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
+}
+
+export type EnumProjectCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCategory | Prisma.EnumProjectCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectCategory[] | Prisma.ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectCategory[] | Prisma.ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProjectCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProjectCategoryFilter<$PrismaModel>
+}
+
+export type EnumProjectStageWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStage | Prisma.EnumProjectStageFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectStage[] | Prisma.ListEnumProjectStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectStage[] | Prisma.ListEnumProjectStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectStageWithAggregatesFilter<$PrismaModel> | $Enums.ProjectStage
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProjectStageFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProjectStageFilter<$PrismaModel>
+}
+
+export type EnumLotModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LotMode | Prisma.EnumLotModeFieldRefInput<$PrismaModel>
+  in?: $Enums.LotMode[] | Prisma.ListEnumLotModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LotMode[] | Prisma.ListEnumLotModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLotModeWithAggregatesFilter<$PrismaModel> | $Enums.LotMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLotModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLotModeFilter<$PrismaModel>
+}
+
+export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectStatus[] | Prisma.ListEnumProjectStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectStatus[] | Prisma.ListEnumProjectStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.ProjectStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
+}
+
+export type EnumLotStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LotStatus | Prisma.EnumLotStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLotStatusFilter<$PrismaModel> | $Enums.LotStatus
+}
+
+export type EnumLotStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LotStatus | Prisma.EnumLotStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLotStatusWithAggregatesFilter<$PrismaModel> | $Enums.LotStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLotStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLotStatusFilter<$PrismaModel>
+}
+
 export type EnumLeadSourceFilter<$PrismaModel = never> = {
   equals?: $Enums.LeadSource | Prisma.EnumLeadSourceFieldRefInput<$PrismaModel>
   in?: $Enums.LeadSource[] | Prisma.ListEnumLeadSourceFieldRefInput<$PrismaModel>
@@ -1050,6 +1135,91 @@ export type NestedEnumMediaTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumMediaTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumMediaTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumProjectCategoryFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCategory | Prisma.EnumProjectCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectCategory[] | Prisma.ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectCategory[] | Prisma.ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectCategoryFilter<$PrismaModel> | $Enums.ProjectCategory
+}
+
+export type NestedEnumProjectStageFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStage | Prisma.EnumProjectStageFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectStage[] | Prisma.ListEnumProjectStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectStage[] | Prisma.ListEnumProjectStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectStageFilter<$PrismaModel> | $Enums.ProjectStage
+}
+
+export type NestedEnumLotModeFilter<$PrismaModel = never> = {
+  equals?: $Enums.LotMode | Prisma.EnumLotModeFieldRefInput<$PrismaModel>
+  in?: $Enums.LotMode[] | Prisma.ListEnumLotModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LotMode[] | Prisma.ListEnumLotModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLotModeFilter<$PrismaModel> | $Enums.LotMode
+}
+
+export type NestedEnumProjectStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectStatus[] | Prisma.ListEnumProjectStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectStatus[] | Prisma.ListEnumProjectStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel> | $Enums.ProjectStatus
+}
+
+export type NestedEnumProjectCategoryWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectCategory | Prisma.EnumProjectCategoryFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectCategory[] | Prisma.ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectCategory[] | Prisma.ListEnumProjectCategoryFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectCategoryWithAggregatesFilter<$PrismaModel> | $Enums.ProjectCategory
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProjectCategoryFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProjectCategoryFilter<$PrismaModel>
+}
+
+export type NestedEnumProjectStageWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStage | Prisma.EnumProjectStageFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectStage[] | Prisma.ListEnumProjectStageFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectStage[] | Prisma.ListEnumProjectStageFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectStageWithAggregatesFilter<$PrismaModel> | $Enums.ProjectStage
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProjectStageFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProjectStageFilter<$PrismaModel>
+}
+
+export type NestedEnumLotModeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LotMode | Prisma.EnumLotModeFieldRefInput<$PrismaModel>
+  in?: $Enums.LotMode[] | Prisma.ListEnumLotModeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LotMode[] | Prisma.ListEnumLotModeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLotModeWithAggregatesFilter<$PrismaModel> | $Enums.LotMode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLotModeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLotModeFilter<$PrismaModel>
+}
+
+export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ProjectStatus | Prisma.EnumProjectStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ProjectStatus[] | Prisma.ListEnumProjectStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ProjectStatus[] | Prisma.ListEnumProjectStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel> | $Enums.ProjectStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumLotStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.LotStatus | Prisma.EnumLotStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLotStatusFilter<$PrismaModel> | $Enums.LotStatus
+}
+
+export type NestedEnumLotStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LotStatus | Prisma.EnumLotStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLotStatusWithAggregatesFilter<$PrismaModel> | $Enums.LotStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLotStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLotStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumLeadSourceFilter<$PrismaModel = never> = {
