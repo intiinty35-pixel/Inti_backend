@@ -172,7 +172,7 @@ export class ProjectsService {
         businessName: dto.businessName,
         downPayment: dto.downPayment,
         monthlyPayment: dto.monthlyPayment,
-        financing: dto.financing ?? [],
+        financing: dto.financing ?? ['cash'],
         totalBlocks: dto.totalBlocks,
         totalLots: dto.totalLots,
         social: dto.social as Prisma.InputJsonValue | undefined,
