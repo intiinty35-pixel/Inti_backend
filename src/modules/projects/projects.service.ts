@@ -21,12 +21,12 @@ import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { OwnerProjectQueryDto } from './dto/owner-project-query.dto';
+import { AdminProjectQueryDto } from './dto/admin-project-query.dto';
 import { ProjectQueryDto, ProjectSort } from './dto/project-query.dto';
 
-const PROJECT_INCLUDE = {
+const PROJECT_SUMMARY_INCLUDE = {
   location: true,
   lots: { orderBy: { position: 'asc' } },
-  milestones: { orderBy: { position: 'asc' } },
   media: { orderBy: [{ isCover: 'desc' }, { position: 'asc' }] },
   agentProfile: {
     include: {
@@ -35,7 +35,20 @@ const PROJECT_INCLUDE = {
   },
 } satisfies Prisma.ProjectInclude;
 
+const PROJECT_INCLUDE = {
+  ...PROJECT_SUMMARY_INCLUDE,
+  milestones: { orderBy: { position: 'asc' } },
+  adminProject: {
+    include: {
+      createdByAdmin: {
+        select: { id: true, firstName: true, lastName: true, email: true, phone: true },
+      },
+    },
+  },
+} satisfies Prisma.ProjectInclude;
+
 type ProjectWithRelations = Prisma.ProjectGetPayload<{ include: typeof PROJECT_INCLUDE }>;
+type ProjectSummaryWithRelations = Prisma.ProjectGetPayload<{ include: typeof PROJECT_SUMMARY_INCLUDE }>;
 
 @Injectable()
 export class ProjectsService {
@@ -53,7 +66,7 @@ export class ProjectsService {
       this.prisma.project.findMany({
         where,
         orderBy,
-        include: PROJECT_INCLUDE,
+        include: PROJECT_SUMMARY_INCLUDE,
         skip: (page - 1) * pageSize,
         take: pageSize,
       }),
@@ -124,6 +137,33 @@ export class ProjectsService {
     };
   }
 
+  async listAdminProjects(query: AdminProjectQueryDto) {
+    const page = query.page ?? 1;
+    const pageSize = Math.min(query.pageSize ?? 9, 50);
+    const where: Prisma.ProjectWhereInput = {
+      adminProject: { isNot: null },
+      status: query.status,
+    };
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.project.findMany({
+        where,
+        orderBy: [{ updatedAt: 'desc' }],
+        include: PROJECT_SUMMARY_INCLUDE,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.prisma.project.count({ where }),
+    ]);
+
+    return {
+      items: items.map((project) => this.toSummary(project)),
+      total,
+      page,
+      pageSize,
+      hasMore: page * pageSize < total,
+    };
+  }
+
   /** El inventario del proyecto se expone como "unidades" para el listado público. */
   async listUnits(slugOrId: string) {
     const project = await this.prisma.project.findFirst({
@@ -156,13 +196,28 @@ export class ProjectsService {
     this.ensureCanManageProjects(agent.type);
     this.validateProject(dto);
 
-    const slug = this.createUniqueSlug(dto.name);
+    return this.createDraftRecord(dto, { agentProfileId: agent.id });
+  }
+
+  async createAdminDraft(user: AuthUser, dto: CreateProjectDto) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Solo un administrador puede crear proyectos de ARIZ');
+    }
+    this.validateProject(dto);
+
+    return this.createDraftRecord(dto, { createdByAdminId: user.id });
+  }
+
+  private async createDraftRecord(
+    dto: CreateProjectDto,
+    owner: { agentProfileId?: string; createdByAdminId?: string },
+  ) {
     const project = await this.prisma.project.create({
       data: {
-        agentProfileId: agent.id,
+        agentProfileId: owner.agentProfileId,
         category: dto.category ?? ProjectCategory.LOTIZACION,
         stage: dto.stage,
-        slug,
+        slug: this.createUniqueSlug(dto.name),
         name: dto.name,
         description: dto.description,
         currency: dto.currency ?? Currency.PEN,
@@ -185,10 +240,13 @@ export class ProjectsService {
         estimatedDelivery: new Date(dto.estimatedDelivery),
         certifications: dto.certifications ?? [],
         tourUrl: dto.tourUrl,
-        contactName: dto.contactName,
+        contactName: dto.contactName ?? (owner.createdByAdminId ? 'ARIZ Proyectos' : undefined),
         contactEmail: dto.contactEmail,
         contactPhone: dto.contactPhone,
         contactWhatsapp: dto.contactWhatsapp,
+        adminProject: owner.createdByAdminId
+          ? { create: { createdByAdminId: owner.createdByAdminId } }
+          : undefined,
         location: { create: dto.location },
         lots: {
           create: dto.lots.map((lot, index) => ({
@@ -230,10 +288,14 @@ export class ProjectsService {
   async publish(user: AuthUser, id: string) {
     const project = await this.prisma.project.findUnique({
       where: { id },
-      include: { agentProfile: true, location: true, lots: true, media: true },
+      include: { agentProfile: true, adminProject: true, location: true, lots: true, media: true },
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
-    if (project.agentProfile.userId !== user.id && user.role !== 'ADMIN') {
+    if (
+      project.adminProject !== null ||
+      !project.agentProfile ||
+      (project.agentProfile.userId !== user.id && user.role !== 'ADMIN')
+    ) {
       throw new ForbiddenException('No puedes publicar este proyecto');
     }
     if (project.agentProfile.status !== ApprovalStatus.APPROVED) {
@@ -259,6 +321,43 @@ export class ProjectsService {
     return this.toDetail(updated);
   }
 
+  async publishAdminProject(user: AuthUser, id: string) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Solo un administrador puede publicar proyectos de ARIZ');
+    }
+
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { adminProject: true, location: true, lots: true, media: true },
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    if (!project.adminProject) {
+      throw new ForbiddenException('Este proyecto no pertenece a ARIZ');
+    }
+    this.validatePublishableProject(project);
+
+    const updated = await this.prisma.project.update({
+      where: { id },
+      data: { status: ProjectStatus.PUBLISHED, publishedAt: new Date() },
+      include: PROJECT_INCLUDE,
+    });
+    return this.toDetail(updated);
+  }
+
+  private validatePublishableProject(project: {
+    location: unknown;
+    lots: unknown[];
+    media: Array<{ type: MediaType }>;
+  }) {
+    if (
+      !project.location ||
+      project.lots.length === 0 ||
+      !project.media.some((media) => media.type === MediaType.IMAGE)
+    ) {
+      throw new BadRequestException('Falta completar ubicación, lotes o imágenes del proyecto');
+    }
+  }
+
   private buildPublicWhere(query: ProjectQueryDto): Prisma.ProjectWhereInput {
     return {
       status: ProjectStatus.PUBLISHED,
@@ -266,6 +365,11 @@ export class ProjectsService {
       stage: query.stage,
       currency: query.currency,
       priceFrom: { gte: query.priceMin, lte: query.priceMax },
+      adminProject: query.origin
+        ? query.origin === 'ADMIN'
+          ? { isNot: null }
+          : { is: null }
+        : undefined,
       location: {
         department: query.department,
         province: query.province,
@@ -398,12 +502,13 @@ export class ProjectsService {
     return `${base || 'proyecto'}-${suffix}`;
   }
 
-  private toSummary(project: ProjectWithRelations) {
+  private toSummary(project: ProjectSummaryWithRelations) {
     const cover = project.media.find((media) => media.isCover) ?? project.media[0];
     const lotPrices = project.lots.map((lot) => Number(lot.price));
     const lotAreas = project.lots.map((lot) => Number(lot.areaM2));
     return {
       id: project.id,
+      origin: project.agentProfileId === null ? 'ADMIN' : 'AGENT',
       slug: project.slug,
       name: project.name,
       description: project.description,
@@ -421,8 +526,11 @@ export class ProjectsService {
         max: lotAreas.length ? Math.max(...lotAreas) : 0,
       },
       developer:
-        project.agentProfile.businessName ??
-        `${project.agentProfile.user.firstName} ${project.agentProfile.user.lastName ?? ''}`.trim(),
+        project.businessName ??
+        project.agentProfile?.businessName ??
+        (project.agentProfile
+          ? `${project.agentProfile.user.firstName} ${project.agentProfile.user.lastName ?? ''}`.trim()
+          : 'ARIZ Proyectos'),
       estimatedDelivery: project.estimatedDelivery.toISOString(),
       location: project.location
         ? {
@@ -435,6 +543,7 @@ export class ProjectsService {
         : { department: '', province: '', district: '' },
       coverImage: cover?.url,
       images: project.media.filter((media) => media.type === MediaType.IMAGE).map((media) => media.url),
+      tourUrl: project.tourUrl,
       status: project.status,
       featured: project.featured,
       publishedAt: project.publishedAt?.toISOString() ?? project.createdAt.toISOString(),
@@ -491,19 +600,29 @@ export class ProjectsService {
         position: media.position,
         isCover: media.isCover,
       })),
-      agent: {
-        id: project.agentProfile.id,
-        name:
-          project.contactName ??
-          project.businessName ??
-          project.agentProfile.businessName ??
-          `${project.agentProfile.user.firstName} ${project.agentProfile.user.lastName ?? ''}`.trim(),
-        type: project.agentProfile.type,
-        status: project.agentProfile.status,
-        whatsapp: project.contactWhatsapp ?? project.agentProfile.whatsapp,
-        phone: project.contactPhone ?? project.agentProfile.user.phone,
-        email: project.contactEmail ?? project.agentProfile.user.email,
-      },
+      agent: project.agentProfile
+        ? {
+            id: project.agentProfile.id,
+            name:
+              project.contactName ??
+              project.businessName ??
+              project.agentProfile.businessName ??
+              `${project.agentProfile.user.firstName} ${project.agentProfile.user.lastName ?? ''}`.trim(),
+            type: project.agentProfile.type,
+            status: project.agentProfile.status,
+            whatsapp: project.contactWhatsapp ?? project.agentProfile.whatsapp,
+            phone: project.contactPhone ?? project.agentProfile.user.phone,
+            email: project.contactEmail ?? project.agentProfile.user.email,
+          }
+        : {
+            id: null,
+            name: project.contactName ?? project.businessName ?? 'ARIZ Proyectos',
+            type: 'ADMIN',
+            status: 'APPROVED',
+            whatsapp: project.contactWhatsapp,
+            phone: project.contactPhone ?? project.adminProject?.createdByAdmin.phone,
+            email: project.contactEmail ?? project.adminProject?.createdByAdmin.email ?? '',
+          },
       createdAt: project.createdAt.toISOString(),
       updatedAt: project.updatedAt.toISOString(),
     };

@@ -65,6 +65,7 @@ export const ModelName = {
   PropertyAmenity: 'PropertyAmenity',
   PropertyMedia: 'PropertyMedia',
   Project: 'Project',
+  AdminProject: 'AdminProject',
   ProjectLocation: 'ProjectLocation',
   ProjectLot: 'ProjectLot',
   ProjectMilestone: 'ProjectMilestone',
@@ -335,6 +336,16 @@ export const ProjectScalarFieldEnum = {
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const AdminProjectScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  createdByAdminId: 'createdByAdminId',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminProjectScalarFieldEnum = (typeof AdminProjectScalarFieldEnum)[keyof typeof AdminProjectScalarFieldEnum]
 
 
 export const ProjectLocationScalarFieldEnum = {

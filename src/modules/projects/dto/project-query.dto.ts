@@ -1,6 +1,17 @@
 import { Transform } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional, IsString, Min } from 'class-validator';
-import { Currency, ProjectCategory, ProjectStage } from '../../../generated/prisma/enums';
+import {
+  IsEnum,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Min,
+} from 'class-validator';
+import {
+  Currency,
+  ProjectCategory,
+  ProjectStage,
+} from '../../../generated/prisma/enums';
 
 export enum ProjectSort {
   RECENT = 'recent',
@@ -15,6 +26,10 @@ function toNumber(value: unknown) {
 }
 
 export class ProjectQueryDto {
+  @IsOptional()
+  @IsIn(['ADMIN', 'AGENT'])
+  origin?: 'ADMIN' | 'AGENT';
+
   @IsOptional()
   @IsEnum(ProjectCategory)
   category?: ProjectCategory;

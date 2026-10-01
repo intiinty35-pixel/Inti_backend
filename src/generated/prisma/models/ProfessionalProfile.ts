@@ -661,10 +661,12 @@ export type ProfessionalProfileCreateNestedOneWithoutProjectsInput = {
   connect?: Prisma.ProfessionalProfileWhereUniqueInput
 }
 
-export type ProfessionalProfileUpdateOneRequiredWithoutProjectsNestedInput = {
+export type ProfessionalProfileUpdateOneWithoutProjectsNestedInput = {
   create?: Prisma.XOR<Prisma.ProfessionalProfileCreateWithoutProjectsInput, Prisma.ProfessionalProfileUncheckedCreateWithoutProjectsInput>
   connectOrCreate?: Prisma.ProfessionalProfileCreateOrConnectWithoutProjectsInput
   upsert?: Prisma.ProfessionalProfileUpsertWithoutProjectsInput
+  disconnect?: Prisma.ProfessionalProfileWhereInput | boolean
+  delete?: Prisma.ProfessionalProfileWhereInput | boolean
   connect?: Prisma.ProfessionalProfileWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProfessionalProfileUpdateToOneWithWhereWithoutProjectsInput, Prisma.ProfessionalProfileUpdateWithoutProjectsInput>, Prisma.ProfessionalProfileUncheckedUpdateWithoutProjectsInput>
 }
@@ -675,10 +677,12 @@ export type ProfessionalProfileCreateNestedOneWithoutLeadsInput = {
   connect?: Prisma.ProfessionalProfileWhereUniqueInput
 }
 
-export type ProfessionalProfileUpdateOneRequiredWithoutLeadsNestedInput = {
+export type ProfessionalProfileUpdateOneWithoutLeadsNestedInput = {
   create?: Prisma.XOR<Prisma.ProfessionalProfileCreateWithoutLeadsInput, Prisma.ProfessionalProfileUncheckedCreateWithoutLeadsInput>
   connectOrCreate?: Prisma.ProfessionalProfileCreateOrConnectWithoutLeadsInput
   upsert?: Prisma.ProfessionalProfileUpsertWithoutLeadsInput
+  disconnect?: Prisma.ProfessionalProfileWhereInput | boolean
+  delete?: Prisma.ProfessionalProfileWhereInput | boolean
   connect?: Prisma.ProfessionalProfileWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProfessionalProfileUpdateToOneWithWhereWithoutLeadsInput, Prisma.ProfessionalProfileUpdateWithoutLeadsInput>, Prisma.ProfessionalProfileUncheckedUpdateWithoutLeadsInput>
 }

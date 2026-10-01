@@ -24,6 +24,7 @@ model User {
   favorites           Favorite[]
   priceAlerts         PriceAlert[]
   searchAlerts        SearchAlert[]
+  adminProjects       AdminProject[]       @relation("AdminProjectCreator")
 
   @@map("users")
 }
@@ -255,43 +256,44 @@ model PropertyMedia {
 }
 
 model Project {
-  id                String              @id @default(uuid())
-  agentProfileId    String
-  category          ProjectCategory     @default(LOTIZACION)
+  id                String               @id @default(uuid())
+  agentProfileId    String?
+  category          ProjectCategory      @default(LOTIZACION)
   stage             ProjectStage
-  slug              String              @unique
+  slug              String               @unique
   name              String
   description       String
   currency          Currency
-  priceFrom         Decimal             @db.Decimal(14, 2)
-  priceTo           Decimal             @db.Decimal(14, 2)
+  priceFrom         Decimal              @db.Decimal(14, 2)
+  priceTo           Decimal              @db.Decimal(14, 2)
   ruc               String?
   businessName      String?
-  downPayment       Decimal?            @db.Decimal(14, 2)
-  monthlyPayment    Decimal?            @db.Decimal(14, 2)
-  financing         String[]            @default([])
+  downPayment       Decimal?             @db.Decimal(14, 2)
+  monthlyPayment    Decimal?             @db.Decimal(14, 2)
+  financing         String[]             @default([])
   totalBlocks       Int?
   totalLots         Int?
   social            Json?
-  services          String[]            @default([])
+  services          String[]             @default([])
   urbanizationName  String?
   registryEntry     String?
-  amenities         String[]            @default([])
+  amenities         String[]             @default([])
   lotMode           LotMode
   constructionStart DateTime?
   estimatedDelivery DateTime
-  certifications    String[]            @default([])
-  status            ProjectStatus       @default(DRAFT)
-  featured          Boolean             @default(false)
+  certifications    String[]             @default([])
+  status            ProjectStatus        @default(DRAFT)
+  featured          Boolean              @default(false)
   tourUrl           String?
   contactName       String?
   contactEmail      String?
   contactPhone      String?
   contactWhatsapp   String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
   publishedAt       DateTime?
-  agentProfile      ProfessionalProfile @relation(fields: [agentProfileId], references: [id])
+  agentProfile      ProfessionalProfile? @relation(fields: [agentProfileId], references: [id], onDelete: Restrict)
+  adminProject      AdminProject?
   location          ProjectLocation?
   lots              ProjectLot[]
   milestones        ProjectMilestone[]
@@ -301,6 +303,18 @@ model Project {
   @@index([status, featured, publishedAt])
   @@index([category, stage, status])
   @@map("projects")
+}
+
+model AdminProject {
+  id               String   @id @default(uuid())
+  projectId        String   @unique
+  createdByAdminId String
+  createdAt        DateTime @default(now())
+  project          Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdByAdmin   User     @relation("AdminProjectCreator", fields: [createdByAdminId], references: [id], onDelete: Restrict)
+
+  @@index([createdByAdminId, createdAt])
+  @@map("admin_projects")
 }
 
 model ProjectLocation {
@@ -368,21 +382,21 @@ model ProjectMedia {
 }
 
 model Lead {
-  id             String              @id @default(uuid())
+  id             String               @id @default(uuid())
   propertyId     String?
   projectId      String?
-  agentProfileId String
+  agentProfileId String?
   userId         String?
   name           String
   email          String
   phone          String?
   message        String
   source         LeadSource
-  createdAt      DateTime            @default(now())
-  agentProfile   ProfessionalProfile @relation(fields: [agentProfileId], references: [id])
-  property       Property?           @relation(fields: [propertyId], references: [id], onDelete: Cascade)
-  project        Project?            @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  user           User?               @relation(fields: [userId], references: [id])
+  createdAt      DateTime             @default(now())
+  agentProfile   ProfessionalProfile? @relation(fields: [agentProfileId], references: [id], onDelete: SetNull)
+  property       Property?            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  project        Project?             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user           User?                @relation(fields: [userId], references: [id])
 
   @@index([propertyId, createdAt])
   @@index([projectId, createdAt])

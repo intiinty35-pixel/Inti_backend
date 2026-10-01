@@ -411,6 +411,7 @@ export const ModelName = {
   PropertyAmenity: 'PropertyAmenity',
   PropertyMedia: 'PropertyMedia',
   Project: 'Project',
+  AdminProject: 'AdminProject',
   ProjectLocation: 'ProjectLocation',
   ProjectLot: 'ProjectLot',
   ProjectMilestone: 'ProjectMilestone',
@@ -431,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "lead"
+    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "lead"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1471,6 +1472,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AdminProject: {
+      payload: Prisma.$AdminProjectPayload<ExtArgs>
+      fields: Prisma.AdminProjectFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdminProjectFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdminProjectFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>
+        }
+        findFirst: {
+          args: Prisma.AdminProjectFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdminProjectFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>
+        }
+        findMany: {
+          args: Prisma.AdminProjectFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>[]
+        }
+        create: {
+          args: Prisma.AdminProjectCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>
+        }
+        createMany: {
+          args: Prisma.AdminProjectCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdminProjectCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>[]
+        }
+        delete: {
+          args: Prisma.AdminProjectDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>
+        }
+        update: {
+          args: Prisma.AdminProjectUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdminProjectDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdminProjectUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdminProjectUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdminProjectUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdminProjectPayload>
+        }
+        aggregate: {
+          args: Prisma.AdminProjectAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdminProject>
+        }
+        groupBy: {
+          args: Prisma.AdminProjectGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminProjectGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdminProjectCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdminProjectCountAggregateOutputType> | number
+        }
+      }
+    }
     ProjectLocation: {
       payload: Prisma.$ProjectLocationPayload<ExtArgs>
       fields: Prisma.ProjectLocationFieldRefs
@@ -2129,6 +2204,16 @@ export const ProjectScalarFieldEnum = {
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
 
 
+export const AdminProjectScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  createdByAdminId: 'createdByAdminId',
+  createdAt: 'createdAt'
+} as const
+
+export type AdminProjectScalarFieldEnum = (typeof AdminProjectScalarFieldEnum)[keyof typeof AdminProjectScalarFieldEnum]
+
+
 export const ProjectLocationScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -2753,6 +2838,7 @@ export type GlobalOmitConfig = {
   propertyAmenity?: Prisma.PropertyAmenityOmit
   propertyMedia?: Prisma.PropertyMediaOmit
   project?: Prisma.ProjectOmit
+  adminProject?: Prisma.AdminProjectOmit
   projectLocation?: Prisma.ProjectLocationOmit
   projectLot?: Prisma.ProjectLotOmit
   projectMilestone?: Prisma.ProjectMilestoneOmit

@@ -227,6 +227,7 @@ export type UserWhereInput = {
   favorites?: Prisma.FavoriteListRelationFilter
   priceAlerts?: Prisma.PriceAlertListRelationFilter
   searchAlerts?: Prisma.SearchAlertListRelationFilter
+  adminProjects?: Prisma.AdminProjectListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -245,6 +246,7 @@ export type UserOrderByWithRelationInput = {
   favorites?: Prisma.FavoriteOrderByRelationAggregateInput
   priceAlerts?: Prisma.PriceAlertOrderByRelationAggregateInput
   searchAlerts?: Prisma.SearchAlertOrderByRelationAggregateInput
+  adminProjects?: Prisma.AdminProjectOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -266,6 +268,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   favorites?: Prisma.FavoriteListRelationFilter
   priceAlerts?: Prisma.PriceAlertListRelationFilter
   searchAlerts?: Prisma.SearchAlertListRelationFilter
+  adminProjects?: Prisma.AdminProjectListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -316,6 +319,7 @@ export type UserCreateInput = {
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -334,6 +338,7 @@ export type UserUncheckedCreateInput = {
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserUpdateInput = {
@@ -352,6 +357,7 @@ export type UserUpdateInput = {
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -370,6 +376,7 @@ export type UserUncheckedUpdateInput = {
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -536,6 +543,20 @@ export type UserUpdateOneRequiredWithoutSearchAlertsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSearchAlertsInput, Prisma.UserUpdateWithoutSearchAlertsInput>, Prisma.UserUncheckedUpdateWithoutSearchAlertsInput>
 }
 
+export type UserCreateNestedOneWithoutAdminProjectsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAdminProjectsInput, Prisma.UserUncheckedCreateWithoutAdminProjectsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminProjectsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAdminProjectsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAdminProjectsInput, Prisma.UserUncheckedCreateWithoutAdminProjectsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminProjectsInput
+  upsert?: Prisma.UserUpsertWithoutAdminProjectsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAdminProjectsInput, Prisma.UserUpdateWithoutAdminProjectsInput>, Prisma.UserUncheckedUpdateWithoutAdminProjectsInput>
+}
+
 export type UserCreateNestedOneWithoutLeadsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsInput, Prisma.UserUncheckedCreateWithoutLeadsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsInput
@@ -567,6 +588,7 @@ export type UserCreateWithoutProfessionalProfileInput = {
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserUncheckedCreateWithoutProfessionalProfileInput = {
@@ -584,6 +606,7 @@ export type UserUncheckedCreateWithoutProfessionalProfileInput = {
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserCreateOrConnectWithoutProfessionalProfileInput = {
@@ -617,6 +640,7 @@ export type UserUpdateWithoutProfessionalProfileInput = {
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfessionalProfileInput = {
@@ -634,6 +658,7 @@ export type UserUncheckedUpdateWithoutProfessionalProfileInput = {
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserCreateWithoutFavoritesInput = {
@@ -651,6 +676,7 @@ export type UserCreateWithoutFavoritesInput = {
   professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -668,6 +694,7 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -701,6 +728,7 @@ export type UserUpdateWithoutFavoritesInput = {
   professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -718,6 +746,7 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserCreateWithoutPriceAlertsInput = {
@@ -735,6 +764,7 @@ export type UserCreateWithoutPriceAlertsInput = {
   professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserUncheckedCreateWithoutPriceAlertsInput = {
@@ -752,6 +782,7 @@ export type UserUncheckedCreateWithoutPriceAlertsInput = {
   professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserCreateOrConnectWithoutPriceAlertsInput = {
@@ -785,6 +816,7 @@ export type UserUpdateWithoutPriceAlertsInput = {
   professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPriceAlertsInput = {
@@ -802,6 +834,7 @@ export type UserUncheckedUpdateWithoutPriceAlertsInput = {
   professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserCreateWithoutSearchAlertsInput = {
@@ -819,6 +852,7 @@ export type UserCreateWithoutSearchAlertsInput = {
   professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserUncheckedCreateWithoutSearchAlertsInput = {
@@ -836,6 +870,7 @@ export type UserUncheckedCreateWithoutSearchAlertsInput = {
   professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserCreateOrConnectWithoutSearchAlertsInput = {
@@ -869,6 +904,7 @@ export type UserUpdateWithoutSearchAlertsInput = {
   professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSearchAlertsInput = {
@@ -886,6 +922,95 @@ export type UserUncheckedUpdateWithoutSearchAlertsInput = {
   professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
+}
+
+export type UserCreateWithoutAdminProjectsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName?: string | null
+  phone?: string | null
+  role?: $Enums.Role
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAdminProjectsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName?: string | null
+  phone?: string | null
+  role?: $Enums.Role
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAdminProjectsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAdminProjectsInput, Prisma.UserUncheckedCreateWithoutAdminProjectsInput>
+}
+
+export type UserUpsertWithoutAdminProjectsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAdminProjectsInput, Prisma.UserUncheckedUpdateWithoutAdminProjectsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAdminProjectsInput, Prisma.UserUncheckedCreateWithoutAdminProjectsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAdminProjectsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAdminProjectsInput, Prisma.UserUncheckedUpdateWithoutAdminProjectsInput>
+}
+
+export type UserUpdateWithoutAdminProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAdminProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLeadsInput = {
@@ -903,6 +1028,7 @@ export type UserCreateWithoutLeadsInput = {
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserUncheckedCreateWithoutLeadsInput = {
@@ -920,6 +1046,7 @@ export type UserUncheckedCreateWithoutLeadsInput = {
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
 }
 
 export type UserCreateOrConnectWithoutLeadsInput = {
@@ -953,6 +1080,7 @@ export type UserUpdateWithoutLeadsInput = {
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeadsInput = {
@@ -970,6 +1098,7 @@ export type UserUncheckedUpdateWithoutLeadsInput = {
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
 }
 
 
@@ -982,6 +1111,7 @@ export type UserCountOutputType = {
   favorites: number
   priceAlerts: number
   searchAlerts: number
+  adminProjects: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -989,6 +1119,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
   priceAlerts?: boolean | UserCountOutputTypeCountPriceAlertsArgs
   searchAlerts?: boolean | UserCountOutputTypeCountSearchAlertsArgs
+  adminProjects?: boolean | UserCountOutputTypeCountAdminProjectsArgs
 }
 
 /**
@@ -1029,6 +1160,13 @@ export type UserCountOutputTypeCountSearchAlertsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.SearchAlertWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAdminProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdminProjectWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1046,6 +1184,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
   priceAlerts?: boolean | Prisma.User$priceAlertsArgs<ExtArgs>
   searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
+  adminProjects?: boolean | Prisma.User$adminProjectsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1095,6 +1234,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
   priceAlerts?: boolean | Prisma.User$priceAlertsArgs<ExtArgs>
   searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
+  adminProjects?: boolean | Prisma.User$adminProjectsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1108,6 +1248,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     favorites: Prisma.$FavoritePayload<ExtArgs>[]
     priceAlerts: Prisma.$PriceAlertPayload<ExtArgs>[]
     searchAlerts: Prisma.$SearchAlertPayload<ExtArgs>[]
+    adminProjects: Prisma.$AdminProjectPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1519,6 +1660,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   favorites<T extends Prisma.User$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   priceAlerts<T extends Prisma.User$priceAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$priceAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   searchAlerts<T extends Prisma.User$searchAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$searchAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SearchAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  adminProjects<T extends Prisma.User$adminProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2063,6 +2205,30 @@ export type User$searchAlertsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.SearchAlertScalarFieldEnum | Prisma.SearchAlertScalarFieldEnum[]
+}
+
+/**
+ * User.adminProjects
+ */
+export type User$adminProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdminProject
+   */
+  select?: Prisma.AdminProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AdminProject
+   */
+  omit?: Prisma.AdminProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdminProjectInclude<ExtArgs> | null
+  where?: Prisma.AdminProjectWhereInput
+  orderBy?: Prisma.AdminProjectOrderByWithRelationInput | Prisma.AdminProjectOrderByWithRelationInput[]
+  cursor?: Prisma.AdminProjectWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AdminProjectScalarFieldEnum | Prisma.AdminProjectScalarFieldEnum[]
 }
 
 /**

@@ -103,6 +103,13 @@ export class LeadsService {
                 },
               },
             },
+            adminProject: {
+              select: {
+                createdByAdmin: {
+                  select: { email: true, firstName: true, lastName: true },
+                },
+              },
+            },
           },
         });
     if (!target) {
@@ -116,11 +123,20 @@ export class LeadsService {
     const publicationUrl = dto.projectId
       ? `/project/${target.slug}`
       : `/propiedades/${target.slug}`;
-    const ownerEmail = target.contactEmail ?? target.agentProfile.user.email;
+    const adminCreator =
+      'adminProject' in target ? target.adminProject?.createdByAdmin : null;
+    const ownerEmail =
+      target.contactEmail ??
+      target.agentProfile?.user.email ??
+      adminCreator?.email ??
+      '';
     const ownerName =
       target.contactName ??
-      target.agentProfile.businessName ??
-      `${target.agentProfile.user.firstName} ${target.agentProfile.user.lastName ?? ''}`.trim();
+      target.agentProfile?.businessName ??
+      (target.agentProfile
+        ? `${target.agentProfile.user.firstName} ${target.agentProfile.user.lastName ?? ''}`.trim()
+        : `${adminCreator?.firstName ?? ''} ${adminCreator?.lastName ?? ''}`.trim() ||
+          'ARIZ Proyectos');
 
     const lead = await this.prisma.lead.create({
       data: {
