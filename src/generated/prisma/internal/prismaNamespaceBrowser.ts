@@ -120,6 +120,7 @@ export const ProfessionalProfileScalarFieldEnum = {
   website: 'website',
   socialLinks: 'socialLinks',
   slug: 'slug',
+  isOfficialDeveloper: 'isOfficialDeveloper',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

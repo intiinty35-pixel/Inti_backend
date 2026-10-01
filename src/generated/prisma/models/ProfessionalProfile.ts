@@ -39,6 +39,7 @@ export type ProfessionalProfileMinAggregateOutputType = {
   website: string | null
   socialLinks: string | null
   slug: string | null
+  isOfficialDeveloper: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +59,7 @@ export type ProfessionalProfileMaxAggregateOutputType = {
   website: string | null
   socialLinks: string | null
   slug: string | null
+  isOfficialDeveloper: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -77,6 +79,7 @@ export type ProfessionalProfileCountAggregateOutputType = {
   website: number
   socialLinks: number
   slug: number
+  isOfficialDeveloper: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -98,6 +101,7 @@ export type ProfessionalProfileMinAggregateInputType = {
   website?: true
   socialLinks?: true
   slug?: true
+  isOfficialDeveloper?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -117,6 +121,7 @@ export type ProfessionalProfileMaxAggregateInputType = {
   website?: true
   socialLinks?: true
   slug?: true
+  isOfficialDeveloper?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -136,6 +141,7 @@ export type ProfessionalProfileCountAggregateInputType = {
   website?: true
   socialLinks?: true
   slug?: true
+  isOfficialDeveloper?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -228,6 +234,7 @@ export type ProfessionalProfileGroupByOutputType = {
   website: string | null
   socialLinks: string | null
   slug: string | null
+  isOfficialDeveloper: boolean
   createdAt: Date
   updatedAt: Date
   _count: ProfessionalProfileCountAggregateOutputType | null
@@ -268,6 +275,7 @@ export type ProfessionalProfileWhereInput = {
   website?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
   socialLinks?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
   slug?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
+  isOfficialDeveloper?: Prisma.BoolFilter<"ProfessionalProfile"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ProfessionalProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProfessionalProfile"> | Date | string
   leads?: Prisma.LeadListRelationFilter
@@ -292,6 +300,7 @@ export type ProfessionalProfileOrderByWithRelationInput = {
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   socialLinks?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrderInput | Prisma.SortOrder
+  isOfficialDeveloper?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   leads?: Prisma.LeadOrderByRelationAggregateInput
@@ -319,6 +328,7 @@ export type ProfessionalProfileWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
   website?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
   socialLinks?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
+  isOfficialDeveloper?: Prisma.BoolFilter<"ProfessionalProfile"> | boolean
   createdAt?: Prisma.DateTimeFilter<"ProfessionalProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProfessionalProfile"> | Date | string
   leads?: Prisma.LeadListRelationFilter
@@ -343,6 +353,7 @@ export type ProfessionalProfileOrderByWithAggregationInput = {
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   socialLinks?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrderInput | Prisma.SortOrder
+  isOfficialDeveloper?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProfessionalProfileCountOrderByAggregateInput
@@ -368,6 +379,7 @@ export type ProfessionalProfileScalarWhereWithAggregatesInput = {
   website?: Prisma.StringNullableWithAggregatesFilter<"ProfessionalProfile"> | string | null
   socialLinks?: Prisma.StringNullableWithAggregatesFilter<"ProfessionalProfile"> | string | null
   slug?: Prisma.StringNullableWithAggregatesFilter<"ProfessionalProfile"> | string | null
+  isOfficialDeveloper?: Prisma.BoolWithAggregatesFilter<"ProfessionalProfile"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProfessionalProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ProfessionalProfile"> | Date | string
 }
@@ -386,6 +398,7 @@ export type ProfessionalProfileCreateInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -410,6 +423,7 @@ export type ProfessionalProfileUncheckedCreateInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -432,6 +446,7 @@ export type ProfessionalProfileUpdateInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -456,6 +471,7 @@ export type ProfessionalProfileUncheckedUpdateInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -479,6 +495,7 @@ export type ProfessionalProfileCreateManyInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -497,6 +514,7 @@ export type ProfessionalProfileUpdateManyMutationInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -516,6 +534,7 @@ export type ProfessionalProfileUncheckedUpdateManyInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -540,6 +559,7 @@ export type ProfessionalProfileCountOrderByAggregateInput = {
   website?: Prisma.SortOrder
   socialLinks?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  isOfficialDeveloper?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -559,6 +579,7 @@ export type ProfessionalProfileMaxOrderByAggregateInput = {
   website?: Prisma.SortOrder
   socialLinks?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  isOfficialDeveloper?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -578,6 +599,7 @@ export type ProfessionalProfileMinOrderByAggregateInput = {
   website?: Prisma.SortOrder
   socialLinks?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  isOfficialDeveloper?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -701,6 +723,7 @@ export type ProfessionalProfileCreateWithoutUserInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -723,6 +746,7 @@ export type ProfessionalProfileUncheckedCreateWithoutUserInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -761,6 +785,7 @@ export type ProfessionalProfileUpdateWithoutUserInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -783,6 +808,7 @@ export type ProfessionalProfileUncheckedUpdateWithoutUserInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -805,6 +831,7 @@ export type ProfessionalProfileCreateWithoutSubscriptionsInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -828,6 +855,7 @@ export type ProfessionalProfileUncheckedCreateWithoutSubscriptionsInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -865,6 +893,7 @@ export type ProfessionalProfileUpdateWithoutSubscriptionsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -888,6 +917,7 @@ export type ProfessionalProfileUncheckedUpdateWithoutSubscriptionsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -909,6 +939,7 @@ export type ProfessionalProfileCreateWithoutPropertiesInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -932,6 +963,7 @@ export type ProfessionalProfileUncheckedCreateWithoutPropertiesInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -969,6 +1001,7 @@ export type ProfessionalProfileUpdateWithoutPropertiesInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -992,6 +1025,7 @@ export type ProfessionalProfileUncheckedUpdateWithoutPropertiesInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -1013,6 +1047,7 @@ export type ProfessionalProfileCreateWithoutProjectsInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -1036,6 +1071,7 @@ export type ProfessionalProfileUncheckedCreateWithoutProjectsInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -1073,6 +1109,7 @@ export type ProfessionalProfileUpdateWithoutProjectsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -1096,6 +1133,7 @@ export type ProfessionalProfileUncheckedUpdateWithoutProjectsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -1117,6 +1155,7 @@ export type ProfessionalProfileCreateWithoutLeadsInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfessionalProfileInput
@@ -1140,6 +1179,7 @@ export type ProfessionalProfileUncheckedCreateWithoutLeadsInput = {
   website?: string | null
   socialLinks?: string | null
   slug?: string | null
+  isOfficialDeveloper?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -1177,6 +1217,7 @@ export type ProfessionalProfileUpdateWithoutLeadsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfessionalProfileNestedInput
@@ -1200,6 +1241,7 @@ export type ProfessionalProfileUncheckedUpdateWithoutLeadsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -1280,6 +1322,7 @@ export type ProfessionalProfileSelect<ExtArgs extends runtime.Types.Extensions.I
   website?: boolean
   socialLinks?: boolean
   slug?: boolean
+  isOfficialDeveloper?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   leads?: boolean | Prisma.ProfessionalProfile$leadsArgs<ExtArgs>
@@ -1305,6 +1348,7 @@ export type ProfessionalProfileSelectCreateManyAndReturn<ExtArgs extends runtime
   website?: boolean
   socialLinks?: boolean
   slug?: boolean
+  isOfficialDeveloper?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1325,6 +1369,7 @@ export type ProfessionalProfileSelectUpdateManyAndReturn<ExtArgs extends runtime
   website?: boolean
   socialLinks?: boolean
   slug?: boolean
+  isOfficialDeveloper?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1345,11 +1390,12 @@ export type ProfessionalProfileSelectScalar = {
   website?: boolean
   socialLinks?: boolean
   slug?: boolean
+  isOfficialDeveloper?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProfessionalProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "status" | "dni" | "ruc" | "businessName" | "whatsapp" | "city" | "districts" | "address" | "website" | "socialLinks" | "slug" | "createdAt" | "updatedAt", ExtArgs["result"]["professionalProfile"]>
+export type ProfessionalProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "status" | "dni" | "ruc" | "businessName" | "whatsapp" | "city" | "districts" | "address" | "website" | "socialLinks" | "slug" | "isOfficialDeveloper" | "createdAt" | "updatedAt", ExtArgs["result"]["professionalProfile"]>
 export type ProfessionalProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   leads?: boolean | Prisma.ProfessionalProfile$leadsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1389,6 +1435,10 @@ export type $ProfessionalProfilePayload<ExtArgs extends runtime.Types.Extensions
     website: string | null
     socialLinks: string | null
     slug: string | null
+    /**
+     * * Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin.
+     */
+    isOfficialDeveloper: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["professionalProfile"]>
@@ -1833,6 +1883,7 @@ export interface ProfessionalProfileFieldRefs {
   readonly website: Prisma.FieldRef<"ProfessionalProfile", 'String'>
   readonly socialLinks: Prisma.FieldRef<"ProfessionalProfile", 'String'>
   readonly slug: Prisma.FieldRef<"ProfessionalProfile", 'String'>
+  readonly isOfficialDeveloper: Prisma.FieldRef<"ProfessionalProfile", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"ProfessionalProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ProfessionalProfile", 'DateTime'>
 }

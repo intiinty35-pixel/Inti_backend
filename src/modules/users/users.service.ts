@@ -58,4 +58,17 @@ export class UsersService {
 
     return updated;
   }
+
+  async setOfficialDeveloper(profileId: string, isOfficialDeveloper: boolean) {
+    const profile = await this.prisma.professionalProfile.findUnique({
+      where: { id: profileId },
+      select: { id: true },
+    });
+    if (!profile) throw new NotFoundException('Perfil profesional no encontrado');
+
+    return this.prisma.professionalProfile.update({
+      where: { id: profileId },
+      data: { isOfficialDeveloper },
+    });
+  }
 }

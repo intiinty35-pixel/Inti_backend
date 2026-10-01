@@ -89,7 +89,7 @@ export type PropertyMedia = Prisma.PropertyMediaModel
 export type Project = Prisma.ProjectModel
 /**
  * Model AdminProject
- *
+ * 
  */
 export type AdminProject = Prisma.AdminProjectModel
 /**

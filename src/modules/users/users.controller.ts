@@ -11,6 +11,7 @@ import { ParseEnumPipe } from '@nestjs/common';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { ApprovalStatus, Role } from '../../generated/prisma/enums';
 import { ListProfessionalsQueryDto } from './dto/list-professionals-query.dto';
+import { UpdateOfficialDeveloperDto } from './dto/update-official-developer.dto';
 import { UpdateProfessionalStatusDto } from './dto/update-professional-status.dto';
 import { UsersService } from './users.service';
 
@@ -34,5 +35,13 @@ export class UsersController {
     @Body() dto: UpdateProfessionalStatusDto,
   ) {
     return this.users.setProfessionalStatus(id, dto.status);
+  }
+
+  @Patch(':id/official-developer')
+  setOfficialDeveloper(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateOfficialDeveloperDto,
+  ) {
+    return this.users.setOfficialDeveloper(id, dto.isOfficialDeveloper);
   }
 }

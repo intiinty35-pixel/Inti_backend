@@ -365,17 +365,28 @@ export class ProjectsService {
       stage: query.stage,
       currency: query.currency,
       priceFrom: { gte: query.priceMin, lte: query.priceMax },
-      adminProject: query.origin
-        ? query.origin === 'ADMIN'
-          ? { isNot: null }
-          : { is: null }
-        : undefined,
+      ...this.buildOriginFilter(query.origin),
       location: {
         department: query.department,
         province: query.province,
         district: query.district,
       },
     };
+  }
+
+  /**
+   * "ADMIN" = creado desde el panel de admin O publicado por un perfil con
+   * el privilegio isOfficialDeveloper (desarrolladoras oficiales de Ariz).
+   * "AGENT" es todo lo demas.
+   */
+  private buildOriginFilter(origin?: 'ADMIN' | 'AGENT'): Prisma.ProjectWhereInput {
+    if (!origin) return {};
+
+    const isArizOrigin: Prisma.ProjectWhereInput = {
+      OR: [{ adminProject: { isNot: null } }, { agentProfile: { isOfficialDeveloper: true } }],
+    };
+
+    return origin === 'ADMIN' ? isArizOrigin : { NOT: isArizOrigin };
   }
 
   private buildOrderBy(sort?: ProjectSort): Prisma.ProjectOrderByWithRelationInput[] {
@@ -508,7 +519,7 @@ export class ProjectsService {
     const lotAreas = project.lots.map((lot) => Number(lot.areaM2));
     return {
       id: project.id,
-      origin: project.agentProfileId === null ? 'ADMIN' : 'AGENT',
+      origin: project.agentProfileId === null || project.agentProfile?.isOfficialDeveloper ? 'ADMIN' : 'AGENT',
       slug: project.slug,
       name: project.name,
       description: project.description,

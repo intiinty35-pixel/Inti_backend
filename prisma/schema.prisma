@@ -44,6 +44,8 @@ model ProfessionalProfile {
   website       String?
   socialLinks   String?
   slug          String?            @unique
+  /** Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin. */
+  isOfficialDeveloper Boolean      @default(false)
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   leads         Lead[]
