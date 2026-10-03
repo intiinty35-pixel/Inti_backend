@@ -9,6 +9,7 @@ import {
   ApprovalStatus,
   AmenityCategory,
   OperationType,
+  ProfessionalType,
   ProjectStatus,
   PropertyStatus,
   PropertyType,
@@ -27,12 +28,22 @@ const PROPERTY_INCLUDE = {
   amenities: { include: { amenity: true } },
   agentProfile: {
     include: {
-      user: { select: { id: true, firstName: true, lastName: true, email: true, phone: true } },
+      user: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          phone: true,
+        },
+      },
     },
   },
 } satisfies Prisma.PropertyInclude;
 
-type PropertyWithRelations = Prisma.PropertyGetPayload<{ include: typeof PROPERTY_INCLUDE }>;
+type PropertyWithRelations = Prisma.PropertyGetPayload<{
+  include: typeof PROPERTY_INCLUDE;
+}>;
 
 @Injectable()
 export class PropertiesService {
@@ -82,7 +93,16 @@ export class PropertiesService {
       where: { userId: user.id },
       select: { id: true },
     });
-    if (!agent) return query.page ? { items: [], total: 0, page: 1, pageSize: query.pageSize ?? 9, hasMore: false } : [];
+    if (!agent)
+      return query.page
+        ? {
+            items: [],
+            total: 0,
+            page: 1,
+            pageSize: query.pageSize ?? 9,
+            hasMore: false,
+          }
+        : [];
 
     if (!query.page) {
       const properties = await this.prisma.property.findMany({
@@ -151,7 +171,8 @@ export class PropertiesService {
             floors: dto.details.floors,
             constructionYear: dto.details.constructionYear,
             conservationStatus: dto.details.conservationStatus,
-            specificDetails: dto.details.specificDetails as Prisma.InputJsonValue | undefined,
+            specificDetails: dto.details.specificDetails as
+              Prisma.InputJsonValue | undefined,
           },
         },
         media: {
@@ -188,7 +209,12 @@ export class PropertiesService {
   async publish(user: AuthUser, id: string) {
     const property = await this.prisma.property.findUnique({
       where: { id },
-      include: { agentProfile: true, location: true, details: true, media: true },
+      include: {
+        agentProfile: true,
+        location: true,
+        details: true,
+        media: true,
+      },
     });
     if (!property) throw new NotFoundException('Propiedad no encontrada');
     if (property.agentProfile.userId !== user.id && user.role !== 'ADMIN') {
@@ -197,8 +223,26 @@ export class PropertiesService {
     if (property.agentProfile.status !== ApprovalStatus.APPROVED) {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
-    if (!property.location || !property.details || property.media.length === 0) {
-      throw new BadRequestException('Falta completar ubicación, características o fotos');
+    if (
+      !property.location ||
+      !property.details ||
+      property.media.length === 0
+    ) {
+      throw new BadRequestException(
+        'Falta completar ubicación, características o fotos',
+      );
+    }
+
+    if (
+      property.agentProfile.type === ProfessionalType.DEVELOPER ||
+      property.agentProfile.type === ProfessionalType.REAL_ESTATE_AGENCY
+    ) {
+      const updated = await this.prisma.property.update({
+        where: { id },
+        data: { status: PropertyStatus.PENDING_REVIEW, publishedAt: null },
+        include: PROPERTY_INCLUDE,
+      });
+      return this.toDetail(updated);
     }
 
     await this.expireMembershipIfNeeded(property.agentProfile.id);
@@ -210,6 +254,77 @@ export class PropertiesService {
       include: PROPERTY_INCLUDE,
     });
     return this.toDetail(updated);
+  }
+
+  async reviewDeveloperProperty(id: string, status: 'PUBLISHED' | 'REJECTED') {
+    const property = await this.prisma.property.findUnique({
+      where: { id },
+      include: { agentProfile: true },
+    });
+    if (!property) throw new NotFoundException('Propiedad no encontrada');
+    if (property.agentProfile.type !== ProfessionalType.DEVELOPER) {
+      throw new ForbiddenException(
+        'Esta propiedad no pertenece a una desarrolladora',
+      );
+    }
+
+    if (property.status !== PropertyStatus.PENDING_REVIEW) {
+      throw new BadRequestException(
+        'La propiedad no está pendiente de revisión',
+      );
+    }
+
+    const updated = await this.prisma.property.update({
+      where: { id },
+      data: {
+        status,
+        publishedAt: status === PropertyStatus.PUBLISHED ? new Date() : null,
+      },
+      include: PROPERTY_INCLUDE,
+    });
+    return this.toDetail(updated);
+  }
+
+  async reviewAgencyProperty(id: string, status: 'PUBLISHED' | 'REJECTED') {
+    const property = await this.prisma.property.findUnique({
+      where: { id },
+      include: { agentProfile: true },
+    });
+    if (!property) throw new NotFoundException('Propiedad no encontrada');
+    if (property.agentProfile.type !== ProfessionalType.REAL_ESTATE_AGENCY) {
+      throw new ForbiddenException(
+        'Esta propiedad no pertenece a una inmobiliaria',
+      );
+    }
+    if (property.status !== PropertyStatus.PENDING_REVIEW) {
+      throw new BadRequestException(
+        'La propiedad no está pendiente de revisión',
+      );
+    }
+
+    const updated = await this.prisma.property.update({
+      where: { id },
+      data: {
+        status,
+        publishedAt: status === PropertyStatus.PUBLISHED ? new Date() : null,
+      },
+      include: PROPERTY_INCLUDE,
+    });
+    return this.toDetail(updated);
+  }
+
+  async getAgencyPropertyReviewDetail(id: string) {
+    const property = await this.prisma.property.findUnique({
+      where: { id },
+      include: PROPERTY_INCLUDE,
+    });
+    if (!property) throw new NotFoundException('Propiedad no encontrada');
+    if (property.agentProfile.type !== ProfessionalType.REAL_ESTATE_AGENCY) {
+      throw new ForbiddenException(
+        'Esta propiedad no pertenece a una inmobiliaria',
+      );
+    }
+    return this.toDetail(property);
   }
 
   private buildPublicWhere(query: PropertyQueryDto): Prisma.PropertyWhereInput {
@@ -228,8 +343,14 @@ export class PropertiesService {
         district: query.district,
       },
       details: {
-        bedrooms: query.bedroomsMin === undefined ? undefined : { gte: query.bedroomsMin },
-        bathrooms: query.bathroomsMin === undefined ? undefined : { gte: query.bathroomsMin },
+        bedrooms:
+          query.bedroomsMin === undefined
+            ? undefined
+            : { gte: query.bedroomsMin },
+        bathrooms:
+          query.bathroomsMin === undefined
+            ? undefined
+            : { gte: query.bathroomsMin },
         totalArea:
           query.areaMin === undefined && query.areaMax === undefined
             ? undefined
@@ -238,16 +359,24 @@ export class PropertiesService {
     };
   }
 
-  private buildOrderBy(sort?: PropertySort): Prisma.PropertyOrderByWithRelationInput[] {
+  private buildOrderBy(
+    sort?: PropertySort,
+  ): Prisma.PropertyOrderByWithRelationInput[] {
     if (sort === PropertySort.PRICE_ASC) return [{ price: 'asc' }];
     if (sort === PropertySort.PRICE_DESC) return [{ price: 'desc' }];
-    if (sort === PropertySort.FEATURED) return [{ featured: 'desc' }, { publishedAt: 'desc' }];
+    if (sort === PropertySort.FEATURED)
+      return [{ featured: 'desc' }, { publishedAt: 'desc' }];
     return [{ publishedAt: 'desc' }, { createdAt: 'desc' }];
   }
 
   private async requireApprovedAgent(userId: string) {
-    const agent = await this.prisma.professionalProfile.findUnique({ where: { userId } });
-    if (!agent) throw new ForbiddenException('Completa tu perfil anunciante para publicar');
+    const agent = await this.prisma.professionalProfile.findUnique({
+      where: { userId },
+    });
+    if (!agent)
+      throw new ForbiddenException(
+        'Completa tu perfil anunciante para publicar',
+      );
     if (agent.status !== ApprovalStatus.APPROVED) {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
@@ -269,19 +398,39 @@ export class PropertiesService {
 
     await this.prisma.$transaction([
       this.prisma.planSubscription.updateMany({
-        where: { id: { in: expiredSubscriptions.map((subscription) => subscription.id) } },
+        where: {
+          id: {
+            in: expiredSubscriptions.map((subscription) => subscription.id),
+          },
+        },
         data: { status: SubscriptionStatus.EXPIRED },
       }),
       this.prisma.property.updateMany({
         where: {
-          agentProfileId: { in: [...new Set(expiredSubscriptions.map((subscription) => subscription.agentProfileId))] },
+          agentProfileId: {
+            in: [
+              ...new Set(
+                expiredSubscriptions.map(
+                  (subscription) => subscription.agentProfileId,
+                ),
+              ),
+            ],
+          },
           status: PropertyStatus.PUBLISHED,
         },
         data: { status: PropertyStatus.PAUSED },
       }),
       this.prisma.project.updateMany({
         where: {
-          agentProfileId: { in: [...new Set(expiredSubscriptions.map((subscription) => subscription.agentProfileId))] },
+          agentProfileId: {
+            in: [
+              ...new Set(
+                expiredSubscriptions.map(
+                  (subscription) => subscription.agentProfileId,
+                ),
+              ),
+            ],
+          },
           status: ProjectStatus.PUBLISHED,
         },
         data: { status: ProjectStatus.PAUSED },
@@ -302,7 +451,9 @@ export class PropertiesService {
     });
 
     if (!subscription) {
-      throw new ForbiddenException('Necesitas una membresia activa para publicar propiedades');
+      throw new ForbiddenException(
+        'Necesitas una membresia activa para publicar propiedades',
+      );
     }
 
     const publishedCount = await this.prisma.property.count({
@@ -321,11 +472,24 @@ export class PropertiesService {
   }
 
   private validateProperty(dto: CreatePropertyDto) {
-    if (dto.details.constructedArea && dto.details.totalArea && dto.details.constructedArea > dto.details.totalArea) {
-      throw new BadRequestException('El área construida no puede superar el área total');
+    if (
+      dto.details.constructedArea &&
+      dto.details.totalArea &&
+      dto.details.constructedArea > dto.details.totalArea
+    ) {
+      throw new BadRequestException(
+        'El área construida no puede superar el área total',
+      );
     }
-    const requiresBedrooms: PropertyType[] = [PropertyType.APARTMENT, PropertyType.HOUSE, PropertyType.ROOM];
-    if (requiresBedrooms.includes(dto.propertyType) && dto.details.bedrooms === undefined) {
+    const requiresBedrooms: PropertyType[] = [
+      PropertyType.APARTMENT,
+      PropertyType.HOUSE,
+      PropertyType.ROOM,
+    ];
+    if (
+      requiresBedrooms.includes(dto.propertyType) &&
+      dto.details.bedrooms === undefined
+    ) {
       throw new BadRequestException('Falta completar dormitorios');
     }
     if (dto.media.filter((media) => media.isCover).length > 1) {
@@ -354,7 +518,8 @@ export class PropertiesService {
   }
 
   private toListing(property: PropertyWithRelations) {
-    const cover = property.media.find((media) => media.isCover) ?? property.media[0];
+    const cover =
+      property.media.find((media) => media.isCover) ?? property.media[0];
     return {
       id: property.id,
       slug: property.slug,
@@ -365,25 +530,35 @@ export class PropertiesService {
       price: {
         amount: Number(property.price),
         currency: property.currency,
-        period: property.operationType === OperationType.RENT ? 'mensual' : 'total',
+        period:
+          property.operationType === OperationType.RENT ? 'mensual' : 'total',
       },
       location: property.location
         ? {
             department: property.location.department,
             province: property.location.province,
             district: property.location.district,
-            address: property.location.approximateLocation ? undefined : property.location.address,
-            lat: property.location.latitude ? Number(property.location.latitude) : undefined,
-            lng: property.location.longitude ? Number(property.location.longitude) : undefined,
+            address: property.location.approximateLocation
+              ? undefined
+              : property.location.address,
+            lat: property.location.latitude
+              ? Number(property.location.latitude)
+              : undefined,
+            lng: property.location.longitude
+              ? Number(property.location.longitude)
+              : undefined,
           }
         : { department: '', province: '', district: '' },
       images: property.media.map((media) => media.url),
       rooms: property.details?.bedrooms ?? 0,
       bathrooms: property.details?.bathrooms ?? 0,
       parkingSpaces: property.details?.parkingSpaces ?? 0,
-      areaM2: Number(property.details?.totalArea ?? property.details?.constructedArea ?? 0),
+      areaM2: Number(
+        property.details?.totalArea ?? property.details?.constructedArea ?? 0,
+      ),
       status: this.toFrontendStatus(property.status),
-      publishedAt: property.publishedAt?.toISOString() ?? property.createdAt.toISOString(),
+      publishedAt:
+        property.publishedAt?.toISOString() ?? property.createdAt.toISOString(),
       featured: property.featured,
       coverImage: cover?.url,
     };
@@ -392,13 +567,21 @@ export class PropertiesService {
   private toDetail(property: PropertyWithRelations) {
     return {
       ...this.toListing(property),
-      maintenanceFee: property.maintenanceFee ? Number(property.maintenanceFee) : null,
+      // The owner panel needs the editorial state to decide whether the item
+      // can be sent to review. Public detail only ever reaches this method for
+      // published properties.
+      status: property.status,
+      maintenanceFee: property.maintenanceFee
+        ? Number(property.maintenanceFee)
+        : null,
       negotiable: property.negotiable,
       details: property.details,
       amenities: property.amenities.map(({ amenity }) => amenity),
       agent: {
         id: property.agentProfile.id,
-        name: property.agentProfile.businessName ?? `${property.agentProfile.user.firstName} ${property.agentProfile.user.lastName ?? ''}`.trim(),
+        name:
+          property.agentProfile.businessName ??
+          `${property.agentProfile.user.firstName} ${property.agentProfile.user.lastName ?? ''}`.trim(),
         type: property.agentProfile.type,
         status: property.agentProfile.status,
         whatsapp: property.agentProfile.whatsapp,

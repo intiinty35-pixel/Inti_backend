@@ -30,7 +30,15 @@ const PROJECT_SUMMARY_INCLUDE = {
   media: { orderBy: [{ isCover: 'desc' }, { position: 'asc' }] },
   agentProfile: {
     include: {
-      user: { select: { id: true, firstName: true, lastName: true, email: true, phone: true } },
+      user: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          phone: true,
+        },
+      },
     },
   },
 } satisfies Prisma.ProjectInclude;
@@ -41,14 +49,24 @@ const PROJECT_INCLUDE = {
   adminProject: {
     include: {
       createdByAdmin: {
-        select: { id: true, firstName: true, lastName: true, email: true, phone: true },
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          phone: true,
+        },
       },
     },
   },
 } satisfies Prisma.ProjectInclude;
 
-type ProjectWithRelations = Prisma.ProjectGetPayload<{ include: typeof PROJECT_INCLUDE }>;
-type ProjectSummaryWithRelations = Prisma.ProjectGetPayload<{ include: typeof PROJECT_SUMMARY_INCLUDE }>;
+type ProjectWithRelations = Prisma.ProjectGetPayload<{
+  include: typeof PROJECT_INCLUDE;
+}>;
+type ProjectSummaryWithRelations = Prisma.ProjectGetPayload<{
+  include: typeof PROJECT_SUMMARY_INCLUDE;
+}>;
 
 @Injectable()
 export class ProjectsService {
@@ -100,7 +118,13 @@ export class ProjectsService {
     });
     if (!agent) {
       return query.page
-        ? { items: [], total: 0, page: 1, pageSize: query.pageSize ?? 9, hasMore: false }
+        ? {
+            items: [],
+            total: 0,
+            page: 1,
+            pageSize: query.pageSize ?? 9,
+            hasMore: false,
+          }
         : [];
     }
 
@@ -180,7 +204,9 @@ export class ProjectsService {
     return lots.map((lot) => ({
       id: lot.id,
       projectId: lot.projectId,
-      label: lot.block ? `Mza. ${lot.block} · Lote ${lot.lotNumber}` : `Lote ${lot.lotNumber}`,
+      label: lot.block
+        ? `Mza. ${lot.block} · Lote ${lot.lotNumber}`
+        : `Lote ${lot.lotNumber}`,
       operation: 'buy',
       price: { amount: Number(lot.price), currency: 'PEN', period: 'total' },
       bedrooms: 0,
@@ -201,7 +227,9 @@ export class ProjectsService {
 
   async createAdminDraft(user: AuthUser, dto: CreateProjectDto) {
     if (user.role !== 'ADMIN') {
-      throw new ForbiddenException('Solo un administrador puede crear proyectos de ARIZ');
+      throw new ForbiddenException(
+        'Solo un administrador puede crear proyectos de ARIZ',
+      );
     }
     this.validateProject(dto);
 
@@ -236,11 +264,15 @@ export class ProjectsService {
         registryEntry: dto.registryEntry,
         amenities: dto.amenities ?? [],
         lotMode: dto.lotMode,
-        constructionStart: dto.constructionStart ? new Date(dto.constructionStart) : undefined,
+        constructionStart: dto.constructionStart
+          ? new Date(dto.constructionStart)
+          : undefined,
         estimatedDelivery: new Date(dto.estimatedDelivery),
         certifications: dto.certifications ?? [],
         tourUrl: dto.tourUrl,
-        contactName: dto.contactName ?? (owner.createdByAdminId ? 'ARIZ Proyectos' : undefined),
+        contactName:
+          dto.contactName ??
+          (owner.createdByAdminId ? 'ARIZ Proyectos' : undefined),
         contactEmail: dto.contactEmail,
         contactPhone: dto.contactPhone,
         contactWhatsapp: dto.contactWhatsapp,
@@ -288,7 +320,13 @@ export class ProjectsService {
   async publish(user: AuthUser, id: string) {
     const project = await this.prisma.project.findUnique({
       where: { id },
-      include: { agentProfile: true, adminProject: true, location: true, lots: true, media: true },
+      include: {
+        agentProfile: true,
+        adminProject: true,
+        location: true,
+        lots: true,
+        media: true,
+      },
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
     if (
@@ -307,7 +345,21 @@ export class ProjectsService {
       project.lots.length === 0 ||
       !project.media.some((media) => media.type === MediaType.IMAGE)
     ) {
-      throw new BadRequestException('Falta completar ubicación, lotes o imágenes del proyecto');
+      throw new BadRequestException(
+        'Falta completar ubicación, lotes o imágenes del proyecto',
+      );
+    }
+
+    if (
+      project.agentProfile.type === ProfessionalType.DEVELOPER ||
+      project.agentProfile.type === ProfessionalType.REAL_ESTATE_AGENCY
+    ) {
+      const updated = await this.prisma.project.update({
+        where: { id },
+        data: { status: ProjectStatus.PENDING_REVIEW, publishedAt: null },
+        include: PROJECT_INCLUDE,
+      });
+      return this.toDetail(updated);
     }
 
     await this.expireMembershipIfNeeded(project.agentProfile.id);
@@ -321,9 +373,91 @@ export class ProjectsService {
     return this.toDetail(updated);
   }
 
+  async reviewDeveloperProject(id: string, status: 'PUBLISHED' | 'REJECTED') {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { agentProfile: true },
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    if (
+      !project.agentProfile ||
+      project.agentProfile.type !== ProfessionalType.DEVELOPER
+    ) {
+      throw new ForbiddenException(
+        'Este proyecto no pertenece a una desarrolladora',
+      );
+    }
+
+    if (project.status !== ProjectStatus.PENDING_REVIEW) {
+      throw new BadRequestException(
+        'El proyecto no está pendiente de revisión',
+      );
+    }
+
+    const updated = await this.prisma.project.update({
+      where: { id },
+      data: {
+        status,
+        publishedAt: status === ProjectStatus.PUBLISHED ? new Date() : null,
+      },
+      include: PROJECT_INCLUDE,
+    });
+    return this.toDetail(updated);
+  }
+
+  async reviewAgencyProject(id: string, status: 'PUBLISHED' | 'REJECTED') {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { agentProfile: true },
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    if (
+      !project.agentProfile ||
+      project.agentProfile.type !== ProfessionalType.REAL_ESTATE_AGENCY
+    ) {
+      throw new ForbiddenException(
+        'Este proyecto no pertenece a una inmobiliaria',
+      );
+    }
+    if (project.status !== ProjectStatus.PENDING_REVIEW) {
+      throw new BadRequestException(
+        'El proyecto no está pendiente de revisión',
+      );
+    }
+
+    const updated = await this.prisma.project.update({
+      where: { id },
+      data: {
+        status,
+        publishedAt: status === ProjectStatus.PUBLISHED ? new Date() : null,
+      },
+      include: PROJECT_INCLUDE,
+    });
+    return this.toDetail(updated);
+  }
+
+  async getAgencyProjectReviewDetail(id: string) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: PROJECT_INCLUDE,
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    if (
+      !project.agentProfile ||
+      project.agentProfile.type !== ProfessionalType.REAL_ESTATE_AGENCY
+    ) {
+      throw new ForbiddenException(
+        'Este proyecto no pertenece a una inmobiliaria',
+      );
+    }
+    return this.toDetail(project);
+  }
+
   async publishAdminProject(user: AuthUser, id: string) {
     if (user.role !== 'ADMIN') {
-      throw new ForbiddenException('Solo un administrador puede publicar proyectos de ARIZ');
+      throw new ForbiddenException(
+        'Solo un administrador puede publicar proyectos de ARIZ',
+      );
     }
 
     const project = await this.prisma.project.findUnique({
@@ -354,7 +488,9 @@ export class ProjectsService {
       project.lots.length === 0 ||
       !project.media.some((media) => media.type === MediaType.IMAGE)
     ) {
-      throw new BadRequestException('Falta completar ubicación, lotes o imágenes del proyecto');
+      throw new BadRequestException(
+        'Falta completar ubicación, lotes o imágenes del proyecto',
+      );
     }
   }
 
@@ -379,26 +515,39 @@ export class ProjectsService {
    * el privilegio isOfficialDeveloper (desarrolladoras oficiales de Ariz).
    * "AGENT" es todo lo demas.
    */
-  private buildOriginFilter(origin?: 'ADMIN' | 'AGENT'): Prisma.ProjectWhereInput {
+  private buildOriginFilter(
+    origin?: 'ADMIN' | 'AGENT',
+  ): Prisma.ProjectWhereInput {
     if (!origin) return {};
 
     const isArizOrigin: Prisma.ProjectWhereInput = {
-      OR: [{ adminProject: { isNot: null } }, { agentProfile: { isOfficialDeveloper: true } }],
+      OR: [
+        { adminProject: { isNot: null } },
+        { agentProfile: { isOfficialDeveloper: true } },
+      ],
     };
 
     return origin === 'ADMIN' ? isArizOrigin : { NOT: isArizOrigin };
   }
 
-  private buildOrderBy(sort?: ProjectSort): Prisma.ProjectOrderByWithRelationInput[] {
+  private buildOrderBy(
+    sort?: ProjectSort,
+  ): Prisma.ProjectOrderByWithRelationInput[] {
     if (sort === ProjectSort.PRICE_ASC) return [{ priceFrom: 'asc' }];
     if (sort === ProjectSort.PRICE_DESC) return [{ priceFrom: 'desc' }];
-    if (sort === ProjectSort.FEATURED) return [{ featured: 'desc' }, { publishedAt: 'desc' }];
+    if (sort === ProjectSort.FEATURED)
+      return [{ featured: 'desc' }, { publishedAt: 'desc' }];
     return [{ publishedAt: 'desc' }, { createdAt: 'desc' }];
   }
 
   private async requireApprovedAgent(userId: string) {
-    const agent = await this.prisma.professionalProfile.findUnique({ where: { userId } });
-    if (!agent) throw new ForbiddenException('Completa tu perfil anunciante para publicar');
+    const agent = await this.prisma.professionalProfile.findUnique({
+      where: { userId },
+    });
+    if (!agent)
+      throw new ForbiddenException(
+        'Completa tu perfil anunciante para publicar',
+      );
     if (agent.status !== ApprovalStatus.APPROVED) {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
@@ -407,7 +556,9 @@ export class ProjectsService {
 
   private ensureCanManageProjects(type: ProfessionalType) {
     if (type === ProfessionalType.INDEPENDENT_AGENT) {
-      throw new ForbiddenException('Los agentes inmobiliarios solo pueden publicar propiedades.');
+      throw new ForbiddenException(
+        'Los agentes inmobiliarios solo pueden publicar propiedades.',
+      );
     }
   }
 
@@ -425,20 +576,32 @@ export class ProjectsService {
     if (expiredSubscriptions.length === 0) return;
 
     const agentIds = [
-      ...new Set(expiredSubscriptions.map((subscription) => subscription.agentProfileId)),
+      ...new Set(
+        expiredSubscriptions.map((subscription) => subscription.agentProfileId),
+      ),
     ];
 
     await this.prisma.$transaction([
       this.prisma.planSubscription.updateMany({
-        where: { id: { in: expiredSubscriptions.map((subscription) => subscription.id) } },
+        where: {
+          id: {
+            in: expiredSubscriptions.map((subscription) => subscription.id),
+          },
+        },
         data: { status: SubscriptionStatus.EXPIRED },
       }),
       this.prisma.property.updateMany({
-        where: { agentProfileId: { in: agentIds }, status: PropertyStatus.PUBLISHED },
+        where: {
+          agentProfileId: { in: agentIds },
+          status: PropertyStatus.PUBLISHED,
+        },
         data: { status: PropertyStatus.PAUSED },
       }),
       this.prisma.project.updateMany({
-        where: { agentProfileId: { in: agentIds }, status: ProjectStatus.PUBLISHED },
+        where: {
+          agentProfileId: { in: agentIds },
+          status: ProjectStatus.PUBLISHED,
+        },
         data: { status: ProjectStatus.PAUSED },
       }),
     ]);
@@ -475,7 +638,9 @@ export class ProjectsService {
     );
 
     if (!hasAvailableCredit) {
-      const maxProjectLimit = Math.max(...subscriptions.map(({ plan }) => plan.projectLimit));
+      const maxProjectLimit = Math.max(
+        ...subscriptions.map(({ plan }) => plan.projectLimit),
+      );
       throw new ForbiddenException(
         `No tienes crédito disponible para publicar otro proyecto. Tus suscripciones activas permiten hasta ${maxProjectLimit} proyectos activos. Solicita una nueva suscripción al administrador.`,
       );
@@ -484,7 +649,9 @@ export class ProjectsService {
 
   private validateProject(dto: CreateProjectDto) {
     if (dto.priceTo < dto.priceFrom) {
-      throw new BadRequestException('El precio hasta no puede ser menor que el precio desde');
+      throw new BadRequestException(
+        'El precio hasta no puede ser menor que el precio desde',
+      );
     }
     if (dto.media.filter((media) => media.isCover).length > 1) {
       throw new BadRequestException('Solo una imagen puede ser portada');
@@ -492,12 +659,19 @@ export class ProjectsService {
     if (!dto.media.some((media) => media.type === MediaType.IMAGE)) {
       throw new BadRequestException('Agrega al menos una imagen del proyecto');
     }
-    if (dto.lotMode === LotMode.GROUP && dto.lots.some((lot) => !lot.lotCount)) {
-      throw new BadRequestException('Cada grupo debe indicar cuántos lotes cubre');
+    if (
+      dto.lotMode === LotMode.GROUP &&
+      dto.lots.some((lot) => !lot.lotCount)
+    ) {
+      throw new BadRequestException(
+        'Cada grupo debe indicar cuántos lotes cubre',
+      );
     }
     const numbers = dto.lots.map((lot) => lot.lotNumber.trim().toLowerCase());
     if (new Set(numbers).size !== numbers.length) {
-      throw new BadRequestException('Hay números de lote repetidos en el inventario');
+      throw new BadRequestException(
+        'Hay números de lote repetidos en el inventario',
+      );
     }
   }
 
@@ -514,12 +688,17 @@ export class ProjectsService {
   }
 
   private toSummary(project: ProjectSummaryWithRelations) {
-    const cover = project.media.find((media) => media.isCover) ?? project.media[0];
+    const cover =
+      project.media.find((media) => media.isCover) ?? project.media[0];
     const lotPrices = project.lots.map((lot) => Number(lot.price));
     const lotAreas = project.lots.map((lot) => Number(lot.areaM2));
     return {
       id: project.id,
-      origin: project.agentProfileId === null || project.agentProfile?.isOfficialDeveloper ? 'ADMIN' : 'AGENT',
+      origin:
+        project.agentProfileId === null ||
+        project.agentProfile?.isOfficialDeveloper
+          ? 'ADMIN'
+          : 'AGENT',
       slug: project.slug,
       name: project.name,
       description: project.description,
@@ -548,16 +727,23 @@ export class ProjectsService {
             department: project.location.department,
             province: project.location.province,
             district: project.location.district,
-            lat: project.location.latitude ? Number(project.location.latitude) : undefined,
-            lng: project.location.longitude ? Number(project.location.longitude) : undefined,
+            lat: project.location.latitude
+              ? Number(project.location.latitude)
+              : undefined,
+            lng: project.location.longitude
+              ? Number(project.location.longitude)
+              : undefined,
           }
         : { department: '', province: '', district: '' },
       coverImage: cover?.url,
-      images: project.media.filter((media) => media.type === MediaType.IMAGE).map((media) => media.url),
+      images: project.media
+        .filter((media) => media.type === MediaType.IMAGE)
+        .map((media) => media.url),
       tourUrl: project.tourUrl,
       status: project.status,
       featured: project.featured,
-      publishedAt: project.publishedAt?.toISOString() ?? project.createdAt.toISOString(),
+      publishedAt:
+        project.publishedAt?.toISOString() ?? project.createdAt.toISOString(),
     };
   }
 
@@ -567,7 +753,9 @@ export class ProjectsService {
       ruc: project.ruc,
       businessName: project.businessName,
       downPayment: project.downPayment ? Number(project.downPayment) : null,
-      monthlyPayment: project.monthlyPayment ? Number(project.monthlyPayment) : null,
+      monthlyPayment: project.monthlyPayment
+        ? Number(project.monthlyPayment)
+        : null,
       financing: project.financing,
       totalBlocks: project.totalBlocks,
       social: project.social,
@@ -582,8 +770,12 @@ export class ProjectsService {
       location: project.location
         ? {
             ...project.location,
-            latitude: project.location.latitude ? Number(project.location.latitude) : null,
-            longitude: project.location.longitude ? Number(project.location.longitude) : null,
+            latitude: project.location.latitude
+              ? Number(project.location.latitude)
+              : null,
+            longitude: project.location.longitude
+              ? Number(project.location.longitude)
+              : null,
           }
         : null,
       lots: project.lots.map((lot) => ({
@@ -627,12 +819,18 @@ export class ProjectsService {
           }
         : {
             id: null,
-            name: project.contactName ?? project.businessName ?? 'ARIZ Proyectos',
+            name:
+              project.contactName ?? project.businessName ?? 'ARIZ Proyectos',
             type: 'ADMIN',
             status: 'APPROVED',
             whatsapp: project.contactWhatsapp,
-            phone: project.contactPhone ?? project.adminProject?.createdByAdmin.phone,
-            email: project.contactEmail ?? project.adminProject?.createdByAdmin.email ?? '',
+            phone:
+              project.contactPhone ??
+              project.adminProject?.createdByAdmin.phone,
+            email:
+              project.contactEmail ??
+              project.adminProject?.createdByAdmin.email ??
+              '',
           },
       createdAt: project.createdAt.toISOString(),
       updatedAt: project.updatedAt.toISOString(),
