@@ -1,0 +1,8 @@
+ALTER TYPE "ProfessionalType" ADD VALUE 'INDIVIDUAL_OWNER';
+
+ALTER TABLE "users"
+ADD COLUMN "biography" TEXT,
+ADD COLUMN "avatarUrl" TEXT;
+
+ALTER TABLE "plans"
+ADD COLUMN "isCustomerOnly" BOOLEAN NOT NULL DEFAULT false;

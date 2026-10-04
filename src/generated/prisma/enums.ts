@@ -31,7 +31,8 @@ export type Role = (typeof Role)[keyof typeof Role]
 export const ProfessionalType = {
   INDEPENDENT_AGENT: 'INDEPENDENT_AGENT',
   REAL_ESTATE_AGENCY: 'REAL_ESTATE_AGENCY',
-  DEVELOPER: 'DEVELOPER'
+  DEVELOPER: 'DEVELOPER',
+  INDIVIDUAL_OWNER: 'INDIVIDUAL_OWNER'
 } as const
 
 export type ProfessionalType = (typeof ProfessionalType)[keyof typeof ProfessionalType]

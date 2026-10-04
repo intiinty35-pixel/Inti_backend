@@ -416,6 +416,7 @@ export const ModelName = {
   ProjectLot: 'ProjectLot',
   ProjectMilestone: 'ProjectMilestone',
   ProjectMedia: 'ProjectMedia',
+  InvestmentOpportunity: 'InvestmentOpportunity',
   Lead: 'Lead'
 } as const
 
@@ -432,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "lead"
+    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "lead"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1842,6 +1843,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    InvestmentOpportunity: {
+      payload: Prisma.$InvestmentOpportunityPayload<ExtArgs>
+      fields: Prisma.InvestmentOpportunityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvestmentOpportunityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvestmentOpportunityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>
+        }
+        findFirst: {
+          args: Prisma.InvestmentOpportunityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvestmentOpportunityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>
+        }
+        findMany: {
+          args: Prisma.InvestmentOpportunityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>[]
+        }
+        create: {
+          args: Prisma.InvestmentOpportunityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>
+        }
+        createMany: {
+          args: Prisma.InvestmentOpportunityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvestmentOpportunityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>[]
+        }
+        delete: {
+          args: Prisma.InvestmentOpportunityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>
+        }
+        update: {
+          args: Prisma.InvestmentOpportunityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>
+        }
+        deleteMany: {
+          args: Prisma.InvestmentOpportunityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvestmentOpportunityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvestmentOpportunityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>[]
+        }
+        upsert: {
+          args: Prisma.InvestmentOpportunityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentOpportunityPayload>
+        }
+        aggregate: {
+          args: Prisma.InvestmentOpportunityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvestmentOpportunity>
+        }
+        groupBy: {
+          args: Prisma.InvestmentOpportunityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvestmentOpportunityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvestmentOpportunityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvestmentOpportunityCountAggregateOutputType> | number
+        }
+      }
+    }
     Lead: {
       payload: Prisma.$LeadPayload<ExtArgs>
       fields: Prisma.LeadFieldRefs
@@ -1962,6 +2037,8 @@ export const UserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   phone: 'phone',
+  biography: 'biography',
+  avatarUrl: 'avatarUrl',
   role: 'role',
   isActive: 'isActive',
   createdAt: 'createdAt',
@@ -2006,6 +2083,7 @@ export const PlanScalarFieldEnum = {
   features: 'features',
   isFree: 'isFree',
   isDefault: 'isDefault',
+  isCustomerOnly: 'isCustomerOnly',
   highlight: 'highlight',
   isActive: 'isActive',
   createdAt: 'createdAt',
@@ -2273,6 +2351,35 @@ export const ProjectMediaScalarFieldEnum = {
 } as const
 
 export type ProjectMediaScalarFieldEnum = (typeof ProjectMediaScalarFieldEnum)[keyof typeof ProjectMediaScalarFieldEnum]
+
+
+export const InvestmentOpportunityScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  summary: 'summary',
+  description: 'description',
+  areaLabel: 'areaLabel',
+  initialInvestment: 'initialInvestment',
+  currency: 'currency',
+  roiPercent: 'roiPercent',
+  investmentGoal: 'investmentGoal',
+  location: 'location',
+  department: 'department',
+  province: 'province',
+  district: 'district',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  coverImageUrl: 'coverImageUrl',
+  coverImagePublicId: 'coverImagePublicId',
+  galleryImages: 'galleryImages',
+  highlights: 'highlights',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestmentOpportunityScalarFieldEnum = (typeof InvestmentOpportunityScalarFieldEnum)[keyof typeof InvestmentOpportunityScalarFieldEnum]
 
 
 export const LeadScalarFieldEnum = {
@@ -2844,6 +2951,7 @@ export type GlobalOmitConfig = {
   projectLot?: Prisma.ProjectLotOmit
   projectMilestone?: Prisma.ProjectMilestoneOmit
   projectMedia?: Prisma.ProjectMediaOmit
+  investmentOpportunity?: Prisma.InvestmentOpportunityOmit
   lead?: Prisma.LeadOmit
 }
 

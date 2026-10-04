@@ -21,6 +21,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
 import { ProfessionalsModule } from './modules/professionals/professionals.module';
 import { PlansModule } from './modules/plans/plans.module';
 import { UsersModule } from './modules/users/users.module';
+import { InvestmentOpportunitiesModule } from './modules/investment-opportunities/investment-opportunities.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { UsersModule } from './modules/users/users.module';
     MediaModule,
     ProfessionalsModule,
     PlansModule,
+    InvestmentOpportunitiesModule,
   ],
   controllers: [AppController],
   providers: [

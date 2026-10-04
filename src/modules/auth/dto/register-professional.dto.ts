@@ -3,7 +3,7 @@ import {
   Equals,
   IsBoolean,
   IsEmail,
-  IsEnum,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -13,11 +13,10 @@ import {
   ValidateIf,
 } from 'class-validator';
 import { ProfessionalType } from '../../../generated/prisma/enums';
-import {
-  PASSWORD_MESSAGE,
-  PASSWORD_RULE,
-  trim,
-} from './register-customer.dto';
+import { PASSWORD_MESSAGE, PASSWORD_RULE, trim } from './register-customer.dto';
+
+const normalizeEmail = ({ value }: { value: unknown }): unknown =>
+  typeof value === 'string' ? value.trim().toLowerCase() : value;
 
 const isPerson = (o: RegisterProfessionalDto) =>
   o.type === ProfessionalType.INDEPENDENT_AGENT;
@@ -25,7 +24,14 @@ const isCompany = (o: RegisterProfessionalDto) =>
   o.type !== ProfessionalType.INDEPENDENT_AGENT;
 
 export class RegisterProfessionalDto {
-  @IsEnum(ProfessionalType, { message: 'Selecciona un tipo de profesional válido' })
+  @IsIn(
+    [
+      ProfessionalType.INDEPENDENT_AGENT,
+      ProfessionalType.REAL_ESTATE_AGENCY,
+      ProfessionalType.DEVELOPER,
+    ],
+    { message: 'Selecciona un tipo de profesional válido' },
+  )
   type!: ProfessionalType;
 
   @ValidateIf(isPerson)
@@ -59,7 +65,7 @@ export class RegisterProfessionalDto {
   @Matches(/^\d{11}$/, { message: 'El RUC debe tener 11 dígitos' })
   ruc?: string;
 
-  @Transform(({ value }) => (typeof value === 'string' ? value.trim().toLowerCase() : value))
+  @Transform(normalizeEmail)
   @IsEmail({}, { message: 'Ingresa un correo válido' })
   email!: string;
 

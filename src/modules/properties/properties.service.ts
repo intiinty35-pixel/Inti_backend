@@ -104,6 +104,8 @@ export class PropertiesService {
           }
         : [];
 
+    await this.expireMembershipIfNeeded(agent.id);
+
     if (!query.page) {
       const properties = await this.prisma.property.findMany({
         where: { agentProfileId: agent.id },
@@ -138,7 +140,10 @@ export class PropertiesService {
   }
 
   async createDraft(user: AuthUser, dto: CreatePropertyDto) {
-    const agent = await this.requireApprovedAgent(user.id);
+    const agent =
+      user.role === 'USER'
+        ? await this.getOrCreateIndividualOwner(user.id, dto.location.district)
+        : await this.requireApprovedAgent(user.id);
     this.validateProperty(dto);
 
     const slug = await this.createUniqueSlug(dto.title);
@@ -246,6 +251,9 @@ export class PropertiesService {
     }
 
     await this.expireMembershipIfNeeded(property.agentProfile.id);
+    if (property.agentProfile.type === ProfessionalType.INDIVIDUAL_OWNER) {
+      await this.ensureCustomerTrial(property.agentProfile.id);
+    }
     await this.ensureCanPublish(property.agentProfile.id, property.id);
 
     const updated = await this.prisma.property.update({
@@ -381,6 +389,92 @@ export class PropertiesService {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
     return agent;
+  }
+
+  private async getOrCreateIndividualOwner(userId: string, district: string) {
+    const profile = await this.prisma.professionalProfile.findUnique({
+      where: { userId },
+    });
+    if (profile) {
+      if (profile.type !== ProfessionalType.INDIVIDUAL_OWNER) {
+        throw new ForbiddenException(
+          'Esta cuenta ya tiene un perfil profesional asociado',
+        );
+      }
+      return profile;
+    }
+
+    return this.prisma.professionalProfile.create({
+      data: {
+        userId,
+        type: ProfessionalType.INDIVIDUAL_OWNER,
+        status: ApprovalStatus.APPROVED,
+        city: district,
+        slug: `particular-${userId}`,
+      },
+    });
+  }
+
+  private async ensureCustomerTrial(agentProfileId: string) {
+    const subscription = await this.prisma.planSubscription.findFirst({
+      where: {
+        agentProfileId,
+        status: {
+          in: [SubscriptionStatus.ACTIVE, SubscriptionStatus.PENDING_PAYMENT],
+        },
+      },
+      select: { id: true },
+    });
+    if (subscription) return;
+
+    const previousMembership = await this.prisma.planSubscription.findFirst({
+      where: { agentProfileId },
+      select: { id: true },
+    });
+    if (previousMembership) return;
+
+    const publishedBefore = await this.prisma.property.findFirst({
+      where: {
+        agentProfileId,
+        status: PropertyStatus.PUBLISHED,
+        publishedAt: { not: null },
+      },
+      select: { id: true },
+    });
+    if (publishedBefore) return;
+
+    const plan = await this.prisma.plan.upsert({
+      where: { slug: 'ariz-particular-prueba-30-dias' },
+      create: {
+        name: 'Primera propiedad gratis',
+        slug: 'ariz-particular-prueba-30-dias',
+        price: 0,
+        currency: 'PEN',
+        durationDays: 30,
+        propertyLimit: 1,
+        projectLimit: 0,
+        features: ['Una propiedad publicada por 30 días'],
+        isFree: true,
+        isCustomerOnly: true,
+        isActive: true,
+      },
+      update: {
+        durationDays: 30,
+        propertyLimit: 1,
+        isCustomerOnly: true,
+        isActive: true,
+      },
+    });
+    const now = new Date();
+    await this.prisma.planSubscription.create({
+      data: {
+        agentProfileId,
+        planId: plan.id,
+        status: SubscriptionStatus.ACTIVE,
+        startedAt: now,
+        expiresAt: new Date(now.getTime() + 30 * 86_400_000),
+      },
+    });
   }
 
   private async expireMembershipIfNeeded(agentProfileId?: string) {
@@ -533,6 +627,8 @@ export class PropertiesService {
         period:
           property.operationType === OperationType.RENT ? 'mensual' : 'total',
       },
+      contactWhatsapp:
+        property.contactWhatsapp ?? property.agentProfile.whatsapp,
       location: property.location
         ? {
             department: property.location.department,

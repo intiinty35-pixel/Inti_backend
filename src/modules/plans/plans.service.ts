@@ -5,9 +5,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma/prisma.service';
-import { PropertyStatus, SubscriptionStatus } from '../../generated/prisma/enums';
+import {
+  ProfessionalType,
+  PropertyStatus,
+  SubscriptionStatus,
+} from '../../generated/prisma/enums';
 import { MailService } from '../mail/mail.service';
 import { RequestPlanDto } from './dto/request-plan.dto';
+import { RequestCustomerMembershipDto } from './dto/request-customer-membership.dto';
 import { ReviewSubscriptionDto } from './dto/review-subscription.dto';
 import { UpsertPlanDto } from './dto/upsert-plan.dto';
 
@@ -35,24 +40,28 @@ export class PlansService {
 
   listActive() {
     return this.prisma.plan.findMany({
-      where: { isActive: true },
+      where: { isActive: true, isCustomerOnly: false },
       orderBy: { price: 'asc' },
     });
   }
 
   async listAll(page?: number, pageSize?: number) {
     if (!page) {
-      return this.prisma.plan.findMany({ orderBy: { price: 'asc' } });
+      return this.prisma.plan.findMany({
+        where: { isCustomerOnly: false },
+        orderBy: { price: 'asc' },
+      });
     }
 
     const size = Math.min(pageSize ?? 10, 50);
     const [items, total] = await this.prisma.$transaction([
       this.prisma.plan.findMany({
+        where: { isCustomerOnly: false },
         orderBy: { price: 'asc' },
         skip: (page - 1) * size,
         take: size,
       }),
-      this.prisma.plan.count(),
+      this.prisma.plan.count({ where: { isCustomerOnly: false } }),
     ]);
 
     return { items, total, page, pageSize: size, hasMore: page * size < total };
@@ -125,7 +134,9 @@ export class PlansService {
   async requestPlan(userId: string, planId: string, dto: RequestPlanDto) {
     const agent = await this.requireAgent(userId);
     const plan = await this.prisma.plan.findUnique({ where: { id: planId } });
-    if (!plan || !plan.isActive) throw new NotFoundException('Plan no encontrado');
+    if (!plan || !plan.isActive || plan.isCustomerOnly) {
+      throw new NotFoundException('Plan no encontrado');
+    }
 
     const isFree = Number(plan.price) === 0;
     if (!isFree && !dto.receiptUrl) {
@@ -161,6 +172,143 @@ export class PlansService {
     }
 
     return subscription;
+  }
+
+  async getCustomerMembership(userId: string) {
+    const profile = await this.prisma.professionalProfile.findUnique({
+      where: { userId },
+      select: { id: true, type: true },
+    });
+    if (!profile) {
+      return {
+        subscription: null,
+        trialAvailable: true,
+        propertyCount: 0,
+      };
+    }
+    if (profile.type !== ProfessionalType.INDIVIDUAL_OWNER) {
+      throw new ForbiddenException(
+        'Esta cuenta no es de un propietario particular',
+      );
+    }
+
+    await this.expireMemberships(profile.id);
+    const [subscription, previousMembership, propertyCount] =
+      await this.prisma.$transaction([
+        this.prisma.planSubscription.findFirst({
+          where: { agentProfileId: profile.id },
+          orderBy: { createdAt: 'desc' },
+          include: { plan: true },
+        }),
+        this.prisma.planSubscription.findFirst({
+          where: { agentProfileId: profile.id },
+          select: { id: true },
+        }),
+        this.prisma.property.count({
+          where: {
+            agentProfileId: profile.id,
+            status: PropertyStatus.PUBLISHED,
+          },
+        }),
+      ]);
+
+    return {
+      subscription,
+      trialAvailable: !previousMembership,
+      propertyCount,
+    };
+  }
+
+  async requestCustomerMembership(
+    userId: string,
+    dto: RequestCustomerMembershipDto,
+  ) {
+    const profile = await this.prisma.professionalProfile.findUnique({
+      where: { userId },
+      select: { id: true, type: true },
+    });
+    if (!profile || profile.type !== ProfessionalType.INDIVIDUAL_OWNER) {
+      throw new ForbiddenException(
+        'Publica primero tu propiedad gratuita para activar las membresías',
+      );
+    }
+
+    await this.expireMemberships(profile.id);
+    const current = await this.prisma.planSubscription.findFirst({
+      where: {
+        agentProfileId: profile.id,
+        status: {
+          in: [SubscriptionStatus.ACTIVE, SubscriptionStatus.PENDING_PAYMENT],
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+    if (current?.status === SubscriptionStatus.PENDING_PAYMENT) {
+      throw new BadRequestException(
+        'Ya tienes un comprobante pendiente de revisión',
+      );
+    }
+    if (current?.status === SubscriptionStatus.ACTIVE) {
+      throw new BadRequestException(
+        'Tu membresía actual sigue activa. Podrás solicitar otra cuando venza',
+      );
+    }
+
+    const previousMembership = await this.prisma.planSubscription.findFirst({
+      where: { agentProfileId: profile.id },
+      select: { id: true },
+    });
+    if (!previousMembership) {
+      throw new BadRequestException(
+        'Primero publica tu propiedad gratuita durante 30 días',
+      );
+    }
+
+    const { propertyLimit, receiptUrl } = dto;
+    const slug = `particular-${propertyLimit}-propiedades-30-dias`;
+    const price = propertyLimit * 20;
+    const name = `Paquete ${propertyLimit} ${propertyLimit === 1 ? 'propiedad' : 'propiedades'}`;
+    const features = [
+      `${propertyLimit} ${propertyLimit === 1 ? 'propiedad activa' : 'propiedades activas'}`,
+      '30 días de publicación',
+    ];
+    const plan = await this.prisma.plan.upsert({
+      where: { slug },
+      create: {
+        name,
+        slug,
+        price,
+        currency: 'PEN',
+        durationDays: 30,
+        propertyLimit,
+        projectLimit: 0,
+        features,
+        isFree: false,
+        isCustomerOnly: true,
+        isActive: true,
+      },
+      update: {
+        name,
+        price,
+        currency: 'PEN',
+        durationDays: 30,
+        propertyLimit,
+        features,
+        isFree: false,
+        isCustomerOnly: true,
+        isActive: true,
+      },
+    });
+
+    return this.prisma.planSubscription.create({
+      data: {
+        agentProfileId: profile.id,
+        planId: plan.id,
+        status: SubscriptionStatus.PENDING_PAYMENT,
+        receiptUrl,
+      },
+      include: { plan: true },
+    });
   }
 
   async assignDefaultPlanIfNone(agentProfileId: string) {
@@ -239,18 +387,58 @@ export class PlansService {
     }
 
     const now = new Date();
-    const updated = await this.prisma.planSubscription.update({
-      where: { id },
-      data: {
-        status: dto.status,
-        rejectionReason: dto.status === 'REJECTED' ? dto.rejectionReason : null,
-        reviewedAt: now,
-        startedAt: dto.status === 'ACTIVE' ? now : null,
-        expiresAt:
-          dto.status === 'ACTIVE'
-            ? new Date(now.getTime() + subscription.plan.durationDays * 86_400_000)
-            : null,
-      },
+    const updated = await this.prisma.$transaction(async (transaction) => {
+      const updatedSubscription = await transaction.planSubscription.update({
+        where: { id },
+        data: {
+          status: dto.status,
+          rejectionReason:
+            dto.status === 'REJECTED' ? dto.rejectionReason : null,
+          reviewedAt: now,
+          startedAt: dto.status === 'ACTIVE' ? now : null,
+          expiresAt:
+            dto.status === 'ACTIVE'
+              ? new Date(
+                  now.getTime() + subscription.plan.durationDays * 86_400_000,
+                )
+              : null,
+        },
+      });
+
+      if (
+        dto.status === 'ACTIVE' &&
+        subscription.agentProfile.type === ProfessionalType.INDIVIDUAL_OWNER
+      ) {
+        const publishedCount = await transaction.property.count({
+          where: {
+            agentProfileId: subscription.agentProfileId,
+            status: PropertyStatus.PUBLISHED,
+          },
+        });
+        const slots = Math.max(
+          0,
+          subscription.plan.propertyLimit - publishedCount,
+        );
+        if (slots > 0) {
+          const paused = await transaction.property.findMany({
+            where: {
+              agentProfileId: subscription.agentProfileId,
+              status: PropertyStatus.PAUSED,
+            },
+            orderBy: { updatedAt: 'desc' },
+            take: slots,
+            select: { id: true },
+          });
+          if (paused.length > 0) {
+            await transaction.property.updateMany({
+              where: { id: { in: paused.map(({ id }) => id) } },
+              data: { status: PropertyStatus.PUBLISHED, publishedAt: now },
+            });
+          }
+        }
+      }
+
+      return updatedSubscription;
     });
 
     if (dto.status === 'ACTIVE') {

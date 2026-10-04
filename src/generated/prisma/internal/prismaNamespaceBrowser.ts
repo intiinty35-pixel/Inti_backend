@@ -70,6 +70,7 @@ export const ModelName = {
   ProjectLot: 'ProjectLot',
   ProjectMilestone: 'ProjectMilestone',
   ProjectMedia: 'ProjectMedia',
+  InvestmentOpportunity: 'InvestmentOpportunity',
   Lead: 'Lead'
 } as const
 
@@ -96,6 +97,8 @@ export const UserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   phone: 'phone',
+  biography: 'biography',
+  avatarUrl: 'avatarUrl',
   role: 'role',
   isActive: 'isActive',
   createdAt: 'createdAt',
@@ -140,6 +143,7 @@ export const PlanScalarFieldEnum = {
   features: 'features',
   isFree: 'isFree',
   isDefault: 'isDefault',
+  isCustomerOnly: 'isCustomerOnly',
   highlight: 'highlight',
   isActive: 'isActive',
   createdAt: 'createdAt',
@@ -407,6 +411,35 @@ export const ProjectMediaScalarFieldEnum = {
 } as const
 
 export type ProjectMediaScalarFieldEnum = (typeof ProjectMediaScalarFieldEnum)[keyof typeof ProjectMediaScalarFieldEnum]
+
+
+export const InvestmentOpportunityScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  summary: 'summary',
+  description: 'description',
+  areaLabel: 'areaLabel',
+  initialInvestment: 'initialInvestment',
+  currency: 'currency',
+  roiPercent: 'roiPercent',
+  investmentGoal: 'investmentGoal',
+  location: 'location',
+  department: 'department',
+  province: 'province',
+  district: 'district',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  coverImageUrl: 'coverImageUrl',
+  coverImagePublicId: 'coverImagePublicId',
+  galleryImages: 'galleryImages',
+  highlights: 'highlights',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestmentOpportunityScalarFieldEnum = (typeof InvestmentOpportunityScalarFieldEnum)[keyof typeof InvestmentOpportunityScalarFieldEnum]
 
 
 export const LeadScalarFieldEnum = {

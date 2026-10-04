@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import {
@@ -22,7 +26,10 @@ export class UsersService {
     page?: number,
     pageSize?: number,
   ) {
-    const where = status ? { status } : undefined;
+    const where: Prisma.ProfessionalProfileWhereInput = {
+      type: { not: ProfessionalType.INDIVIDUAL_OWNER },
+      status,
+    };
     const include = {
       user: {
         select: {
@@ -224,10 +231,15 @@ export class UsersService {
   async setProfessionalStatus(profileId: string, status: ApprovalStatus) {
     const profile = await this.prisma.professionalProfile.findUnique({
       where: { id: profileId },
-      select: { id: true },
+      select: { id: true, type: true },
     });
     if (!profile)
       throw new NotFoundException('Perfil profesional no encontrado');
+    if (profile.type === ProfessionalType.INDIVIDUAL_OWNER) {
+      throw new BadRequestException(
+        'Los perfiles de propietario particular no requieren aprobación profesional',
+      );
+    }
     const updated = await this.prisma.professionalProfile.update({
       where: { id: profileId },
       data: { status },

@@ -6,10 +6,17 @@ import { AdminDeveloperReviewController } from './admin-developer-review.control
 import { PropertiesModule } from '../properties/properties.module';
 import { ProjectsModule } from '../projects/projects.module';
 import { AdminAgencyReviewController } from './admin-agency-review.controller';
+import { CustomerAccountController } from './customer-account.controller';
+import { CustomerAccountService } from './customer-account.service';
 
 @Module({
   imports: [PlansModule, PropertiesModule, ProjectsModule],
-  controllers: [UsersController, AdminDeveloperReviewController, AdminAgencyReviewController],
-  providers: [UsersService],
+  controllers: [
+    UsersController,
+    AdminDeveloperReviewController,
+    AdminAgencyReviewController,
+    CustomerAccountController,
+  ],
+  providers: [UsersService, CustomerAccountService],
 })
 export class UsersModule {}

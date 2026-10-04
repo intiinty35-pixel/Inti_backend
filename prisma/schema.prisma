@@ -15,6 +15,8 @@ model User {
   firstName           String
   lastName            String?
   phone               String?
+  biography           String?
+  avatarUrl           String?
   role                Role                 @default(USER)
   isActive            Boolean              @default(true)
   createdAt           DateTime             @default(now())
@@ -69,6 +71,7 @@ model Plan {
   features      String[] @default([])
   isFree        Boolean  @default(false)
   isDefault     Boolean  @default(false)
+  isCustomerOnly Boolean @default(false)
   highlight     Boolean  @default(false)
   isActive      Boolean  @default(true)
   createdAt     DateTime @default(now())
@@ -383,6 +386,35 @@ model ProjectMedia {
   @@map("project_media")
 }
 
+model InvestmentOpportunity {
+  id                 String   @id @default(uuid())
+  name               String
+  slug               String   @unique
+  summary            String
+  description        String   @db.Text
+  areaLabel          String
+  initialInvestment  Decimal  @db.Decimal(14, 2)
+  currency           Currency @default(PEN)
+  roiPercent         Decimal  @db.Decimal(5, 2)
+  investmentGoal     String
+  location           String
+  department         String
+  province           String
+  district           String
+  latitude           Decimal  @db.Decimal(10, 7)
+  longitude          Decimal  @db.Decimal(10, 7)
+  coverImageUrl      String
+  coverImagePublicId String?
+  galleryImages      String[] @default([])
+  highlights         String[] @default([])
+  isPublished        Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([isPublished, updatedAt])
+  @@map("investment_opportunities")
+}
+
 model Lead {
   id             String               @id @default(uuid())
   propertyId     String?
@@ -416,6 +448,7 @@ enum ProfessionalType {
   INDEPENDENT_AGENT
   REAL_ESTATE_AGENCY
   DEVELOPER
+  INDIVIDUAL_OWNER
 }
 
 enum ApprovalStatus {

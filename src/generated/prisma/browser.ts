@@ -113,6 +113,11 @@ export type ProjectMilestone = Prisma.ProjectMilestoneModel
  */
 export type ProjectMedia = Prisma.ProjectMediaModel
 /**
+ * Model InvestmentOpportunity
+ * 
+ */
+export type InvestmentOpportunity = Prisma.InvestmentOpportunityModel
+/**
  * Model Lead
  * 
  */
