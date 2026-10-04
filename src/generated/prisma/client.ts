@@ -110,6 +110,26 @@ export type PropertyMedia = Prisma.PropertyMediaModel
  */
 export type Project = Prisma.ProjectModel
 /**
+ * Model Referrer
+ * 
+ */
+export type Referrer = Prisma.ReferrerModel
+/**
+ * Model Referral
+ * 
+ */
+export type Referral = Prisma.ReferralModel
+/**
+ * Model ReferralStatusPoint
+ * 
+ */
+export type ReferralStatusPoint = Prisma.ReferralStatusPointModel
+/**
+ * Model ReferralStatusHistory
+ * 
+ */
+export type ReferralStatusHistory = Prisma.ReferralStatusHistoryModel
+/**
  * Model AdminProject
  * 
  */

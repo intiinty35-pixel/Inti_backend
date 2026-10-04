@@ -22,6 +22,7 @@ import { ProfessionalsModule } from './modules/professionals/professionals.modul
 import { PlansModule } from './modules/plans/plans.module';
 import { UsersModule } from './modules/users/users.module';
 import { InvestmentOpportunitiesModule } from './modules/investment-opportunities/investment-opportunities.module';
+import { ReferralsModule } from './modules/referrals/referrals.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { InvestmentOpportunitiesModule } from './modules/investment-opportunitie
     ProfessionalsModule,
     PlansModule,
     InvestmentOpportunitiesModule,
+    ReferralsModule,
   ],
   controllers: [AppController],
   providers: [

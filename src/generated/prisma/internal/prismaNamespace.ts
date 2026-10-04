@@ -411,6 +411,10 @@ export const ModelName = {
   PropertyAmenity: 'PropertyAmenity',
   PropertyMedia: 'PropertyMedia',
   Project: 'Project',
+  Referrer: 'Referrer',
+  Referral: 'Referral',
+  ReferralStatusPoint: 'ReferralStatusPoint',
+  ReferralStatusHistory: 'ReferralStatusHistory',
   AdminProject: 'AdminProject',
   ProjectLocation: 'ProjectLocation',
   ProjectLot: 'ProjectLot',
@@ -433,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "lead"
+    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "lead"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1473,6 +1477,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Referrer: {
+      payload: Prisma.$ReferrerPayload<ExtArgs>
+      fields: Prisma.ReferrerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReferrerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReferrerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>
+        }
+        findFirst: {
+          args: Prisma.ReferrerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReferrerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>
+        }
+        findMany: {
+          args: Prisma.ReferrerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>[]
+        }
+        create: {
+          args: Prisma.ReferrerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>
+        }
+        createMany: {
+          args: Prisma.ReferrerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReferrerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>[]
+        }
+        delete: {
+          args: Prisma.ReferrerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>
+        }
+        update: {
+          args: Prisma.ReferrerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReferrerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReferrerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReferrerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReferrerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferrerPayload>
+        }
+        aggregate: {
+          args: Prisma.ReferrerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReferrer>
+        }
+        groupBy: {
+          args: Prisma.ReferrerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferrerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReferrerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferrerCountAggregateOutputType> | number
+        }
+      }
+    }
+    Referral: {
+      payload: Prisma.$ReferralPayload<ExtArgs>
+      fields: Prisma.ReferralFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReferralFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReferralFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        findFirst: {
+          args: Prisma.ReferralFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReferralFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        findMany: {
+          args: Prisma.ReferralFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>[]
+        }
+        create: {
+          args: Prisma.ReferralCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        createMany: {
+          args: Prisma.ReferralCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReferralCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>[]
+        }
+        delete: {
+          args: Prisma.ReferralDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        update: {
+          args: Prisma.ReferralUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReferralDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReferralUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReferralUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReferralUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralPayload>
+        }
+        aggregate: {
+          args: Prisma.ReferralAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReferral>
+        }
+        groupBy: {
+          args: Prisma.ReferralGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferralGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReferralCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferralCountAggregateOutputType> | number
+        }
+      }
+    }
+    ReferralStatusPoint: {
+      payload: Prisma.$ReferralStatusPointPayload<ExtArgs>
+      fields: Prisma.ReferralStatusPointFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReferralStatusPointFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReferralStatusPointFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>
+        }
+        findFirst: {
+          args: Prisma.ReferralStatusPointFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReferralStatusPointFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>
+        }
+        findMany: {
+          args: Prisma.ReferralStatusPointFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>[]
+        }
+        create: {
+          args: Prisma.ReferralStatusPointCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>
+        }
+        createMany: {
+          args: Prisma.ReferralStatusPointCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReferralStatusPointCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>[]
+        }
+        delete: {
+          args: Prisma.ReferralStatusPointDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>
+        }
+        update: {
+          args: Prisma.ReferralStatusPointUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReferralStatusPointDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReferralStatusPointUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReferralStatusPointUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReferralStatusPointUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusPointPayload>
+        }
+        aggregate: {
+          args: Prisma.ReferralStatusPointAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReferralStatusPoint>
+        }
+        groupBy: {
+          args: Prisma.ReferralStatusPointGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferralStatusPointGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReferralStatusPointCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferralStatusPointCountAggregateOutputType> | number
+        }
+      }
+    }
+    ReferralStatusHistory: {
+      payload: Prisma.$ReferralStatusHistoryPayload<ExtArgs>
+      fields: Prisma.ReferralStatusHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReferralStatusHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReferralStatusHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.ReferralStatusHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReferralStatusHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.ReferralStatusHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.ReferralStatusHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.ReferralStatusHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReferralStatusHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.ReferralStatusHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>
+        }
+        update: {
+          args: Prisma.ReferralStatusHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReferralStatusHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReferralStatusHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReferralStatusHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReferralStatusHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReferralStatusHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.ReferralStatusHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReferralStatusHistory>
+        }
+        groupBy: {
+          args: Prisma.ReferralStatusHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferralStatusHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReferralStatusHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReferralStatusHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
     AdminProject: {
       payload: Prisma.$AdminProjectPayload<ExtArgs>
       fields: Prisma.AdminProjectFieldRefs
@@ -2283,6 +2583,59 @@ export const ProjectScalarFieldEnum = {
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
 
 
+export const ReferrerScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReferrerScalarFieldEnum = (typeof ReferrerScalarFieldEnum)[keyof typeof ReferrerScalarFieldEnum]
+
+
+export const ReferralScalarFieldEnum = {
+  id: 'id',
+  referrerId: 'referrerId',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  projectId: 'projectId',
+  status: 'status',
+  code: 'code',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReferralScalarFieldEnum = (typeof ReferralScalarFieldEnum)[keyof typeof ReferralScalarFieldEnum]
+
+
+export const ReferralStatusPointScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  points: 'points',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReferralStatusPointScalarFieldEnum = (typeof ReferralStatusPointScalarFieldEnum)[keyof typeof ReferralStatusPointScalarFieldEnum]
+
+
+export const ReferralStatusHistoryScalarFieldEnum = {
+  id: 'id',
+  referralId: 'referralId',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  pointsAwarded: 'pointsAwarded',
+  changedById: 'changedById',
+  createdAt: 'createdAt'
+} as const
+
+export type ReferralStatusHistoryScalarFieldEnum = (typeof ReferralStatusHistoryScalarFieldEnum)[keyof typeof ReferralStatusHistoryScalarFieldEnum]
+
+
 export const AdminProjectScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -2741,6 +3094,20 @@ export type ListEnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'ReferralStatus'
+ */
+export type EnumReferralStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ReferralStatus[]'
+ */
+export type ListEnumReferralStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'LotStatus'
  */
 export type EnumLotStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LotStatus'>
@@ -2946,6 +3313,10 @@ export type GlobalOmitConfig = {
   propertyAmenity?: Prisma.PropertyAmenityOmit
   propertyMedia?: Prisma.PropertyMediaOmit
   project?: Prisma.ProjectOmit
+  referrer?: Prisma.ReferrerOmit
+  referral?: Prisma.ReferralOmit
+  referralStatusPoint?: Prisma.ReferralStatusPointOmit
+  referralStatusHistory?: Prisma.ReferralStatusHistoryOmit
   adminProject?: Prisma.AdminProjectOmit
   projectLocation?: Prisma.ProjectLocationOmit
   projectLot?: Prisma.ProjectLotOmit

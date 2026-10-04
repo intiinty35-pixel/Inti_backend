@@ -27,6 +27,7 @@ model User {
   priceAlerts         PriceAlert[]
   searchAlerts        SearchAlert[]
   adminProjects       AdminProject[]       @relation("AdminProjectCreator")
+  referralChanges     ReferralStatusHistory[] @relation("ReferralStatusChanger")
 
   @@map("users")
 }
@@ -304,10 +305,71 @@ model Project {
   milestones        ProjectMilestone[]
   media             ProjectMedia[]
   leads             Lead[]
+  referrals         Referral[]
 
   @@index([status, featured, publishedAt])
   @@index([category, stage, status])
   @@map("projects")
+}
+
+model Referrer {
+  id        String     @id @default(uuid())
+  code      String     @unique
+  name      String
+  email     String     @unique
+  phone     String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  referrals Referral[]
+
+  @@map("referrers")
+}
+
+model Referral {
+  id         String                   @id @default(uuid())
+  referrerId String
+  name       String
+  email      String
+  phone      String
+  projectId  String
+  status     ReferralStatus            @default(CONTACTED)
+  code       String                   @unique
+  createdAt  DateTime                 @default(now())
+  updatedAt  DateTime                 @updatedAt
+  referrer   Referrer                 @relation(fields: [referrerId], references: [id], onDelete: Restrict)
+  project    Project                  @relation(fields: [projectId], references: [id], onDelete: Restrict)
+  history    ReferralStatusHistory[]
+
+  @@index([referrerId, createdAt])
+  @@index([projectId, createdAt])
+  @@index([status, createdAt])
+  @@map("referrals")
+}
+
+model ReferralStatusPoint {
+  id        String         @id @default(uuid())
+  status    ReferralStatus @unique
+  points    Int
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@map("referral_status_points")
+}
+
+model ReferralStatusHistory {
+  id            String         @id @default(uuid())
+  referralId    String
+  fromStatus    ReferralStatus?
+  toStatus      ReferralStatus
+  pointsAwarded Int            @default(0)
+  changedById   String?
+  createdAt     DateTime       @default(now())
+  referral      Referral       @relation(fields: [referralId], references: [id], onDelete: Cascade)
+  changedBy     User?          @relation("ReferralStatusChanger", fields: [changedById], references: [id], onDelete: SetNull)
+
+  @@unique([referralId, toStatus])
+  @@index([referralId, createdAt])
+  @@map("referral_status_history")
 }
 
 model AdminProject {
@@ -521,6 +583,12 @@ enum LeadSource {
   WHATSAPP
   QUICK_QUESTION
   PHONE
+}
+
+enum ReferralStatus {
+  CONTACTED
+  VISIT
+  OPERATION_COMPLETED
 }
 
 enum ProjectCategory {

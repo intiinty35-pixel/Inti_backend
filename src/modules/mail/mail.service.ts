@@ -48,6 +48,22 @@ interface MembershipApprovedInput {
   expiresAt?: Date | null;
 }
 
+interface ReferralStatusUpdatedInput {
+  referrerName: string;
+  referrerEmail: string;
+  projectName: string;
+  status: string;
+  pointsAwarded: number;
+  referralPoints: number;
+  totalPoints: number;
+}
+
+interface ReferrerWelcomeInput {
+  referrerName: string;
+  referrerEmail: string;
+  referrerCode: string;
+}
+
 const BRAND = {
   primary: '#00124f',
   accent: '#f2a900',
@@ -107,7 +123,10 @@ export class MailService {
           ${this.infoRow('Correo', input.userEmail)}
           ${input.targetPrice ? this.infoRow('Precio objetivo', input.targetPrice) : ''}
         `,
-        button: { label: 'Revisar propiedad', url: this.absoluteUrl(input.propertyUrl) },
+        button: {
+          label: 'Revisar propiedad',
+          url: this.absoluteUrl(input.propertyUrl),
+        },
       }),
     });
   }
@@ -134,7 +153,9 @@ export class MailService {
 
   async sendMembershipApproved(input: MembershipApprovedInput) {
     const expires = input.expiresAt
-      ? new Intl.DateTimeFormat('es-PE', { dateStyle: 'long' }).format(input.expiresAt)
+      ? new Intl.DateTimeFormat('es-PE', { dateStyle: 'long' }).format(
+          input.expiresAt,
+        )
       : null;
 
     return this.send({
@@ -151,7 +172,64 @@ export class MailService {
             Ya puedes publicar y administrar tus anuncios segun los limites de tu plan.
           </p>
         `,
-        button: { label: 'Ir a mi panel', url: `${this.frontendUrl()}/panel/owner/subscription` },
+        button: {
+          label: 'Ir a mi panel',
+          url: `${this.frontendUrl()}/panel/owner/subscription`,
+        },
+      }),
+    });
+  }
+
+  async sendReferralStatusUpdated(input: ReferralStatusUpdatedInput) {
+    return this.send({
+      to: [{ email: input.referrerEmail, name: input.referrerName }],
+      subject: `Actualización de tu referido en ARIZ: ${input.status}`,
+      html: this.layout({
+        preheader: 'Tu referido avanzó y tus puntos fueron actualizados.',
+        title: 'Tus puntos en ARIZ fueron actualizados',
+        intro: `Hola ${this.escape(input.referrerName)}, el estado de tu referido fue actualizado correctamente.`,
+        content: `
+          ${this.infoRow('Proyecto', input.projectName)}
+          ${this.infoRow('Estado actualizado', input.status)}
+          ${this.infoRow('Puntos obtenidos en este cambio', String(input.pointsAwarded))}
+          ${this.infoRow('Puntos acumulados del referido', String(input.referralPoints))}
+          ${this.infoRow('Total acumulado de tus referidos', String(input.totalPoints))}
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Gracias por confiar en ARIZ y ayudarnos a conectar más personas con nuevas oportunidades inmobiliarias.
+          </p>
+        `,
+        button: { label: 'Conocer ARIZ', url: this.frontendUrl() },
+      }),
+    });
+  }
+
+  async sendReferrerWelcome(input: ReferrerWelcomeInput) {
+    return this.send({
+      to: [{ email: input.referrerEmail, name: input.referrerName }],
+      subject: '¡Bienvenido al programa de referidos de ARIZ!',
+      html: this.layout({
+        preheader: 'Tu código de referente está listo para usar.',
+        title: '¡Bienvenido al programa de referidos!',
+        intro: `Hola ${this.escape(input.referrerName)}, gracias por unirte al programa de referidos de ARIZ.`,
+        content: `
+          <p style="margin:0 0 18px;color:${BRAND.muted};line-height:1.7;">
+            Tu registro fue exitoso. A partir de ahora puedes referir personas a nuestros proyectos inmobiliarios y acumular puntos con cada referido.
+          </p>
+          <div style="background:${BRAND.canvas};border-radius:12px;padding:20px;text-align:center;margin:20px 0;">
+            <p style="margin:0 0 8px;color:${BRAND.muted};font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Tu código de referente</p>
+            <p style="margin:0;font-size:24px;font-weight:800;color:${BRAND.primary};letter-spacing:.05em;">${this.escape(input.referrerCode)}</p>
+          </div>
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Comparte este código con las personas que quieras referir. Cuando lo usen para registrarse, sus referidos se vincularán automáticamente a tu cuenta y podrás ver tus puntos acumulados.
+          </p>
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            <strong style="color:${BRAND.ink};">¿Cómo funciona?</strong><br>
+            • Cada referido inicia con puntos al ser contactado<br>
+            • Ganas más puntos cuando el referido avanza de estado<br>
+            • Los puntos se acumulan por cada referido exitoso
+          </p>
+        `,
+        button: { label: 'Conocer más sobre ARIZ', url: this.frontendUrl() },
       }),
     });
   }
@@ -258,7 +336,9 @@ export class MailService {
   }
 
   private frontendUrl() {
-    return this.config.get<string>('FRONTEND_URL', 'http://localhost:3000').replace(/\/$/, '');
+    return this.config
+      .get<string>('FRONTEND_URL', 'http://localhost:3000')
+      .replace(/\/$/, '');
   }
 
   private absoluteUrl(value: string) {
