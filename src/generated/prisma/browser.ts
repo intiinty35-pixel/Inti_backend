@@ -108,6 +108,21 @@ export type ReferralStatusPoint = Prisma.ReferralStatusPointModel
  */
 export type ReferralStatusHistory = Prisma.ReferralStatusHistoryModel
 /**
+ * Model Incentive
+ * 
+ */
+export type Incentive = Prisma.IncentiveModel
+/**
+ * Model Redemption
+ * 
+ */
+export type Redemption = Prisma.RedemptionModel
+/**
+ * Model PointMovement
+ * 
+ */
+export type PointMovement = Prisma.PointMovementModel
+/**
  * Model AdminProject
  * 
  */

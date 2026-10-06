@@ -9,25 +9,26 @@ datasource db {
 }
 
 model User {
-  id                  String               @id @default(uuid())
-  email               String               @unique
-  passwordHash        String
-  firstName           String
-  lastName            String?
-  phone               String?
-  biography           String?
-  avatarUrl           String?
-  role                Role                 @default(USER)
-  isActive            Boolean              @default(true)
-  createdAt           DateTime             @default(now())
-  updatedAt           DateTime             @updatedAt
-  leads               Lead[]
-  professionalProfile ProfessionalProfile?
-  favorites           Favorite[]
-  priceAlerts         PriceAlert[]
-  searchAlerts        SearchAlert[]
-  adminProjects       AdminProject[]       @relation("AdminProjectCreator")
-  referralChanges     ReferralStatusHistory[] @relation("ReferralStatusChanger")
+  id                    String               @id @default(uuid())
+  email                 String               @unique
+  passwordHash          String
+  firstName             String
+  lastName              String?
+  phone                 String?
+  biography             String?
+  avatarUrl             String?
+  role                  Role                 @default(USER)
+  isActive              Boolean              @default(true)
+  createdAt             DateTime             @default(now())
+  updatedAt             DateTime             @updatedAt
+  leads                 Lead[]
+  professionalProfile   ProfessionalProfile?
+  favorites             Favorite[]
+  priceAlerts           PriceAlert[]
+  searchAlerts          SearchAlert[]
+  adminProjects         AdminProject[]       @relation("AdminProjectCreator")
+  referralChanges       ReferralStatusHistory[] @relation("ReferralStatusChanger")
+  processedRedemptions  Redemption[]
 
   @@map("users")
 }
@@ -313,14 +314,16 @@ model Project {
 }
 
 model Referrer {
-  id        String     @id @default(uuid())
-  code      String     @unique
-  name      String
-  email     String     @unique
-  phone     String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  referrals Referral[]
+  id             String           @id @default(uuid())
+  code           String           @unique
+  name           String
+  email          String           @unique
+  phone          String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  referrals      Referral[]
+  redemptions    Redemption[]
+  pointMovements PointMovement[]
 
   @@map("referrers")
 }
@@ -372,6 +375,72 @@ model ReferralStatusHistory {
   @@unique([referralId, toStatus])
   @@index([referralId, createdAt])
   @@map("referral_status_history")
+}
+
+model Incentive {
+  id             String           @id @default(uuid())
+  name           String
+  description    String
+  promotion      String?
+  imageUrl       String?
+  publicId       String?
+  pointsRequired Int
+  stock          Int              @default(0)
+  status         IncentiveStatus  @default(ACTIVE)
+  isDeleted      Boolean          @default(false)
+  deletedAt      DateTime?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  redemptions    Redemption[]
+
+  @@index([status, isDeleted])
+  @@map("incentives")
+}
+
+model Redemption {
+  id              String           @id @default(uuid())
+  referrerId      String
+  referralCode    String
+  incentiveId     String
+  incentiveName   String
+  incentiveImageUrl String?
+  pointsSpent     Int
+  status          RedemptionStatus @default(PENDING)
+  requestedAt     DateTime         @default(now())
+  processedAt     DateTime?
+  processedById   String?
+  deliveredAt     DateTime?
+  rejectedAt      DateTime?
+  rejectionReason String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  isDeleted       Boolean          @default(false)
+  deletedAt       DateTime?
+
+  referrer        Referrer         @relation(fields: [referrerId], references: [id], onDelete: Restrict)
+  incentive       Incentive        @relation(fields: [incentiveId], references: [id], onDelete: Restrict)
+  processedBy     User?            @relation(fields: [processedById], references: [id], onDelete: SetNull)
+  pointMovements  PointMovement[]
+
+  @@index([referrerId, createdAt])
+  @@index([status, createdAt])
+  @@map("redemptions")
+}
+
+model PointMovement {
+  id          String            @id @default(uuid())
+  referrerId  String
+  points      Int
+  type        PointMovementType
+  referenceId String?
+  description String
+  createdAt   DateTime          @default(now())
+
+  referrer    Referrer          @relation(fields: [referrerId], references: [id], onDelete: Restrict)
+  redemption  Redemption?       @relation(fields: [referenceId], references: [id], onDelete: SetNull)
+
+  @@index([referrerId, createdAt])
+  @@map("point_movements")
 }
 
 model AdminProject {
@@ -638,4 +707,23 @@ enum ProjectStatus {
   SOLD
   REJECTED
   ARCHIVED
+}
+
+enum IncentiveStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum RedemptionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  DELIVERED
+  CANCELLED
+}
+
+enum PointMovementType {
+  POINTS_EARNED
+  POINTS_REDEEMED
+  POINTS_REFUNDED
 }

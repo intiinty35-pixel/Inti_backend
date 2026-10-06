@@ -210,6 +210,7 @@ export class ReferralsService {
         where: { id },
         include: {
           referrer: true,
+          project: { select: { id: true, name: true } },
         },
       });
       if (!current) throw new NotFoundException('Referido no encontrado');
@@ -249,6 +250,7 @@ export class ReferralsService {
         referrerName: result.referrer.name,
         referrerEmail: result.referrer.email,
         interestLabel: INTEREST_LABELS[String(result.interest)] ?? 'Referido',
+        projectName: result.project?.name ?? 'Sin proyecto',
         status: STATUS_LABELS[status],
         pointsAwarded: result.pointsAwarded,
         referralPoints: result.points,

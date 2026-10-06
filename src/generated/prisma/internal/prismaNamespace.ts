@@ -415,6 +415,9 @@ export const ModelName = {
   Referral: 'Referral',
   ReferralStatusPoint: 'ReferralStatusPoint',
   ReferralStatusHistory: 'ReferralStatusHistory',
+  Incentive: 'Incentive',
+  Redemption: 'Redemption',
+  PointMovement: 'PointMovement',
   AdminProject: 'AdminProject',
   ProjectLocation: 'ProjectLocation',
   ProjectLot: 'ProjectLot',
@@ -437,7 +440,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "lead"
+    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "lead"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1773,6 +1776,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Incentive: {
+      payload: Prisma.$IncentivePayload<ExtArgs>
+      fields: Prisma.IncentiveFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IncentiveFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IncentiveFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>
+        }
+        findFirst: {
+          args: Prisma.IncentiveFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IncentiveFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>
+        }
+        findMany: {
+          args: Prisma.IncentiveFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>[]
+        }
+        create: {
+          args: Prisma.IncentiveCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>
+        }
+        createMany: {
+          args: Prisma.IncentiveCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IncentiveCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>[]
+        }
+        delete: {
+          args: Prisma.IncentiveDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>
+        }
+        update: {
+          args: Prisma.IncentiveUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>
+        }
+        deleteMany: {
+          args: Prisma.IncentiveDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IncentiveUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IncentiveUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>[]
+        }
+        upsert: {
+          args: Prisma.IncentiveUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncentivePayload>
+        }
+        aggregate: {
+          args: Prisma.IncentiveAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIncentive>
+        }
+        groupBy: {
+          args: Prisma.IncentiveGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IncentiveGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IncentiveCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IncentiveCountAggregateOutputType> | number
+        }
+      }
+    }
+    Redemption: {
+      payload: Prisma.$RedemptionPayload<ExtArgs>
+      fields: Prisma.RedemptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RedemptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RedemptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>
+        }
+        findFirst: {
+          args: Prisma.RedemptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RedemptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>
+        }
+        findMany: {
+          args: Prisma.RedemptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>[]
+        }
+        create: {
+          args: Prisma.RedemptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>
+        }
+        createMany: {
+          args: Prisma.RedemptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RedemptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>[]
+        }
+        delete: {
+          args: Prisma.RedemptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>
+        }
+        update: {
+          args: Prisma.RedemptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.RedemptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RedemptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RedemptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.RedemptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RedemptionPayload>
+        }
+        aggregate: {
+          args: Prisma.RedemptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRedemption>
+        }
+        groupBy: {
+          args: Prisma.RedemptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RedemptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RedemptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RedemptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    PointMovement: {
+      payload: Prisma.$PointMovementPayload<ExtArgs>
+      fields: Prisma.PointMovementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PointMovementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PointMovementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>
+        }
+        findFirst: {
+          args: Prisma.PointMovementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PointMovementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>
+        }
+        findMany: {
+          args: Prisma.PointMovementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>[]
+        }
+        create: {
+          args: Prisma.PointMovementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>
+        }
+        createMany: {
+          args: Prisma.PointMovementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PointMovementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>[]
+        }
+        delete: {
+          args: Prisma.PointMovementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>
+        }
+        update: {
+          args: Prisma.PointMovementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>
+        }
+        deleteMany: {
+          args: Prisma.PointMovementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PointMovementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PointMovementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>[]
+        }
+        upsert: {
+          args: Prisma.PointMovementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PointMovementPayload>
+        }
+        aggregate: {
+          args: Prisma.PointMovementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePointMovement>
+        }
+        groupBy: {
+          args: Prisma.PointMovementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PointMovementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PointMovementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PointMovementCountAggregateOutputType> | number
+        }
+      }
+    }
     AdminProject: {
       payload: Prisma.$AdminProjectPayload<ExtArgs>
       fields: Prisma.AdminProjectFieldRefs
@@ -2638,6 +2863,62 @@ export const ReferralStatusHistoryScalarFieldEnum = {
 export type ReferralStatusHistoryScalarFieldEnum = (typeof ReferralStatusHistoryScalarFieldEnum)[keyof typeof ReferralStatusHistoryScalarFieldEnum]
 
 
+export const IncentiveScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  promotion: 'promotion',
+  imageUrl: 'imageUrl',
+  publicId: 'publicId',
+  pointsRequired: 'pointsRequired',
+  stock: 'stock',
+  status: 'status',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IncentiveScalarFieldEnum = (typeof IncentiveScalarFieldEnum)[keyof typeof IncentiveScalarFieldEnum]
+
+
+export const RedemptionScalarFieldEnum = {
+  id: 'id',
+  referrerId: 'referrerId',
+  referralCode: 'referralCode',
+  incentiveId: 'incentiveId',
+  incentiveName: 'incentiveName',
+  incentiveImageUrl: 'incentiveImageUrl',
+  pointsSpent: 'pointsSpent',
+  status: 'status',
+  requestedAt: 'requestedAt',
+  processedAt: 'processedAt',
+  processedById: 'processedById',
+  deliveredAt: 'deliveredAt',
+  rejectedAt: 'rejectedAt',
+  rejectionReason: 'rejectionReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt'
+} as const
+
+export type RedemptionScalarFieldEnum = (typeof RedemptionScalarFieldEnum)[keyof typeof RedemptionScalarFieldEnum]
+
+
+export const PointMovementScalarFieldEnum = {
+  id: 'id',
+  referrerId: 'referrerId',
+  points: 'points',
+  type: 'type',
+  referenceId: 'referenceId',
+  description: 'description',
+  createdAt: 'createdAt'
+} as const
+
+export type PointMovementScalarFieldEnum = (typeof PointMovementScalarFieldEnum)[keyof typeof PointMovementScalarFieldEnum]
+
+
 export const AdminProjectScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -3138,6 +3419,48 @@ export type ListEnumReferralStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'IncentiveStatus'
+ */
+export type EnumIncentiveStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IncentiveStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'IncentiveStatus[]'
+ */
+export type ListEnumIncentiveStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IncentiveStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RedemptionStatus'
+ */
+export type EnumRedemptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RedemptionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'RedemptionStatus[]'
+ */
+export type ListEnumRedemptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RedemptionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PointMovementType'
+ */
+export type EnumPointMovementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PointMovementType'>
+    
+
+
+/**
+ * Reference to a field of type 'PointMovementType[]'
+ */
+export type ListEnumPointMovementTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PointMovementType[]'>
+    
+
+
+/**
  * Reference to a field of type 'LotStatus'
  */
 export type EnumLotStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LotStatus'>
@@ -3347,6 +3670,9 @@ export type GlobalOmitConfig = {
   referral?: Prisma.ReferralOmit
   referralStatusPoint?: Prisma.ReferralStatusPointOmit
   referralStatusHistory?: Prisma.ReferralStatusHistoryOmit
+  incentive?: Prisma.IncentiveOmit
+  redemption?: Prisma.RedemptionOmit
+  pointMovement?: Prisma.PointMovementOmit
   adminProject?: Prisma.AdminProjectOmit
   projectLocation?: Prisma.ProjectLocationOmit
   projectLot?: Prisma.ProjectLotOmit

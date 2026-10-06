@@ -59,6 +59,7 @@ interface ReferralStatusUpdatedInput {
   referrerName: string;
   referrerEmail: string;
   interestLabel: string;
+  projectName: string;
   status: string;
   pointsAwarded: number;
   referralPoints: number;
@@ -69,6 +70,36 @@ interface ReferrerWelcomeInput {
   referrerName: string;
   referrerEmail: string;
   referrerCode: string;
+}
+
+interface RedemptionRequestedInput {
+  referrerName: string;
+  referrerEmail: string;
+  incentiveName: string;
+  pointsSpent: number;
+  remainingPoints: number;
+}
+
+interface RedemptionApprovedInput {
+  referrerName: string;
+  referrerEmail: string;
+  incentiveName: string;
+  pointsSpent: number;
+}
+
+interface RedemptionRejectedInput {
+  referrerName: string;
+  referrerEmail: string;
+  incentiveName: string;
+  pointsRefunded: number;
+  newBalance: number;
+  reason?: string;
+}
+
+interface RedemptionDeliveredInput {
+  referrerName: string;
+  referrerEmail: string;
+  incentiveName: string;
 }
 
 const BRAND = {
@@ -197,6 +228,7 @@ export class MailService {
         intro: `Hola ${this.escape(input.referrerName)}, el estado de tu referido fue actualizado correctamente.`,
         content: `
           ${this.infoRow('Interés', input.interestLabel)}
+          ${this.infoRow('Proyecto', input.projectName)}
           ${this.infoRow('Estado actualizado', input.status)}
           ${this.infoRow('Puntos obtenidos en este cambio', String(input.pointsAwarded))}
           ${this.infoRow('Puntos acumulados del referido', String(input.referralPoints))}
@@ -259,6 +291,103 @@ export class MailService {
           </div>
         `,
         button: { label: 'Ir a mi panel', url: `${this.frontendUrl()}/panel/owner` },
+      }),
+    });
+  }
+
+  async sendRedemptionRequested(input: RedemptionRequestedInput) {
+    return this.send({
+      to: [{ email: input.referrerEmail, name: input.referrerName }],
+      subject: 'Solicitud de canje recibida - ARIZ',
+      html: this.layout({
+        preheader: 'Tu solicitud de canje ha sido recibida.',
+        title: 'Solicitud de canje recibida',
+        intro: `Hola ${this.escape(input.referrerName)}, hemos recibido tu solicitud de canje.`,
+        content: `
+          ${this.infoRow('Recompensa', input.incentiveName)}
+          ${this.infoRow('Puntos utilizados', `${input.pointsSpent} pts`)}
+          ${this.infoRow('Puntos restantes', `${input.remainingPoints} pts`)}
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Tu solicitud está siendo revisada por nuestro equipo. Te notificaremos cuando sea aprobada o si necesitamos más información.
+          </p>
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            <strong style="color:${BRAND.ink};">¿Qué sigue?</strong><br>
+            • Revisaremos tu solicitud en las próximas 24-48 horas<br>
+            • Si es aprobada, coordinaremos la entrega de tu recompensa<br>
+            • Si es rechazada, tus puntos serán devueltos automáticamente
+          </p>
+        `,
+        button: { label: 'Ver mis canjes', url: `${this.frontendUrl()}/rewards/my` },
+      }),
+    });
+  }
+
+  async sendRedemptionApproved(input: RedemptionApprovedInput) {
+    return this.send({
+      to: [{ email: input.referrerEmail, name: input.referrerName }],
+      subject: '¡Tu canje ha sido aprobado! - ARIZ',
+      html: this.layout({
+        preheader: 'Tu canje ha sido aprobado.',
+        title: '¡Canje aprobado!',
+        intro: `Hola ${this.escape(input.referrerName)}, tu solicitud de canje ha sido aprobada.`,
+        content: `
+          ${this.infoRow('Recompensa', input.incentiveName)}
+          ${this.infoRow('Puntos utilizados', `${input.pointsSpent} pts`)}
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Tu recompensa está siendo preparada. Pronto nos pondremos en contacto contigo para coordinar la entrega.
+          </p>
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            ¡Gracias por ser parte del programa de referidos de ARIZ!
+          </p>
+        `,
+        button: { label: 'Ver mis canjes', url: `${this.frontendUrl()}/rewards/my` },
+      }),
+    });
+  }
+
+  async sendRedemptionRejected(input: RedemptionRejectedInput) {
+    return this.send({
+      to: [{ email: input.referrerEmail, name: input.referrerName }],
+      subject: 'Actualización sobre tu canje - ARIZ',
+      html: this.layout({
+        preheader: 'Tu solicitud de canje ha sido revisada.',
+        title: 'Solicitud de canje revisada',
+        intro: `Hola ${this.escape(input.referrerName)}, lamentablemente tu solicitud de canje no pudo ser aprobada en esta ocasión.`,
+        content: `
+          ${this.infoRow('Recompensa', input.incentiveName)}
+          ${this.infoRow('Puntos devueltos', `${input.pointsRefunded} pts`)}
+          ${this.infoRow('Nuevo saldo', `${input.newBalance} pts`)}
+          ${input.reason ? `<p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;"><strong style="color:${BRAND.ink};">Motivo:</strong> ${this.escape(input.reason)}</p>` : ''}
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Tus puntos han sido devueltos a tu cuenta y están disponibles para futuros canjes.
+          </p>
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Si tienes alguna duda, no dudes en contactarnos.
+          </p>
+        `,
+        button: { label: 'Ver catálogo de recompensas', url: `${this.frontendUrl()}/rewards` },
+      }),
+    });
+  }
+
+  async sendRedemptionDelivered(input: RedemptionDeliveredInput) {
+    return this.send({
+      to: [{ email: input.referrerEmail, name: input.referrerName }],
+      subject: '¡Tu recompensa ha sido entregada! - ARIZ',
+      html: this.layout({
+        preheader: 'Tu recompensa ha sido entregada.',
+        title: '¡Recompensa entregada!',
+        intro: `Hola ${this.escape(input.referrerName)}, tu recompensa ha sido marcada como entregada.`,
+        content: `
+          ${this.infoRow('Recompensa', input.incentiveName)}
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Esperamos que disfrutes tu recompensa. ¡Gracias por ser parte del programa de referidos de ARIZ!
+          </p>
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Sigue refiriendo personas para acumular más puntos y desbloquear nuevas recompensas.
+          </p>
+        `,
+        button: { label: 'Ver catálogo de recompensas', url: `${this.frontendUrl()}/rewards` },
       }),
     });
   }

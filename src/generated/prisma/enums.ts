@@ -212,3 +212,31 @@ export const ProjectStatus = {
 } as const
 
 export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]
+
+
+export const IncentiveStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE'
+} as const
+
+export type IncentiveStatus = (typeof IncentiveStatus)[keyof typeof IncentiveStatus]
+
+
+export const RedemptionStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type RedemptionStatus = (typeof RedemptionStatus)[keyof typeof RedemptionStatus]
+
+
+export const PointMovementType = {
+  POINTS_EARNED: 'POINTS_EARNED',
+  POINTS_REDEEMED: 'POINTS_REDEEMED',
+  POINTS_REFUNDED: 'POINTS_REFUNDED'
+} as const
+
+export type PointMovementType = (typeof PointMovementType)[keyof typeof PointMovementType]
