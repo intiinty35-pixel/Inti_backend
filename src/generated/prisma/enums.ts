@@ -137,6 +137,15 @@ export const LeadSource = {
 export type LeadSource = (typeof LeadSource)[keyof typeof LeadSource]
 
 
+export const ReferralStatus = {
+  CONTACTED: 'CONTACTED',
+  VISIT: 'VISIT',
+  OPERATION_COMPLETED: 'OPERATION_COMPLETED'
+} as const
+
+export type ReferralStatus = (typeof ReferralStatus)[keyof typeof ReferralStatus]
+
+
 export const ProjectCategory = {
   LOTIZACION: 'LOTIZACION'
 } as const

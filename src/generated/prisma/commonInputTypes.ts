@@ -613,6 +613,40 @@ export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
 }
 
+export type EnumReferralStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralStatusFilter<$PrismaModel> | $Enums.ReferralStatus
+}
+
+export type EnumReferralStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReferralStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferralStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferralStatusFilter<$PrismaModel>
+}
+
+export type EnumReferralStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumReferralStatusNullableFilter<$PrismaModel> | $Enums.ReferralStatus | null
+}
+
+export type EnumReferralStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumReferralStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.ReferralStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferralStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferralStatusNullableFilter<$PrismaModel>
+}
+
 export type EnumLotStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.LotStatus | Prisma.EnumLotStatusFieldRefInput<$PrismaModel>
   in?: $Enums.LotStatus[] | Prisma.ListEnumLotStatusFieldRefInput<$PrismaModel>
@@ -1203,6 +1237,40 @@ export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumReferralStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralStatusFilter<$PrismaModel> | $Enums.ReferralStatus
+}
+
+export type NestedEnumReferralStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReferralStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferralStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferralStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumReferralStatusNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumReferralStatusNullableFilter<$PrismaModel> | $Enums.ReferralStatus | null
+}
+
+export type NestedEnumReferralStatusNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumReferralStatusNullableWithAggregatesFilter<$PrismaModel> | $Enums.ReferralStatus | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferralStatusNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferralStatusNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumLotStatusFilter<$PrismaModel = never> = {

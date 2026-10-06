@@ -65,6 +65,10 @@ export const ModelName = {
   PropertyAmenity: 'PropertyAmenity',
   PropertyMedia: 'PropertyMedia',
   Project: 'Project',
+  Referrer: 'Referrer',
+  Referral: 'Referral',
+  ReferralStatusPoint: 'ReferralStatusPoint',
+  ReferralStatusHistory: 'ReferralStatusHistory',
   AdminProject: 'AdminProject',
   ProjectLocation: 'ProjectLocation',
   ProjectLot: 'ProjectLot',
@@ -341,6 +345,59 @@ export const ProjectScalarFieldEnum = {
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
+
+
+export const ReferrerScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReferrerScalarFieldEnum = (typeof ReferrerScalarFieldEnum)[keyof typeof ReferrerScalarFieldEnum]
+
+
+export const ReferralScalarFieldEnum = {
+  id: 'id',
+  referrerId: 'referrerId',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  projectId: 'projectId',
+  status: 'status',
+  code: 'code',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReferralScalarFieldEnum = (typeof ReferralScalarFieldEnum)[keyof typeof ReferralScalarFieldEnum]
+
+
+export const ReferralStatusPointScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  points: 'points',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReferralStatusPointScalarFieldEnum = (typeof ReferralStatusPointScalarFieldEnum)[keyof typeof ReferralStatusPointScalarFieldEnum]
+
+
+export const ReferralStatusHistoryScalarFieldEnum = {
+  id: 'id',
+  referralId: 'referralId',
+  fromStatus: 'fromStatus',
+  toStatus: 'toStatus',
+  pointsAwarded: 'pointsAwarded',
+  changedById: 'changedById',
+  createdAt: 'createdAt'
+} as const
+
+export type ReferralStatusHistoryScalarFieldEnum = (typeof ReferralStatusHistoryScalarFieldEnum)[keyof typeof ReferralStatusHistoryScalarFieldEnum]
 
 
 export const AdminProjectScalarFieldEnum = {
