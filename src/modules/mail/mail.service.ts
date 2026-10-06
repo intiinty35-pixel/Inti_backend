@@ -48,6 +48,13 @@ interface MembershipApprovedInput {
   expiresAt?: Date | null;
 }
 
+interface AdminNoticeInput {
+  email: string;
+  name: string;
+  subject?: string;
+  message?: string;
+}
+
 const BRAND = {
   primary: '#00124f',
   accent: '#f2a900',
@@ -152,6 +159,28 @@ export class MailService {
           </p>
         `,
         button: { label: 'Ir a mi panel', url: `${this.frontendUrl()}/panel/owner/subscription` },
+      }),
+    });
+  }
+
+  async sendAdminNotice(input: AdminNoticeInput) {
+    const message =
+      input.message ??
+      'Estamos revisando tu cuenta y tus publicaciones para mantener la calidad de la plataforma. Si necesitas actualizar datos o corregir informacion, ingresa a tu panel de ARIZ.';
+
+    return this.send({
+      to: [{ email: input.email, name: input.name }],
+      subject: input.subject ?? 'Notificacion administrativa de ARIZ',
+      html: this.layout({
+        preheader: 'Tienes una notificacion administrativa de ARIZ.',
+        title: 'Notificacion administrativa',
+        intro: `Hola ${this.escape(input.name)}, el equipo de ARIZ te envia este aviso desde el panel administrativo.`,
+        content: `
+          <div style="margin-top:4px;padding:16px;border-radius:12px;background:${BRAND.canvas};color:${BRAND.ink};line-height:1.65;">
+            ${this.escape(message).replace(/\n/g, '<br>')}
+          </div>
+        `,
+        button: { label: 'Ir a mi panel', url: `${this.frontendUrl()}/panel/owner` },
       }),
     });
   }

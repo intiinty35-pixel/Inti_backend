@@ -5,6 +5,7 @@ import {
   Param,
   ParseUUIDPipe,
   Patch,
+  Post,
   Query,
 } from '@nestjs/common';
 import { ParseEnumPipe } from '@nestjs/common';
@@ -43,5 +44,10 @@ export class UsersController {
     @Body() dto: UpdateOfficialDeveloperDto,
   ) {
     return this.users.setOfficialDeveloper(id, dto.isOfficialDeveloper);
+  }
+
+  @Post(':id/notify')
+  notify(@Param('id', ParseUUIDPipe) id: string) {
+    return this.users.notifyProfessional(id);
   }
 }

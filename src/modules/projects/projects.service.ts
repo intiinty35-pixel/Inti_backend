@@ -744,6 +744,17 @@ export class ProjectsService {
       featured: project.featured,
       publishedAt:
         project.publishedAt?.toISOString() ?? project.createdAt.toISOString(),
+      agent: project.agentProfile
+        ? {
+            id: project.agentProfile.id,
+            type: project.agentProfile.type,
+            status: project.agentProfile.status,
+          }
+        : {
+            id: null,
+            type: 'ADMIN',
+            status: 'APPROVED',
+          },
     };
   }
 

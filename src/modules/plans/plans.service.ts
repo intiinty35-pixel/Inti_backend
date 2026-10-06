@@ -369,6 +369,37 @@ export class PlansService {
     return { items, total, page, pageSize: size, hasMore: page * size < total };
   }
 
+  async listSubscriptions(page?: number, pageSize?: number) {
+    await this.expireMemberships();
+
+    const include = {
+      plan: true,
+      agentProfile: {
+        include: { user: { select: { firstName: true, lastName: true, email: true } } },
+      },
+    };
+
+    if (!page) {
+      return this.prisma.planSubscription.findMany({
+        orderBy: { createdAt: 'desc' },
+        include,
+      });
+    }
+
+    const size = Math.min(pageSize ?? 10, 100);
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.planSubscription.findMany({
+        orderBy: { createdAt: 'desc' },
+        include,
+        skip: (page - 1) * size,
+        take: size,
+      }),
+      this.prisma.planSubscription.count(),
+    ]);
+
+    return { items, total, page, pageSize: size, hasMore: page * size < total };
+  }
+
   async reviewSubscription(id: string, dto: ReviewSubscriptionDto) {
     await this.expireMemberships();
 

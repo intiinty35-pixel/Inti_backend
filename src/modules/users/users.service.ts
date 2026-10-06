@@ -13,12 +13,14 @@ import {
 } from '../../generated/prisma/enums';
 import { PlansService } from '../plans/plans.service';
 import { DeveloperReviewQueryDto } from './dto/developer-review-query.dto';
+import { MailService } from '../mail/mail.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly plans: PlansService,
+    private readonly mail: MailService,
   ) {}
 
   async listProfessionals(
@@ -264,5 +266,35 @@ export class UsersService {
       where: { id: profileId },
       data: { isOfficialDeveloper },
     });
+  }
+
+  async notifyProfessional(profileId: string) {
+    const profile = await this.prisma.professionalProfile.findUnique({
+      where: { id: profileId },
+      select: {
+        businessName: true,
+        user: {
+          select: {
+            email: true,
+            firstName: true,
+            lastName: true,
+          },
+        },
+      },
+    });
+
+    if (!profile) {
+      throw new NotFoundException('Perfil profesional no encontrado');
+    }
+
+    const fullName = `${profile.user.firstName} ${profile.user.lastName ?? ''}`.trim();
+    const name = (profile.businessName ?? fullName) || 'Usuario';
+
+    await this.mail.sendAdminNotice({
+      email: profile.user.email,
+      name,
+    });
+
+    return { ok: true, email: profile.user.email };
   }
 }

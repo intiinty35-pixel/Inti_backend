@@ -10,6 +10,11 @@ import { PlansService } from './plans.service';
 export class AdminSubscriptionsController {
   constructor(private readonly plans: PlansService) {}
 
+  @Get()
+  list(@Query() query: PageQueryDto) {
+    return this.plans.listSubscriptions(query.page, query.pageSize);
+  }
+
   @Get('pending')
   pending(@Query() query: PageQueryDto) {
     return this.plans.listPendingSubscriptions(query.page, query.pageSize);

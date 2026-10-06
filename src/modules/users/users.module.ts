@@ -8,9 +8,10 @@ import { ProjectsModule } from '../projects/projects.module';
 import { AdminAgencyReviewController } from './admin-agency-review.controller';
 import { CustomerAccountController } from './customer-account.controller';
 import { CustomerAccountService } from './customer-account.service';
+import { MailModule } from '../mail/mail.module';
 
 @Module({
-  imports: [PlansModule, PropertiesModule, ProjectsModule],
+  imports: [PlansModule, PropertiesModule, ProjectsModule, MailModule],
   controllers: [
     UsersController,
     AdminDeveloperReviewController,

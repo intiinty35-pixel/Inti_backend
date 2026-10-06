@@ -657,6 +657,11 @@ export class PropertiesService {
         property.publishedAt?.toISOString() ?? property.createdAt.toISOString(),
       featured: property.featured,
       coverImage: cover?.url,
+      agent: {
+        id: property.agentProfile.id,
+        type: property.agentProfile.type,
+        status: property.agentProfile.status,
+      },
     };
   }
 
