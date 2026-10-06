@@ -1092,14 +1092,14 @@ export type ProjectSumOrderByAggregateInput = {
   totalLots?: Prisma.SortOrder
 }
 
-export type ProjectScalarRelationFilter = {
-  is?: Prisma.ProjectWhereInput
-  isNot?: Prisma.ProjectWhereInput
-}
-
 export type ProjectNullableScalarRelationFilter = {
   is?: Prisma.ProjectWhereInput | null
   isNot?: Prisma.ProjectWhereInput | null
+}
+
+export type ProjectScalarRelationFilter = {
+  is?: Prisma.ProjectWhereInput
+  isNot?: Prisma.ProjectWhereInput
 }
 
 export type ProjectCreateNestedManyWithoutAgentProfileInput = {
@@ -1202,10 +1202,12 @@ export type ProjectCreateNestedOneWithoutReferralsInput = {
   connect?: Prisma.ProjectWhereUniqueInput
 }
 
-export type ProjectUpdateOneRequiredWithoutReferralsNestedInput = {
+export type ProjectUpdateOneWithoutReferralsNestedInput = {
   create?: Prisma.XOR<Prisma.ProjectCreateWithoutReferralsInput, Prisma.ProjectUncheckedCreateWithoutReferralsInput>
   connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutReferralsInput
   upsert?: Prisma.ProjectUpsertWithoutReferralsInput
+  disconnect?: Prisma.ProjectWhereInput | boolean
+  delete?: Prisma.ProjectWhereInput | boolean
   connect?: Prisma.ProjectWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutReferralsInput, Prisma.ProjectUpdateWithoutReferralsInput>, Prisma.ProjectUncheckedUpdateWithoutReferralsInput>
 }

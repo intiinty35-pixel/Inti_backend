@@ -232,7 +232,7 @@ export class ReferralsService {
       await this.mail.sendReferralStatusUpdated({
         referrerName: result.referrer.name,
         referrerEmail: result.referrer.email,
-        projectName: result.project.name,
+        projectName: result.project?.name ?? 'Sin proyecto',
         status: STATUS_LABELS[status],
         pointsAwarded: result.pointsAwarded,
         referralPoints: result.points,

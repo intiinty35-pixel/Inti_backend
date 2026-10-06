@@ -69,6 +69,9 @@ export const ModelName = {
   Referral: 'Referral',
   ReferralStatusPoint: 'ReferralStatusPoint',
   ReferralStatusHistory: 'ReferralStatusHistory',
+  Incentive: 'Incentive',
+  Redemption: 'Redemption',
+  PointMovement: 'PointMovement',
   AdminProject: 'AdminProject',
   ProjectLocation: 'ProjectLocation',
   ProjectLot: 'ProjectLot',
@@ -369,6 +372,8 @@ export const ReferralScalarFieldEnum = {
   projectId: 'projectId',
   status: 'status',
   code: 'code',
+  availability: 'availability',
+  interest: 'interest',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -398,6 +403,62 @@ export const ReferralStatusHistoryScalarFieldEnum = {
 } as const
 
 export type ReferralStatusHistoryScalarFieldEnum = (typeof ReferralStatusHistoryScalarFieldEnum)[keyof typeof ReferralStatusHistoryScalarFieldEnum]
+
+
+export const IncentiveScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  promotion: 'promotion',
+  imageUrl: 'imageUrl',
+  publicId: 'publicId',
+  pointsRequired: 'pointsRequired',
+  stock: 'stock',
+  status: 'status',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IncentiveScalarFieldEnum = (typeof IncentiveScalarFieldEnum)[keyof typeof IncentiveScalarFieldEnum]
+
+
+export const RedemptionScalarFieldEnum = {
+  id: 'id',
+  referrerId: 'referrerId',
+  referralCode: 'referralCode',
+  incentiveId: 'incentiveId',
+  incentiveName: 'incentiveName',
+  incentiveImageUrl: 'incentiveImageUrl',
+  pointsSpent: 'pointsSpent',
+  status: 'status',
+  requestedAt: 'requestedAt',
+  processedAt: 'processedAt',
+  processedById: 'processedById',
+  deliveredAt: 'deliveredAt',
+  rejectedAt: 'rejectedAt',
+  rejectionReason: 'rejectionReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt'
+} as const
+
+export type RedemptionScalarFieldEnum = (typeof RedemptionScalarFieldEnum)[keyof typeof RedemptionScalarFieldEnum]
+
+
+export const PointMovementScalarFieldEnum = {
+  id: 'id',
+  referrerId: 'referrerId',
+  points: 'points',
+  type: 'type',
+  referenceId: 'referenceId',
+  description: 'description',
+  createdAt: 'createdAt'
+} as const
+
+export type PointMovementScalarFieldEnum = (typeof PointMovementScalarFieldEnum)[keyof typeof PointMovementScalarFieldEnum]
 
 
 export const AdminProjectScalarFieldEnum = {

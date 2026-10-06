@@ -23,6 +23,8 @@ import { PlansModule } from './modules/plans/plans.module';
 import { UsersModule } from './modules/users/users.module';
 import { InvestmentOpportunitiesModule } from './modules/investment-opportunities/investment-opportunities.module';
 import { ReferralsModule } from './modules/referrals/referrals.module';
+import { IncentivesModule } from './modules/incentives/incentives.module';
+import { RedemptionsModule } from './modules/redemptions/redemptions.module';
 
 @Module({
   imports: [
@@ -50,6 +52,8 @@ import { ReferralsModule } from './modules/referrals/referrals.module';
     PlansModule,
     InvestmentOpportunitiesModule,
     ReferralsModule,
+    IncentivesModule,
+    RedemptionsModule,
   ],
   controllers: [AppController],
   providers: [
