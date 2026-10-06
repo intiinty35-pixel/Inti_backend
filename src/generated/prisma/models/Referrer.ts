@@ -215,16 +215,16 @@ export type ReferrerOrderByWithRelationInput = {
 export type ReferrerWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   code?: string
+  email?: string
   AND?: Prisma.ReferrerWhereInput | Prisma.ReferrerWhereInput[]
   OR?: Prisma.ReferrerWhereInput[]
   NOT?: Prisma.ReferrerWhereInput | Prisma.ReferrerWhereInput[]
   name?: Prisma.StringFilter<"Referrer"> | string
-  email?: Prisma.StringFilter<"Referrer"> | string
   phone?: Prisma.StringFilter<"Referrer"> | string
   createdAt?: Prisma.DateTimeFilter<"Referrer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Referrer"> | Date | string
   referrals?: Prisma.ReferralListRelationFilter
-}, "id" | "code">
+}, "id" | "code" | "email">
 
 export type ReferrerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

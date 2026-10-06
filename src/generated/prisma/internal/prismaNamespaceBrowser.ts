@@ -366,6 +366,8 @@ export const ReferralScalarFieldEnum = {
   name: 'name',
   email: 'email',
   phone: 'phone',
+  interest: 'interest',
+  availability: 'availability',
   projectId: 'projectId',
   status: 'status',
   code: 'code',

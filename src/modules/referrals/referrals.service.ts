@@ -8,6 +8,7 @@ import { Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
 import { ReferralStatus } from '../../generated/prisma/enums';
+import { ReferralAvailability } from '../../generated/prisma/enums';
 import { CreateReferralDto } from './dto/create-referral.dto';
 import { ReferralQueryDto } from './dto/referral-query.dto';
 
@@ -15,6 +16,21 @@ const STATUS_LABELS: Record<ReferralStatus, string> = {
   [ReferralStatus.CONTACTED]: 'Contactado',
   [ReferralStatus.VISIT]: 'Visita',
   [ReferralStatus.OPERATION_COMPLETED]: 'Operación concretada',
+};
+
+const INTEREST_LABELS: Record<string, string> = {
+  VENTA: 'Venta',
+  COMPRA: 'Compra',
+  ALQUILER: 'Alquilar',
+  COMPRA_LOTE: 'Comprar un lote',
+  INVERSION: 'Invertir en un proyecto',
+  CORRETAJE: 'Servicio de corretaje',
+};
+
+const AVAILABILITY_LABELS: Record<string, string> = {
+  INMEDIATA: 'Inmediata',
+  AVERIGUAR: 'Averiguar',
+  POR_CONFIRMAR: 'Por confirmar',
 };
 
 export interface ReferralHistoryRecord {
@@ -26,6 +42,7 @@ export interface ReferralHistoryRecord {
 }
 
 export interface ReferralWithHistory {
+  availability: string;
   history: ReferralHistoryRecord[];
 }
 
@@ -141,7 +158,8 @@ export class ReferralsService {
             name: dto.name.trim(),
             email: dto.email.trim().toLowerCase(),
             phone: dto.phone.trim(),
-            projectId: dto.projectId,
+            interest: dto.interest,
+            availability: dto.availability ?? ReferralAvailability.INMEDIATA,
             code: referralCode,
             history: {
               create: {
@@ -153,7 +171,6 @@ export class ReferralsService {
           },
           include: {
             referrer: true,
-            project: { select: { id: true, name: true } },
           },
         });
       });
@@ -193,7 +210,6 @@ export class ReferralsService {
         where: { id },
         include: {
           referrer: true,
-          project: { select: { id: true, name: true } },
         },
       });
       if (!current) throw new NotFoundException('Referido no encontrado');
@@ -232,7 +248,7 @@ export class ReferralsService {
       await this.mail.sendReferralStatusUpdated({
         referrerName: result.referrer.name,
         referrerEmail: result.referrer.email,
-        projectName: result.project.name,
+        interestLabel: INTEREST_LABELS[String(result.interest)] ?? 'Referido',
         status: STATUS_LABELS[status],
         pointsAwarded: result.pointsAwarded,
         referralPoints: result.points,
@@ -270,6 +286,9 @@ export class ReferralsService {
   private toReferralResponse<T extends ReferralWithHistory>(referral: T) {
     return {
       ...referral,
+      availability:
+        AVAILABILITY_LABELS[String(referral.availability)] ??
+        String(referral.availability),
       points: referral.history.reduce(
         (sum, item) => sum + item.pointsAwarded,
         0,

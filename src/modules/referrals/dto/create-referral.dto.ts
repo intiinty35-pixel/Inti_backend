@@ -1,11 +1,15 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsUUID,
   MaxLength,
 } from 'class-validator';
+import {
+  ReferralAvailability,
+  ReferralInterest,
+} from '../../../generated/prisma/enums';
 
 export class CreateReferralDto {
   @IsString()
@@ -39,6 +43,10 @@ export class CreateReferralDto {
   @MaxLength(30)
   phone!: string;
 
-  @IsUUID()
-  projectId!: string;
+  @IsEnum(ReferralInterest)
+  interest!: ReferralInterest;
+
+  @IsOptional()
+  @IsEnum(ReferralAvailability)
+  availability?: ReferralAvailability;
 }

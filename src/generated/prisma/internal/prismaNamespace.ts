@@ -2602,6 +2602,8 @@ export const ReferralScalarFieldEnum = {
   name: 'name',
   email: 'email',
   phone: 'phone',
+  interest: 'interest',
+  availability: 'availability',
   projectId: 'projectId',
   status: 'status',
   code: 'code',
@@ -3090,6 +3092,34 @@ export type EnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'ProjectStatus[]'
  */
 export type ListEnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ProjectStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReferralInterest'
+ */
+export type EnumReferralInterestFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralInterest'>
+    
+
+
+/**
+ * Reference to a field of type 'ReferralInterest[]'
+ */
+export type ListEnumReferralInterestFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralInterest[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ReferralAvailability'
+ */
+export type EnumReferralAvailabilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralAvailability'>
+    
+
+
+/**
+ * Reference to a field of type 'ReferralAvailability[]'
+ */
+export type ListEnumReferralAvailabilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralAvailability[]'>
     
 
 

@@ -613,11 +613,45 @@ export type EnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
 }
 
+export type EnumReferralInterestFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralInterest | Prisma.EnumReferralInterestFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralInterest[] | Prisma.ListEnumReferralInterestFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralInterest[] | Prisma.ListEnumReferralInterestFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralInterestFilter<$PrismaModel> | $Enums.ReferralInterest
+}
+
+export type EnumReferralAvailabilityFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralAvailability | Prisma.EnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralAvailability[] | Prisma.ListEnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralAvailability[] | Prisma.ListEnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralAvailabilityFilter<$PrismaModel> | $Enums.ReferralAvailability
+}
+
 export type EnumReferralStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel>
   in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumReferralStatusFilter<$PrismaModel> | $Enums.ReferralStatus
+}
+
+export type EnumReferralInterestWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralInterest | Prisma.EnumReferralInterestFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralInterest[] | Prisma.ListEnumReferralInterestFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralInterest[] | Prisma.ListEnumReferralInterestFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralInterestWithAggregatesFilter<$PrismaModel> | $Enums.ReferralInterest
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferralInterestFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferralInterestFilter<$PrismaModel>
+}
+
+export type EnumReferralAvailabilityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralAvailability | Prisma.EnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralAvailability[] | Prisma.ListEnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralAvailability[] | Prisma.ListEnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralAvailabilityWithAggregatesFilter<$PrismaModel> | $Enums.ReferralAvailability
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferralAvailabilityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferralAvailabilityFilter<$PrismaModel>
 }
 
 export type EnumReferralStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -1239,11 +1273,45 @@ export type NestedEnumProjectStatusWithAggregatesFilter<$PrismaModel = never> = 
   _max?: Prisma.NestedEnumProjectStatusFilter<$PrismaModel>
 }
 
+export type NestedEnumReferralInterestFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralInterest | Prisma.EnumReferralInterestFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralInterest[] | Prisma.ListEnumReferralInterestFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralInterest[] | Prisma.ListEnumReferralInterestFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralInterestFilter<$PrismaModel> | $Enums.ReferralInterest
+}
+
+export type NestedEnumReferralAvailabilityFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralAvailability | Prisma.EnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralAvailability[] | Prisma.ListEnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralAvailability[] | Prisma.ListEnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralAvailabilityFilter<$PrismaModel> | $Enums.ReferralAvailability
+}
+
 export type NestedEnumReferralStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.ReferralStatus | Prisma.EnumReferralStatusFieldRefInput<$PrismaModel>
   in?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.ReferralStatus[] | Prisma.ListEnumReferralStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumReferralStatusFilter<$PrismaModel> | $Enums.ReferralStatus
+}
+
+export type NestedEnumReferralInterestWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralInterest | Prisma.EnumReferralInterestFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralInterest[] | Prisma.ListEnumReferralInterestFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralInterest[] | Prisma.ListEnumReferralInterestFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralInterestWithAggregatesFilter<$PrismaModel> | $Enums.ReferralInterest
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferralInterestFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferralInterestFilter<$PrismaModel>
+}
+
+export type NestedEnumReferralAvailabilityWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReferralAvailability | Prisma.EnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  in?: $Enums.ReferralAvailability[] | Prisma.ListEnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReferralAvailability[] | Prisma.ListEnumReferralAvailabilityFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReferralAvailabilityWithAggregatesFilter<$PrismaModel> | $Enums.ReferralAvailability
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReferralAvailabilityFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReferralAvailabilityFilter<$PrismaModel>
 }
 
 export type NestedEnumReferralStatusWithAggregatesFilter<$PrismaModel = never> = {

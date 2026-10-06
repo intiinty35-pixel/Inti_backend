@@ -58,7 +58,7 @@ interface AdminNoticeInput {
 interface ReferralStatusUpdatedInput {
   referrerName: string;
   referrerEmail: string;
-  projectName: string;
+  interestLabel: string;
   status: string;
   pointsAwarded: number;
   referralPoints: number;
@@ -196,7 +196,7 @@ export class MailService {
         title: 'Tus puntos en ARIZ fueron actualizados',
         intro: `Hola ${this.escape(input.referrerName)}, el estado de tu referido fue actualizado correctamente.`,
         content: `
-          ${this.infoRow('Proyecto', input.projectName)}
+          ${this.infoRow('Interés', input.interestLabel)}
           ${this.infoRow('Estado actualizado', input.status)}
           ${this.infoRow('Puntos obtenidos en este cambio', String(input.pointsAwarded))}
           ${this.infoRow('Puntos acumulados del referido', String(input.referralPoints))}

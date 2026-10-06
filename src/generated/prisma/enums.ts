@@ -146,6 +146,27 @@ export const ReferralStatus = {
 export type ReferralStatus = (typeof ReferralStatus)[keyof typeof ReferralStatus]
 
 
+export const ReferralInterest = {
+  VENTA: 'VENTA',
+  COMPRA: 'COMPRA',
+  ALQUILER: 'ALQUILER',
+  COMPRA_LOTE: 'COMPRA_LOTE',
+  INVERSION: 'INVERSION',
+  CORRETAJE: 'CORRETAJE'
+} as const
+
+export type ReferralInterest = (typeof ReferralInterest)[keyof typeof ReferralInterest]
+
+
+export const ReferralAvailability = {
+  INMEDIATA: 'INMEDIATA',
+  AVERIGUAR: 'AVERIGUAR',
+  POR_CONFIRMAR: 'POR_CONFIRMAR'
+} as const
+
+export type ReferralAvailability = (typeof ReferralAvailability)[keyof typeof ReferralAvailability]
+
+
 export const ProjectCategory = {
   LOTIZACION: 'LOTIZACION'
 } as const
