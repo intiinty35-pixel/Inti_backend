@@ -104,7 +104,7 @@ export class ProjectsService {
     await this.expireMembershipIfNeeded();
 
     const project = await this.prisma.project.findFirst({
-      where: { slug, status: ProjectStatus.PUBLISHED },
+      where: { slug, status: ProjectStatus.PUBLISHED, isDeleted: false },
       include: PROJECT_INCLUDE,
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
@@ -130,7 +130,7 @@ export class ProjectsService {
 
     if (!query.page) {
       const projects = await this.prisma.project.findMany({
-        where: { agentProfileId: agent.id },
+        where: { agentProfileId: agent.id, isDeleted: false },
         orderBy: [{ updatedAt: 'desc' }],
         include: PROJECT_INCLUDE,
       });
@@ -139,7 +139,7 @@ export class ProjectsService {
 
     const page = query.page;
     const pageSize = Math.min(query.pageSize ?? 9, 50);
-    const where = { agentProfileId: agent.id };
+    const where = { agentProfileId: agent.id, isDeleted: false };
 
     const [items, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
@@ -167,6 +167,7 @@ export class ProjectsService {
     const where: Prisma.ProjectWhereInput = {
       adminProject: { isNot: null },
       status: query.status,
+      isDeleted: false,
     };
     const [items, total] = await this.prisma.$transaction([
       this.prisma.project.findMany({
@@ -373,6 +374,33 @@ export class ProjectsService {
     return this.toDetail(updated);
   }
 
+  async remove(user: AuthUser, id: string) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { agentProfile: true },
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+
+    const isOwner = project.agentProfile && project.agentProfile.userId === user.id;
+    if (!isOwner && user.role !== 'ADMIN') {
+      throw new ForbiddenException('No puedes eliminar este proyecto');
+    }
+    if (project.isDeleted) return;
+
+    await this.prisma.project.update({
+      where: { id },
+      data: { isDeleted: true, deletedAt: new Date() },
+    });
+  }
+
+  /** Baja logica de todos los proyectos de un agente, usada al eliminar su cuenta desde el admin. */
+  async removeAllByAgent(agentProfileId: string) {
+    await this.prisma.project.updateMany({
+      where: { agentProfileId, isDeleted: false },
+      data: { isDeleted: true, deletedAt: new Date() },
+    });
+  }
+
   async reviewDeveloperProject(id: string, status: 'PUBLISHED' | 'REJECTED') {
     const project = await this.prisma.project.findUnique({
       where: { id },
@@ -497,6 +525,7 @@ export class ProjectsService {
   private buildPublicWhere(query: ProjectQueryDto): Prisma.ProjectWhereInput {
     return {
       status: ProjectStatus.PUBLISHED,
+      isDeleted: false,
       category: query.category,
       stage: query.stage,
       currency: query.currency,
