@@ -153,6 +153,11 @@ export type ProjectMedia = Prisma.ProjectMediaModel
  */
 export type InvestmentOpportunity = Prisma.InvestmentOpportunityModel
 /**
+ * Model InvestmentType
+ * 
+ */
+export type InvestmentType = Prisma.InvestmentTypeModel
+/**
  * Model Lead
  * 
  */

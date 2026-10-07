@@ -424,6 +424,7 @@ export const ModelName = {
   ProjectMilestone: 'ProjectMilestone',
   ProjectMedia: 'ProjectMedia',
   InvestmentOpportunity: 'InvestmentOpportunity',
+  InvestmentType: 'InvestmentType',
   Lead: 'Lead'
 } as const
 
@@ -440,7 +441,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "lead"
+    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "investmentType" | "lead"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2442,6 +2443,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    InvestmentType: {
+      payload: Prisma.$InvestmentTypePayload<ExtArgs>
+      fields: Prisma.InvestmentTypeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InvestmentTypeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InvestmentTypeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>
+        }
+        findFirst: {
+          args: Prisma.InvestmentTypeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InvestmentTypeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>
+        }
+        findMany: {
+          args: Prisma.InvestmentTypeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>[]
+        }
+        create: {
+          args: Prisma.InvestmentTypeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>
+        }
+        createMany: {
+          args: Prisma.InvestmentTypeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InvestmentTypeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>[]
+        }
+        delete: {
+          args: Prisma.InvestmentTypeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>
+        }
+        update: {
+          args: Prisma.InvestmentTypeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>
+        }
+        deleteMany: {
+          args: Prisma.InvestmentTypeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InvestmentTypeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InvestmentTypeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>[]
+        }
+        upsert: {
+          args: Prisma.InvestmentTypeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InvestmentTypePayload>
+        }
+        aggregate: {
+          args: Prisma.InvestmentTypeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvestmentType>
+        }
+        groupBy: {
+          args: Prisma.InvestmentTypeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvestmentTypeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InvestmentTypeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InvestmentTypeCountAggregateOutputType> | number
+        }
+      }
+    }
     Lead: {
       payload: Prisma.$LeadPayload<ExtArgs>
       fields: Prisma.LeadFieldRefs
@@ -2991,15 +3066,25 @@ export type ProjectMediaScalarFieldEnum = (typeof ProjectMediaScalarFieldEnum)[k
 
 export const InvestmentOpportunityScalarFieldEnum = {
   id: 'id',
+  investmentTypeId: 'investmentTypeId',
   name: 'name',
   slug: 'slug',
   summary: 'summary',
   description: 'description',
   areaLabel: 'areaLabel',
+  investmentKind: 'investmentKind',
+  assetType: 'assetType',
   initialInvestment: 'initialInvestment',
   currency: 'currency',
   roiPercent: 'roiPercent',
+  estimatedReturnLabel: 'estimatedReturnLabel',
+  estimatedTermMonths: 'estimatedTermMonths',
   investmentGoal: 'investmentGoal',
+  status: 'status',
+  riskLevel: 'riskLevel',
+  featured: 'featured',
+  sortOrder: 'sortOrder',
+  ctaLabel: 'ctaLabel',
   location: 'location',
   department: 'department',
   province: 'province',
@@ -3016,6 +3101,20 @@ export const InvestmentOpportunityScalarFieldEnum = {
 } as const
 
 export type InvestmentOpportunityScalarFieldEnum = (typeof InvestmentOpportunityScalarFieldEnum)[keyof typeof InvestmentOpportunityScalarFieldEnum]
+
+
+export const InvestmentTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestmentTypeScalarFieldEnum = (typeof InvestmentTypeScalarFieldEnum)[keyof typeof InvestmentTypeScalarFieldEnum]
 
 
 export const LeadScalarFieldEnum = {
@@ -3679,6 +3778,7 @@ export type GlobalOmitConfig = {
   projectMilestone?: Prisma.ProjectMilestoneOmit
   projectMedia?: Prisma.ProjectMediaOmit
   investmentOpportunity?: Prisma.InvestmentOpportunityOmit
+  investmentType?: Prisma.InvestmentTypeOmit
   lead?: Prisma.LeadOmit
 }
 

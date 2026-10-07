@@ -13,6 +13,12 @@ export class InvestmentOpportunitiesController {
   }
 
   @Public()
+  @Get('types')
+  listTypes() {
+    return this.opportunities.listTypes(false);
+  }
+
+  @Public()
   @Get(':slug')
   detail(@Param('slug') slug: string) {
     return this.opportunities.getPublicBySlug(slug);

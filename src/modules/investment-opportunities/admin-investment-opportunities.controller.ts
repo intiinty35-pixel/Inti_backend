@@ -13,6 +13,7 @@ import { Roles } from '../../common/decorators/roles.decorator';
 import type { AuthUser } from '../../common/types/auth-user';
 import { Role } from '../../generated/prisma/enums';
 import { InvestmentOpportunityDto } from './dto/investment-opportunity.dto';
+import { InvestmentTypeDto } from './dto/investment-type.dto';
 import { InvestmentOpportunitiesService } from './investment-opportunities.service';
 
 @Roles(Role.ADMIN)
@@ -23,6 +24,29 @@ export class AdminInvestmentOpportunitiesController {
   @Get()
   list() {
     return this.opportunities.listAdmin();
+  }
+
+  @Get('types')
+  listTypes() {
+    return this.opportunities.listTypes(true);
+  }
+
+  @Post('types')
+  createType(@Body() dto: InvestmentTypeDto) {
+    return this.opportunities.createType(dto);
+  }
+
+  @Patch('types/:id')
+  updateType(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: InvestmentTypeDto,
+  ) {
+    return this.opportunities.updateType(id, dto);
+  }
+
+  @Delete('types/:id')
+  deleteType(@Param('id', ParseUUIDPipe) id: string) {
+    return this.opportunities.deleteType(id);
   }
 
   @Get(':id')

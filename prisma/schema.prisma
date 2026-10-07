@@ -521,15 +521,25 @@ model ProjectMedia {
 
 model InvestmentOpportunity {
   id                 String   @id @default(uuid())
+  investmentTypeId   String?
   name               String
   slug               String   @unique
   summary            String
   description        String   @db.Text
   areaLabel          String
+  investmentKind     String   @default("Inversión inmobiliaria")
+  assetType          String   @default("Proyecto")
   initialInvestment  Decimal  @db.Decimal(14, 2)
   currency           Currency @default(PEN)
   roiPercent         Decimal  @db.Decimal(5, 2)
+  estimatedReturnLabel String?
+  estimatedTermMonths  Int?
   investmentGoal     String
+  status             String   @default("AVAILABLE")
+  riskLevel          String?
+  featured           Boolean  @default(false)
+  sortOrder          Int      @default(0)
+  ctaLabel           String   @default("Solicitar información")
   location           String
   department         String
   province           String
@@ -543,9 +553,26 @@ model InvestmentOpportunity {
   isPublished        Boolean  @default(true)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+  investmentType     InvestmentType? @relation(fields: [investmentTypeId], references: [id], onDelete: SetNull)
 
+  @@index([investmentTypeId, sortOrder])
   @@index([isPublished, updatedAt])
   @@map("investment_opportunities")
+}
+
+model InvestmentType {
+  id            String   @id @default(uuid())
+  name          String
+  slug          String   @unique
+  description   String?
+  isActive      Boolean  @default(true)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  opportunities InvestmentOpportunity[]
+
+  @@index([isActive, sortOrder])
+  @@map("investment_types")
 }
 
 model Lead {

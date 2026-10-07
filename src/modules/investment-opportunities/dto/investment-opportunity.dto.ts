@@ -14,6 +14,10 @@ import {
 } from 'class-validator';
 
 export class InvestmentOpportunityDto {
+  @IsOptional()
+  @IsString()
+  investmentTypeId?: string;
+
   @IsString()
   @IsNotEmpty()
   @MaxLength(120)
@@ -34,6 +38,16 @@ export class InvestmentOpportunityDto {
   @MaxLength(80)
   areaLabel!: string;
 
+  @IsOptional()
+  @IsString()
+  @MaxLength(80)
+  investmentKind?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(80)
+  assetType?: string;
+
   @IsNumber()
   @Min(1)
   initialInvestment!: number;
@@ -43,8 +57,40 @@ export class InvestmentOpportunityDto {
   @Max(100)
   roiPercent!: number;
 
+  @IsOptional()
+  @IsString()
+  @MaxLength(80)
+  estimatedReturnLabel?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  estimatedTermMonths?: number;
+
   @IsIn(['plusvalia', 'construccion', 'renta'])
   investmentGoal!: string;
+
+  @IsOptional()
+  @IsIn(['AVAILABLE', 'COMING_SOON', 'CLOSED'])
+  status?: string;
+
+  @IsOptional()
+  @IsIn(['LOW', 'MEDIUM', 'HIGH'])
+  riskLevel?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  featured?: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  sortOrder?: number;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(80)
+  ctaLabel?: string;
 
   @IsString()
   @IsNotEmpty()

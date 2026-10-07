@@ -78,6 +78,7 @@ export const ModelName = {
   ProjectMilestone: 'ProjectMilestone',
   ProjectMedia: 'ProjectMedia',
   InvestmentOpportunity: 'InvestmentOpportunity',
+  InvestmentType: 'InvestmentType',
   Lead: 'Lead'
 } as const
 
@@ -533,15 +534,25 @@ export type ProjectMediaScalarFieldEnum = (typeof ProjectMediaScalarFieldEnum)[k
 
 export const InvestmentOpportunityScalarFieldEnum = {
   id: 'id',
+  investmentTypeId: 'investmentTypeId',
   name: 'name',
   slug: 'slug',
   summary: 'summary',
   description: 'description',
   areaLabel: 'areaLabel',
+  investmentKind: 'investmentKind',
+  assetType: 'assetType',
   initialInvestment: 'initialInvestment',
   currency: 'currency',
   roiPercent: 'roiPercent',
+  estimatedReturnLabel: 'estimatedReturnLabel',
+  estimatedTermMonths: 'estimatedTermMonths',
   investmentGoal: 'investmentGoal',
+  status: 'status',
+  riskLevel: 'riskLevel',
+  featured: 'featured',
+  sortOrder: 'sortOrder',
+  ctaLabel: 'ctaLabel',
   location: 'location',
   department: 'department',
   province: 'province',
@@ -558,6 +569,20 @@ export const InvestmentOpportunityScalarFieldEnum = {
 } as const
 
 export type InvestmentOpportunityScalarFieldEnum = (typeof InvestmentOpportunityScalarFieldEnum)[keyof typeof InvestmentOpportunityScalarFieldEnum]
+
+
+export const InvestmentTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InvestmentTypeScalarFieldEnum = (typeof InvestmentTypeScalarFieldEnum)[keyof typeof InvestmentTypeScalarFieldEnum]
 
 
 export const LeadScalarFieldEnum = {

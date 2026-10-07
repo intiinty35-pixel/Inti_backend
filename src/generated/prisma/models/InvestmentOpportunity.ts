@@ -29,6 +29,8 @@ export type AggregateInvestmentOpportunity = {
 export type InvestmentOpportunityAvgAggregateOutputType = {
   initialInvestment: runtime.Decimal | null
   roiPercent: runtime.Decimal | null
+  estimatedTermMonths: number | null
+  sortOrder: number | null
   latitude: runtime.Decimal | null
   longitude: runtime.Decimal | null
 }
@@ -36,21 +38,33 @@ export type InvestmentOpportunityAvgAggregateOutputType = {
 export type InvestmentOpportunitySumAggregateOutputType = {
   initialInvestment: runtime.Decimal | null
   roiPercent: runtime.Decimal | null
+  estimatedTermMonths: number | null
+  sortOrder: number | null
   latitude: runtime.Decimal | null
   longitude: runtime.Decimal | null
 }
 
 export type InvestmentOpportunityMinAggregateOutputType = {
   id: string | null
+  investmentTypeId: string | null
   name: string | null
   slug: string | null
   summary: string | null
   description: string | null
   areaLabel: string | null
+  investmentKind: string | null
+  assetType: string | null
   initialInvestment: runtime.Decimal | null
   currency: $Enums.Currency | null
   roiPercent: runtime.Decimal | null
+  estimatedReturnLabel: string | null
+  estimatedTermMonths: number | null
   investmentGoal: string | null
+  status: string | null
+  riskLevel: string | null
+  featured: boolean | null
+  sortOrder: number | null
+  ctaLabel: string | null
   location: string | null
   department: string | null
   province: string | null
@@ -66,15 +80,25 @@ export type InvestmentOpportunityMinAggregateOutputType = {
 
 export type InvestmentOpportunityMaxAggregateOutputType = {
   id: string | null
+  investmentTypeId: string | null
   name: string | null
   slug: string | null
   summary: string | null
   description: string | null
   areaLabel: string | null
+  investmentKind: string | null
+  assetType: string | null
   initialInvestment: runtime.Decimal | null
   currency: $Enums.Currency | null
   roiPercent: runtime.Decimal | null
+  estimatedReturnLabel: string | null
+  estimatedTermMonths: number | null
   investmentGoal: string | null
+  status: string | null
+  riskLevel: string | null
+  featured: boolean | null
+  sortOrder: number | null
+  ctaLabel: string | null
   location: string | null
   department: string | null
   province: string | null
@@ -90,15 +114,25 @@ export type InvestmentOpportunityMaxAggregateOutputType = {
 
 export type InvestmentOpportunityCountAggregateOutputType = {
   id: number
+  investmentTypeId: number
   name: number
   slug: number
   summary: number
   description: number
   areaLabel: number
+  investmentKind: number
+  assetType: number
   initialInvestment: number
   currency: number
   roiPercent: number
+  estimatedReturnLabel: number
+  estimatedTermMonths: number
   investmentGoal: number
+  status: number
+  riskLevel: number
+  featured: number
+  sortOrder: number
+  ctaLabel: number
   location: number
   department: number
   province: number
@@ -119,6 +153,8 @@ export type InvestmentOpportunityCountAggregateOutputType = {
 export type InvestmentOpportunityAvgAggregateInputType = {
   initialInvestment?: true
   roiPercent?: true
+  estimatedTermMonths?: true
+  sortOrder?: true
   latitude?: true
   longitude?: true
 }
@@ -126,21 +162,33 @@ export type InvestmentOpportunityAvgAggregateInputType = {
 export type InvestmentOpportunitySumAggregateInputType = {
   initialInvestment?: true
   roiPercent?: true
+  estimatedTermMonths?: true
+  sortOrder?: true
   latitude?: true
   longitude?: true
 }
 
 export type InvestmentOpportunityMinAggregateInputType = {
   id?: true
+  investmentTypeId?: true
   name?: true
   slug?: true
   summary?: true
   description?: true
   areaLabel?: true
+  investmentKind?: true
+  assetType?: true
   initialInvestment?: true
   currency?: true
   roiPercent?: true
+  estimatedReturnLabel?: true
+  estimatedTermMonths?: true
   investmentGoal?: true
+  status?: true
+  riskLevel?: true
+  featured?: true
+  sortOrder?: true
+  ctaLabel?: true
   location?: true
   department?: true
   province?: true
@@ -156,15 +204,25 @@ export type InvestmentOpportunityMinAggregateInputType = {
 
 export type InvestmentOpportunityMaxAggregateInputType = {
   id?: true
+  investmentTypeId?: true
   name?: true
   slug?: true
   summary?: true
   description?: true
   areaLabel?: true
+  investmentKind?: true
+  assetType?: true
   initialInvestment?: true
   currency?: true
   roiPercent?: true
+  estimatedReturnLabel?: true
+  estimatedTermMonths?: true
   investmentGoal?: true
+  status?: true
+  riskLevel?: true
+  featured?: true
+  sortOrder?: true
+  ctaLabel?: true
   location?: true
   department?: true
   province?: true
@@ -180,15 +238,25 @@ export type InvestmentOpportunityMaxAggregateInputType = {
 
 export type InvestmentOpportunityCountAggregateInputType = {
   id?: true
+  investmentTypeId?: true
   name?: true
   slug?: true
   summary?: true
   description?: true
   areaLabel?: true
+  investmentKind?: true
+  assetType?: true
   initialInvestment?: true
   currency?: true
   roiPercent?: true
+  estimatedReturnLabel?: true
+  estimatedTermMonths?: true
   investmentGoal?: true
+  status?: true
+  riskLevel?: true
+  featured?: true
+  sortOrder?: true
+  ctaLabel?: true
   location?: true
   department?: true
   province?: true
@@ -293,15 +361,25 @@ export type InvestmentOpportunityGroupByArgs<ExtArgs extends runtime.Types.Exten
 
 export type InvestmentOpportunityGroupByOutputType = {
   id: string
+  investmentTypeId: string | null
   name: string
   slug: string
   summary: string
   description: string
   areaLabel: string
+  investmentKind: string
+  assetType: string
   initialInvestment: runtime.Decimal
   currency: $Enums.Currency
   roiPercent: runtime.Decimal
+  estimatedReturnLabel: string | null
+  estimatedTermMonths: number | null
   investmentGoal: string
+  status: string
+  riskLevel: string | null
+  featured: boolean
+  sortOrder: number
+  ctaLabel: string
   location: string
   department: string
   province: string
@@ -342,15 +420,25 @@ export type InvestmentOpportunityWhereInput = {
   OR?: Prisma.InvestmentOpportunityWhereInput[]
   NOT?: Prisma.InvestmentOpportunityWhereInput | Prisma.InvestmentOpportunityWhereInput[]
   id?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  investmentTypeId?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
   name?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   slug?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   summary?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   description?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   areaLabel?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  investmentKind?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  assetType?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   initialInvestment?: Prisma.DecimalFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFilter<"InvestmentOpportunity"> | $Enums.Currency
   roiPercent?: Prisma.DecimalFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
+  estimatedTermMonths?: Prisma.IntNullableFilter<"InvestmentOpportunity"> | number | null
   investmentGoal?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  status?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  riskLevel?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
+  featured?: Prisma.BoolFilter<"InvestmentOpportunity"> | boolean
+  sortOrder?: Prisma.IntFilter<"InvestmentOpportunity"> | number
+  ctaLabel?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   location?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   department?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   province?: Prisma.StringFilter<"InvestmentOpportunity"> | string
@@ -364,19 +452,30 @@ export type InvestmentOpportunityWhereInput = {
   isPublished?: Prisma.BoolFilter<"InvestmentOpportunity"> | boolean
   createdAt?: Prisma.DateTimeFilter<"InvestmentOpportunity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InvestmentOpportunity"> | Date | string
+  investmentType?: Prisma.XOR<Prisma.InvestmentTypeNullableScalarRelationFilter, Prisma.InvestmentTypeWhereInput> | null
 }
 
 export type InvestmentOpportunityOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  investmentTypeId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   description?: Prisma.SortOrder
   areaLabel?: Prisma.SortOrder
+  investmentKind?: Prisma.SortOrder
+  assetType?: Prisma.SortOrder
   initialInvestment?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   roiPercent?: Prisma.SortOrder
+  estimatedReturnLabel?: Prisma.SortOrderInput | Prisma.SortOrder
+  estimatedTermMonths?: Prisma.SortOrderInput | Prisma.SortOrder
   investmentGoal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  featured?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
+  ctaLabel?: Prisma.SortOrder
   location?: Prisma.SortOrder
   department?: Prisma.SortOrder
   province?: Prisma.SortOrder
@@ -390,6 +489,7 @@ export type InvestmentOpportunityOrderByWithRelationInput = {
   isPublished?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  investmentType?: Prisma.InvestmentTypeOrderByWithRelationInput
 }
 
 export type InvestmentOpportunityWhereUniqueInput = Prisma.AtLeast<{
@@ -398,14 +498,24 @@ export type InvestmentOpportunityWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.InvestmentOpportunityWhereInput | Prisma.InvestmentOpportunityWhereInput[]
   OR?: Prisma.InvestmentOpportunityWhereInput[]
   NOT?: Prisma.InvestmentOpportunityWhereInput | Prisma.InvestmentOpportunityWhereInput[]
+  investmentTypeId?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
   name?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   summary?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   description?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   areaLabel?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  investmentKind?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  assetType?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   initialInvestment?: Prisma.DecimalFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFilter<"InvestmentOpportunity"> | $Enums.Currency
   roiPercent?: Prisma.DecimalFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
+  estimatedTermMonths?: Prisma.IntNullableFilter<"InvestmentOpportunity"> | number | null
   investmentGoal?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  status?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  riskLevel?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
+  featured?: Prisma.BoolFilter<"InvestmentOpportunity"> | boolean
+  sortOrder?: Prisma.IntFilter<"InvestmentOpportunity"> | number
+  ctaLabel?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   location?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   department?: Prisma.StringFilter<"InvestmentOpportunity"> | string
   province?: Prisma.StringFilter<"InvestmentOpportunity"> | string
@@ -419,19 +529,30 @@ export type InvestmentOpportunityWhereUniqueInput = Prisma.AtLeast<{
   isPublished?: Prisma.BoolFilter<"InvestmentOpportunity"> | boolean
   createdAt?: Prisma.DateTimeFilter<"InvestmentOpportunity"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InvestmentOpportunity"> | Date | string
+  investmentType?: Prisma.XOR<Prisma.InvestmentTypeNullableScalarRelationFilter, Prisma.InvestmentTypeWhereInput> | null
 }, "id" | "slug">
 
 export type InvestmentOpportunityOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  investmentTypeId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   description?: Prisma.SortOrder
   areaLabel?: Prisma.SortOrder
+  investmentKind?: Prisma.SortOrder
+  assetType?: Prisma.SortOrder
   initialInvestment?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   roiPercent?: Prisma.SortOrder
+  estimatedReturnLabel?: Prisma.SortOrderInput | Prisma.SortOrder
+  estimatedTermMonths?: Prisma.SortOrderInput | Prisma.SortOrder
   investmentGoal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  featured?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
+  ctaLabel?: Prisma.SortOrder
   location?: Prisma.SortOrder
   department?: Prisma.SortOrder
   province?: Prisma.SortOrder
@@ -457,15 +578,25 @@ export type InvestmentOpportunityScalarWhereWithAggregatesInput = {
   OR?: Prisma.InvestmentOpportunityScalarWhereWithAggregatesInput[]
   NOT?: Prisma.InvestmentOpportunityScalarWhereWithAggregatesInput | Prisma.InvestmentOpportunityScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
+  investmentTypeId?: Prisma.StringNullableWithAggregatesFilter<"InvestmentOpportunity"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
   slug?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
   summary?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
   description?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
   areaLabel?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
+  investmentKind?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
+  assetType?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
   initialInvestment?: Prisma.DecimalWithAggregatesFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyWithAggregatesFilter<"InvestmentOpportunity"> | $Enums.Currency
   roiPercent?: Prisma.DecimalWithAggregatesFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.StringNullableWithAggregatesFilter<"InvestmentOpportunity"> | string | null
+  estimatedTermMonths?: Prisma.IntNullableWithAggregatesFilter<"InvestmentOpportunity"> | number | null
   investmentGoal?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
+  status?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
+  riskLevel?: Prisma.StringNullableWithAggregatesFilter<"InvestmentOpportunity"> | string | null
+  featured?: Prisma.BoolWithAggregatesFilter<"InvestmentOpportunity"> | boolean
+  sortOrder?: Prisma.IntWithAggregatesFilter<"InvestmentOpportunity"> | number
+  ctaLabel?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
   location?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
   department?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
   province?: Prisma.StringWithAggregatesFilter<"InvestmentOpportunity"> | string
@@ -488,10 +619,19 @@ export type InvestmentOpportunityCreateInput = {
   summary: string
   description: string
   areaLabel: string
+  investmentKind?: string
+  assetType?: string
   initialInvestment: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: $Enums.Currency
   roiPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: string | null
+  estimatedTermMonths?: number | null
   investmentGoal: string
+  status?: string
+  riskLevel?: string | null
+  featured?: boolean
+  sortOrder?: number
+  ctaLabel?: string
   location: string
   department: string
   province: string
@@ -505,19 +645,30 @@ export type InvestmentOpportunityCreateInput = {
   isPublished?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  investmentType?: Prisma.InvestmentTypeCreateNestedOneWithoutOpportunitiesInput
 }
 
 export type InvestmentOpportunityUncheckedCreateInput = {
   id?: string
+  investmentTypeId?: string | null
   name: string
   slug: string
   summary: string
   description: string
   areaLabel: string
+  investmentKind?: string
+  assetType?: string
   initialInvestment: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: $Enums.Currency
   roiPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: string | null
+  estimatedTermMonths?: number | null
   investmentGoal: string
+  status?: string
+  riskLevel?: string | null
+  featured?: boolean
+  sortOrder?: number
+  ctaLabel?: string
   location: string
   department: string
   province: string
@@ -540,10 +691,19 @@ export type InvestmentOpportunityUpdateInput = {
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   areaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentKind?: Prisma.StringFieldUpdateOperationsInput | string
+  assetType?: Prisma.StringFieldUpdateOperationsInput | string
   initialInvestment?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   roiPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedTermMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   investmentGoal?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  ctaLabel?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
   province?: Prisma.StringFieldUpdateOperationsInput | string
@@ -557,19 +717,30 @@ export type InvestmentOpportunityUpdateInput = {
   isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  investmentType?: Prisma.InvestmentTypeUpdateOneWithoutOpportunitiesNestedInput
 }
 
 export type InvestmentOpportunityUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   areaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentKind?: Prisma.StringFieldUpdateOperationsInput | string
+  assetType?: Prisma.StringFieldUpdateOperationsInput | string
   initialInvestment?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   roiPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedTermMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   investmentGoal?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  ctaLabel?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
   province?: Prisma.StringFieldUpdateOperationsInput | string
@@ -587,15 +758,25 @@ export type InvestmentOpportunityUncheckedUpdateInput = {
 
 export type InvestmentOpportunityCreateManyInput = {
   id?: string
+  investmentTypeId?: string | null
   name: string
   slug: string
   summary: string
   description: string
   areaLabel: string
+  investmentKind?: string
+  assetType?: string
   initialInvestment: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: $Enums.Currency
   roiPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: string | null
+  estimatedTermMonths?: number | null
   investmentGoal: string
+  status?: string
+  riskLevel?: string | null
+  featured?: boolean
+  sortOrder?: number
+  ctaLabel?: string
   location: string
   department: string
   province: string
@@ -618,10 +799,19 @@ export type InvestmentOpportunityUpdateManyMutationInput = {
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   areaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentKind?: Prisma.StringFieldUpdateOperationsInput | string
+  assetType?: Prisma.StringFieldUpdateOperationsInput | string
   initialInvestment?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   roiPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedTermMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   investmentGoal?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  ctaLabel?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
   province?: Prisma.StringFieldUpdateOperationsInput | string
@@ -639,15 +829,25 @@ export type InvestmentOpportunityUpdateManyMutationInput = {
 
 export type InvestmentOpportunityUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentTypeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   areaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentKind?: Prisma.StringFieldUpdateOperationsInput | string
+  assetType?: Prisma.StringFieldUpdateOperationsInput | string
   initialInvestment?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
   roiPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedTermMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   investmentGoal?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  ctaLabel?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
   department?: Prisma.StringFieldUpdateOperationsInput | string
   province?: Prisma.StringFieldUpdateOperationsInput | string
@@ -665,15 +865,25 @@ export type InvestmentOpportunityUncheckedUpdateManyInput = {
 
 export type InvestmentOpportunityCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  investmentTypeId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   description?: Prisma.SortOrder
   areaLabel?: Prisma.SortOrder
+  investmentKind?: Prisma.SortOrder
+  assetType?: Prisma.SortOrder
   initialInvestment?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   roiPercent?: Prisma.SortOrder
+  estimatedReturnLabel?: Prisma.SortOrder
+  estimatedTermMonths?: Prisma.SortOrder
   investmentGoal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  featured?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
+  ctaLabel?: Prisma.SortOrder
   location?: Prisma.SortOrder
   department?: Prisma.SortOrder
   province?: Prisma.SortOrder
@@ -692,21 +902,33 @@ export type InvestmentOpportunityCountOrderByAggregateInput = {
 export type InvestmentOpportunityAvgOrderByAggregateInput = {
   initialInvestment?: Prisma.SortOrder
   roiPercent?: Prisma.SortOrder
+  estimatedTermMonths?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
 }
 
 export type InvestmentOpportunityMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  investmentTypeId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   description?: Prisma.SortOrder
   areaLabel?: Prisma.SortOrder
+  investmentKind?: Prisma.SortOrder
+  assetType?: Prisma.SortOrder
   initialInvestment?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   roiPercent?: Prisma.SortOrder
+  estimatedReturnLabel?: Prisma.SortOrder
+  estimatedTermMonths?: Prisma.SortOrder
   investmentGoal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  featured?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
+  ctaLabel?: Prisma.SortOrder
   location?: Prisma.SortOrder
   department?: Prisma.SortOrder
   province?: Prisma.SortOrder
@@ -722,15 +944,25 @@ export type InvestmentOpportunityMaxOrderByAggregateInput = {
 
 export type InvestmentOpportunityMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  investmentTypeId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   description?: Prisma.SortOrder
   areaLabel?: Prisma.SortOrder
+  investmentKind?: Prisma.SortOrder
+  assetType?: Prisma.SortOrder
   initialInvestment?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   roiPercent?: Prisma.SortOrder
+  estimatedReturnLabel?: Prisma.SortOrder
+  estimatedTermMonths?: Prisma.SortOrder
   investmentGoal?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  riskLevel?: Prisma.SortOrder
+  featured?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
+  ctaLabel?: Prisma.SortOrder
   location?: Prisma.SortOrder
   department?: Prisma.SortOrder
   province?: Prisma.SortOrder
@@ -747,8 +979,20 @@ export type InvestmentOpportunityMinOrderByAggregateInput = {
 export type InvestmentOpportunitySumOrderByAggregateInput = {
   initialInvestment?: Prisma.SortOrder
   roiPercent?: Prisma.SortOrder
+  estimatedTermMonths?: Prisma.SortOrder
+  sortOrder?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
+}
+
+export type InvestmentOpportunityListRelationFilter = {
+  every?: Prisma.InvestmentOpportunityWhereInput
+  some?: Prisma.InvestmentOpportunityWhereInput
+  none?: Prisma.InvestmentOpportunityWhereInput
+}
+
+export type InvestmentOpportunityOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type InvestmentOpportunityCreategalleryImagesInput = {
@@ -769,19 +1013,346 @@ export type InvestmentOpportunityUpdatehighlightsInput = {
   push?: string | string[]
 }
 
+export type InvestmentOpportunityCreateNestedManyWithoutInvestmentTypeInput = {
+  create?: Prisma.XOR<Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput, Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput> | Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput[] | Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput[]
+  connectOrCreate?: Prisma.InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput[]
+  createMany?: Prisma.InvestmentOpportunityCreateManyInvestmentTypeInputEnvelope
+  connect?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+}
+
+export type InvestmentOpportunityUncheckedCreateNestedManyWithoutInvestmentTypeInput = {
+  create?: Prisma.XOR<Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput, Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput> | Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput[] | Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput[]
+  connectOrCreate?: Prisma.InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput[]
+  createMany?: Prisma.InvestmentOpportunityCreateManyInvestmentTypeInputEnvelope
+  connect?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+}
+
+export type InvestmentOpportunityUpdateManyWithoutInvestmentTypeNestedInput = {
+  create?: Prisma.XOR<Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput, Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput> | Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput[] | Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput[]
+  connectOrCreate?: Prisma.InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput[]
+  upsert?: Prisma.InvestmentOpportunityUpsertWithWhereUniqueWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityUpsertWithWhereUniqueWithoutInvestmentTypeInput[]
+  createMany?: Prisma.InvestmentOpportunityCreateManyInvestmentTypeInputEnvelope
+  set?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+  disconnect?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+  delete?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+  connect?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+  update?: Prisma.InvestmentOpportunityUpdateWithWhereUniqueWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityUpdateWithWhereUniqueWithoutInvestmentTypeInput[]
+  updateMany?: Prisma.InvestmentOpportunityUpdateManyWithWhereWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityUpdateManyWithWhereWithoutInvestmentTypeInput[]
+  deleteMany?: Prisma.InvestmentOpportunityScalarWhereInput | Prisma.InvestmentOpportunityScalarWhereInput[]
+}
+
+export type InvestmentOpportunityUncheckedUpdateManyWithoutInvestmentTypeNestedInput = {
+  create?: Prisma.XOR<Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput, Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput> | Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput[] | Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput[]
+  connectOrCreate?: Prisma.InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput[]
+  upsert?: Prisma.InvestmentOpportunityUpsertWithWhereUniqueWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityUpsertWithWhereUniqueWithoutInvestmentTypeInput[]
+  createMany?: Prisma.InvestmentOpportunityCreateManyInvestmentTypeInputEnvelope
+  set?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+  disconnect?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+  delete?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+  connect?: Prisma.InvestmentOpportunityWhereUniqueInput | Prisma.InvestmentOpportunityWhereUniqueInput[]
+  update?: Prisma.InvestmentOpportunityUpdateWithWhereUniqueWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityUpdateWithWhereUniqueWithoutInvestmentTypeInput[]
+  updateMany?: Prisma.InvestmentOpportunityUpdateManyWithWhereWithoutInvestmentTypeInput | Prisma.InvestmentOpportunityUpdateManyWithWhereWithoutInvestmentTypeInput[]
+  deleteMany?: Prisma.InvestmentOpportunityScalarWhereInput | Prisma.InvestmentOpportunityScalarWhereInput[]
+}
+
+export type InvestmentOpportunityCreateWithoutInvestmentTypeInput = {
+  id?: string
+  name: string
+  slug: string
+  summary: string
+  description: string
+  areaLabel: string
+  investmentKind?: string
+  assetType?: string
+  initialInvestment: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: $Enums.Currency
+  roiPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: string | null
+  estimatedTermMonths?: number | null
+  investmentGoal: string
+  status?: string
+  riskLevel?: string | null
+  featured?: boolean
+  sortOrder?: number
+  ctaLabel?: string
+  location: string
+  department: string
+  province: string
+  district: string
+  latitude: runtime.Decimal | runtime.DecimalJsLike | number | string
+  longitude: runtime.Decimal | runtime.DecimalJsLike | number | string
+  coverImageUrl: string
+  coverImagePublicId?: string | null
+  galleryImages?: Prisma.InvestmentOpportunityCreategalleryImagesInput | string[]
+  highlights?: Prisma.InvestmentOpportunityCreatehighlightsInput | string[]
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput = {
+  id?: string
+  name: string
+  slug: string
+  summary: string
+  description: string
+  areaLabel: string
+  investmentKind?: string
+  assetType?: string
+  initialInvestment: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: $Enums.Currency
+  roiPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: string | null
+  estimatedTermMonths?: number | null
+  investmentGoal: string
+  status?: string
+  riskLevel?: string | null
+  featured?: boolean
+  sortOrder?: number
+  ctaLabel?: string
+  location: string
+  department: string
+  province: string
+  district: string
+  latitude: runtime.Decimal | runtime.DecimalJsLike | number | string
+  longitude: runtime.Decimal | runtime.DecimalJsLike | number | string
+  coverImageUrl: string
+  coverImagePublicId?: string | null
+  galleryImages?: Prisma.InvestmentOpportunityCreategalleryImagesInput | string[]
+  highlights?: Prisma.InvestmentOpportunityCreatehighlightsInput | string[]
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InvestmentOpportunityCreateOrConnectWithoutInvestmentTypeInput = {
+  where: Prisma.InvestmentOpportunityWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput, Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput>
+}
+
+export type InvestmentOpportunityCreateManyInvestmentTypeInputEnvelope = {
+  data: Prisma.InvestmentOpportunityCreateManyInvestmentTypeInput | Prisma.InvestmentOpportunityCreateManyInvestmentTypeInput[]
+  skipDuplicates?: boolean
+}
+
+export type InvestmentOpportunityUpsertWithWhereUniqueWithoutInvestmentTypeInput = {
+  where: Prisma.InvestmentOpportunityWhereUniqueInput
+  update: Prisma.XOR<Prisma.InvestmentOpportunityUpdateWithoutInvestmentTypeInput, Prisma.InvestmentOpportunityUncheckedUpdateWithoutInvestmentTypeInput>
+  create: Prisma.XOR<Prisma.InvestmentOpportunityCreateWithoutInvestmentTypeInput, Prisma.InvestmentOpportunityUncheckedCreateWithoutInvestmentTypeInput>
+}
+
+export type InvestmentOpportunityUpdateWithWhereUniqueWithoutInvestmentTypeInput = {
+  where: Prisma.InvestmentOpportunityWhereUniqueInput
+  data: Prisma.XOR<Prisma.InvestmentOpportunityUpdateWithoutInvestmentTypeInput, Prisma.InvestmentOpportunityUncheckedUpdateWithoutInvestmentTypeInput>
+}
+
+export type InvestmentOpportunityUpdateManyWithWhereWithoutInvestmentTypeInput = {
+  where: Prisma.InvestmentOpportunityScalarWhereInput
+  data: Prisma.XOR<Prisma.InvestmentOpportunityUpdateManyMutationInput, Prisma.InvestmentOpportunityUncheckedUpdateManyWithoutInvestmentTypeInput>
+}
+
+export type InvestmentOpportunityScalarWhereInput = {
+  AND?: Prisma.InvestmentOpportunityScalarWhereInput | Prisma.InvestmentOpportunityScalarWhereInput[]
+  OR?: Prisma.InvestmentOpportunityScalarWhereInput[]
+  NOT?: Prisma.InvestmentOpportunityScalarWhereInput | Prisma.InvestmentOpportunityScalarWhereInput[]
+  id?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  investmentTypeId?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
+  name?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  slug?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  summary?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  description?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  areaLabel?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  investmentKind?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  assetType?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  initialInvestment?: Prisma.DecimalFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFilter<"InvestmentOpportunity"> | $Enums.Currency
+  roiPercent?: Prisma.DecimalFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
+  estimatedTermMonths?: Prisma.IntNullableFilter<"InvestmentOpportunity"> | number | null
+  investmentGoal?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  status?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  riskLevel?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
+  featured?: Prisma.BoolFilter<"InvestmentOpportunity"> | boolean
+  sortOrder?: Prisma.IntFilter<"InvestmentOpportunity"> | number
+  ctaLabel?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  location?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  department?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  province?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  district?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  latitude?: Prisma.DecimalFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  longitude?: Prisma.DecimalFilter<"InvestmentOpportunity"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  coverImageUrl?: Prisma.StringFilter<"InvestmentOpportunity"> | string
+  coverImagePublicId?: Prisma.StringNullableFilter<"InvestmentOpportunity"> | string | null
+  galleryImages?: Prisma.StringNullableListFilter<"InvestmentOpportunity">
+  highlights?: Prisma.StringNullableListFilter<"InvestmentOpportunity">
+  isPublished?: Prisma.BoolFilter<"InvestmentOpportunity"> | boolean
+  createdAt?: Prisma.DateTimeFilter<"InvestmentOpportunity"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"InvestmentOpportunity"> | Date | string
+}
+
+export type InvestmentOpportunityCreateManyInvestmentTypeInput = {
+  id?: string
+  name: string
+  slug: string
+  summary: string
+  description: string
+  areaLabel: string
+  investmentKind?: string
+  assetType?: string
+  initialInvestment: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: $Enums.Currency
+  roiPercent: runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: string | null
+  estimatedTermMonths?: number | null
+  investmentGoal: string
+  status?: string
+  riskLevel?: string | null
+  featured?: boolean
+  sortOrder?: number
+  ctaLabel?: string
+  location: string
+  department: string
+  province: string
+  district: string
+  latitude: runtime.Decimal | runtime.DecimalJsLike | number | string
+  longitude: runtime.Decimal | runtime.DecimalJsLike | number | string
+  coverImageUrl: string
+  coverImagePublicId?: string | null
+  galleryImages?: Prisma.InvestmentOpportunityCreategalleryImagesInput | string[]
+  highlights?: Prisma.InvestmentOpportunityCreatehighlightsInput | string[]
+  isPublished?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type InvestmentOpportunityUpdateWithoutInvestmentTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  areaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentKind?: Prisma.StringFieldUpdateOperationsInput | string
+  assetType?: Prisma.StringFieldUpdateOperationsInput | string
+  initialInvestment?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  roiPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedTermMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  investmentGoal?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  ctaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  longitude?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  coverImageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.InvestmentOpportunityUpdategalleryImagesInput | string[]
+  highlights?: Prisma.InvestmentOpportunityUpdatehighlightsInput | string[]
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type InvestmentOpportunityUncheckedUpdateWithoutInvestmentTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  areaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentKind?: Prisma.StringFieldUpdateOperationsInput | string
+  assetType?: Prisma.StringFieldUpdateOperationsInput | string
+  initialInvestment?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  roiPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedTermMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  investmentGoal?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  ctaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  longitude?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  coverImageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.InvestmentOpportunityUpdategalleryImagesInput | string[]
+  highlights?: Prisma.InvestmentOpportunityUpdatehighlightsInput | string[]
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type InvestmentOpportunityUncheckedUpdateManyWithoutInvestmentTypeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  areaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  investmentKind?: Prisma.StringFieldUpdateOperationsInput | string
+  assetType?: Prisma.StringFieldUpdateOperationsInput | string
+  initialInvestment?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  roiPercent?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  estimatedReturnLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estimatedTermMonths?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  investmentGoal?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  riskLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  sortOrder?: Prisma.IntFieldUpdateOperationsInput | number
+  ctaLabel?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  province?: Prisma.StringFieldUpdateOperationsInput | string
+  district?: Prisma.StringFieldUpdateOperationsInput | string
+  latitude?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  longitude?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  coverImageUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  coverImagePublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryImages?: Prisma.InvestmentOpportunityUpdategalleryImagesInput | string[]
+  highlights?: Prisma.InvestmentOpportunityUpdatehighlightsInput | string[]
+  isPublished?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 
 export type InvestmentOpportunitySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  investmentTypeId?: boolean
   name?: boolean
   slug?: boolean
   summary?: boolean
   description?: boolean
   areaLabel?: boolean
+  investmentKind?: boolean
+  assetType?: boolean
   initialInvestment?: boolean
   currency?: boolean
   roiPercent?: boolean
+  estimatedReturnLabel?: boolean
+  estimatedTermMonths?: boolean
   investmentGoal?: boolean
+  status?: boolean
+  riskLevel?: boolean
+  featured?: boolean
+  sortOrder?: boolean
+  ctaLabel?: boolean
   location?: boolean
   department?: boolean
   province?: boolean
@@ -795,19 +1366,30 @@ export type InvestmentOpportunitySelect<ExtArgs extends runtime.Types.Extensions
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  investmentType?: boolean | Prisma.InvestmentOpportunity$investmentTypeArgs<ExtArgs>
 }, ExtArgs["result"]["investmentOpportunity"]>
 
 export type InvestmentOpportunitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  investmentTypeId?: boolean
   name?: boolean
   slug?: boolean
   summary?: boolean
   description?: boolean
   areaLabel?: boolean
+  investmentKind?: boolean
+  assetType?: boolean
   initialInvestment?: boolean
   currency?: boolean
   roiPercent?: boolean
+  estimatedReturnLabel?: boolean
+  estimatedTermMonths?: boolean
   investmentGoal?: boolean
+  status?: boolean
+  riskLevel?: boolean
+  featured?: boolean
+  sortOrder?: boolean
+  ctaLabel?: boolean
   location?: boolean
   department?: boolean
   province?: boolean
@@ -821,19 +1403,30 @@ export type InvestmentOpportunitySelectCreateManyAndReturn<ExtArgs extends runti
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  investmentType?: boolean | Prisma.InvestmentOpportunity$investmentTypeArgs<ExtArgs>
 }, ExtArgs["result"]["investmentOpportunity"]>
 
 export type InvestmentOpportunitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  investmentTypeId?: boolean
   name?: boolean
   slug?: boolean
   summary?: boolean
   description?: boolean
   areaLabel?: boolean
+  investmentKind?: boolean
+  assetType?: boolean
   initialInvestment?: boolean
   currency?: boolean
   roiPercent?: boolean
+  estimatedReturnLabel?: boolean
+  estimatedTermMonths?: boolean
   investmentGoal?: boolean
+  status?: boolean
+  riskLevel?: boolean
+  featured?: boolean
+  sortOrder?: boolean
+  ctaLabel?: boolean
   location?: boolean
   department?: boolean
   province?: boolean
@@ -847,19 +1440,30 @@ export type InvestmentOpportunitySelectUpdateManyAndReturn<ExtArgs extends runti
   isPublished?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  investmentType?: boolean | Prisma.InvestmentOpportunity$investmentTypeArgs<ExtArgs>
 }, ExtArgs["result"]["investmentOpportunity"]>
 
 export type InvestmentOpportunitySelectScalar = {
   id?: boolean
+  investmentTypeId?: boolean
   name?: boolean
   slug?: boolean
   summary?: boolean
   description?: boolean
   areaLabel?: boolean
+  investmentKind?: boolean
+  assetType?: boolean
   initialInvestment?: boolean
   currency?: boolean
   roiPercent?: boolean
+  estimatedReturnLabel?: boolean
+  estimatedTermMonths?: boolean
   investmentGoal?: boolean
+  status?: boolean
+  riskLevel?: boolean
+  featured?: boolean
+  sortOrder?: boolean
+  ctaLabel?: boolean
   location?: boolean
   department?: boolean
   province?: boolean
@@ -875,22 +1479,43 @@ export type InvestmentOpportunitySelectScalar = {
   updatedAt?: boolean
 }
 
-export type InvestmentOpportunityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "summary" | "description" | "areaLabel" | "initialInvestment" | "currency" | "roiPercent" | "investmentGoal" | "location" | "department" | "province" | "district" | "latitude" | "longitude" | "coverImageUrl" | "coverImagePublicId" | "galleryImages" | "highlights" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["investmentOpportunity"]>
+export type InvestmentOpportunityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "investmentTypeId" | "name" | "slug" | "summary" | "description" | "areaLabel" | "investmentKind" | "assetType" | "initialInvestment" | "currency" | "roiPercent" | "estimatedReturnLabel" | "estimatedTermMonths" | "investmentGoal" | "status" | "riskLevel" | "featured" | "sortOrder" | "ctaLabel" | "location" | "department" | "province" | "district" | "latitude" | "longitude" | "coverImageUrl" | "coverImagePublicId" | "galleryImages" | "highlights" | "isPublished" | "createdAt" | "updatedAt", ExtArgs["result"]["investmentOpportunity"]>
+export type InvestmentOpportunityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  investmentType?: boolean | Prisma.InvestmentOpportunity$investmentTypeArgs<ExtArgs>
+}
+export type InvestmentOpportunityIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  investmentType?: boolean | Prisma.InvestmentOpportunity$investmentTypeArgs<ExtArgs>
+}
+export type InvestmentOpportunityIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  investmentType?: boolean | Prisma.InvestmentOpportunity$investmentTypeArgs<ExtArgs>
+}
 
 export type $InvestmentOpportunityPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InvestmentOpportunity"
-  objects: {}
+  objects: {
+    investmentType: Prisma.$InvestmentTypePayload<ExtArgs> | null
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    investmentTypeId: string | null
     name: string
     slug: string
     summary: string
     description: string
     areaLabel: string
+    investmentKind: string
+    assetType: string
     initialInvestment: runtime.Decimal
     currency: $Enums.Currency
     roiPercent: runtime.Decimal
+    estimatedReturnLabel: string | null
+    estimatedTermMonths: number | null
     investmentGoal: string
+    status: string
+    riskLevel: string | null
+    featured: boolean
+    sortOrder: number
+    ctaLabel: string
     location: string
     department: string
     province: string
@@ -1298,6 +1923,7 @@ readonly fields: InvestmentOpportunityFieldRefs;
  */
 export interface Prisma__InvestmentOpportunityClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  investmentType<T extends Prisma.InvestmentOpportunity$investmentTypeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InvestmentOpportunity$investmentTypeArgs<ExtArgs>>): Prisma.Prisma__InvestmentTypeClient<runtime.Types.Result.GetResult<Prisma.$InvestmentTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1328,15 +1954,25 @@ export interface Prisma__InvestmentOpportunityClient<T, Null = never, ExtArgs ex
  */
 export interface InvestmentOpportunityFieldRefs {
   readonly id: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
+  readonly investmentTypeId: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly name: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly slug: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly summary: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly description: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly areaLabel: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
+  readonly investmentKind: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
+  readonly assetType: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly initialInvestment: Prisma.FieldRef<"InvestmentOpportunity", 'Decimal'>
   readonly currency: Prisma.FieldRef<"InvestmentOpportunity", 'Currency'>
   readonly roiPercent: Prisma.FieldRef<"InvestmentOpportunity", 'Decimal'>
+  readonly estimatedReturnLabel: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
+  readonly estimatedTermMonths: Prisma.FieldRef<"InvestmentOpportunity", 'Int'>
   readonly investmentGoal: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
+  readonly status: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
+  readonly riskLevel: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
+  readonly featured: Prisma.FieldRef<"InvestmentOpportunity", 'Boolean'>
+  readonly sortOrder: Prisma.FieldRef<"InvestmentOpportunity", 'Int'>
+  readonly ctaLabel: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly location: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly department: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
   readonly province: Prisma.FieldRef<"InvestmentOpportunity", 'String'>
@@ -1367,6 +2003,10 @@ export type InvestmentOpportunityFindUniqueArgs<ExtArgs extends runtime.Types.Ex
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
+  /**
    * Filter, which InvestmentOpportunity to fetch.
    */
   where: Prisma.InvestmentOpportunityWhereUniqueInput
@@ -1385,6 +2025,10 @@ export type InvestmentOpportunityFindUniqueOrThrowArgs<ExtArgs extends runtime.T
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
+  /**
    * Filter, which InvestmentOpportunity to fetch.
    */
   where: Prisma.InvestmentOpportunityWhereUniqueInput
@@ -1402,6 +2046,10 @@ export type InvestmentOpportunityFindFirstArgs<ExtArgs extends runtime.Types.Ext
    * Omit specific fields from the InvestmentOpportunity
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
   /**
    * Filter, which InvestmentOpportunity to fetch.
    */
@@ -1451,6 +2099,10 @@ export type InvestmentOpportunityFindFirstOrThrowArgs<ExtArgs extends runtime.Ty
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
+  /**
    * Filter, which InvestmentOpportunity to fetch.
    */
   where?: Prisma.InvestmentOpportunityWhereInput
@@ -1498,6 +2150,10 @@ export type InvestmentOpportunityFindManyArgs<ExtArgs extends runtime.Types.Exte
    * Omit specific fields from the InvestmentOpportunity
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
   /**
    * Filter, which InvestmentOpportunities to fetch.
    */
@@ -1547,6 +2203,10 @@ export type InvestmentOpportunityCreateArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
+  /**
    * The data needed to create a InvestmentOpportunity.
    */
   data: Prisma.XOR<Prisma.InvestmentOpportunityCreateInput, Prisma.InvestmentOpportunityUncheckedCreateInput>
@@ -1580,6 +2240,10 @@ export type InvestmentOpportunityCreateManyAndReturnArgs<ExtArgs extends runtime
    */
   data: Prisma.InvestmentOpportunityCreateManyInput | Prisma.InvestmentOpportunityCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1594,6 +2258,10 @@ export type InvestmentOpportunityUpdateArgs<ExtArgs extends runtime.Types.Extens
    * Omit specific fields from the InvestmentOpportunity
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
   /**
    * The data needed to update a InvestmentOpportunity.
    */
@@ -1646,6 +2314,10 @@ export type InvestmentOpportunityUpdateManyAndReturnArgs<ExtArgs extends runtime
    * Limit how many InvestmentOpportunities to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1660,6 +2332,10 @@ export type InvestmentOpportunityUpsertArgs<ExtArgs extends runtime.Types.Extens
    * Omit specific fields from the InvestmentOpportunity
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
   /**
    * The filter to search for the InvestmentOpportunity to update in case it exists.
    */
@@ -1687,6 +2363,10 @@ export type InvestmentOpportunityDeleteArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
+  /**
    * Filter which InvestmentOpportunity to delete.
    */
   where: Prisma.InvestmentOpportunityWhereUniqueInput
@@ -1707,6 +2387,25 @@ export type InvestmentOpportunityDeleteManyArgs<ExtArgs extends runtime.Types.Ex
 }
 
 /**
+ * InvestmentOpportunity.investmentType
+ */
+export type InvestmentOpportunity$investmentTypeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InvestmentType
+   */
+  select?: Prisma.InvestmentTypeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InvestmentType
+   */
+  omit?: Prisma.InvestmentTypeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentTypeInclude<ExtArgs> | null
+  where?: Prisma.InvestmentTypeWhereInput
+}
+
+/**
  * InvestmentOpportunity without action
  */
 export type InvestmentOpportunityDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1718,4 +2417,8 @@ export type InvestmentOpportunityDefaultArgs<ExtArgs extends runtime.Types.Exten
    * Omit specific fields from the InvestmentOpportunity
    */
   omit?: Prisma.InvestmentOpportunityOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InvestmentOpportunityInclude<ExtArgs> | null
 }
