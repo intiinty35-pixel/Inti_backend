@@ -73,6 +73,8 @@ export type ProjectMinAggregateOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   publishedAt: Date | null
@@ -107,6 +109,8 @@ export type ProjectMaxAggregateOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   publishedAt: Date | null
@@ -146,6 +150,8 @@ export type ProjectCountAggregateOutputType = {
   contactEmail: number
   contactPhone: number
   contactWhatsapp: number
+  isDeleted: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   publishedAt: number
@@ -200,6 +206,8 @@ export type ProjectMinAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
@@ -234,6 +242,8 @@ export type ProjectMaxAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
@@ -273,6 +283,8 @@ export type ProjectCountAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
@@ -399,6 +411,8 @@ export type ProjectGroupByOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
+  isDeleted: boolean
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   publishedAt: Date | null
@@ -461,6 +475,8 @@ export type ProjectWhereInput = {
   contactEmail?: Prisma.StringNullableFilter<"Project"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Project"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Project"> | string | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
@@ -508,6 +524,8 @@ export type ProjectOrderByWithRelationInput = {
   contactEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -558,6 +576,8 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   contactEmail?: Prisma.StringNullableFilter<"Project"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Project"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Project"> | string | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
@@ -605,6 +625,8 @@ export type ProjectOrderByWithAggregationInput = {
   contactEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -652,6 +674,8 @@ export type ProjectScalarWhereWithAggregatesInput = {
   contactEmail?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   contactPhone?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   contactWhatsapp?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
@@ -690,6 +714,8 @@ export type ProjectCreateInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -737,6 +763,8 @@ export type ProjectUncheckedCreateInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -782,6 +810,8 @@ export type ProjectUpdateInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -829,6 +859,8 @@ export type ProjectUncheckedUpdateInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -875,6 +907,8 @@ export type ProjectCreateManyInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -913,6 +947,8 @@ export type ProjectUpdateManyMutationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -952,6 +988,8 @@ export type ProjectUncheckedUpdateManyInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1001,6 +1039,8 @@ export type ProjectCountOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
@@ -1044,6 +1084,8 @@ export type ProjectMaxOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
@@ -1078,6 +1120,8 @@ export type ProjectMinOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
@@ -1331,6 +1375,8 @@ export type ProjectCreateWithoutAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -1376,6 +1422,8 @@ export type ProjectUncheckedCreateWithoutAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -1451,6 +1499,8 @@ export type ProjectScalarWhereInput = {
   contactEmail?: Prisma.StringNullableFilter<"Project"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Project"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Project"> | string | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
@@ -1489,6 +1539,8 @@ export type ProjectCreateWithoutReferralsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -1535,6 +1587,8 @@ export type ProjectUncheckedCreateWithoutReferralsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -1595,6 +1649,8 @@ export type ProjectUpdateWithoutReferralsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1641,6 +1697,8 @@ export type ProjectUncheckedUpdateWithoutReferralsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1685,6 +1743,8 @@ export type ProjectCreateWithoutAdminProjectInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -1731,6 +1791,8 @@ export type ProjectUncheckedCreateWithoutAdminProjectInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -1791,6 +1853,8 @@ export type ProjectUpdateWithoutAdminProjectInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1837,6 +1901,8 @@ export type ProjectUncheckedUpdateWithoutAdminProjectInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1881,6 +1947,8 @@ export type ProjectCreateWithoutLocationInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -1927,6 +1995,8 @@ export type ProjectUncheckedCreateWithoutLocationInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -1987,6 +2057,8 @@ export type ProjectUpdateWithoutLocationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2033,6 +2105,8 @@ export type ProjectUncheckedUpdateWithoutLocationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2077,6 +2151,8 @@ export type ProjectCreateWithoutLotsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2123,6 +2199,8 @@ export type ProjectUncheckedCreateWithoutLotsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2183,6 +2261,8 @@ export type ProjectUpdateWithoutLotsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2229,6 +2309,8 @@ export type ProjectUncheckedUpdateWithoutLotsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2273,6 +2355,8 @@ export type ProjectCreateWithoutMilestonesInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2319,6 +2403,8 @@ export type ProjectUncheckedCreateWithoutMilestonesInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2379,6 +2465,8 @@ export type ProjectUpdateWithoutMilestonesInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2425,6 +2513,8 @@ export type ProjectUncheckedUpdateWithoutMilestonesInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2469,6 +2559,8 @@ export type ProjectCreateWithoutMediaInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2515,6 +2607,8 @@ export type ProjectUncheckedCreateWithoutMediaInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2575,6 +2669,8 @@ export type ProjectUpdateWithoutMediaInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2621,6 +2717,8 @@ export type ProjectUncheckedUpdateWithoutMediaInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2665,6 +2763,8 @@ export type ProjectCreateWithoutLeadsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2711,6 +2811,8 @@ export type ProjectUncheckedCreateWithoutLeadsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2771,6 +2873,8 @@ export type ProjectUpdateWithoutLeadsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2817,6 +2921,8 @@ export type ProjectUncheckedUpdateWithoutLeadsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2861,6 +2967,8 @@ export type ProjectCreateManyAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
@@ -2899,6 +3007,8 @@ export type ProjectUpdateWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2944,6 +3054,8 @@ export type ProjectUncheckedUpdateWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -2989,6 +3101,8 @@ export type ProjectUncheckedUpdateManyWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3095,6 +3209,8 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
@@ -3143,6 +3259,8 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
@@ -3183,6 +3301,8 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
@@ -3223,12 +3343,14 @@ export type ProjectSelectScalar = {
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "category" | "stage" | "slug" | "name" | "description" | "currency" | "priceFrom" | "priceTo" | "ruc" | "businessName" | "downPayment" | "monthlyPayment" | "financing" | "totalBlocks" | "totalLots" | "social" | "services" | "urbanizationName" | "registryEntry" | "amenities" | "lotMode" | "constructionStart" | "estimatedDelivery" | "certifications" | "status" | "featured" | "tourUrl" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "createdAt" | "updatedAt" | "publishedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "category" | "stage" | "slug" | "name" | "description" | "currency" | "priceFrom" | "priceTo" | "ruc" | "businessName" | "downPayment" | "monthlyPayment" | "financing" | "totalBlocks" | "totalLots" | "social" | "services" | "urbanizationName" | "registryEntry" | "amenities" | "lotMode" | "constructionStart" | "estimatedDelivery" | "certifications" | "status" | "featured" | "tourUrl" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "publishedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
   adminProject?: boolean | Prisma.Project$adminProjectArgs<ExtArgs>
@@ -3293,6 +3415,11 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     contactEmail: string | null
     contactPhone: string | null
     contactWhatsapp: string | null
+    /**
+     * * Baja logica: eliminado por su dueño o por un admin. No se borra la fila.
+     */
+    isDeleted: boolean
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
     publishedAt: Date | null
@@ -3760,6 +3887,8 @@ export interface ProjectFieldRefs {
   readonly contactEmail: Prisma.FieldRef<"Project", 'String'>
   readonly contactPhone: Prisma.FieldRef<"Project", 'String'>
   readonly contactWhatsapp: Prisma.FieldRef<"Project", 'String'>
+  readonly isDeleted: Prisma.FieldRef<"Project", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly publishedAt: Prisma.FieldRef<"Project", 'DateTime'>

@@ -19,6 +19,8 @@ model User {
   avatarUrl             String?
   role                  Role                 @default(USER)
   isActive              Boolean              @default(true)
+  /** Baja logica de la cuenta hecha por un admin; isActive pasa a false al mismo tiempo. */
+  deletedAt             DateTime?
   createdAt             DateTime             @default(now())
   updatedAt             DateTime             @updatedAt
   leads                 Lead[]
@@ -50,6 +52,9 @@ model ProfessionalProfile {
   slug          String?            @unique
   /** Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin. */
   isOfficialDeveloper Boolean      @default(false)
+  /** Baja logica: al eliminar el agente/inmobiliaria desde el admin, no se borra la fila, solo se marca. */
+  isDeleted     Boolean            @default(false)
+  deletedAt     DateTime?
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   leads         Lead[]
@@ -58,6 +63,7 @@ model ProfessionalProfile {
   projects      Project[]
   subscriptions PlanSubscription[]
 
+  @@index([isDeleted])
   @@map("professional_profiles")
 }
 
@@ -171,6 +177,9 @@ model Property {
   contactEmail    String?
   contactPhone    String?
   contactWhatsapp String?
+  /** Baja logica: eliminada por su dueño o por un admin. No se borra la fila. */
+  isDeleted       Boolean             @default(false)
+  deletedAt       DateTime?
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
   publishedAt     DateTime?
@@ -185,6 +194,7 @@ model Property {
 
   @@index([status, featured, publishedAt])
   @@index([operationType, propertyType, status])
+  @@index([isDeleted])
   @@map("properties")
 }
 
@@ -296,6 +306,9 @@ model Project {
   contactEmail      String?
   contactPhone      String?
   contactWhatsapp   String?
+  /** Baja logica: eliminado por su dueño o por un admin. No se borra la fila. */
+  isDeleted         Boolean              @default(false)
+  deletedAt         DateTime?
   createdAt         DateTime             @default(now())
   updatedAt         DateTime             @updatedAt
   publishedAt       DateTime?
@@ -310,6 +323,7 @@ model Project {
 
   @@index([status, featured, publishedAt])
   @@index([category, stage, status])
+  @@index([isDeleted])
   @@map("projects")
 }
 

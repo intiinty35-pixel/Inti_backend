@@ -40,6 +40,8 @@ export type ProfessionalProfileMinAggregateOutputType = {
   socialLinks: string | null
   slug: string | null
   isOfficialDeveloper: boolean | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,6 +62,8 @@ export type ProfessionalProfileMaxAggregateOutputType = {
   socialLinks: string | null
   slug: string | null
   isOfficialDeveloper: boolean | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -80,6 +84,8 @@ export type ProfessionalProfileCountAggregateOutputType = {
   socialLinks: number
   slug: number
   isOfficialDeveloper: number
+  isDeleted: number
+  deletedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -102,6 +108,8 @@ export type ProfessionalProfileMinAggregateInputType = {
   socialLinks?: true
   slug?: true
   isOfficialDeveloper?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -122,6 +130,8 @@ export type ProfessionalProfileMaxAggregateInputType = {
   socialLinks?: true
   slug?: true
   isOfficialDeveloper?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -142,6 +152,8 @@ export type ProfessionalProfileCountAggregateInputType = {
   socialLinks?: true
   slug?: true
   isOfficialDeveloper?: true
+  isDeleted?: true
+  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -235,6 +247,8 @@ export type ProfessionalProfileGroupByOutputType = {
   socialLinks: string | null
   slug: string | null
   isOfficialDeveloper: boolean
+  isDeleted: boolean
+  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: ProfessionalProfileCountAggregateOutputType | null
@@ -276,6 +290,8 @@ export type ProfessionalProfileWhereInput = {
   socialLinks?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
   slug?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
   isOfficialDeveloper?: Prisma.BoolFilter<"ProfessionalProfile"> | boolean
+  isDeleted?: Prisma.BoolFilter<"ProfessionalProfile"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"ProfessionalProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ProfessionalProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProfessionalProfile"> | Date | string
   leads?: Prisma.LeadListRelationFilter
@@ -301,6 +317,8 @@ export type ProfessionalProfileOrderByWithRelationInput = {
   socialLinks?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrderInput | Prisma.SortOrder
   isOfficialDeveloper?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   leads?: Prisma.LeadOrderByRelationAggregateInput
@@ -329,6 +347,8 @@ export type ProfessionalProfileWhereUniqueInput = Prisma.AtLeast<{
   website?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
   socialLinks?: Prisma.StringNullableFilter<"ProfessionalProfile"> | string | null
   isOfficialDeveloper?: Prisma.BoolFilter<"ProfessionalProfile"> | boolean
+  isDeleted?: Prisma.BoolFilter<"ProfessionalProfile"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"ProfessionalProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ProfessionalProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ProfessionalProfile"> | Date | string
   leads?: Prisma.LeadListRelationFilter
@@ -354,6 +374,8 @@ export type ProfessionalProfileOrderByWithAggregationInput = {
   socialLinks?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrderInput | Prisma.SortOrder
   isOfficialDeveloper?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProfessionalProfileCountOrderByAggregateInput
@@ -380,6 +402,8 @@ export type ProfessionalProfileScalarWhereWithAggregatesInput = {
   socialLinks?: Prisma.StringNullableWithAggregatesFilter<"ProfessionalProfile"> | string | null
   slug?: Prisma.StringNullableWithAggregatesFilter<"ProfessionalProfile"> | string | null
   isOfficialDeveloper?: Prisma.BoolWithAggregatesFilter<"ProfessionalProfile"> | boolean
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"ProfessionalProfile"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ProfessionalProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProfessionalProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ProfessionalProfile"> | Date | string
 }
@@ -399,6 +423,8 @@ export type ProfessionalProfileCreateInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -424,6 +450,8 @@ export type ProfessionalProfileUncheckedCreateInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -447,6 +475,8 @@ export type ProfessionalProfileUpdateInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -472,6 +502,8 @@ export type ProfessionalProfileUncheckedUpdateInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -496,6 +528,8 @@ export type ProfessionalProfileCreateManyInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -515,6 +549,8 @@ export type ProfessionalProfileUpdateManyMutationInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -535,6 +571,8 @@ export type ProfessionalProfileUncheckedUpdateManyInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -560,6 +598,8 @@ export type ProfessionalProfileCountOrderByAggregateInput = {
   socialLinks?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   isOfficialDeveloper?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -580,6 +620,8 @@ export type ProfessionalProfileMaxOrderByAggregateInput = {
   socialLinks?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   isOfficialDeveloper?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -600,6 +642,8 @@ export type ProfessionalProfileMinOrderByAggregateInput = {
   socialLinks?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   isOfficialDeveloper?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -724,6 +768,8 @@ export type ProfessionalProfileCreateWithoutUserInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -747,6 +793,8 @@ export type ProfessionalProfileUncheckedCreateWithoutUserInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -786,6 +834,8 @@ export type ProfessionalProfileUpdateWithoutUserInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -809,6 +859,8 @@ export type ProfessionalProfileUncheckedUpdateWithoutUserInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -832,6 +884,8 @@ export type ProfessionalProfileCreateWithoutSubscriptionsInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -856,6 +910,8 @@ export type ProfessionalProfileUncheckedCreateWithoutSubscriptionsInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -894,6 +950,8 @@ export type ProfessionalProfileUpdateWithoutSubscriptionsInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -918,6 +976,8 @@ export type ProfessionalProfileUncheckedUpdateWithoutSubscriptionsInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -940,6 +1000,8 @@ export type ProfessionalProfileCreateWithoutPropertiesInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -964,6 +1026,8 @@ export type ProfessionalProfileUncheckedCreateWithoutPropertiesInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -1002,6 +1066,8 @@ export type ProfessionalProfileUpdateWithoutPropertiesInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -1026,6 +1092,8 @@ export type ProfessionalProfileUncheckedUpdateWithoutPropertiesInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -1048,6 +1116,8 @@ export type ProfessionalProfileCreateWithoutProjectsInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAgentProfileInput
@@ -1072,6 +1142,8 @@ export type ProfessionalProfileUncheckedCreateWithoutProjectsInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -1110,6 +1182,8 @@ export type ProfessionalProfileUpdateWithoutProjectsInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAgentProfileNestedInput
@@ -1134,6 +1208,8 @@ export type ProfessionalProfileUncheckedUpdateWithoutProjectsInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -1156,6 +1232,8 @@ export type ProfessionalProfileCreateWithoutLeadsInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfessionalProfileInput
@@ -1180,6 +1258,8 @@ export type ProfessionalProfileUncheckedCreateWithoutLeadsInput = {
   socialLinks?: string | null
   slug?: string | null
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   properties?: Prisma.PropertyUncheckedCreateNestedManyWithoutAgentProfileInput
@@ -1218,6 +1298,8 @@ export type ProfessionalProfileUpdateWithoutLeadsInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfessionalProfileNestedInput
@@ -1242,6 +1324,8 @@ export type ProfessionalProfileUncheckedUpdateWithoutLeadsInput = {
   socialLinks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isOfficialDeveloper?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   properties?: Prisma.PropertyUncheckedUpdateManyWithoutAgentProfileNestedInput
@@ -1323,6 +1407,8 @@ export type ProfessionalProfileSelect<ExtArgs extends runtime.Types.Extensions.I
   socialLinks?: boolean
   slug?: boolean
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   leads?: boolean | Prisma.ProfessionalProfile$leadsArgs<ExtArgs>
@@ -1349,6 +1435,8 @@ export type ProfessionalProfileSelectCreateManyAndReturn<ExtArgs extends runtime
   socialLinks?: boolean
   slug?: boolean
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1370,6 +1458,8 @@ export type ProfessionalProfileSelectUpdateManyAndReturn<ExtArgs extends runtime
   socialLinks?: boolean
   slug?: boolean
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1391,11 +1481,13 @@ export type ProfessionalProfileSelectScalar = {
   socialLinks?: boolean
   slug?: boolean
   isOfficialDeveloper?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ProfessionalProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "status" | "dni" | "ruc" | "businessName" | "whatsapp" | "city" | "districts" | "address" | "website" | "socialLinks" | "slug" | "isOfficialDeveloper" | "createdAt" | "updatedAt", ExtArgs["result"]["professionalProfile"]>
+export type ProfessionalProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "type" | "status" | "dni" | "ruc" | "businessName" | "whatsapp" | "city" | "districts" | "address" | "website" | "socialLinks" | "slug" | "isOfficialDeveloper" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["professionalProfile"]>
 export type ProfessionalProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   leads?: boolean | Prisma.ProfessionalProfile$leadsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1439,6 +1531,11 @@ export type $ProfessionalProfilePayload<ExtArgs extends runtime.Types.Extensions
      * * Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin.
      */
     isOfficialDeveloper: boolean
+    /**
+     * * Baja logica: al eliminar el agente/inmobiliaria desde el admin, no se borra la fila, solo se marca.
+     */
+    isDeleted: boolean
+    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["professionalProfile"]>
@@ -1884,6 +1981,8 @@ export interface ProfessionalProfileFieldRefs {
   readonly socialLinks: Prisma.FieldRef<"ProfessionalProfile", 'String'>
   readonly slug: Prisma.FieldRef<"ProfessionalProfile", 'String'>
   readonly isOfficialDeveloper: Prisma.FieldRef<"ProfessionalProfile", 'Boolean'>
+  readonly isDeleted: Prisma.FieldRef<"ProfessionalProfile", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"ProfessionalProfile", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"ProfessionalProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ProfessionalProfile", 'DateTime'>
 }

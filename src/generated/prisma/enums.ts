@@ -138,9 +138,11 @@ export type LeadSource = (typeof LeadSource)[keyof typeof LeadSource]
 
 
 export const ReferralStatus = {
+  PENDING_VALIDATION: 'PENDING_VALIDATION',
   CONTACTED: 'CONTACTED',
   VISIT: 'VISIT',
-  OPERATION_COMPLETED: 'OPERATION_COMPLETED'
+  OPERATION_COMPLETED: 'OPERATION_COMPLETED',
+  REJECTED: 'REJECTED'
 } as const
 
 export type ReferralStatus = (typeof ReferralStatus)[keyof typeof ReferralStatus]
