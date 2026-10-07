@@ -14,6 +14,7 @@ import type { AuthUser } from '../../common/types/auth-user';
 import { Role } from '../../generated/prisma/enums';
 import { CreateReferralDto } from './dto/create-referral.dto';
 import { ReferralQueryDto } from './dto/referral-query.dto';
+import { UpdateReferralPointsDto } from './dto/update-referral-points.dto';
 import { UpdateReferralStatusDto } from './dto/update-referral-status.dto';
 import { ReferralsService } from './referrals.service';
 
@@ -30,6 +31,11 @@ export class ReferralsController {
   @Get('referrers/:id')
   referrerDetail(@Param('id', ParseUUIDPipe) id: string) {
     return this.referrals.getReferrer(id);
+  }
+
+  @Patch('status-points')
+  updateStatusPoints(@Body() dto: UpdateReferralPointsDto) {
+    return this.referrals.updateStatusPoints(dto);
   }
 
   @Get(':id')
@@ -49,5 +55,21 @@ export class ReferralsController {
     @Body() dto: UpdateReferralStatusDto,
   ) {
     return this.referrals.updateStatus(id, dto.status, user.id);
+  }
+
+  @Patch(':id/approve')
+  approve(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return this.referrals.approveReferral(id, user.id);
+  }
+
+  @Patch(':id/reject')
+  reject(
+    @Param('id', ParseUUIDPipe) id: string,
+    @CurrentUser() user: AuthUser,
+  ) {
+    return this.referrals.rejectReferral(id, user.id);
   }
 }

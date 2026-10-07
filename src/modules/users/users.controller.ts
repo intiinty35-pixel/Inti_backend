@@ -12,6 +12,7 @@ import { ParseEnumPipe } from '@nestjs/common';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { ApprovalStatus, Role } from '../../generated/prisma/enums';
 import { ListProfessionalsQueryDto } from './dto/list-professionals-query.dto';
+import { NotifyProfessionalDto } from './dto/notify-professional.dto';
 import { UpdateOfficialDeveloperDto } from './dto/update-official-developer.dto';
 import { UpdateProfessionalStatusDto } from './dto/update-professional-status.dto';
 import { UsersService } from './users.service';
@@ -47,7 +48,10 @@ export class UsersController {
   }
 
   @Post(':id/notify')
-  notify(@Param('id', ParseUUIDPipe) id: string) {
-    return this.users.notifyProfessional(id);
+  notify(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: NotifyProfessionalDto,
+  ) {
+    return this.users.notifyProfessional(id, dto);
   }
 }

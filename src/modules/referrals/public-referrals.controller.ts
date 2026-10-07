@@ -28,4 +28,9 @@ export class PublicReferralsController {
       } 
     };
   }
+
+  @Get('my')
+  async myReferrals(@Query('code') code: string) {
+    return this.referrals.getReferralsByCode(code);
+  }
 }

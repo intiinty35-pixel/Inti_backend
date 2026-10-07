@@ -12,6 +12,7 @@ import {
   PropertyStatus,
 } from '../../generated/prisma/enums';
 import { PlansService } from '../plans/plans.service';
+import { NotifyProfessionalDto } from './dto/notify-professional.dto';
 import { DeveloperReviewQueryDto } from './dto/developer-review-query.dto';
 import { MailService } from '../mail/mail.service';
 
@@ -268,7 +269,7 @@ export class UsersService {
     });
   }
 
-  async notifyProfessional(profileId: string) {
+  async notifyProfessional(profileId: string, dto: NotifyProfessionalDto = {}) {
     const profile = await this.prisma.professionalProfile.findUnique({
       where: { id: profileId },
       select: {
@@ -293,6 +294,8 @@ export class UsersService {
     await this.mail.sendAdminNotice({
       email: profile.user.email,
       name,
+      subject: dto.subject,
+      message: dto.message,
     });
 
     return { ok: true, email: profile.user.email };

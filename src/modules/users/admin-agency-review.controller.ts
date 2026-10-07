@@ -31,14 +31,6 @@ export class AdminAgencyReviewController {
     return this.users.listAgencies(query);
   }
 
-  @Get(':id')
-  agencyDetail(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Query() query: DeveloperReviewQueryDto,
-  ) {
-    return this.users.getAgency(id, query);
-  }
-
   @Get('properties/:id')
   agencyPropertyDetail(@Param('id', ParseUUIDPipe) id: string) {
     return this.properties.getAgencyPropertyReviewDetail(id);
@@ -47,6 +39,14 @@ export class AdminAgencyReviewController {
   @Get('projects/:id')
   agencyProjectDetail(@Param('id', ParseUUIDPipe) id: string) {
     return this.projects.getAgencyProjectReviewDetail(id);
+  }
+
+  @Get(':id')
+  agencyDetail(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Query() query: DeveloperReviewQueryDto,
+  ) {
+    return this.users.getAgency(id, query);
   }
 
   @Patch('properties/:id/publish')

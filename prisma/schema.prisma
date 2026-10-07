@@ -657,9 +657,11 @@ enum LeadSource {
 }
 
 enum ReferralStatus {
+  PENDING_VALIDATION
   CONTACTED
   VISIT
   OPERATION_COMPLETED
+  REJECTED
 }
 
 enum ReferralInterest {

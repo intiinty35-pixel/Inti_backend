@@ -72,6 +72,20 @@ interface ReferrerWelcomeInput {
   referrerCode: string;
 }
 
+interface ReferralRegisteredAdminInput {
+  referralCode: string;
+  referrerName: string;
+  referrerEmail: string;
+  referrerPhone: string;
+  referrerCode: string;
+  isNewReferrer: boolean;
+  referralName: string;
+  referralEmail: string;
+  referralPhone: string;
+  interestLabel: string;
+  availabilityLabel: string;
+}
+
 interface RedemptionRequestedInput {
   referrerName: string;
   referrerEmail: string;
@@ -392,6 +406,53 @@ export class MailService {
     });
   }
 
+  /**
+   * Notifica al equipo de ARIZ (arizcenter@...) el ingreso de un nuevo referido,
+   * con TODOS los datos del registro: quién refiere (referente) y quién es el
+   * referido, además del interés y la disponibilidad declarados.
+   */
+  async sendReferralRegisteredToAdmin(input: ReferralRegisteredAdminInput) {
+    const recipient =
+      this.config.get<string>('REFERRALS_NOTIFICATION_EMAIL')?.trim() ||
+      this.config.get<string>('ADMIN_NOTIFICATION_EMAIL')?.trim() ||
+      this.config.get<string>('BREVO_SENDER_EMAIL')?.trim();
+
+    if (!recipient) {
+      this.logger.warn(
+        'Sin destinatario para notificación de referidos: define REFERRALS_NOTIFICATION_EMAIL',
+      );
+      return;
+    }
+
+    return this.send({
+      to: [{ email: recipient, name: 'ARIZ' }],
+      replyTo: { email: input.referralEmail, name: input.referralName },
+      subject: `Nuevo referido registrado: ${input.referralName}`,
+      html: this.layout({
+        preheader: 'Se registró un nuevo referido desde el programa de ARIZ.',
+        title: 'Nuevo referido registrado',
+        intro: 'Se registró un nuevo referido a través del formulario público de referidos.',
+        content: `
+          <p style="margin:0 0 6px;color:${BRAND.primary};font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;">Referente (quién refiere)</p>
+          ${this.infoRow('Nombre', input.referrerName)}
+          ${this.infoRow('Correo', input.referrerEmail)}
+          ${this.infoRow('Teléfono', input.referrerPhone)}
+          ${this.infoRow('Código de referente', input.referrerCode)}
+          ${this.infoRow('Tipo', input.isNewReferrer ? 'Referente nuevo' : 'Referente existente')}
+
+          <p style="margin:24px 0 6px;color:${BRAND.primary};font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;">Referido</p>
+          ${this.infoRow('Nombre', input.referralName)}
+          ${this.infoRow('Correo', input.referralEmail)}
+          ${this.infoRow('Teléfono', input.referralPhone)}
+          ${this.infoRow('¿Qué desea hacer?', input.interestLabel)}
+          ${this.infoRow('Disponibilidad', input.availabilityLabel)}
+          ${this.infoRow('Código de referido', input.referralCode)}
+        `,
+        button: { label: 'Ver panel de referidos', url: `${this.frontendUrl()}/panel/admin/referrals` },
+      }),
+    });
+  }
+
   private async send(input: SendMailInput) {
     const apiKey = this.config.get<string>('BREVO_API_KEY');
     const senderEmail = this.config.get<string>('BREVO_SENDER_EMAIL');
@@ -421,10 +482,26 @@ export class MailService {
 
       if (!response.ok) {
         const body = await response.text();
-        this.logger.error(`Brevo respondio ${response.status}: ${body}`);
+        this.logger.error(
+          `Brevo respondio ${response.status} al enviar "${input.subject}" a ${input.to
+            .map((address) => address.email)
+            .join(', ')}: ${body}`,
+        );
+        return false;
       }
+
+      const result = (await response.json().catch(() => null)) as {
+        messageId?: string;
+      } | null;
+      this.logger.log(
+        `Correo enviado a ${input.to
+          .map((address) => address.email)
+          .join(', ')} (messageId: ${result?.messageId ?? 'sin id'})`,
+      );
+      return true;
     } catch (error) {
       this.logger.error('No se pudo enviar correo con Brevo', error as Error);
+      return false;
     }
   }
 

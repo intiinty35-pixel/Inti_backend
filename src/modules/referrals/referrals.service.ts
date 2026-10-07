@@ -11,6 +11,7 @@ import { ReferralStatus } from '../../generated/prisma/enums';
 import { ReferralAvailability } from '../../generated/prisma/enums';
 import { CreateReferralDto } from './dto/create-referral.dto';
 import { ReferralQueryDto } from './dto/referral-query.dto';
+import { UpdateReferralPointsDto } from './dto/update-referral-points.dto';
 
 const STATUS_LABELS: Record<ReferralStatus, string> = {
   [ReferralStatus.CONTACTED]: 'Contactado',
@@ -26,6 +27,12 @@ const INTEREST_LABELS: Record<string, string> = {
   INVERSION: 'Invertir en un proyecto',
   CORRETAJE: 'Servicio de corretaje',
 };
+
+const STATUS_ORDER: ReferralStatus[] = [
+  ReferralStatus.CONTACTED,
+  ReferralStatus.VISIT,
+  ReferralStatus.OPERATION_COMPLETED,
+];
 
 const AVAILABILITY_LABELS: Record<string, string> = {
   INMEDIATA: 'Inmediata',
@@ -72,12 +79,22 @@ export class ReferralsService {
       total,
       page,
       pageSize,
-      statusPoints: statusPoints.map((item) => ({
-        status: item.status,
-        label: STATUS_LABELS[item.status],
-        points: item.points,
-      })),
+      statusPoints: this.toStatusPointsResponse(statusPoints),
     };
+  }
+
+  async updateStatusPoints(dto: UpdateReferralPointsDto) {
+    const updated = await this.prisma.$transaction(
+      STATUS_ORDER.map((status) =>
+        this.prisma.referralStatusPoint.upsert({
+          where: { status },
+          update: { points: dto[status] },
+          create: { status, points: dto[status] },
+        }),
+      ),
+    );
+
+    return this.toStatusPointsResponse(updated);
   }
 
   async get(id: string) {
@@ -106,6 +123,73 @@ export class ReferralsService {
     return referrer;
   }
 
+  /**
+   * Lista publica de los referidos de un referente identificado por su codigo
+   * REF-XXXXXXXX. Devuelve solo los campos necesarios para que el referente vea
+   * el avance de cada referido.
+   */
+  async getReferralsByCode(code: string) {
+    const normalized = code?.trim().toUpperCase();
+    if (!normalized) {
+      return {
+        valid: false,
+        message: 'Código de referente no válido',
+        referrals: [],
+      };
+    }
+
+    const referrer = await this.prisma.referrer.findUnique({
+      where: { code: normalized },
+      select: { id: true, code: true, name: true },
+    });
+
+    if (!referrer) {
+      return {
+        valid: false,
+        message: 'Código de referente no válido',
+        referrals: [],
+      };
+    }
+
+    const referrals = await this.prisma.referral.findMany({
+      where: { referrerId: referrer.id },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        project: { select: { id: true, name: true } },
+        history: { orderBy: { createdAt: 'asc' as const } },
+      },
+    });
+
+    return {
+      valid: true,
+      referrer: { code: referrer.code, name: referrer.name },
+      total: referrals.length,
+      referrals: referrals.map((referral) => ({
+        id: referral.id,
+        name: referral.name,
+        email: referral.email,
+        phone: referral.phone,
+        status: referral.status,
+        statusLabel: STATUS_LABELS[referral.status],
+        interest: referral.interest,
+        interestLabel:
+          INTEREST_LABELS[String(referral.interest)] ??
+          String(referral.interest),
+        availability:
+          AVAILABILITY_LABELS[String(referral.availability)] ??
+          String(referral.availability),
+        points: referral.history.reduce(
+          (sum, item) => sum + item.pointsAwarded,
+          0,
+        ),
+        project: referral.project
+          ? { id: referral.project.id, name: referral.project.name }
+          : null,
+        createdAt: referral.createdAt,
+      })),
+    };
+  }
+
   async referrerExistsByEmail(email: string): Promise<boolean> {
     const referrer = await this.prisma.referrer.findFirst({
       where: { email: email.trim().toLowerCase() },
@@ -127,19 +211,19 @@ export class ReferralsService {
     const referrerEmail = dto.referrerEmail.trim().toLowerCase();
     const referralCode = await this.uniqueCode('RFD');
     let isNewReferrer = false;
+
     try {
       const created = await this.prisma.$transaction(async (tx) => {
-        // Primero buscar por código si se proporcionó
         let referrer = referrerCode
           ? await tx.referrer.findUnique({ where: { code: referrerCode } })
           : null;
-        
-        // Si no se encontró por código, buscar por email
+
         if (!referrer) {
-          referrer = await tx.referrer.findFirst({ where: { email: referrerEmail } });
+          referrer = await tx.referrer.findFirst({
+            where: { email: referrerEmail },
+          });
         }
-        
-        // Si aún no existe, crear nuevo referente
+
         if (!referrer) {
           referrer = await tx.referrer.create({
             data: {
@@ -151,7 +235,7 @@ export class ReferralsService {
           });
           isNewReferrer = true;
         }
-        
+
         return tx.referral.create({
           data: {
             referrerId: referrer.id,
@@ -161,6 +245,7 @@ export class ReferralsService {
             interest: dto.interest,
             availability: dto.availability ?? ReferralAvailability.INMEDIATA,
             code: referralCode,
+            status: ReferralStatus.CONTACTED,
             history: {
               create: {
                 toStatus: ReferralStatus.CONTACTED,
@@ -174,6 +259,7 @@ export class ReferralsService {
           },
         });
       });
+
       const persisted = await this.prisma.referral.findUnique({
         where: { id: created.id },
         include: { history: true },
@@ -181,7 +267,7 @@ export class ReferralsService {
       const totalPoints =
         persisted?.history.reduce((sum, item) => sum + item.pointsAwarded, 0) ??
         points.points;
-      
+
       if (isNewReferrer) {
         await this.mail.sendReferrerWelcome({
           referrerName: created.referrer.name,
@@ -189,7 +275,24 @@ export class ReferralsService {
           referrerCode: created.referrer.code,
         });
       }
-      
+
+      await this.mail.sendReferralRegisteredToAdmin({
+        referralCode: created.code,
+        referrerName: created.referrer.name,
+        referrerEmail: created.referrer.email,
+        referrerPhone: created.referrer.phone,
+        referrerCode: created.referrer.code,
+        isNewReferrer,
+        referralName: created.name,
+        referralEmail: created.email,
+        referralPhone: created.phone,
+        interestLabel:
+          INTEREST_LABELS[String(created.interest)] ?? String(created.interest),
+        availabilityLabel:
+          AVAILABILITY_LABELS[String(created.availability)] ??
+          String(created.availability),
+      });
+
       return { ...created, points: points.points, totalPoints };
     } catch (error) {
       if (
@@ -211,6 +314,7 @@ export class ReferralsService {
         include: {
           referrer: true,
           project: { select: { id: true, name: true } },
+          history: { orderBy: { createdAt: 'asc' as const } },
         },
       });
       if (!current) throw new NotFoundException('Referido no encontrado');
@@ -241,6 +345,7 @@ export class ReferralsService {
           },
         });
       }
+
       const updated = { ...current, status };
       return this.responseWithTotals(tx, updated, pointsAwarded, true);
     });
@@ -258,6 +363,27 @@ export class ReferralsService {
       });
     }
     return result;
+  }
+
+  async approveReferral(id: string, changedById: string) {
+    const current = await this.prisma.referral.findUnique({
+      where: { id },
+      include: { referrer: true },
+    });
+    if (!current) throw new NotFoundException('Referido no encontrado');
+    if (current.status === ReferralStatus.CONTACTED) {
+      return this.updateStatus(id, ReferralStatus.CONTACTED, changedById);
+    }
+    throw new ConflictException('El referido ya fue aprobado previamente');
+  }
+
+  async rejectReferral(id: string, _changedById: string) {
+    const current = await this.prisma.referral.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+    if (!current) throw new NotFoundException('Referido no encontrado');
+    throw new ConflictException('El estado rechazado no está disponible');
   }
 
   private referralsInclude() {
@@ -301,6 +427,20 @@ export class ReferralsService {
         toStatus: STATUS_LABELS[item.toStatus],
       })),
     };
+  }
+
+  private toStatusPointsResponse<
+    T extends { status: ReferralStatus; points: number },
+  >(statusPoints: T[]) {
+    const byStatus = new Map(statusPoints.map((item) => [item.status, item]));
+    return STATUS_ORDER.map((status) => {
+      const item = byStatus.get(status);
+      return {
+        status,
+        label: STATUS_LABELS[status],
+        points: item?.points ?? 0,
+      };
+    });
   }
 
   private async responseWithTotals<
