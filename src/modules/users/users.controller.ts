@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -53,5 +54,10 @@ export class UsersController {
     @Body() dto: NotifyProfessionalDto,
   ) {
     return this.users.notifyProfessional(id, dto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.users.deleteProfessionalAccount(id);
   }
 }

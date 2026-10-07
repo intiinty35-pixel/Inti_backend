@@ -32,6 +32,7 @@ export class UsersService {
     const where: Prisma.ProfessionalProfileWhereInput = {
       type: { not: ProfessionalType.INDIVIDUAL_OWNER },
       status,
+      isDeleted: false,
     };
     const include = {
       user: {
@@ -73,6 +74,7 @@ export class UsersService {
     const projectStatus = status as unknown as ProjectStatus;
     const where: Prisma.ProfessionalProfileWhereInput = {
       type: ProfessionalType.DEVELOPER,
+      isDeleted: false,
       OR: [
         { properties: { some: { status } } },
         { projects: { some: { status: projectStatus } } },
@@ -89,11 +91,11 @@ export class UsersService {
         },
       },
       properties: {
-        where: { status },
+        where: { status, isDeleted: false },
         orderBy: { updatedAt: 'desc' as const },
       },
       projects: {
-        where: { status: projectStatus },
+        where: { status: projectStatus, isDeleted: false },
         orderBy: { updatedAt: 'desc' as const },
       },
     };
@@ -141,9 +143,9 @@ export class UsersService {
             phone: true,
           },
         },
-        properties: { where: { status }, orderBy: { updatedAt: 'desc' } },
+        properties: { where: { status, isDeleted: false }, orderBy: { updatedAt: 'desc' } },
         projects: {
-          where: { status: projectStatus },
+          where: { status: projectStatus, isDeleted: false },
           orderBy: { updatedAt: 'desc' },
         },
       },
@@ -157,6 +159,7 @@ export class UsersService {
     const projectStatus = status as unknown as ProjectStatus;
     const where: Prisma.ProfessionalProfileWhereInput = {
       type: ProfessionalType.REAL_ESTATE_AGENCY,
+      isDeleted: false,
     };
     const select = {
       id: true,
@@ -173,12 +176,12 @@ export class UsersService {
         },
       },
       properties: {
-        where: { status },
+        where: { status, isDeleted: false },
         orderBy: { updatedAt: 'desc' as const },
         select: { id: true, title: true, status: true },
       },
       projects: {
-        where: { status: projectStatus },
+        where: { status: projectStatus, isDeleted: false },
         orderBy: { updatedAt: 'desc' as const },
         select: { id: true, name: true, status: true },
       },
@@ -216,12 +219,12 @@ export class UsersService {
           select: { firstName: true, lastName: true, email: true },
         },
         properties: {
-          where: { status },
+          where: { status, isDeleted: false },
           orderBy: { updatedAt: 'desc' },
           select: { id: true, title: true, status: true },
         },
         projects: {
-          where: { status: projectStatus },
+          where: { status: projectStatus, isDeleted: false },
           orderBy: { updatedAt: 'desc' },
           select: { id: true, name: true, status: true },
         },
@@ -267,6 +270,42 @@ export class UsersService {
       where: { id: profileId },
       data: { isOfficialDeveloper },
     });
+  }
+
+  /**
+   * Baja logica de una cuenta profesional (agente/inmobiliaria/desarrolladora)
+   * desde el admin: no se borra ninguna fila. Se marca el perfil y el usuario
+   * como eliminados (isActive=false bloquea login y sesiones activas via
+   * JwtAuthGuard), y en cascada se marcan como eliminadas todas sus
+   * propiedades y proyectos, para que dejen de aparecer en cualquier listado.
+   */
+  async deleteProfessionalAccount(profileId: string) {
+    const profile = await this.prisma.professionalProfile.findUnique({
+      where: { id: profileId },
+      select: { id: true, userId: true, isDeleted: true },
+    });
+    if (!profile) throw new NotFoundException('Perfil profesional no encontrado');
+    if (profile.isDeleted) return;
+
+    const now = new Date();
+    await this.prisma.$transaction([
+      this.prisma.professionalProfile.update({
+        where: { id: profileId },
+        data: { isDeleted: true, deletedAt: now },
+      }),
+      this.prisma.user.update({
+        where: { id: profile.userId },
+        data: { isActive: false, deletedAt: now },
+      }),
+      this.prisma.property.updateMany({
+        where: { agentProfileId: profileId, isDeleted: false },
+        data: { isDeleted: true, deletedAt: now },
+      }),
+      this.prisma.project.updateMany({
+        where: { agentProfileId: profileId, isDeleted: false },
+        data: { isDeleted: true, deletedAt: now },
+      }),
+    ]);
   }
 
   async notifyProfessional(profileId: string, dto: NotifyProfessionalDto = {}) {
