@@ -86,6 +86,21 @@ interface ReferralRegisteredAdminInput {
   availabilityLabel: string;
 }
 
+interface ContactReportMailInput {
+  name: string;
+  email: string;
+  phone?: string | null;
+  topic: string;
+  message: string;
+  reportId: string;
+}
+
+interface ContactReportConfirmationInput {
+  name: string;
+  email: string;
+  topic: string;
+}
+
 interface RedemptionRequestedInput {
   referrerName: string;
   referrerEmail: string;
@@ -305,6 +320,65 @@ export class MailService {
           </div>
         `,
         button: { label: 'Ir a mi panel', url: `${this.frontendUrl()}/panel/owner` },
+      }),
+    });
+  }
+
+  async sendContactReportToAdmin(input: ContactReportMailInput) {
+    const recipient =
+      this.config.get<string>('CONTACT_REPORTS_EMAIL')?.trim() ||
+      this.config.get<string>('ADMIN_NOTIFICATION_EMAIL')?.trim() ||
+      this.config.get<string>('BREVO_SENDER_EMAIL')?.trim();
+
+    if (!recipient) {
+      this.logger.warn(
+        'Sin destinatario para reportes de contacto: define CONTACT_REPORTS_EMAIL',
+      );
+      return;
+    }
+
+    return this.send({
+      to: [{ email: recipient, name: 'ARIZ' }],
+      replyTo: { email: input.email, name: input.name },
+      subject: `Nueva consulta de contacto: ${input.topic}`,
+      html: this.layout({
+        preheader: 'Se registro una consulta desde la pagina de contacto.',
+        title: 'Nueva consulta desde Contacto',
+        intro:
+          'Un usuario envio el formulario de contacto de Ariz Inmobiliaria. El reporte quedo registrado en el panel admin.',
+        content: `
+          ${this.infoRow('Reporte', input.reportId)}
+          ${this.infoRow('Nombre', input.name)}
+          ${this.infoRow('Correo', input.email)}
+          ${input.phone ? this.infoRow('Telefono', input.phone) : ''}
+          ${this.infoRow('Tema', input.topic)}
+          <div style="margin-top:18px;padding:16px;border-radius:12px;background:${BRAND.canvas};color:${BRAND.ink};line-height:1.65;">
+            ${this.escape(input.message).replace(/\n/g, '<br>')}
+          </div>
+        `,
+        button: {
+          label: 'Ver reportes',
+          url: `${this.frontendUrl()}/panel/admin/reports`,
+        },
+      }),
+    });
+  }
+
+  async sendContactReportConfirmation(input: ContactReportConfirmationInput) {
+    return this.send({
+      to: [{ email: input.email, name: input.name }],
+      subject: 'Recibimos tu consulta - ARIZ',
+      html: this.layout({
+        preheader: 'Tu consulta fue recibida por ARIZ.',
+        title: 'Recibimos tu consulta',
+        intro: `Hola ${this.escape(input.name)}, gracias por contactar a Ariz Inmobiliaria.`,
+        content: `
+          ${this.infoRow('Tema', input.topic)}
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Nuestro equipo revisara tu solicitud y se comunicara contigo por correo, telefono o WhatsApp segun los datos enviados.
+          </p>
+        `,
+        button: { label: 'Ir a ARIZ', url: this.frontendUrl() },
       }),
     });
   }
