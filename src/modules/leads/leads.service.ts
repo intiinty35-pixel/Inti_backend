@@ -79,6 +79,7 @@ export class LeadsService {
             agentProfile: {
               select: {
                 businessName: true,
+                userId: true,
                 user: {
                   select: { email: true, firstName: true, lastName: true },
                 },
@@ -98,6 +99,7 @@ export class LeadsService {
             agentProfile: {
               select: {
                 businessName: true,
+                userId: true,
                 user: {
                   select: { email: true, firstName: true, lastName: true },
                 },
@@ -152,17 +154,26 @@ export class LeadsService {
       },
     });
 
-    void this.mail.sendLeadNotification({
-      ownerEmail,
-      ownerName,
-      publicationType,
-      publicationTitle,
-      publicationUrl,
-      leadName: dto.name,
-      leadEmail: dto.email,
-      leadPhone: dto.phone,
-      message: dto.message,
-    });
+    const ownerSettings = target.agentProfile?.userId
+      ? await this.prisma.notificationSettings.findUnique({
+          where: { userId: target.agentProfile.userId },
+          select: { emailLeads: true },
+        })
+      : null;
+
+    if (ownerSettings?.emailLeads !== false) {
+      void this.mail.sendLeadNotification({
+        ownerEmail,
+        ownerName,
+        publicationType,
+        publicationTitle,
+        publicationUrl,
+        leadName: dto.name,
+        leadEmail: dto.email,
+        leadPhone: dto.phone,
+        message: dto.message,
+      });
+    }
 
     return lead;
   }

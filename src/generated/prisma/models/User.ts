@@ -254,6 +254,7 @@ export type UserWhereInput = {
   adminProjects?: Prisma.AdminProjectListRelationFilter
   referralChanges?: Prisma.ReferralStatusHistoryListRelationFilter
   processedRedemptions?: Prisma.RedemptionListRelationFilter
+  notificationSettings?: Prisma.XOR<Prisma.NotificationSettingsNullableScalarRelationFilter, Prisma.NotificationSettingsWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -278,6 +279,7 @@ export type UserOrderByWithRelationInput = {
   adminProjects?: Prisma.AdminProjectOrderByRelationAggregateInput
   referralChanges?: Prisma.ReferralStatusHistoryOrderByRelationAggregateInput
   processedRedemptions?: Prisma.RedemptionOrderByRelationAggregateInput
+  notificationSettings?: Prisma.NotificationSettingsOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -305,6 +307,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   adminProjects?: Prisma.AdminProjectListRelationFilter
   referralChanges?: Prisma.ReferralStatusHistoryListRelationFilter
   processedRedemptions?: Prisma.RedemptionListRelationFilter
+  notificationSettings?: Prisma.XOR<Prisma.NotificationSettingsNullableScalarRelationFilter, Prisma.NotificationSettingsWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -367,6 +370,7 @@ export type UserCreateInput = {
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -391,6 +395,7 @@ export type UserUncheckedCreateInput = {
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -415,6 +420,7 @@ export type UserUpdateInput = {
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -439,6 +445,7 @@ export type UserUncheckedUpdateInput = {
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -571,6 +578,20 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type UserCreateNestedOneWithoutNotificationSettingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationSettingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationSettingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationSettingsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationSettingsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationSettingsInput, Prisma.UserUpdateWithoutNotificationSettingsInput>, Prisma.UserUncheckedUpdateWithoutNotificationSettingsInput>
+}
+
 export type UserCreateNestedOneWithoutProfessionalProfileInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutProfessionalProfileInput, Prisma.UserUncheckedCreateWithoutProfessionalProfileInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfessionalProfileInput
@@ -689,6 +710,118 @@ export type UserUpdateOneWithoutLeadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadsInput, Prisma.UserUpdateWithoutLeadsInput>, Prisma.UserUncheckedUpdateWithoutLeadsInput>
 }
 
+export type UserCreateWithoutNotificationSettingsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName?: string | null
+  phone?: string | null
+  biography?: string | null
+  avatarUrl?: string | null
+  role?: $Enums.Role
+  isActive?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
+  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserUncheckedCreateWithoutNotificationSettingsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName?: string | null
+  phone?: string | null
+  biography?: string | null
+  avatarUrl?: string | null
+  role?: $Enums.Role
+  isActive?: boolean
+  deletedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+}
+
+export type UserCreateOrConnectWithoutNotificationSettingsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
+}
+
+export type UserUpsertWithoutNotificationSettingsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationSettingsInput, Prisma.UserUncheckedUpdateWithoutNotificationSettingsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationSettingsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationSettingsInput, Prisma.UserUncheckedUpdateWithoutNotificationSettingsInput>
+}
+
+export type UserUpdateWithoutNotificationSettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+}
+
 export type UserCreateWithoutProfessionalProfileInput = {
   id?: string
   email: string
@@ -710,6 +843,7 @@ export type UserCreateWithoutProfessionalProfileInput = {
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfessionalProfileInput = {
@@ -733,6 +867,7 @@ export type UserUncheckedCreateWithoutProfessionalProfileInput = {
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfessionalProfileInput = {
@@ -772,6 +907,7 @@ export type UserUpdateWithoutProfessionalProfileInput = {
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfessionalProfileInput = {
@@ -795,6 +931,7 @@ export type UserUncheckedUpdateWithoutProfessionalProfileInput = {
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFavoritesInput = {
@@ -818,6 +955,7 @@ export type UserCreateWithoutFavoritesInput = {
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -841,6 +979,7 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -880,6 +1019,7 @@ export type UserUpdateWithoutFavoritesInput = {
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -903,6 +1043,7 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPriceAlertsInput = {
@@ -926,6 +1067,7 @@ export type UserCreateWithoutPriceAlertsInput = {
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPriceAlertsInput = {
@@ -949,6 +1091,7 @@ export type UserUncheckedCreateWithoutPriceAlertsInput = {
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPriceAlertsInput = {
@@ -988,6 +1131,7 @@ export type UserUpdateWithoutPriceAlertsInput = {
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPriceAlertsInput = {
@@ -1011,6 +1155,7 @@ export type UserUncheckedUpdateWithoutPriceAlertsInput = {
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSearchAlertsInput = {
@@ -1034,6 +1179,7 @@ export type UserCreateWithoutSearchAlertsInput = {
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSearchAlertsInput = {
@@ -1057,6 +1203,7 @@ export type UserUncheckedCreateWithoutSearchAlertsInput = {
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSearchAlertsInput = {
@@ -1096,6 +1243,7 @@ export type UserUpdateWithoutSearchAlertsInput = {
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSearchAlertsInput = {
@@ -1119,6 +1267,7 @@ export type UserUncheckedUpdateWithoutSearchAlertsInput = {
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutReferralChangesInput = {
@@ -1142,6 +1291,7 @@ export type UserCreateWithoutReferralChangesInput = {
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralChangesInput = {
@@ -1165,6 +1315,7 @@ export type UserUncheckedCreateWithoutReferralChangesInput = {
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralChangesInput = {
@@ -1204,6 +1355,7 @@ export type UserUpdateWithoutReferralChangesInput = {
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralChangesInput = {
@@ -1227,6 +1379,7 @@ export type UserUncheckedUpdateWithoutReferralChangesInput = {
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProcessedRedemptionsInput = {
@@ -1250,6 +1403,7 @@ export type UserCreateWithoutProcessedRedemptionsInput = {
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProcessedRedemptionsInput = {
@@ -1273,6 +1427,7 @@ export type UserUncheckedCreateWithoutProcessedRedemptionsInput = {
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProcessedRedemptionsInput = {
@@ -1312,6 +1467,7 @@ export type UserUpdateWithoutProcessedRedemptionsInput = {
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProcessedRedemptionsInput = {
@@ -1335,6 +1491,7 @@ export type UserUncheckedUpdateWithoutProcessedRedemptionsInput = {
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAdminProjectsInput = {
@@ -1358,6 +1515,7 @@ export type UserCreateWithoutAdminProjectsInput = {
   searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAdminProjectsInput = {
@@ -1381,6 +1539,7 @@ export type UserUncheckedCreateWithoutAdminProjectsInput = {
   searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAdminProjectsInput = {
@@ -1420,6 +1579,7 @@ export type UserUpdateWithoutAdminProjectsInput = {
   searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdminProjectsInput = {
@@ -1443,6 +1603,7 @@ export type UserUncheckedUpdateWithoutAdminProjectsInput = {
   searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLeadsInput = {
@@ -1466,6 +1627,7 @@ export type UserCreateWithoutLeadsInput = {
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLeadsInput = {
@@ -1489,6 +1651,7 @@ export type UserUncheckedCreateWithoutLeadsInput = {
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLeadsInput = {
@@ -1528,6 +1691,7 @@ export type UserUpdateWithoutLeadsInput = {
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeadsInput = {
@@ -1551,6 +1715,7 @@ export type UserUncheckedUpdateWithoutLeadsInput = {
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -1660,6 +1825,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   adminProjects?: boolean | Prisma.User$adminProjectsArgs<ExtArgs>
   referralChanges?: boolean | Prisma.User$referralChangesArgs<ExtArgs>
   processedRedemptions?: boolean | Prisma.User$processedRedemptionsArgs<ExtArgs>
+  notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1721,6 +1887,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   adminProjects?: boolean | Prisma.User$adminProjectsArgs<ExtArgs>
   referralChanges?: boolean | Prisma.User$referralChangesArgs<ExtArgs>
   processedRedemptions?: boolean | Prisma.User$processedRedemptionsArgs<ExtArgs>
+  notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1737,6 +1904,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     adminProjects: Prisma.$AdminProjectPayload<ExtArgs>[]
     referralChanges: Prisma.$ReferralStatusHistoryPayload<ExtArgs>[]
     processedRedemptions: Prisma.$RedemptionPayload<ExtArgs>[]
+    notificationSettings: Prisma.$NotificationSettingsPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2154,6 +2322,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   adminProjects<T extends Prisma.User$adminProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   referralChanges<T extends Prisma.User$referralChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referralChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   processedRedemptions<T extends Prisma.User$processedRedemptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$processedRedemptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RedemptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notificationSettings<T extends Prisma.User$notificationSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationSettingsArgs<ExtArgs>>): Prisma.Prisma__NotificationSettingsClient<runtime.Types.Result.GetResult<Prisma.$NotificationSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2773,6 +2942,25 @@ export type User$processedRedemptionsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.RedemptionScalarFieldEnum | Prisma.RedemptionScalarFieldEnum[]
+}
+
+/**
+ * User.notificationSettings
+ */
+export type User$notificationSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the NotificationSettings
+   */
+  select?: Prisma.NotificationSettingsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the NotificationSettings
+   */
+  omit?: Prisma.NotificationSettingsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationSettingsInclude<ExtArgs> | null
+  where?: Prisma.NotificationSettingsWhereInput
 }
 
 /**

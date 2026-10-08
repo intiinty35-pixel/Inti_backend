@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User.js'
+export type * from './models/NotificationSettings.js'
 export type * from './models/ProfessionalProfile.js'
 export type * from './models/Plan.js'
 export type * from './models/PlanSubscription.js'

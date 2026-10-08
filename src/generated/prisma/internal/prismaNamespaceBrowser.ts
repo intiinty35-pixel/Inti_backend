@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  NotificationSettings: 'NotificationSettings',
   ProfessionalProfile: 'ProfessionalProfile',
   Plan: 'Plan',
   PlanSubscription: 'PlanSubscription',
@@ -117,6 +118,20 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const NotificationSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  emailLeads: 'emailLeads',
+  whatsappLeads: 'whatsappLeads',
+  membershipReminders: 'membershipReminders',
+  weeklyStats: 'weeklyStats',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationSettingsScalarFieldEnum = (typeof NotificationSettingsScalarFieldEnum)[keyof typeof NotificationSettingsScalarFieldEnum]
 
 
 export const ProfessionalProfileScalarFieldEnum = {

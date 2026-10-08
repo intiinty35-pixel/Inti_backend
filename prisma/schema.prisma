@@ -30,8 +30,23 @@ model User {
   adminProjects         AdminProject[]       @relation("AdminProjectCreator")
   referralChanges       ReferralStatusHistory[] @relation("ReferralStatusChanger")
   processedRedemptions  Redemption[]
+  notificationSettings  NotificationSettings?
 
   @@map("users")
+}
+
+model NotificationSettings {
+  id                    String   @id @default(uuid())
+  userId                String   @unique
+  emailLeads            Boolean  @default(true)
+  whatsappLeads         Boolean  @default(false)
+  membershipReminders   Boolean  @default(true)
+  weeklyStats           Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_settings")
 }
 
 model ProfessionalProfile {

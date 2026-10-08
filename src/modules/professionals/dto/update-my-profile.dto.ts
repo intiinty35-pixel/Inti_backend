@@ -26,6 +26,12 @@ export class UpdateMyProfileDto {
   @IsOptional()
   @Transform(trim)
   @IsString()
+  @MaxLength(500)
+  avatarUrl?: string;
+
+  @IsOptional()
+  @Transform(trim)
+  @IsString()
   @MaxLength(20)
   whatsapp?: string;
 
