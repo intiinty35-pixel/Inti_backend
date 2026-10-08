@@ -79,7 +79,9 @@ export const ModelName = {
   ProjectMedia: 'ProjectMedia',
   InvestmentOpportunity: 'InvestmentOpportunity',
   InvestmentType: 'InvestmentType',
-  Lead: 'Lead'
+  Lead: 'Lead',
+  ContactReport: 'ContactReport',
+  Claim: 'Claim'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -109,6 +111,7 @@ export const UserScalarFieldEnum = {
   avatarUrl: 'avatarUrl',
   role: 'role',
   isActive: 'isActive',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -132,6 +135,8 @@ export const ProfessionalProfileScalarFieldEnum = {
   socialLinks: 'socialLinks',
   slug: 'slug',
   isOfficialDeveloper: 'isOfficialDeveloper',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -233,7 +238,9 @@ export const PropertyScalarFieldEnum = {
   contactWhatsapp: 'contactWhatsapp',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  publishedAt: 'publishedAt'
+  publishedAt: 'publishedAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
@@ -345,7 +352,9 @@ export const ProjectScalarFieldEnum = {
   contactWhatsapp: 'contactWhatsapp',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  publishedAt: 'publishedAt'
+  publishedAt: 'publishedAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
@@ -600,6 +609,44 @@ export const LeadScalarFieldEnum = {
 } as const
 
 export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+
+
+export const ContactReportScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  topic: 'topic',
+  message: 'message',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContactReportScalarFieldEnum = (typeof ContactReportScalarFieldEnum)[keyof typeof ContactReportScalarFieldEnum]
+
+
+export const ClaimScalarFieldEnum = {
+  id: 'id',
+  claimCode: 'claimCode',
+  fullName: 'fullName',
+  address: 'address',
+  dniOrCe: 'dniOrCe',
+  phone: 'phone',
+  email: 'email',
+  parentGuardian: 'parentGuardian',
+  assetType: 'assetType',
+  claimedAmount: 'claimedAmount',
+  assetDescription: 'assetDescription',
+  type: 'type',
+  claimDetails: 'claimDetails',
+  consumerRequest: 'consumerRequest',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ClaimScalarFieldEnum = (typeof ClaimScalarFieldEnum)[keyof typeof ClaimScalarFieldEnum]
 
 
 export const SortOrder = {

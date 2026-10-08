@@ -162,3 +162,13 @@ export type InvestmentType = Prisma.InvestmentTypeModel
  * 
  */
 export type Lead = Prisma.LeadModel
+/**
+ * Model ContactReport
+ * 
+ */
+export type ContactReport = Prisma.ContactReportModel
+/**
+ * Model Claim
+ * 
+ */
+export type Claim = Prisma.ClaimModel

@@ -19,6 +19,7 @@ model User {
   avatarUrl             String?
   role                  Role                 @default(USER)
   isActive              Boolean              @default(true)
+  deletedAt             DateTime?
   createdAt             DateTime             @default(now())
   updatedAt             DateTime             @updatedAt
   leads                 Lead[]
@@ -50,6 +51,8 @@ model ProfessionalProfile {
   slug          String?            @unique
   /** Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin. */
   isOfficialDeveloper Boolean      @default(false)
+  isDeleted     Boolean            @default(false)
+  deletedAt     DateTime?
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
   leads         Lead[]
@@ -58,6 +61,7 @@ model ProfessionalProfile {
   projects      Project[]
   subscriptions PlanSubscription[]
 
+  @@index([isDeleted])
   @@map("professional_profiles")
 }
 
@@ -174,6 +178,8 @@ model Property {
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
   publishedAt     DateTime?
+  isDeleted       Boolean             @default(false)
+  deletedAt       DateTime?
   leads           Lead[]
   agentProfile    ProfessionalProfile @relation(fields: [agentProfileId], references: [id])
   amenities       PropertyAmenity[]
@@ -185,6 +191,7 @@ model Property {
 
   @@index([status, featured, publishedAt])
   @@index([operationType, propertyType, status])
+  @@index([isDeleted])
   @@map("properties")
 }
 
@@ -299,6 +306,8 @@ model Project {
   createdAt         DateTime             @default(now())
   updatedAt         DateTime             @updatedAt
   publishedAt       DateTime?
+  isDeleted         Boolean              @default(false)
+  deletedAt         DateTime?
   agentProfile      ProfessionalProfile? @relation(fields: [agentProfileId], references: [id], onDelete: Restrict)
   adminProject      AdminProject?
   location          ProjectLocation?
@@ -310,6 +319,7 @@ model Project {
 
   @@index([status, featured, publishedAt])
   @@index([category, stage, status])
+  @@index([isDeleted])
   @@map("projects")
 }
 
@@ -771,4 +781,27 @@ enum PointMovementType {
   POINTS_EARNED
   POINTS_REDEEMED
   POINTS_REFUNDED
+}
+
+model Claim {
+  id               String   @id @default(uuid())
+  claimCode        String   @unique
+  fullName         String
+  address          String
+  dniOrCe          String
+  phone            String?
+  email            String
+  parentGuardian   String?
+  assetType        String
+  claimedAmount    Decimal  @db.Decimal(10, 2)
+  assetDescription String
+  type             String
+  claimDetails     String
+  consumerRequest  String
+  isDeleted        Boolean  @default(false)
+  deletedAt        DateTime?
+  createdAt        DateTime @default(now())
+
+  @@index([isDeleted])
+  @@map("claims")
 }

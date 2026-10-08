@@ -76,6 +76,8 @@ export type ProjectMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   publishedAt: Date | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type ProjectMaxAggregateOutputType = {
@@ -110,6 +112,8 @@ export type ProjectMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   publishedAt: Date | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type ProjectCountAggregateOutputType = {
@@ -149,6 +153,8 @@ export type ProjectCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   publishedAt: number
+  isDeleted: number
+  deletedAt: number
   _all: number
 }
 
@@ -203,6 +209,8 @@ export type ProjectMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
 }
 
 export type ProjectMaxAggregateInputType = {
@@ -237,6 +245,8 @@ export type ProjectMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
 }
 
 export type ProjectCountAggregateInputType = {
@@ -276,6 +286,8 @@ export type ProjectCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -402,6 +414,8 @@ export type ProjectGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   publishedAt: Date | null
+  isDeleted: boolean
+  deletedAt: Date | null
   _count: ProjectCountAggregateOutputType | null
   _avg: ProjectAvgAggregateOutputType | null
   _sum: ProjectSumAggregateOutputType | null
@@ -464,6 +478,8 @@ export type ProjectWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   adminProject?: Prisma.XOR<Prisma.AdminProjectNullableScalarRelationFilter, Prisma.AdminProjectWhereInput> | null
   location?: Prisma.XOR<Prisma.ProjectLocationNullableScalarRelationFilter, Prisma.ProjectLocationWhereInput> | null
@@ -511,6 +527,8 @@ export type ProjectOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   agentProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
   adminProject?: Prisma.AdminProjectOrderByWithRelationInput
   location?: Prisma.ProjectLocationOrderByWithRelationInput
@@ -561,6 +579,8 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   adminProject?: Prisma.XOR<Prisma.AdminProjectNullableScalarRelationFilter, Prisma.AdminProjectWhereInput> | null
   location?: Prisma.XOR<Prisma.ProjectLocationNullableScalarRelationFilter, Prisma.ProjectLocationWhereInput> | null
@@ -608,6 +628,8 @@ export type ProjectOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProjectCountOrderByAggregateInput
   _avg?: Prisma.ProjectAvgOrderByAggregateInput
   _max?: Prisma.ProjectMaxOrderByAggregateInput
@@ -655,6 +677,8 @@ export type ProjectScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
 }
 
 export type ProjectCreateInput = {
@@ -693,6 +717,8 @@ export type ProjectCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
@@ -740,6 +766,8 @@ export type ProjectUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
@@ -785,6 +813,8 @@ export type ProjectUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
@@ -832,6 +862,8 @@ export type ProjectUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
@@ -878,6 +910,8 @@ export type ProjectCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type ProjectUpdateManyMutationInput = {
@@ -916,6 +950,8 @@ export type ProjectUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProjectUncheckedUpdateManyInput = {
@@ -955,6 +991,8 @@ export type ProjectUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProjectListRelationFilter = {
@@ -1004,6 +1042,8 @@ export type ProjectCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type ProjectAvgOrderByAggregateInput = {
@@ -1047,6 +1087,8 @@ export type ProjectMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type ProjectMinOrderByAggregateInput = {
@@ -1081,6 +1123,8 @@ export type ProjectMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type ProjectSumOrderByAggregateInput = {
@@ -1334,6 +1378,8 @@ export type ProjectCreateWithoutAgentProfileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
@@ -1379,6 +1425,8 @@ export type ProjectUncheckedCreateWithoutAgentProfileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
@@ -1454,6 +1502,8 @@ export type ProjectScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
 }
 
 export type ProjectCreateWithoutReferralsInput = {
@@ -1492,6 +1542,8 @@ export type ProjectCreateWithoutReferralsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
@@ -1538,6 +1590,8 @@ export type ProjectUncheckedCreateWithoutReferralsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
@@ -1598,6 +1652,8 @@ export type ProjectUpdateWithoutReferralsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
@@ -1644,6 +1700,8 @@ export type ProjectUncheckedUpdateWithoutReferralsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
@@ -1688,6 +1746,8 @@ export type ProjectCreateWithoutAdminProjectInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
@@ -1734,6 +1794,8 @@ export type ProjectUncheckedCreateWithoutAdminProjectInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
   milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
@@ -1794,6 +1856,8 @@ export type ProjectUpdateWithoutAdminProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
@@ -1840,6 +1904,8 @@ export type ProjectUncheckedUpdateWithoutAdminProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
   milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
@@ -1884,6 +1950,8 @@ export type ProjectCreateWithoutLocationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
@@ -1930,6 +1998,8 @@ export type ProjectUncheckedCreateWithoutLocationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
   milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
@@ -1990,6 +2060,8 @@ export type ProjectUpdateWithoutLocationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
@@ -2036,6 +2108,8 @@ export type ProjectUncheckedUpdateWithoutLocationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
   milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
@@ -2080,6 +2154,8 @@ export type ProjectCreateWithoutLotsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
@@ -2126,6 +2202,8 @@ export type ProjectUncheckedCreateWithoutLotsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
@@ -2186,6 +2264,8 @@ export type ProjectUpdateWithoutLotsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
@@ -2232,6 +2312,8 @@ export type ProjectUncheckedUpdateWithoutLotsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
@@ -2276,6 +2358,8 @@ export type ProjectCreateWithoutMilestonesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
@@ -2322,6 +2406,8 @@ export type ProjectUncheckedCreateWithoutMilestonesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
@@ -2382,6 +2468,8 @@ export type ProjectUpdateWithoutMilestonesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
@@ -2428,6 +2516,8 @@ export type ProjectUncheckedUpdateWithoutMilestonesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
@@ -2472,6 +2562,8 @@ export type ProjectCreateWithoutMediaInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
@@ -2518,6 +2610,8 @@ export type ProjectUncheckedCreateWithoutMediaInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
@@ -2578,6 +2672,8 @@ export type ProjectUpdateWithoutMediaInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
@@ -2624,6 +2720,8 @@ export type ProjectUncheckedUpdateWithoutMediaInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
@@ -2668,6 +2766,8 @@ export type ProjectCreateWithoutLeadsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
@@ -2714,6 +2814,8 @@ export type ProjectUncheckedCreateWithoutLeadsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
@@ -2774,6 +2876,8 @@ export type ProjectUpdateWithoutLeadsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
@@ -2820,6 +2924,8 @@ export type ProjectUncheckedUpdateWithoutLeadsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
@@ -2864,6 +2970,8 @@ export type ProjectCreateManyAgentProfileInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type ProjectUpdateWithoutAgentProfileInput = {
@@ -2902,6 +3010,8 @@ export type ProjectUpdateWithoutAgentProfileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
@@ -2947,6 +3057,8 @@ export type ProjectUncheckedUpdateWithoutAgentProfileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
@@ -2992,6 +3104,8 @@ export type ProjectUncheckedUpdateManyWithoutAgentProfileInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -3098,6 +3212,8 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
   adminProject?: boolean | Prisma.Project$adminProjectArgs<ExtArgs>
   location?: boolean | Prisma.Project$locationArgs<ExtArgs>
@@ -3146,6 +3262,8 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -3186,6 +3304,8 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -3226,9 +3346,11 @@ export type ProjectSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "category" | "stage" | "slug" | "name" | "description" | "currency" | "priceFrom" | "priceTo" | "ruc" | "businessName" | "downPayment" | "monthlyPayment" | "financing" | "totalBlocks" | "totalLots" | "social" | "services" | "urbanizationName" | "registryEntry" | "amenities" | "lotMode" | "constructionStart" | "estimatedDelivery" | "certifications" | "status" | "featured" | "tourUrl" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "createdAt" | "updatedAt" | "publishedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "category" | "stage" | "slug" | "name" | "description" | "currency" | "priceFrom" | "priceTo" | "ruc" | "businessName" | "downPayment" | "monthlyPayment" | "financing" | "totalBlocks" | "totalLots" | "social" | "services" | "urbanizationName" | "registryEntry" | "amenities" | "lotMode" | "constructionStart" | "estimatedDelivery" | "certifications" | "status" | "featured" | "tourUrl" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "createdAt" | "updatedAt" | "publishedAt" | "isDeleted" | "deletedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
   adminProject?: boolean | Prisma.Project$adminProjectArgs<ExtArgs>
@@ -3296,6 +3418,8 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     createdAt: Date
     updatedAt: Date
     publishedAt: Date | null
+    isDeleted: boolean
+    deletedAt: Date | null
   }, ExtArgs["result"]["project"]>
   composites: {}
 }
@@ -3763,6 +3887,8 @@ export interface ProjectFieldRefs {
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly publishedAt: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly isDeleted: Prisma.FieldRef<"Project", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Project", 'DateTime'>
 }
     
 

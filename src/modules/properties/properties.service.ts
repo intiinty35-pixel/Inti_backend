@@ -81,7 +81,7 @@ export class PropertiesService {
     await this.expireMembershipIfNeeded();
 
     const property = await this.prisma.property.findFirst({
-      where: { slug, status: PropertyStatus.PUBLISHED },
+      where: { slug, status: PropertyStatus.PUBLISHED, isDeleted: false },
       include: PROPERTY_INCLUDE,
     });
     if (!property) throw new NotFoundException('Propiedad no encontrada');
@@ -108,7 +108,7 @@ export class PropertiesService {
 
     if (!query.page) {
       const properties = await this.prisma.property.findMany({
-        where: { agentProfileId: agent.id },
+        where: { agentProfileId: agent.id, isDeleted: false },
         orderBy: [{ updatedAt: 'desc' }],
         include: PROPERTY_INCLUDE,
       });
@@ -117,7 +117,7 @@ export class PropertiesService {
 
     const page = query.page;
     const pageSize = Math.min(query.pageSize ?? 9, 50);
-    const where = { agentProfileId: agent.id };
+    const where = { agentProfileId: agent.id, isDeleted: false };
 
     const [items, total] = await this.prisma.$transaction([
       this.prisma.property.findMany({
@@ -264,6 +264,31 @@ export class PropertiesService {
     return this.toDetail(updated);
   }
 
+  async remove(user: AuthUser, id: string) {
+    const property = await this.prisma.property.findUnique({
+      where: { id },
+      include: { agentProfile: true },
+    });
+    if (!property) throw new NotFoundException('Propiedad no encontrada');
+    if (property.agentProfile.userId !== user.id && user.role !== 'ADMIN') {
+      throw new ForbiddenException('No puedes eliminar esta propiedad');
+    }
+    if (property.isDeleted) return;
+
+    await this.prisma.property.update({
+      where: { id },
+      data: { isDeleted: true, deletedAt: new Date() },
+    });
+  }
+
+  /** Baja logica de todas las propiedades de un agente, usada al eliminar su cuenta desde el admin. */
+  async removeAllByAgent(agentProfileId: string) {
+    await this.prisma.property.updateMany({
+      where: { agentProfileId, isDeleted: false },
+      data: { isDeleted: true, deletedAt: new Date() },
+    });
+  }
+
   async reviewDeveloperProperty(id: string, status: 'PUBLISHED' | 'REJECTED') {
     const property = await this.prisma.property.findUnique({
       where: { id },
@@ -338,6 +363,7 @@ export class PropertiesService {
   private buildPublicWhere(query: PropertyQueryDto): Prisma.PropertyWhereInput {
     return {
       status: PropertyStatus.PUBLISHED,
+      isDeleted: false,
       operationType: query.operationType,
       propertyType: query.propertyType,
       currency: query.currency,

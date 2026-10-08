@@ -539,10 +539,6 @@ export type EnumSubscriptionStatusFieldUpdateOperationsInput = {
   set?: $Enums.SubscriptionStatus
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type PlanSubscriptionCreateWithoutAgentProfileInput = {
   id?: string
   status?: $Enums.SubscriptionStatus
