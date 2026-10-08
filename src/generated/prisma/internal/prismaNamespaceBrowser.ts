@@ -78,7 +78,9 @@ export const ModelName = {
   ProjectMilestone: 'ProjectMilestone',
   ProjectMedia: 'ProjectMedia',
   InvestmentOpportunity: 'InvestmentOpportunity',
-  Lead: 'Lead'
+  Lead: 'Lead',
+  investment_types: 'investment_types',
+  Claim: 'Claim'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -104,13 +106,13 @@ export const UserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   phone: 'phone',
-  biography: 'biography',
-  avatarUrl: 'avatarUrl',
   role: 'role',
   isActive: 'isActive',
-  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  biography: 'biography',
+  avatarUrl: 'avatarUrl',
+  deletedAt: 'deletedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -130,12 +132,12 @@ export const ProfessionalProfileScalarFieldEnum = {
   address: 'address',
   website: 'website',
   socialLinks: 'socialLinks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   slug: 'slug',
   isOfficialDeveloper: 'isOfficialDeveloper',
   isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  deletedAt: 'deletedAt'
 } as const
 
 export type ProfessionalProfileScalarFieldEnum = (typeof ProfessionalProfileScalarFieldEnum)[keyof typeof ProfessionalProfileScalarFieldEnum]
@@ -153,11 +155,11 @@ export const PlanScalarFieldEnum = {
   features: 'features',
   isFree: 'isFree',
   isDefault: 'isDefault',
-  isCustomerOnly: 'isCustomerOnly',
   highlight: 'highlight',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  isCustomerOnly: 'isCustomerOnly'
 } as const
 
 export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
@@ -233,11 +235,11 @@ export const PropertyScalarFieldEnum = {
   contactEmail: 'contactEmail',
   contactPhone: 'contactPhone',
   contactWhatsapp: 'contactWhatsapp',
-  isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  publishedAt: 'publishedAt'
+  publishedAt: 'publishedAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
@@ -347,11 +349,11 @@ export const ProjectScalarFieldEnum = {
   contactEmail: 'contactEmail',
   contactPhone: 'contactPhone',
   contactWhatsapp: 'contactWhatsapp',
-  isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  publishedAt: 'publishedAt'
+  publishedAt: 'publishedAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
@@ -376,13 +378,13 @@ export const ReferralScalarFieldEnum = {
   name: 'name',
   email: 'email',
   phone: 'phone',
-  interest: 'interest',
-  availability: 'availability',
   projectId: 'projectId',
   status: 'status',
   code: 'code',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  interest: 'interest',
+  availability: 'availability'
 } as const
 
 export type ReferralScalarFieldEnum = (typeof ReferralScalarFieldEnum)[keyof typeof ReferralScalarFieldEnum]
@@ -561,7 +563,17 @@ export const InvestmentOpportunityScalarFieldEnum = {
   highlights: 'highlights',
   isPublished: 'isPublished',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  investmentTypeId: 'investmentTypeId',
+  investmentKind: 'investmentKind',
+  assetType: 'assetType',
+  estimatedReturnLabel: 'estimatedReturnLabel',
+  estimatedTermMonths: 'estimatedTermMonths',
+  status: 'status',
+  riskLevel: 'riskLevel',
+  featured: 'featured',
+  sortOrder: 'sortOrder',
+  ctaLabel: 'ctaLabel'
 } as const
 
 export type InvestmentOpportunityScalarFieldEnum = (typeof InvestmentOpportunityScalarFieldEnum)[keyof typeof InvestmentOpportunityScalarFieldEnum]
@@ -570,7 +582,6 @@ export type InvestmentOpportunityScalarFieldEnum = (typeof InvestmentOpportunity
 export const LeadScalarFieldEnum = {
   id: 'id',
   propertyId: 'propertyId',
-  projectId: 'projectId',
   agentProfileId: 'agentProfileId',
   userId: 'userId',
   name: 'name',
@@ -578,10 +589,48 @@ export const LeadScalarFieldEnum = {
   phone: 'phone',
   message: 'message',
   source: 'source',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  projectId: 'projectId'
 } as const
 
 export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+
+
+export const Investment_typesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type Investment_typesScalarFieldEnum = (typeof Investment_typesScalarFieldEnum)[keyof typeof Investment_typesScalarFieldEnum]
+
+
+export const ClaimScalarFieldEnum = {
+  id: 'id',
+  claimCode: 'claimCode',
+  fullName: 'fullName',
+  address: 'address',
+  dniOrCe: 'dniOrCe',
+  phone: 'phone',
+  email: 'email',
+  parentGuardian: 'parentGuardian',
+  assetType: 'assetType',
+  claimedAmount: 'claimedAmount',
+  assetDescription: 'assetDescription',
+  type: 'type',
+  claimDetails: 'claimDetails',
+  consumerRequest: 'consumerRequest',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ClaimScalarFieldEnum = (typeof ClaimScalarFieldEnum)[keyof typeof ClaimScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -14,11 +14,9 @@ import { ReferralQueryDto } from './dto/referral-query.dto';
 import { UpdateReferralPointsDto } from './dto/update-referral-points.dto';
 
 const STATUS_LABELS: Record<ReferralStatus, string> = {
-  [ReferralStatus.PENDING_VALIDATION]: 'Pendiente de validación',
   [ReferralStatus.CONTACTED]: 'Contactado',
   [ReferralStatus.VISIT]: 'Visita',
   [ReferralStatus.OPERATION_COMPLETED]: 'Operación concretada',
-  [ReferralStatus.REJECTED]: 'Rechazado',
 };
 
 const INTEREST_LABELS: Record<string, string> = {

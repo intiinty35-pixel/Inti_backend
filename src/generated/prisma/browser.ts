@@ -157,3 +157,13 @@ export type InvestmentOpportunity = Prisma.InvestmentOpportunityModel
  * 
  */
 export type Lead = Prisma.LeadModel
+/**
+ * Model investment_types
+ * 
+ */
+export type investment_types = Prisma.investment_typesModel
+/**
+ * Model Claim
+ * 
+ */
+export type Claim = Prisma.ClaimModel

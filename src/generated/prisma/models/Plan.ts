@@ -51,11 +51,11 @@ export type PlanMinAggregateOutputType = {
   projectLimit: number | null
   isFree: boolean | null
   isDefault: boolean | null
-  isCustomerOnly: boolean | null
   highlight: boolean | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  isCustomerOnly: boolean | null
 }
 
 export type PlanMaxAggregateOutputType = {
@@ -69,11 +69,11 @@ export type PlanMaxAggregateOutputType = {
   projectLimit: number | null
   isFree: boolean | null
   isDefault: boolean | null
-  isCustomerOnly: boolean | null
   highlight: boolean | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  isCustomerOnly: boolean | null
 }
 
 export type PlanCountAggregateOutputType = {
@@ -88,11 +88,11 @@ export type PlanCountAggregateOutputType = {
   features: number
   isFree: number
   isDefault: number
-  isCustomerOnly: number
   highlight: number
   isActive: number
   createdAt: number
   updatedAt: number
+  isCustomerOnly: number
   _all: number
 }
 
@@ -122,11 +122,11 @@ export type PlanMinAggregateInputType = {
   projectLimit?: true
   isFree?: true
   isDefault?: true
-  isCustomerOnly?: true
   highlight?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  isCustomerOnly?: true
 }
 
 export type PlanMaxAggregateInputType = {
@@ -140,11 +140,11 @@ export type PlanMaxAggregateInputType = {
   projectLimit?: true
   isFree?: true
   isDefault?: true
-  isCustomerOnly?: true
   highlight?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  isCustomerOnly?: true
 }
 
 export type PlanCountAggregateInputType = {
@@ -159,11 +159,11 @@ export type PlanCountAggregateInputType = {
   features?: true
   isFree?: true
   isDefault?: true
-  isCustomerOnly?: true
   highlight?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  isCustomerOnly?: true
   _all?: true
 }
 
@@ -265,11 +265,11 @@ export type PlanGroupByOutputType = {
   features: string[]
   isFree: boolean
   isDefault: boolean
-  isCustomerOnly: boolean
   highlight: boolean
   isActive: boolean
   createdAt: Date
   updatedAt: Date
+  isCustomerOnly: boolean
   _count: PlanCountAggregateOutputType | null
   _avg: PlanAvgAggregateOutputType | null
   _sum: PlanSumAggregateOutputType | null
@@ -307,11 +307,11 @@ export type PlanWhereInput = {
   features?: Prisma.StringNullableListFilter<"Plan">
   isFree?: Prisma.BoolFilter<"Plan"> | boolean
   isDefault?: Prisma.BoolFilter<"Plan"> | boolean
-  isCustomerOnly?: Prisma.BoolFilter<"Plan"> | boolean
   highlight?: Prisma.BoolFilter<"Plan"> | boolean
   isActive?: Prisma.BoolFilter<"Plan"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Plan"> | Date | string
+  isCustomerOnly?: Prisma.BoolFilter<"Plan"> | boolean
   subscriptions?: Prisma.PlanSubscriptionListRelationFilter
 }
 
@@ -327,11 +327,11 @@ export type PlanOrderByWithRelationInput = {
   features?: Prisma.SortOrder
   isFree?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
-  isCustomerOnly?: Prisma.SortOrder
   highlight?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isCustomerOnly?: Prisma.SortOrder
   subscriptions?: Prisma.PlanSubscriptionOrderByRelationAggregateInput
 }
 
@@ -350,11 +350,11 @@ export type PlanWhereUniqueInput = Prisma.AtLeast<{
   features?: Prisma.StringNullableListFilter<"Plan">
   isFree?: Prisma.BoolFilter<"Plan"> | boolean
   isDefault?: Prisma.BoolFilter<"Plan"> | boolean
-  isCustomerOnly?: Prisma.BoolFilter<"Plan"> | boolean
   highlight?: Prisma.BoolFilter<"Plan"> | boolean
   isActive?: Prisma.BoolFilter<"Plan"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Plan"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Plan"> | Date | string
+  isCustomerOnly?: Prisma.BoolFilter<"Plan"> | boolean
   subscriptions?: Prisma.PlanSubscriptionListRelationFilter
 }, "id" | "slug">
 
@@ -370,11 +370,11 @@ export type PlanOrderByWithAggregationInput = {
   features?: Prisma.SortOrder
   isFree?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
-  isCustomerOnly?: Prisma.SortOrder
   highlight?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isCustomerOnly?: Prisma.SortOrder
   _count?: Prisma.PlanCountOrderByAggregateInput
   _avg?: Prisma.PlanAvgOrderByAggregateInput
   _max?: Prisma.PlanMaxOrderByAggregateInput
@@ -397,11 +397,11 @@ export type PlanScalarWhereWithAggregatesInput = {
   features?: Prisma.StringNullableListFilter<"Plan">
   isFree?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
   isDefault?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
-  isCustomerOnly?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
   highlight?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
   isActive?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Plan"> | Date | string
+  isCustomerOnly?: Prisma.BoolWithAggregatesFilter<"Plan"> | boolean
 }
 
 export type PlanCreateInput = {
@@ -416,11 +416,11 @@ export type PlanCreateInput = {
   features?: Prisma.PlanCreatefeaturesInput | string[]
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  isCustomerOnly?: boolean
   subscriptions?: Prisma.PlanSubscriptionCreateNestedManyWithoutPlanInput
 }
 
@@ -436,11 +436,11 @@ export type PlanUncheckedCreateInput = {
   features?: Prisma.PlanCreatefeaturesInput | string[]
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  isCustomerOnly?: boolean
   subscriptions?: Prisma.PlanSubscriptionUncheckedCreateNestedManyWithoutPlanInput
 }
 
@@ -456,11 +456,11 @@ export type PlanUpdateInput = {
   features?: Prisma.PlanUpdatefeaturesInput | string[]
   isFree?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   highlight?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   subscriptions?: Prisma.PlanSubscriptionUpdateManyWithoutPlanNestedInput
 }
 
@@ -476,11 +476,11 @@ export type PlanUncheckedUpdateInput = {
   features?: Prisma.PlanUpdatefeaturesInput | string[]
   isFree?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   highlight?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   subscriptions?: Prisma.PlanSubscriptionUncheckedUpdateManyWithoutPlanNestedInput
 }
 
@@ -496,11 +496,11 @@ export type PlanCreateManyInput = {
   features?: Prisma.PlanCreatefeaturesInput | string[]
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  isCustomerOnly?: boolean
 }
 
 export type PlanUpdateManyMutationInput = {
@@ -515,11 +515,11 @@ export type PlanUpdateManyMutationInput = {
   features?: Prisma.PlanUpdatefeaturesInput | string[]
   isFree?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   highlight?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PlanUncheckedUpdateManyInput = {
@@ -534,11 +534,11 @@ export type PlanUncheckedUpdateManyInput = {
   features?: Prisma.PlanUpdatefeaturesInput | string[]
   isFree?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   highlight?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -561,11 +561,11 @@ export type PlanCountOrderByAggregateInput = {
   features?: Prisma.SortOrder
   isFree?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
-  isCustomerOnly?: Prisma.SortOrder
   highlight?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isCustomerOnly?: Prisma.SortOrder
 }
 
 export type PlanAvgOrderByAggregateInput = {
@@ -586,11 +586,11 @@ export type PlanMaxOrderByAggregateInput = {
   projectLimit?: Prisma.SortOrder
   isFree?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
-  isCustomerOnly?: Prisma.SortOrder
   highlight?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isCustomerOnly?: Prisma.SortOrder
 }
 
 export type PlanMinOrderByAggregateInput = {
@@ -604,11 +604,11 @@ export type PlanMinOrderByAggregateInput = {
   projectLimit?: Prisma.SortOrder
   isFree?: Prisma.SortOrder
   isDefault?: Prisma.SortOrder
-  isCustomerOnly?: Prisma.SortOrder
   highlight?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  isCustomerOnly?: Prisma.SortOrder
 }
 
 export type PlanSumOrderByAggregateInput = {
@@ -678,11 +678,11 @@ export type PlanCreateWithoutSubscriptionsInput = {
   features?: Prisma.PlanCreatefeaturesInput | string[]
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  isCustomerOnly?: boolean
 }
 
 export type PlanUncheckedCreateWithoutSubscriptionsInput = {
@@ -697,11 +697,11 @@ export type PlanUncheckedCreateWithoutSubscriptionsInput = {
   features?: Prisma.PlanCreatefeaturesInput | string[]
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  isCustomerOnly?: boolean
 }
 
 export type PlanCreateOrConnectWithoutSubscriptionsInput = {
@@ -732,11 +732,11 @@ export type PlanUpdateWithoutSubscriptionsInput = {
   features?: Prisma.PlanUpdatefeaturesInput | string[]
   isFree?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   highlight?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type PlanUncheckedUpdateWithoutSubscriptionsInput = {
@@ -751,11 +751,11 @@ export type PlanUncheckedUpdateWithoutSubscriptionsInput = {
   features?: Prisma.PlanUpdatefeaturesInput | string[]
   isFree?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isDefault?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
   highlight?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isCustomerOnly?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -801,11 +801,11 @@ export type PlanSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   features?: boolean
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isCustomerOnly?: boolean
   subscriptions?: boolean | Prisma.Plan$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.PlanCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["plan"]>
@@ -822,11 +822,11 @@ export type PlanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   features?: boolean
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isCustomerOnly?: boolean
 }, ExtArgs["result"]["plan"]>
 
 export type PlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -841,11 +841,11 @@ export type PlanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   features?: boolean
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isCustomerOnly?: boolean
 }, ExtArgs["result"]["plan"]>
 
 export type PlanSelectScalar = {
@@ -860,14 +860,14 @@ export type PlanSelectScalar = {
   features?: boolean
   isFree?: boolean
   isDefault?: boolean
-  isCustomerOnly?: boolean
   highlight?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  isCustomerOnly?: boolean
 }
 
-export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "price" | "currency" | "durationDays" | "propertyLimit" | "projectLimit" | "features" | "isFree" | "isDefault" | "isCustomerOnly" | "highlight" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["plan"]>
+export type PlanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "price" | "currency" | "durationDays" | "propertyLimit" | "projectLimit" | "features" | "isFree" | "isDefault" | "highlight" | "isActive" | "createdAt" | "updatedAt" | "isCustomerOnly", ExtArgs["result"]["plan"]>
 export type PlanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   subscriptions?: boolean | Prisma.Plan$subscriptionsArgs<ExtArgs>
   _count?: boolean | Prisma.PlanCountOutputTypeDefaultArgs<ExtArgs>
@@ -892,11 +892,11 @@ export type $PlanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     features: string[]
     isFree: boolean
     isDefault: boolean
-    isCustomerOnly: boolean
     highlight: boolean
     isActive: boolean
     createdAt: Date
     updatedAt: Date
+    isCustomerOnly: boolean
   }, ExtArgs["result"]["plan"]>
   composites: {}
 }
@@ -1332,11 +1332,11 @@ export interface PlanFieldRefs {
   readonly features: Prisma.FieldRef<"Plan", 'String[]'>
   readonly isFree: Prisma.FieldRef<"Plan", 'Boolean'>
   readonly isDefault: Prisma.FieldRef<"Plan", 'Boolean'>
-  readonly isCustomerOnly: Prisma.FieldRef<"Plan", 'Boolean'>
   readonly highlight: Prisma.FieldRef<"Plan", 'Boolean'>
   readonly isActive: Prisma.FieldRef<"Plan", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Plan", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Plan", 'DateTime'>
+  readonly isCustomerOnly: Prisma.FieldRef<"Plan", 'Boolean'>
 }
     
 

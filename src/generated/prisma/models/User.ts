@@ -31,13 +31,13 @@ export type UserMinAggregateOutputType = {
   firstName: string | null
   lastName: string | null
   phone: string | null
-  biography: string | null
-  avatarUrl: string | null
   role: $Enums.Role | null
   isActive: boolean | null
-  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  biography: string | null
+  avatarUrl: string | null
+  deletedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -47,13 +47,13 @@ export type UserMaxAggregateOutputType = {
   firstName: string | null
   lastName: string | null
   phone: string | null
-  biography: string | null
-  avatarUrl: string | null
   role: $Enums.Role | null
   isActive: boolean | null
-  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
+  biography: string | null
+  avatarUrl: string | null
+  deletedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -63,13 +63,13 @@ export type UserCountAggregateOutputType = {
   firstName: number
   lastName: number
   phone: number
-  biography: number
-  avatarUrl: number
   role: number
   isActive: number
-  deletedAt: number
   createdAt: number
   updatedAt: number
+  biography: number
+  avatarUrl: number
+  deletedAt: number
   _all: number
 }
 
@@ -81,13 +81,13 @@ export type UserMinAggregateInputType = {
   firstName?: true
   lastName?: true
   phone?: true
-  biography?: true
-  avatarUrl?: true
   role?: true
   isActive?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  biography?: true
+  avatarUrl?: true
+  deletedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -97,13 +97,13 @@ export type UserMaxAggregateInputType = {
   firstName?: true
   lastName?: true
   phone?: true
-  biography?: true
-  avatarUrl?: true
   role?: true
   isActive?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  biography?: true
+  avatarUrl?: true
+  deletedAt?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -113,13 +113,13 @@ export type UserCountAggregateInputType = {
   firstName?: true
   lastName?: true
   phone?: true
-  biography?: true
-  avatarUrl?: true
   role?: true
   isActive?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
+  biography?: true
+  avatarUrl?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -202,13 +202,13 @@ export type UserGroupByOutputType = {
   firstName: string
   lastName: string | null
   phone: string | null
-  biography: string | null
-  avatarUrl: string | null
   role: $Enums.Role
   isActive: boolean
-  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
+  biography: string | null
+  avatarUrl: string | null
+  deletedAt: Date | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -239,21 +239,21 @@ export type UserWhereInput = {
   firstName?: Prisma.StringFilter<"User"> | string
   lastName?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
-  biography?: Prisma.StringNullableFilter<"User"> | string | null
-  avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolFilter<"User"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  leads?: Prisma.LeadListRelationFilter
-  professionalProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
-  favorites?: Prisma.FavoriteListRelationFilter
-  priceAlerts?: Prisma.PriceAlertListRelationFilter
-  searchAlerts?: Prisma.SearchAlertListRelationFilter
+  biography?: Prisma.StringNullableFilter<"User"> | string | null
+  avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   adminProjects?: Prisma.AdminProjectListRelationFilter
-  referralChanges?: Prisma.ReferralStatusHistoryListRelationFilter
+  favorites?: Prisma.FavoriteListRelationFilter
+  leads?: Prisma.LeadListRelationFilter
+  priceAlerts?: Prisma.PriceAlertListRelationFilter
+  professionalProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   processedRedemptions?: Prisma.RedemptionListRelationFilter
+  referralChanges?: Prisma.ReferralStatusHistoryListRelationFilter
+  searchAlerts?: Prisma.SearchAlertListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -263,21 +263,21 @@ export type UserOrderByWithRelationInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
-  biography?: Prisma.SortOrderInput | Prisma.SortOrder
-  avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  leads?: Prisma.LeadOrderByRelationAggregateInput
-  professionalProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
-  favorites?: Prisma.FavoriteOrderByRelationAggregateInput
-  priceAlerts?: Prisma.PriceAlertOrderByRelationAggregateInput
-  searchAlerts?: Prisma.SearchAlertOrderByRelationAggregateInput
+  biography?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   adminProjects?: Prisma.AdminProjectOrderByRelationAggregateInput
-  referralChanges?: Prisma.ReferralStatusHistoryOrderByRelationAggregateInput
+  favorites?: Prisma.FavoriteOrderByRelationAggregateInput
+  leads?: Prisma.LeadOrderByRelationAggregateInput
+  priceAlerts?: Prisma.PriceAlertOrderByRelationAggregateInput
+  professionalProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
   processedRedemptions?: Prisma.RedemptionOrderByRelationAggregateInput
+  referralChanges?: Prisma.ReferralStatusHistoryOrderByRelationAggregateInput
+  searchAlerts?: Prisma.SearchAlertOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -290,21 +290,21 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   firstName?: Prisma.StringFilter<"User"> | string
   lastName?: Prisma.StringNullableFilter<"User"> | string | null
   phone?: Prisma.StringNullableFilter<"User"> | string | null
-  biography?: Prisma.StringNullableFilter<"User"> | string | null
-  avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolFilter<"User"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  leads?: Prisma.LeadListRelationFilter
-  professionalProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
-  favorites?: Prisma.FavoriteListRelationFilter
-  priceAlerts?: Prisma.PriceAlertListRelationFilter
-  searchAlerts?: Prisma.SearchAlertListRelationFilter
+  biography?: Prisma.StringNullableFilter<"User"> | string | null
+  avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   adminProjects?: Prisma.AdminProjectListRelationFilter
-  referralChanges?: Prisma.ReferralStatusHistoryListRelationFilter
+  favorites?: Prisma.FavoriteListRelationFilter
+  leads?: Prisma.LeadListRelationFilter
+  priceAlerts?: Prisma.PriceAlertListRelationFilter
+  professionalProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   processedRedemptions?: Prisma.RedemptionListRelationFilter
+  referralChanges?: Prisma.ReferralStatusHistoryListRelationFilter
+  searchAlerts?: Prisma.SearchAlertListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -314,13 +314,13 @@ export type UserOrderByWithAggregationInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
-  biography?: Prisma.SortOrderInput | Prisma.SortOrder
-  avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  biography?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -336,13 +336,13 @@ export type UserScalarWhereWithAggregatesInput = {
   firstName?: Prisma.StringWithAggregatesFilter<"User"> | string
   lastName?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  biography?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   isActive?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  biography?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
 }
 
 export type UserCreateInput = {
@@ -352,21 +352,21 @@ export type UserCreateInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -376,21 +376,21 @@ export type UserUncheckedCreateInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -400,21 +400,21 @@ export type UserUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -424,21 +424,21 @@ export type UserUncheckedUpdateInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -448,13 +448,13 @@ export type UserCreateManyInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -464,13 +464,13 @@ export type UserUpdateManyMutationInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -480,13 +480,13 @@ export type UserUncheckedUpdateManyInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -496,13 +496,13 @@ export type UserCountOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
-  biography?: Prisma.SortOrder
-  avatarUrl?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  biography?: Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -512,13 +512,13 @@ export type UserMaxOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
-  biography?: Prisma.SortOrder
-  avatarUrl?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  biography?: Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -528,13 +528,13 @@ export type UserMinOrderByAggregateInput = {
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
-  biography?: Prisma.SortOrder
-  avatarUrl?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  biography?: Prisma.SortOrder
+  avatarUrl?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -563,12 +563,12 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type UserCreateNestedOneWithoutProfessionalProfileInput = {
@@ -696,20 +696,20 @@ export type UserCreateWithoutProfessionalProfileInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfessionalProfileInput = {
@@ -719,20 +719,20 @@ export type UserUncheckedCreateWithoutProfessionalProfileInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfessionalProfileInput = {
@@ -758,20 +758,20 @@ export type UserUpdateWithoutProfessionalProfileInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfessionalProfileInput = {
@@ -781,20 +781,20 @@ export type UserUncheckedUpdateWithoutProfessionalProfileInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFavoritesInput = {
@@ -804,20 +804,20 @@ export type UserCreateWithoutFavoritesInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -827,20 +827,20 @@ export type UserUncheckedCreateWithoutFavoritesInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -866,20 +866,20 @@ export type UserUpdateWithoutFavoritesInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -889,20 +889,20 @@ export type UserUncheckedUpdateWithoutFavoritesInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPriceAlertsInput = {
@@ -912,20 +912,20 @@ export type UserCreateWithoutPriceAlertsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   leads?: Prisma.LeadCreateNestedManyWithoutUserInput
   professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
-  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPriceAlertsInput = {
@@ -935,20 +935,20 @@ export type UserUncheckedCreateWithoutPriceAlertsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
   professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
-  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPriceAlertsInput = {
@@ -974,20 +974,20 @@ export type UserUpdateWithoutPriceAlertsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
   professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
-  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPriceAlertsInput = {
@@ -997,20 +997,20 @@ export type UserUncheckedUpdateWithoutPriceAlertsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
   professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
-  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSearchAlertsInput = {
@@ -1020,20 +1020,20 @@ export type UserCreateWithoutSearchAlertsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
 }
 
 export type UserUncheckedCreateWithoutSearchAlertsInput = {
@@ -1043,20 +1043,20 @@ export type UserUncheckedCreateWithoutSearchAlertsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
 }
 
 export type UserCreateOrConnectWithoutSearchAlertsInput = {
@@ -1082,20 +1082,20 @@ export type UserUpdateWithoutSearchAlertsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSearchAlertsInput = {
@@ -1105,20 +1105,20 @@ export type UserUncheckedUpdateWithoutSearchAlertsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
 }
 
 export type UserCreateWithoutReferralChangesInput = {
@@ -1128,20 +1128,20 @@ export type UserCreateWithoutReferralChangesInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutReferralChangesInput = {
@@ -1151,20 +1151,20 @@ export type UserUncheckedCreateWithoutReferralChangesInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutReferralChangesInput = {
@@ -1190,20 +1190,20 @@ export type UserUpdateWithoutReferralChangesInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReferralChangesInput = {
@@ -1213,20 +1213,20 @@ export type UserUncheckedUpdateWithoutReferralChangesInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProcessedRedemptionsInput = {
@@ -1236,20 +1236,20 @@ export type UserCreateWithoutProcessedRedemptionsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProcessedRedemptionsInput = {
@@ -1259,20 +1259,20 @@ export type UserUncheckedCreateWithoutProcessedRedemptionsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProcessedRedemptionsInput = {
@@ -1298,20 +1298,20 @@ export type UserUpdateWithoutProcessedRedemptionsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
+  favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProcessedRedemptionsInput = {
@@ -1321,20 +1321,20 @@ export type UserUncheckedUpdateWithoutProcessedRedemptionsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAdminProjectsInput = {
@@ -1344,20 +1344,20 @@ export type UserCreateWithoutAdminProjectsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
-  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAdminProjectsInput = {
@@ -1367,20 +1367,20 @@ export type UserUncheckedCreateWithoutAdminProjectsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAdminProjectsInput = {
@@ -1406,20 +1406,20 @@ export type UserUpdateWithoutAdminProjectsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdminProjectsInput = {
@@ -1429,20 +1429,20 @@ export type UserUncheckedUpdateWithoutAdminProjectsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLeadsInput = {
@@ -1452,20 +1452,20 @@ export type UserCreateWithoutLeadsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
+  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
   favorites?: Prisma.FavoriteCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
-  adminProjects?: Prisma.AdminProjectCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  professionalProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLeadsInput = {
@@ -1475,20 +1475,20 @@ export type UserUncheckedCreateWithoutLeadsInput = {
   firstName: string
   lastName?: string | null
   phone?: string | null
-  biography?: string | null
-  avatarUrl?: string | null
   role?: $Enums.Role
   isActive?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
+  biography?: string | null
+  avatarUrl?: string | null
+  deletedAt?: Date | string | null
+  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
   favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutUserInput
   priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutUserInput
-  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
-  adminProjects?: Prisma.AdminProjectUncheckedCreateNestedManyWithoutCreatedByAdminInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedCreateNestedOneWithoutUserInput
   processedRedemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutProcessedByInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutChangedByInput
+  searchAlerts?: Prisma.SearchAlertUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLeadsInput = {
@@ -1514,20 +1514,20 @@ export type UserUpdateWithoutLeadsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
   favorites?: Prisma.FavoriteUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
-  adminProjects?: Prisma.AdminProjectUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeadsInput = {
@@ -1537,20 +1537,20 @@ export type UserUncheckedUpdateWithoutLeadsInput = {
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
+  biography?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
   favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutUserNestedInput
   priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutUserNestedInput
-  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
-  adminProjects?: Prisma.AdminProjectUncheckedUpdateManyWithoutCreatedByAdminNestedInput
-  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  professionalProfile?: Prisma.ProfessionalProfileUncheckedUpdateOneWithoutUserNestedInput
   processedRedemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutProcessedByNestedInput
+  referralChanges?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutChangedByNestedInput
+  searchAlerts?: Prisma.SearchAlertUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1559,23 +1559,23 @@ export type UserUncheckedUpdateWithoutLeadsInput = {
  */
 
 export type UserCountOutputType = {
-  leads: number
-  favorites: number
-  priceAlerts: number
-  searchAlerts: number
   adminProjects: number
-  referralChanges: number
+  favorites: number
+  leads: number
+  priceAlerts: number
   processedRedemptions: number
+  referralChanges: number
+  searchAlerts: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  leads?: boolean | UserCountOutputTypeCountLeadsArgs
-  favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
-  priceAlerts?: boolean | UserCountOutputTypeCountPriceAlertsArgs
-  searchAlerts?: boolean | UserCountOutputTypeCountSearchAlertsArgs
   adminProjects?: boolean | UserCountOutputTypeCountAdminProjectsArgs
-  referralChanges?: boolean | UserCountOutputTypeCountReferralChangesArgs
+  favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
+  leads?: boolean | UserCountOutputTypeCountLeadsArgs
+  priceAlerts?: boolean | UserCountOutputTypeCountPriceAlertsArgs
   processedRedemptions?: boolean | UserCountOutputTypeCountProcessedRedemptionsArgs
+  referralChanges?: boolean | UserCountOutputTypeCountReferralChangesArgs
+  searchAlerts?: boolean | UserCountOutputTypeCountSearchAlertsArgs
 }
 
 /**
@@ -1591,8 +1591,8 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadWhereInput
+export type UserCountOutputTypeCountAdminProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdminProjectWhereInput
 }
 
 /**
@@ -1605,6 +1605,13 @@ export type UserCountOutputTypeCountFavoritesArgs<ExtArgs extends runtime.Types.
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountPriceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PriceAlertWhereInput
 }
@@ -1612,15 +1619,8 @@ export type UserCountOutputTypeCountPriceAlertsArgs<ExtArgs extends runtime.Type
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountSearchAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SearchAlertWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountAdminProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AdminProjectWhereInput
+export type UserCountOutputTypeCountProcessedRedemptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RedemptionWhereInput
 }
 
 /**
@@ -1633,8 +1633,8 @@ export type UserCountOutputTypeCountReferralChangesArgs<ExtArgs extends runtime.
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountProcessedRedemptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.RedemptionWhereInput
+export type UserCountOutputTypeCountSearchAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SearchAlertWhereInput
 }
 
 
@@ -1645,21 +1645,21 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
-  biography?: boolean
-  avatarUrl?: boolean
   role?: boolean
   isActive?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
-  professionalProfile?: boolean | Prisma.User$professionalProfileArgs<ExtArgs>
-  favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
-  priceAlerts?: boolean | Prisma.User$priceAlertsArgs<ExtArgs>
-  searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
+  biography?: boolean
+  avatarUrl?: boolean
+  deletedAt?: boolean
   adminProjects?: boolean | Prisma.User$adminProjectsArgs<ExtArgs>
-  referralChanges?: boolean | Prisma.User$referralChangesArgs<ExtArgs>
+  favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
+  leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
+  priceAlerts?: boolean | Prisma.User$priceAlertsArgs<ExtArgs>
+  professionalProfile?: boolean | Prisma.User$professionalProfileArgs<ExtArgs>
   processedRedemptions?: boolean | Prisma.User$processedRedemptionsArgs<ExtArgs>
+  referralChanges?: boolean | Prisma.User$referralChangesArgs<ExtArgs>
+  searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1670,13 +1670,13 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
-  biography?: boolean
-  avatarUrl?: boolean
   role?: boolean
   isActive?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  biography?: boolean
+  avatarUrl?: boolean
+  deletedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1686,13 +1686,13 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
-  biography?: boolean
-  avatarUrl?: boolean
   role?: boolean
   isActive?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  biography?: boolean
+  avatarUrl?: boolean
+  deletedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -1702,25 +1702,25 @@ export type UserSelectScalar = {
   firstName?: boolean
   lastName?: boolean
   phone?: boolean
-  biography?: boolean
-  avatarUrl?: boolean
   role?: boolean
   isActive?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  biography?: boolean
+  avatarUrl?: boolean
+  deletedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "firstName" | "lastName" | "phone" | "biography" | "avatarUrl" | "role" | "isActive" | "deletedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "firstName" | "lastName" | "phone" | "role" | "isActive" | "createdAt" | "updatedAt" | "biography" | "avatarUrl" | "deletedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
-  professionalProfile?: boolean | Prisma.User$professionalProfileArgs<ExtArgs>
-  favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
-  priceAlerts?: boolean | Prisma.User$priceAlertsArgs<ExtArgs>
-  searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
   adminProjects?: boolean | Prisma.User$adminProjectsArgs<ExtArgs>
-  referralChanges?: boolean | Prisma.User$referralChangesArgs<ExtArgs>
+  favorites?: boolean | Prisma.User$favoritesArgs<ExtArgs>
+  leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
+  priceAlerts?: boolean | Prisma.User$priceAlertsArgs<ExtArgs>
+  professionalProfile?: boolean | Prisma.User$professionalProfileArgs<ExtArgs>
   processedRedemptions?: boolean | Prisma.User$processedRedemptionsArgs<ExtArgs>
+  referralChanges?: boolean | Prisma.User$referralChangesArgs<ExtArgs>
+  searchAlerts?: boolean | Prisma.User$searchAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1729,14 +1729,14 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    leads: Prisma.$LeadPayload<ExtArgs>[]
-    professionalProfile: Prisma.$ProfessionalProfilePayload<ExtArgs> | null
-    favorites: Prisma.$FavoritePayload<ExtArgs>[]
-    priceAlerts: Prisma.$PriceAlertPayload<ExtArgs>[]
-    searchAlerts: Prisma.$SearchAlertPayload<ExtArgs>[]
     adminProjects: Prisma.$AdminProjectPayload<ExtArgs>[]
-    referralChanges: Prisma.$ReferralStatusHistoryPayload<ExtArgs>[]
+    favorites: Prisma.$FavoritePayload<ExtArgs>[]
+    leads: Prisma.$LeadPayload<ExtArgs>[]
+    priceAlerts: Prisma.$PriceAlertPayload<ExtArgs>[]
+    professionalProfile: Prisma.$ProfessionalProfilePayload<ExtArgs> | null
     processedRedemptions: Prisma.$RedemptionPayload<ExtArgs>[]
+    referralChanges: Prisma.$ReferralStatusHistoryPayload<ExtArgs>[]
+    searchAlerts: Prisma.$SearchAlertPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1745,16 +1745,13 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     firstName: string
     lastName: string | null
     phone: string | null
-    biography: string | null
-    avatarUrl: string | null
     role: $Enums.Role
     isActive: boolean
-    /**
-     * * Baja logica de la cuenta hecha por un admin; isActive pasa a false al mismo tiempo.
-     */
-    deletedAt: Date | null
     createdAt: Date
     updatedAt: Date
+    biography: string | null
+    avatarUrl: string | null
+    deletedAt: Date | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2149,14 +2146,14 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  leads<T extends Prisma.User$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  professionalProfile<T extends Prisma.User$professionalProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$professionalProfileArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  favorites<T extends Prisma.User$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  priceAlerts<T extends Prisma.User$priceAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$priceAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  searchAlerts<T extends Prisma.User$searchAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$searchAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SearchAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   adminProjects<T extends Prisma.User$adminProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  referralChanges<T extends Prisma.User$referralChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referralChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  favorites<T extends Prisma.User$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leads<T extends Prisma.User$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  priceAlerts<T extends Prisma.User$priceAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$priceAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  professionalProfile<T extends Prisma.User$professionalProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$professionalProfileArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   processedRedemptions<T extends Prisma.User$processedRedemptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$processedRedemptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RedemptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  referralChanges<T extends Prisma.User$referralChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$referralChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  searchAlerts<T extends Prisma.User$searchAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$searchAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SearchAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2192,13 +2189,13 @@ export interface UserFieldRefs {
   readonly firstName: Prisma.FieldRef<"User", 'String'>
   readonly lastName: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
-  readonly biography: Prisma.FieldRef<"User", 'String'>
-  readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly isActive: Prisma.FieldRef<"User", 'Boolean'>
-  readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly biography: Prisma.FieldRef<"User", 'String'>
+  readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
+  readonly deletedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 
@@ -2592,46 +2589,27 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.leads
+ * User.adminProjects
  */
-export type User$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$adminProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Lead
+   * Select specific fields to fetch from the AdminProject
    */
-  select?: Prisma.LeadSelect<ExtArgs> | null
+  select?: Prisma.AdminProjectSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Lead
+   * Omit specific fields from the AdminProject
    */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
+  omit?: Prisma.AdminProjectOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
-  cursor?: Prisma.LeadWhereUniqueInput
+  include?: Prisma.AdminProjectInclude<ExtArgs> | null
+  where?: Prisma.AdminProjectWhereInput
+  orderBy?: Prisma.AdminProjectOrderByWithRelationInput | Prisma.AdminProjectOrderByWithRelationInput[]
+  cursor?: Prisma.AdminProjectWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
-}
-
-/**
- * User.professionalProfile
- */
-export type User$professionalProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProfessionalProfile
-   */
-  select?: Prisma.ProfessionalProfileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProfessionalProfile
-   */
-  omit?: Prisma.ProfessionalProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProfessionalProfileInclude<ExtArgs> | null
-  where?: Prisma.ProfessionalProfileWhereInput
+  distinct?: Prisma.AdminProjectScalarFieldEnum | Prisma.AdminProjectScalarFieldEnum[]
 }
 
 /**
@@ -2659,6 +2637,30 @@ export type User$favoritesArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.leads
+ */
+export type User$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lead
+   */
+  select?: Prisma.LeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lead
+   */
+  omit?: Prisma.LeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
+  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
+  cursor?: Prisma.LeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+}
+
+/**
  * User.priceAlerts
  */
 export type User$priceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2683,51 +2685,46 @@ export type User$priceAlertsArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * User.searchAlerts
+ * User.professionalProfile
  */
-export type User$searchAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$professionalProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the SearchAlert
+   * Select specific fields to fetch from the ProfessionalProfile
    */
-  select?: Prisma.SearchAlertSelect<ExtArgs> | null
+  select?: Prisma.ProfessionalProfileSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the SearchAlert
+   * Omit specific fields from the ProfessionalProfile
    */
-  omit?: Prisma.SearchAlertOmit<ExtArgs> | null
+  omit?: Prisma.ProfessionalProfileOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SearchAlertInclude<ExtArgs> | null
-  where?: Prisma.SearchAlertWhereInput
-  orderBy?: Prisma.SearchAlertOrderByWithRelationInput | Prisma.SearchAlertOrderByWithRelationInput[]
-  cursor?: Prisma.SearchAlertWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.SearchAlertScalarFieldEnum | Prisma.SearchAlertScalarFieldEnum[]
+  include?: Prisma.ProfessionalProfileInclude<ExtArgs> | null
+  where?: Prisma.ProfessionalProfileWhereInput
 }
 
 /**
- * User.adminProjects
+ * User.processedRedemptions
  */
-export type User$adminProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$processedRedemptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the AdminProject
+   * Select specific fields to fetch from the Redemption
    */
-  select?: Prisma.AdminProjectSelect<ExtArgs> | null
+  select?: Prisma.RedemptionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the AdminProject
+   * Omit specific fields from the Redemption
    */
-  omit?: Prisma.AdminProjectOmit<ExtArgs> | null
+  omit?: Prisma.RedemptionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.AdminProjectInclude<ExtArgs> | null
-  where?: Prisma.AdminProjectWhereInput
-  orderBy?: Prisma.AdminProjectOrderByWithRelationInput | Prisma.AdminProjectOrderByWithRelationInput[]
-  cursor?: Prisma.AdminProjectWhereUniqueInput
+  include?: Prisma.RedemptionInclude<ExtArgs> | null
+  where?: Prisma.RedemptionWhereInput
+  orderBy?: Prisma.RedemptionOrderByWithRelationInput | Prisma.RedemptionOrderByWithRelationInput[]
+  cursor?: Prisma.RedemptionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.AdminProjectScalarFieldEnum | Prisma.AdminProjectScalarFieldEnum[]
+  distinct?: Prisma.RedemptionScalarFieldEnum | Prisma.RedemptionScalarFieldEnum[]
 }
 
 /**
@@ -2755,27 +2752,27 @@ export type User$referralChangesArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * User.processedRedemptions
+ * User.searchAlerts
  */
-export type User$processedRedemptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$searchAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Redemption
+   * Select specific fields to fetch from the SearchAlert
    */
-  select?: Prisma.RedemptionSelect<ExtArgs> | null
+  select?: Prisma.SearchAlertSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Redemption
+   * Omit specific fields from the SearchAlert
    */
-  omit?: Prisma.RedemptionOmit<ExtArgs> | null
+  omit?: Prisma.SearchAlertOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.RedemptionInclude<ExtArgs> | null
-  where?: Prisma.RedemptionWhereInput
-  orderBy?: Prisma.RedemptionOrderByWithRelationInput | Prisma.RedemptionOrderByWithRelationInput[]
-  cursor?: Prisma.RedemptionWhereUniqueInput
+  include?: Prisma.SearchAlertInclude<ExtArgs> | null
+  where?: Prisma.SearchAlertWhereInput
+  orderBy?: Prisma.SearchAlertOrderByWithRelationInput | Prisma.SearchAlertOrderByWithRelationInput[]
+  cursor?: Prisma.SearchAlertWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.RedemptionScalarFieldEnum | Prisma.RedemptionScalarFieldEnum[]
+  distinct?: Prisma.SearchAlertScalarFieldEnum | Prisma.SearchAlertScalarFieldEnum[]
 }
 
 /**

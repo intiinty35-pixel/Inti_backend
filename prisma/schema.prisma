@@ -9,100 +9,89 @@ datasource db {
 }
 
 model User {
-  id                    String               @id @default(uuid())
-  email                 String               @unique
-  passwordHash          String
-  firstName             String
-  lastName              String?
-  phone                 String?
-  biography             String?
-  avatarUrl             String?
-  role                  Role                 @default(USER)
-  isActive              Boolean              @default(true)
-  /** Baja logica de la cuenta hecha por un admin; isActive pasa a false al mismo tiempo. */
-  deletedAt             DateTime?
-  createdAt             DateTime             @default(now())
-  updatedAt             DateTime             @updatedAt
-  leads                 Lead[]
-  professionalProfile   ProfessionalProfile?
-  favorites             Favorite[]
-  priceAlerts           PriceAlert[]
-  searchAlerts          SearchAlert[]
-  adminProjects         AdminProject[]       @relation("AdminProjectCreator")
-  referralChanges       ReferralStatusHistory[] @relation("ReferralStatusChanger")
-  processedRedemptions  Redemption[]
+  id                   String                  @id @default(uuid())
+  email                String                  @unique
+  passwordHash         String
+  firstName            String
+  lastName             String?
+  phone                String?
+  role                 Role                    @default(USER)
+  isActive             Boolean                 @default(true)
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+  biography            String?
+  avatarUrl            String?
+  deletedAt            DateTime?
+  adminProjects        AdminProject[]          @relation("AdminProjectCreator")
+  favorites            Favorite[]
+  leads                Lead[]
+  priceAlerts          PriceAlert[]
+  professionalProfile  ProfessionalProfile?
+  processedRedemptions Redemption[]
+  referralChanges      ReferralStatusHistory[] @relation("ReferralStatusChanger")
+  searchAlerts         SearchAlert[]
 
   @@map("users")
 }
 
 model ProfessionalProfile {
-  id            String             @id @default(uuid())
-  userId        String             @unique
-  type          ProfessionalType
-  status        ApprovalStatus     @default(PENDING)
-  dni           String?
-  ruc           String?
-  businessName  String?
-  whatsapp      String?
-  city          String
-  districts     String?
-  address       String?
-  website       String?
-  socialLinks   String?
-  slug          String?            @unique
-  /** Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin. */
-  isOfficialDeveloper Boolean      @default(false)
-  /** Baja logica: al eliminar el agente/inmobiliaria desde el admin, no se borra la fila, solo se marca. */
-  isDeleted     Boolean            @default(false)
-  deletedAt     DateTime?
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
-  leads         Lead[]
-  user          User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  properties    Property[]
-  projects      Project[]
-  subscriptions PlanSubscription[]
+  id                  String             @id @default(uuid())
+  userId              String             @unique
+  type                ProfessionalType
+  status              ApprovalStatus     @default(PENDING)
+  dni                 String?
+  ruc                 String?
+  businessName        String?
+  whatsapp            String?
+  city                String
+  districts           String?
+  address             String?
+  website             String?
+  socialLinks         String?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  slug                String?            @unique
+  /// * Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin.
+  isOfficialDeveloper Boolean            @default(false)
+  /// * Baja logica: al eliminar el agente/inmobiliaria desde el admin, no se borra la fila, solo se marca.
+  isDeleted           Boolean            @default(false)
+  deletedAt           DateTime?
+  leads               Lead[]
+  subscriptions       PlanSubscription[]
+  user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projects            Project[]
+  properties          Property[]
 
   @@index([isDeleted])
   @@map("professional_profiles")
 }
 
 model Plan {
-  id            String   @id @default(uuid())
-  name          String
-  slug          String   @unique
-  price         Decimal  @db.Decimal(10, 2)
-  currency      Currency @default(PEN)
-  durationDays  Int
-  propertyLimit Int
-  projectLimit  Int      @default(0)
-  features      String[] @default([])
-  isFree        Boolean  @default(false)
-  isDefault     Boolean  @default(false)
-  isCustomerOnly Boolean @default(false)
-  highlight     Boolean  @default(false)
-  isActive      Boolean  @default(true)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  subscriptions PlanSubscription[]
+  id             String             @id @default(uuid())
+  name           String
+  slug           String             @unique
+  price          Decimal            @db.Decimal(10, 2)
+  currency       Currency           @default(PEN)
+  durationDays   Int
+  propertyLimit  Int
+  projectLimit   Int                @default(0)
+  features       String[]           @default([])
+  isFree         Boolean            @default(false)
+  isDefault      Boolean            @default(false)
+  highlight      Boolean            @default(false)
+  isActive       Boolean            @default(true)
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  isCustomerOnly Boolean            @default(false)
+  subscriptions  PlanSubscription[]
 
   @@map("plans")
-}
-
-enum SubscriptionStatus {
-  PENDING_PAYMENT
-  ACTIVE
-  REJECTED
-  EXPIRED
 }
 
 model PlanSubscription {
   id              String              @id @default(uuid())
   agentProfileId  String
-  agentProfile    ProfessionalProfile @relation(fields: [agentProfileId], references: [id], onDelete: Cascade)
   planId          String
-  plan            Plan                @relation(fields: [planId], references: [id])
   status          SubscriptionStatus  @default(PENDING_PAYMENT)
   receiptUrl      String?
   rejectionReason String?
@@ -111,6 +100,8 @@ model PlanSubscription {
   expiresAt       DateTime?
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
+  agentProfile    ProfessionalProfile @relation(fields: [agentProfileId], references: [id], onDelete: Cascade)
+  plan            Plan                @relation(fields: [planId], references: [id])
 
   @@index([agentProfileId, status])
   @@index([status, createdAt])
@@ -177,20 +168,20 @@ model Property {
   contactEmail    String?
   contactPhone    String?
   contactWhatsapp String?
-  /** Baja logica: eliminada por su dueño o por un admin. No se borra la fila. */
-  isDeleted       Boolean             @default(false)
-  deletedAt       DateTime?
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
   publishedAt     DateTime?
+  /// * Baja logica: eliminada por su dueño o por un admin. No se borra la fila.
+  isDeleted       Boolean             @default(false)
+  deletedAt       DateTime?
+  favorites       Favorite[]
   leads           Lead[]
+  priceAlerts     PriceAlert[]
   agentProfile    ProfessionalProfile @relation(fields: [agentProfileId], references: [id])
   amenities       PropertyAmenity[]
   details         PropertyDetails?
   location        PropertyLocation?
   media           PropertyMedia[]
-  favorites       Favorite[]
-  priceAlerts     PriceAlert[]
 
   @@index([status, featured, publishedAt])
   @@index([operationType, propertyType, status])
@@ -306,19 +297,19 @@ model Project {
   contactEmail      String?
   contactPhone      String?
   contactWhatsapp   String?
-  /** Baja logica: eliminado por su dueño o por un admin. No se borra la fila. */
-  isDeleted         Boolean              @default(false)
-  deletedAt         DateTime?
   createdAt         DateTime             @default(now())
   updatedAt         DateTime             @updatedAt
   publishedAt       DateTime?
-  agentProfile      ProfessionalProfile? @relation(fields: [agentProfileId], references: [id], onDelete: Restrict)
+  /// * Baja logica: eliminado por su dueño o por un admin. No se borra la fila.
+  isDeleted         Boolean              @default(false)
+  deletedAt         DateTime?
   adminProject      AdminProject?
+  leads             Lead[]
   location          ProjectLocation?
   lots              ProjectLot[]
-  milestones        ProjectMilestone[]
   media             ProjectMedia[]
-  leads             Lead[]
+  milestones        ProjectMilestone[]
+  agentProfile      ProfessionalProfile? @relation(fields: [agentProfileId], references: [id], onDelete: Restrict)
   referrals         Referral[]
 
   @@index([status, featured, publishedAt])
@@ -328,36 +319,36 @@ model Project {
 }
 
 model Referrer {
-  id             String           @id @default(uuid())
-  code           String           @unique
+  id             String          @id @default(uuid())
+  code           String          @unique
   name           String
-  email          String           @unique
+  email          String          @unique
   phone          String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  referrals      Referral[]
-  redemptions    Redemption[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
   pointMovements PointMovement[]
+  redemptions    Redemption[]
+  referrals      Referral[]
 
   @@map("referrers")
 }
 
 model Referral {
-  id           String                   @id @default(uuid())
+  id           String                  @id @default(uuid())
   referrerId   String
   name         String
   email        String
   phone        String
-  interest     ReferralInterest         @default(VENTA)
-  availability ReferralAvailability     @default(INMEDIATA)
   projectId    String?
-  status       ReferralStatus            @default(CONTACTED)
-  code         String                   @unique
-  createdAt    DateTime                 @default(now())
-  updatedAt    DateTime                 @updatedAt
-  referrer     Referrer                 @relation(fields: [referrerId], references: [id], onDelete: Restrict)
-  project      Project?                 @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  status       ReferralStatus          @default(CONTACTED)
+  code         String                  @unique
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+  interest     ReferralInterest        @default(VENTA)
+  availability ReferralAvailability    @default(INMEDIATA)
   history      ReferralStatusHistory[]
+  project      Project?                @relation(fields: [projectId], references: [id])
+  referrer     Referrer                @relation(fields: [referrerId], references: [id])
 
   @@index([referrerId, createdAt])
   @@index([projectId, createdAt])
@@ -376,15 +367,15 @@ model ReferralStatusPoint {
 }
 
 model ReferralStatusHistory {
-  id            String         @id @default(uuid())
+  id            String          @id @default(uuid())
   referralId    String
   fromStatus    ReferralStatus?
   toStatus      ReferralStatus
-  pointsAwarded Int            @default(0)
+  pointsAwarded Int             @default(0)
   changedById   String?
-  createdAt     DateTime       @default(now())
-  referral      Referral       @relation(fields: [referralId], references: [id], onDelete: Cascade)
-  changedBy     User?          @relation("ReferralStatusChanger", fields: [changedById], references: [id], onDelete: SetNull)
+  createdAt     DateTime        @default(now())
+  changedBy     User?           @relation("ReferralStatusChanger", fields: [changedById], references: [id])
+  referral      Referral        @relation(fields: [referralId], references: [id], onDelete: Cascade)
 
   @@unique([referralId, toStatus])
   @@index([referralId, createdAt])
@@ -392,19 +383,19 @@ model ReferralStatusHistory {
 }
 
 model Incentive {
-  id             String           @id @default(uuid())
+  id             String          @id @default(uuid())
   name           String
   description    String
   promotion      String?
   imageUrl       String?
   publicId       String?
   pointsRequired Int
-  stock          Int              @default(0)
-  status         IncentiveStatus  @default(ACTIVE)
-  isDeleted      Boolean          @default(false)
+  stock          Int             @default(0)
+  status         IncentiveStatus @default(ACTIVE)
+  isDeleted      Boolean         @default(false)
   deletedAt      DateTime?
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
   redemptions    Redemption[]
 
   @@index([status, isDeleted])
@@ -412,29 +403,28 @@ model Incentive {
 }
 
 model Redemption {
-  id              String           @id @default(uuid())
-  referrerId      String
-  referralCode    String
-  incentiveId     String
-  incentiveName   String
+  id                String           @id @default(uuid())
+  referrerId        String
+  referralCode      String
+  incentiveId       String
+  incentiveName     String
   incentiveImageUrl String?
-  pointsSpent     Int
-  status          RedemptionStatus @default(PENDING)
-  requestedAt     DateTime         @default(now())
-  processedAt     DateTime?
-  processedById   String?
-  deliveredAt     DateTime?
-  rejectedAt      DateTime?
-  rejectionReason String?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  isDeleted       Boolean          @default(false)
-  deletedAt       DateTime?
-
-  referrer        Referrer         @relation(fields: [referrerId], references: [id], onDelete: Restrict)
-  incentive       Incentive        @relation(fields: [incentiveId], references: [id], onDelete: Restrict)
-  processedBy     User?            @relation(fields: [processedById], references: [id], onDelete: SetNull)
-  pointMovements  PointMovement[]
+  pointsSpent       Int
+  status            RedemptionStatus @default(PENDING)
+  requestedAt       DateTime         @default(now())
+  processedAt       DateTime?
+  processedById     String?
+  deliveredAt       DateTime?
+  rejectedAt        DateTime?
+  rejectionReason   String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  isDeleted         Boolean          @default(false)
+  deletedAt         DateTime?
+  pointMovements    PointMovement[]
+  incentive         Incentive        @relation(fields: [incentiveId], references: [id])
+  processedBy       User?            @relation(fields: [processedById], references: [id])
+  referrer          Referrer         @relation(fields: [referrerId], references: [id])
 
   @@index([referrerId, createdAt])
   @@index([status, createdAt])
@@ -449,9 +439,8 @@ model PointMovement {
   referenceId String?
   description String
   createdAt   DateTime          @default(now())
-
-  referrer    Referrer          @relation(fields: [referrerId], references: [id], onDelete: Restrict)
-  redemption  Redemption?       @relation(fields: [referenceId], references: [id], onDelete: SetNull)
+  redemption  Redemption?       @relation(fields: [referenceId], references: [id])
+  referrer    Referrer          @relation(fields: [referrerId], references: [id])
 
   @@index([referrerId, createdAt])
   @@map("point_movements")
@@ -462,8 +451,8 @@ model AdminProject {
   projectId        String   @unique
   createdByAdminId String
   createdAt        DateTime @default(now())
+  createdByAdmin   User     @relation("AdminProjectCreator", fields: [createdByAdminId], references: [id])
   project          Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  createdByAdmin   User     @relation("AdminProjectCreator", fields: [createdByAdminId], references: [id], onDelete: Restrict)
 
   @@index([createdByAdminId, createdAt])
   @@map("admin_projects")
@@ -534,38 +523,49 @@ model ProjectMedia {
 }
 
 model InvestmentOpportunity {
-  id                 String   @id @default(uuid())
-  name               String
-  slug               String   @unique
-  summary            String
-  description        String   @db.Text
-  areaLabel          String
-  initialInvestment  Decimal  @db.Decimal(14, 2)
-  currency           Currency @default(PEN)
-  roiPercent         Decimal  @db.Decimal(5, 2)
-  investmentGoal     String
-  location           String
-  department         String
-  province           String
-  district           String
-  latitude           Decimal  @db.Decimal(10, 7)
-  longitude          Decimal  @db.Decimal(10, 7)
-  coverImageUrl      String
-  coverImagePublicId String?
-  galleryImages      String[] @default([])
-  highlights         String[] @default([])
-  isPublished        Boolean  @default(true)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  id                   String            @id @default(uuid())
+  name                 String
+  slug                 String            @unique
+  summary              String
+  description          String
+  areaLabel            String
+  initialInvestment    Decimal           @db.Decimal(14, 2)
+  currency             Currency          @default(PEN)
+  roiPercent           Decimal           @db.Decimal(5, 2)
+  investmentGoal       String
+  location             String
+  department           String
+  province             String
+  district             String
+  latitude             Decimal           @db.Decimal(10, 7)
+  longitude            Decimal           @db.Decimal(10, 7)
+  coverImageUrl        String
+  coverImagePublicId   String?
+  galleryImages        String[]          @default([])
+  highlights           String[]          @default([])
+  isPublished          Boolean           @default(true)
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+  investmentTypeId     String?
+  investmentKind       String            @default("Inversion inmobiliaria")
+  assetType            String            @default("Proyecto")
+  estimatedReturnLabel String?
+  estimatedTermMonths  Int?
+  status               String            @default("AVAILABLE")
+  riskLevel            String?
+  featured             Boolean           @default(false)
+  sortOrder            Int               @default(0)
+  ctaLabel             String            @default("Solicitar informacion")
+  investment_types     investment_types? @relation(fields: [investmentTypeId], references: [id])
 
   @@index([isPublished, updatedAt])
+  @@index([investmentTypeId, sortOrder])
   @@map("investment_opportunities")
 }
 
 model Lead {
   id             String               @id @default(uuid())
   propertyId     String?
-  projectId      String?
   agentProfileId String?
   userId         String?
   name           String
@@ -574,15 +574,37 @@ model Lead {
   message        String
   source         LeadSource
   createdAt      DateTime             @default(now())
-  agentProfile   ProfessionalProfile? @relation(fields: [agentProfileId], references: [id], onDelete: SetNull)
-  property       Property?            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  projectId      String?
+  agentProfile   ProfessionalProfile? @relation(fields: [agentProfileId], references: [id])
   project        Project?             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  property       Property?            @relation(fields: [propertyId], references: [id], onDelete: Cascade)
   user           User?                @relation(fields: [userId], references: [id])
 
   @@index([propertyId, createdAt])
   @@index([projectId, createdAt])
   @@index([agentProfileId, createdAt])
   @@map("leads")
+}
+
+model investment_types {
+  id                       String                  @id
+  name                     String
+  slug                     String                  @unique
+  description              String?
+  isActive                 Boolean                 @default(true)
+  sortOrder                Int                     @default(0)
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime
+  investment_opportunities InvestmentOpportunity[]
+
+  @@index([isActive, sortOrder])
+}
+
+enum SubscriptionStatus {
+  PENDING_PAYMENT
+  ACTIVE
+  REJECTED
+  EXPIRED
 }
 
 enum Role {
@@ -664,18 +686,16 @@ enum MediaType {
 
 enum LeadSource {
   PROPERTY_FORM
-  PROJECT_FORM
   WHATSAPP
   QUICK_QUESTION
   PHONE
+  PROJECT_FORM
 }
 
 enum ReferralStatus {
-  PENDING_VALIDATION
   CONTACTED
   VISIT
   OPERATION_COMPLETED
-  REJECTED
 }
 
 enum ReferralInterest {
@@ -742,4 +762,27 @@ enum PointMovementType {
   POINTS_EARNED
   POINTS_REDEEMED
   POINTS_REFUNDED
+}
+
+model Claim {
+  id                String      @id @default(uuid())
+  claimCode         String      @unique
+  fullName          String
+  address           String
+  dniOrCe           String
+  phone             String?
+  email             String
+  parentGuardian    String?
+  assetType         String
+  claimedAmount     Decimal     @db.Decimal(10, 2)
+  assetDescription  String
+  type              String
+  claimDetails      String
+  consumerRequest   String
+  isDeleted         Boolean     @default(false)
+  deletedAt         DateTime?
+  createdAt         DateTime    @default(now())
+
+  @@index([isDeleted])
+  @@map("claims")
 }

@@ -25,6 +25,7 @@ import { InvestmentOpportunitiesModule } from './modules/investment-opportunitie
 import { ReferralsModule } from './modules/referrals/referrals.module';
 import { IncentivesModule } from './modules/incentives/incentives.module';
 import { RedemptionsModule } from './modules/redemptions/redemptions.module';
+import { ClaimsModule } from './modules/claims/claims.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { RedemptionsModule } from './modules/redemptions/redemptions.module';
     ReferralsModule,
     IncentivesModule,
     RedemptionsModule,
+    ClaimsModule,
   ],
   controllers: [AppController],
   providers: [

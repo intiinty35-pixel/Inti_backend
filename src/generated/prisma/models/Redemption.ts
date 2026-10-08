@@ -320,10 +320,10 @@ export type RedemptionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Redemption"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Redemption"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Redemption"> | Date | string | null
-  referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
+  pointMovements?: Prisma.PointMovementListRelationFilter
   incentive?: Prisma.XOR<Prisma.IncentiveScalarRelationFilter, Prisma.IncentiveWhereInput>
   processedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  pointMovements?: Prisma.PointMovementListRelationFilter
+  referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
 }
 
 export type RedemptionOrderByWithRelationInput = {
@@ -345,10 +345,10 @@ export type RedemptionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   isDeleted?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  referrer?: Prisma.ReferrerOrderByWithRelationInput
+  pointMovements?: Prisma.PointMovementOrderByRelationAggregateInput
   incentive?: Prisma.IncentiveOrderByWithRelationInput
   processedBy?: Prisma.UserOrderByWithRelationInput
-  pointMovements?: Prisma.PointMovementOrderByRelationAggregateInput
+  referrer?: Prisma.ReferrerOrderByWithRelationInput
 }
 
 export type RedemptionWhereUniqueInput = Prisma.AtLeast<{
@@ -373,10 +373,10 @@ export type RedemptionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Redemption"> | Date | string
   isDeleted?: Prisma.BoolFilter<"Redemption"> | boolean
   deletedAt?: Prisma.DateTimeNullableFilter<"Redemption"> | Date | string | null
-  referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
+  pointMovements?: Prisma.PointMovementListRelationFilter
   incentive?: Prisma.XOR<Prisma.IncentiveScalarRelationFilter, Prisma.IncentiveWhereInput>
   processedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  pointMovements?: Prisma.PointMovementListRelationFilter
+  referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
 }, "id">
 
 export type RedemptionOrderByWithAggregationInput = {
@@ -445,10 +445,10 @@ export type RedemptionCreateInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   deletedAt?: Date | string | null
-  referrer: Prisma.ReferrerCreateNestedOneWithoutRedemptionsInput
+  pointMovements?: Prisma.PointMovementCreateNestedManyWithoutRedemptionInput
   incentive: Prisma.IncentiveCreateNestedOneWithoutRedemptionsInput
   processedBy?: Prisma.UserCreateNestedOneWithoutProcessedRedemptionsInput
-  pointMovements?: Prisma.PointMovementCreateNestedManyWithoutRedemptionInput
+  referrer: Prisma.ReferrerCreateNestedOneWithoutRedemptionsInput
 }
 
 export type RedemptionUncheckedCreateInput = {
@@ -489,10 +489,10 @@ export type RedemptionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutRedemptionsNestedInput
+  pointMovements?: Prisma.PointMovementUpdateManyWithoutRedemptionNestedInput
   incentive?: Prisma.IncentiveUpdateOneRequiredWithoutRedemptionsNestedInput
   processedBy?: Prisma.UserUpdateOneWithoutProcessedRedemptionsNestedInput
-  pointMovements?: Prisma.PointMovementUpdateManyWithoutRedemptionNestedInput
+  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutRedemptionsNestedInput
 }
 
 export type RedemptionUncheckedUpdateInput = {
@@ -825,9 +825,9 @@ export type RedemptionCreateWithoutProcessedByInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   deletedAt?: Date | string | null
-  referrer: Prisma.ReferrerCreateNestedOneWithoutRedemptionsInput
-  incentive: Prisma.IncentiveCreateNestedOneWithoutRedemptionsInput
   pointMovements?: Prisma.PointMovementCreateNestedManyWithoutRedemptionInput
+  incentive: Prisma.IncentiveCreateNestedOneWithoutRedemptionsInput
+  referrer: Prisma.ReferrerCreateNestedOneWithoutRedemptionsInput
 }
 
 export type RedemptionUncheckedCreateWithoutProcessedByInput = {
@@ -917,9 +917,9 @@ export type RedemptionCreateWithoutReferrerInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   deletedAt?: Date | string | null
+  pointMovements?: Prisma.PointMovementCreateNestedManyWithoutRedemptionInput
   incentive: Prisma.IncentiveCreateNestedOneWithoutRedemptionsInput
   processedBy?: Prisma.UserCreateNestedOneWithoutProcessedRedemptionsInput
-  pointMovements?: Prisma.PointMovementCreateNestedManyWithoutRedemptionInput
 }
 
 export type RedemptionUncheckedCreateWithoutReferrerInput = {
@@ -985,9 +985,9 @@ export type RedemptionCreateWithoutIncentiveInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   deletedAt?: Date | string | null
-  referrer: Prisma.ReferrerCreateNestedOneWithoutRedemptionsInput
-  processedBy?: Prisma.UserCreateNestedOneWithoutProcessedRedemptionsInput
   pointMovements?: Prisma.PointMovementCreateNestedManyWithoutRedemptionInput
+  processedBy?: Prisma.UserCreateNestedOneWithoutProcessedRedemptionsInput
+  referrer: Prisma.ReferrerCreateNestedOneWithoutRedemptionsInput
 }
 
 export type RedemptionUncheckedCreateWithoutIncentiveInput = {
@@ -1053,9 +1053,9 @@ export type RedemptionCreateWithoutPointMovementsInput = {
   updatedAt?: Date | string
   isDeleted?: boolean
   deletedAt?: Date | string | null
-  referrer: Prisma.ReferrerCreateNestedOneWithoutRedemptionsInput
   incentive: Prisma.IncentiveCreateNestedOneWithoutRedemptionsInput
   processedBy?: Prisma.UserCreateNestedOneWithoutProcessedRedemptionsInput
+  referrer: Prisma.ReferrerCreateNestedOneWithoutRedemptionsInput
 }
 
 export type RedemptionUncheckedCreateWithoutPointMovementsInput = {
@@ -1111,9 +1111,9 @@ export type RedemptionUpdateWithoutPointMovementsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutRedemptionsNestedInput
   incentive?: Prisma.IncentiveUpdateOneRequiredWithoutRedemptionsNestedInput
   processedBy?: Prisma.UserUpdateOneWithoutProcessedRedemptionsNestedInput
+  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutRedemptionsNestedInput
 }
 
 export type RedemptionUncheckedUpdateWithoutPointMovementsInput = {
@@ -1173,9 +1173,9 @@ export type RedemptionUpdateWithoutProcessedByInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutRedemptionsNestedInput
-  incentive?: Prisma.IncentiveUpdateOneRequiredWithoutRedemptionsNestedInput
   pointMovements?: Prisma.PointMovementUpdateManyWithoutRedemptionNestedInput
+  incentive?: Prisma.IncentiveUpdateOneRequiredWithoutRedemptionsNestedInput
+  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutRedemptionsNestedInput
 }
 
 export type RedemptionUncheckedUpdateWithoutProcessedByInput = {
@@ -1255,9 +1255,9 @@ export type RedemptionUpdateWithoutReferrerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  pointMovements?: Prisma.PointMovementUpdateManyWithoutRedemptionNestedInput
   incentive?: Prisma.IncentiveUpdateOneRequiredWithoutRedemptionsNestedInput
   processedBy?: Prisma.UserUpdateOneWithoutProcessedRedemptionsNestedInput
-  pointMovements?: Prisma.PointMovementUpdateManyWithoutRedemptionNestedInput
 }
 
 export type RedemptionUncheckedUpdateWithoutReferrerInput = {
@@ -1337,9 +1337,9 @@ export type RedemptionUpdateWithoutIncentiveInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutRedemptionsNestedInput
-  processedBy?: Prisma.UserUpdateOneWithoutProcessedRedemptionsNestedInput
   pointMovements?: Prisma.PointMovementUpdateManyWithoutRedemptionNestedInput
+  processedBy?: Prisma.UserUpdateOneWithoutProcessedRedemptionsNestedInput
+  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutRedemptionsNestedInput
 }
 
 export type RedemptionUncheckedUpdateWithoutIncentiveInput = {
@@ -1433,10 +1433,10 @@ export type RedemptionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   updatedAt?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
+  pointMovements?: boolean | Prisma.Redemption$pointMovementsArgs<ExtArgs>
   incentive?: boolean | Prisma.IncentiveDefaultArgs<ExtArgs>
   processedBy?: boolean | Prisma.Redemption$processedByArgs<ExtArgs>
-  pointMovements?: boolean | Prisma.Redemption$pointMovementsArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.RedemptionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["redemption"]>
 
@@ -1459,9 +1459,9 @@ export type RedemptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   updatedAt?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   incentive?: boolean | Prisma.IncentiveDefaultArgs<ExtArgs>
   processedBy?: boolean | Prisma.Redemption$processedByArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["redemption"]>
 
 export type RedemptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1483,9 +1483,9 @@ export type RedemptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   updatedAt?: boolean
   isDeleted?: boolean
   deletedAt?: boolean
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   incentive?: boolean | Prisma.IncentiveDefaultArgs<ExtArgs>
   processedBy?: boolean | Prisma.Redemption$processedByArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["redemption"]>
 
 export type RedemptionSelectScalar = {
@@ -1511,30 +1511,30 @@ export type RedemptionSelectScalar = {
 
 export type RedemptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "referrerId" | "referralCode" | "incentiveId" | "incentiveName" | "incentiveImageUrl" | "pointsSpent" | "status" | "requestedAt" | "processedAt" | "processedById" | "deliveredAt" | "rejectedAt" | "rejectionReason" | "createdAt" | "updatedAt" | "isDeleted" | "deletedAt", ExtArgs["result"]["redemption"]>
 export type RedemptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
+  pointMovements?: boolean | Prisma.Redemption$pointMovementsArgs<ExtArgs>
   incentive?: boolean | Prisma.IncentiveDefaultArgs<ExtArgs>
   processedBy?: boolean | Prisma.Redemption$processedByArgs<ExtArgs>
-  pointMovements?: boolean | Prisma.Redemption$pointMovementsArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.RedemptionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RedemptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   incentive?: boolean | Prisma.IncentiveDefaultArgs<ExtArgs>
   processedBy?: boolean | Prisma.Redemption$processedByArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }
 export type RedemptionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   incentive?: boolean | Prisma.IncentiveDefaultArgs<ExtArgs>
   processedBy?: boolean | Prisma.Redemption$processedByArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }
 
 export type $RedemptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Redemption"
   objects: {
-    referrer: Prisma.$ReferrerPayload<ExtArgs>
+    pointMovements: Prisma.$PointMovementPayload<ExtArgs>[]
     incentive: Prisma.$IncentivePayload<ExtArgs>
     processedBy: Prisma.$UserPayload<ExtArgs> | null
-    pointMovements: Prisma.$PointMovementPayload<ExtArgs>[]
+    referrer: Prisma.$ReferrerPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1949,10 +1949,10 @@ readonly fields: RedemptionFieldRefs;
  */
 export interface Prisma__RedemptionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  referrer<T extends Prisma.ReferrerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReferrerDefaultArgs<ExtArgs>>): Prisma.Prisma__ReferrerClient<runtime.Types.Result.GetResult<Prisma.$ReferrerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  pointMovements<T extends Prisma.Redemption$pointMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Redemption$pointMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PointMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   incentive<T extends Prisma.IncentiveDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.IncentiveDefaultArgs<ExtArgs>>): Prisma.Prisma__IncentiveClient<runtime.Types.Result.GetResult<Prisma.$IncentivePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   processedBy<T extends Prisma.Redemption$processedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Redemption$processedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  pointMovements<T extends Prisma.Redemption$pointMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Redemption$pointMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PointMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  referrer<T extends Prisma.ReferrerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReferrerDefaultArgs<ExtArgs>>): Prisma.Prisma__ReferrerClient<runtime.Types.Result.GetResult<Prisma.$ReferrerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2401,25 +2401,6 @@ export type RedemptionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Redemption.processedBy
- */
-export type Redemption$processedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
  * Redemption.pointMovements
  */
 export type Redemption$pointMovementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2441,6 +2422,25 @@ export type Redemption$pointMovementsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.PointMovementScalarFieldEnum | Prisma.PointMovementScalarFieldEnum[]
+}
+
+/**
+ * Redemption.processedBy
+ */
+export type Redemption$processedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

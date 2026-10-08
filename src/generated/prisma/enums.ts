@@ -128,21 +128,19 @@ export type MediaType = (typeof MediaType)[keyof typeof MediaType]
 
 export const LeadSource = {
   PROPERTY_FORM: 'PROPERTY_FORM',
-  PROJECT_FORM: 'PROJECT_FORM',
   WHATSAPP: 'WHATSAPP',
   QUICK_QUESTION: 'QUICK_QUESTION',
-  PHONE: 'PHONE'
+  PHONE: 'PHONE',
+  PROJECT_FORM: 'PROJECT_FORM'
 } as const
 
 export type LeadSource = (typeof LeadSource)[keyof typeof LeadSource]
 
 
 export const ReferralStatus = {
-  PENDING_VALIDATION: 'PENDING_VALIDATION',
   CONTACTED: 'CONTACTED',
   VISIT: 'VISIT',
-  OPERATION_COMPLETED: 'OPERATION_COMPLETED',
-  REJECTED: 'REJECTED'
+  OPERATION_COMPLETED: 'OPERATION_COMPLETED'
 } as const
 
 export type ReferralStatus = (typeof ReferralStatus)[keyof typeof ReferralStatus]

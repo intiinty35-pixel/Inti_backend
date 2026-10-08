@@ -424,7 +424,9 @@ export const ModelName = {
   ProjectMilestone: 'ProjectMilestone',
   ProjectMedia: 'ProjectMedia',
   InvestmentOpportunity: 'InvestmentOpportunity',
-  Lead: 'Lead'
+  Lead: 'Lead',
+  investment_types: 'investment_types',
+  Claim: 'Claim'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -440,7 +442,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "lead"
+    modelProps: "user" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "lead" | "investment_types" | "claim"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2516,6 +2518,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    investment_types: {
+      payload: Prisma.$investment_typesPayload<ExtArgs>
+      fields: Prisma.investment_typesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.investment_typesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.investment_typesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>
+        }
+        findFirst: {
+          args: Prisma.investment_typesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.investment_typesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>
+        }
+        findMany: {
+          args: Prisma.investment_typesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>[]
+        }
+        create: {
+          args: Prisma.investment_typesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>
+        }
+        createMany: {
+          args: Prisma.investment_typesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.investment_typesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>[]
+        }
+        delete: {
+          args: Prisma.investment_typesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>
+        }
+        update: {
+          args: Prisma.investment_typesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>
+        }
+        deleteMany: {
+          args: Prisma.investment_typesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.investment_typesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.investment_typesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>[]
+        }
+        upsert: {
+          args: Prisma.investment_typesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$investment_typesPayload>
+        }
+        aggregate: {
+          args: Prisma.Investment_typesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInvestment_types>
+        }
+        groupBy: {
+          args: Prisma.investment_typesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Investment_typesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.investment_typesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Investment_typesCountAggregateOutputType> | number
+        }
+      }
+    }
+    Claim: {
+      payload: Prisma.$ClaimPayload<ExtArgs>
+      fields: Prisma.ClaimFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClaimFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClaimFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>
+        }
+        findFirst: {
+          args: Prisma.ClaimFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClaimFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>
+        }
+        findMany: {
+          args: Prisma.ClaimFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>[]
+        }
+        create: {
+          args: Prisma.ClaimCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>
+        }
+        createMany: {
+          args: Prisma.ClaimCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClaimCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>[]
+        }
+        delete: {
+          args: Prisma.ClaimDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>
+        }
+        update: {
+          args: Prisma.ClaimUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClaimDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClaimUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClaimUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClaimUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClaimPayload>
+        }
+        aggregate: {
+          args: Prisma.ClaimAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClaim>
+        }
+        groupBy: {
+          args: Prisma.ClaimGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClaimGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClaimCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClaimCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2562,13 +2712,13 @@ export const UserScalarFieldEnum = {
   firstName: 'firstName',
   lastName: 'lastName',
   phone: 'phone',
-  biography: 'biography',
-  avatarUrl: 'avatarUrl',
   role: 'role',
   isActive: 'isActive',
-  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  biography: 'biography',
+  avatarUrl: 'avatarUrl',
+  deletedAt: 'deletedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -2588,12 +2738,12 @@ export const ProfessionalProfileScalarFieldEnum = {
   address: 'address',
   website: 'website',
   socialLinks: 'socialLinks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   slug: 'slug',
   isOfficialDeveloper: 'isOfficialDeveloper',
   isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  deletedAt: 'deletedAt'
 } as const
 
 export type ProfessionalProfileScalarFieldEnum = (typeof ProfessionalProfileScalarFieldEnum)[keyof typeof ProfessionalProfileScalarFieldEnum]
@@ -2611,11 +2761,11 @@ export const PlanScalarFieldEnum = {
   features: 'features',
   isFree: 'isFree',
   isDefault: 'isDefault',
-  isCustomerOnly: 'isCustomerOnly',
   highlight: 'highlight',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  isCustomerOnly: 'isCustomerOnly'
 } as const
 
 export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
@@ -2691,11 +2841,11 @@ export const PropertyScalarFieldEnum = {
   contactEmail: 'contactEmail',
   contactPhone: 'contactPhone',
   contactWhatsapp: 'contactWhatsapp',
-  isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  publishedAt: 'publishedAt'
+  publishedAt: 'publishedAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
@@ -2805,11 +2955,11 @@ export const ProjectScalarFieldEnum = {
   contactEmail: 'contactEmail',
   contactPhone: 'contactPhone',
   contactWhatsapp: 'contactWhatsapp',
-  isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  publishedAt: 'publishedAt'
+  publishedAt: 'publishedAt',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
@@ -2834,13 +2984,13 @@ export const ReferralScalarFieldEnum = {
   name: 'name',
   email: 'email',
   phone: 'phone',
-  interest: 'interest',
-  availability: 'availability',
   projectId: 'projectId',
   status: 'status',
   code: 'code',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  interest: 'interest',
+  availability: 'availability'
 } as const
 
 export type ReferralScalarFieldEnum = (typeof ReferralScalarFieldEnum)[keyof typeof ReferralScalarFieldEnum]
@@ -3019,7 +3169,17 @@ export const InvestmentOpportunityScalarFieldEnum = {
   highlights: 'highlights',
   isPublished: 'isPublished',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  investmentTypeId: 'investmentTypeId',
+  investmentKind: 'investmentKind',
+  assetType: 'assetType',
+  estimatedReturnLabel: 'estimatedReturnLabel',
+  estimatedTermMonths: 'estimatedTermMonths',
+  status: 'status',
+  riskLevel: 'riskLevel',
+  featured: 'featured',
+  sortOrder: 'sortOrder',
+  ctaLabel: 'ctaLabel'
 } as const
 
 export type InvestmentOpportunityScalarFieldEnum = (typeof InvestmentOpportunityScalarFieldEnum)[keyof typeof InvestmentOpportunityScalarFieldEnum]
@@ -3028,7 +3188,6 @@ export type InvestmentOpportunityScalarFieldEnum = (typeof InvestmentOpportunity
 export const LeadScalarFieldEnum = {
   id: 'id',
   propertyId: 'propertyId',
-  projectId: 'projectId',
   agentProfileId: 'agentProfileId',
   userId: 'userId',
   name: 'name',
@@ -3036,10 +3195,48 @@ export const LeadScalarFieldEnum = {
   phone: 'phone',
   message: 'message',
   source: 'source',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  projectId: 'projectId'
 } as const
 
 export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
+
+
+export const Investment_typesScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type Investment_typesScalarFieldEnum = (typeof Investment_typesScalarFieldEnum)[keyof typeof Investment_typesScalarFieldEnum]
+
+
+export const ClaimScalarFieldEnum = {
+  id: 'id',
+  claimCode: 'claimCode',
+  fullName: 'fullName',
+  address: 'address',
+  dniOrCe: 'dniOrCe',
+  phone: 'phone',
+  email: 'email',
+  parentGuardian: 'parentGuardian',
+  assetType: 'assetType',
+  claimedAmount: 'claimedAmount',
+  assetDescription: 'assetDescription',
+  type: 'type',
+  claimDetails: 'claimDetails',
+  consumerRequest: 'consumerRequest',
+  isDeleted: 'isDeleted',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type ClaimScalarFieldEnum = (typeof ClaimScalarFieldEnum)[keyof typeof ClaimScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3384,6 +3581,20 @@ export type ListEnumProjectStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
+ * Reference to a field of type 'ReferralStatus'
+ */
+export type EnumReferralStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ReferralStatus[]'
+ */
+export type ListEnumReferralStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'ReferralInterest'
  */
 export type EnumReferralInterestFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralInterest'>
@@ -3408,20 +3619,6 @@ export type EnumReferralAvailabilityFieldRefInput<$PrismaModel> = FieldRefInputT
  * Reference to a field of type 'ReferralAvailability[]'
  */
 export type ListEnumReferralAvailabilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralAvailability[]'>
-    
-
-
-/**
- * Reference to a field of type 'ReferralStatus'
- */
-export type EnumReferralStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralStatus'>
-    
-
-
-/**
- * Reference to a field of type 'ReferralStatus[]'
- */
-export type ListEnumReferralStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReferralStatus[]'>
     
 
 
@@ -3687,6 +3884,8 @@ export type GlobalOmitConfig = {
   projectMedia?: Prisma.ProjectMediaOmit
   investmentOpportunity?: Prisma.InvestmentOpportunityOmit
   lead?: Prisma.LeadOmit
+  investment_types?: Prisma.investment_typesOmit
+  claim?: Prisma.ClaimOmit
 }
 
 /* Types for Logging */

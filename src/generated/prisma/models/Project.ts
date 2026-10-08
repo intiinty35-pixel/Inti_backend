@@ -73,11 +73,11 @@ export type ProjectMinAggregateOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
-  isDeleted: boolean | null
-  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   publishedAt: Date | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type ProjectMaxAggregateOutputType = {
@@ -109,11 +109,11 @@ export type ProjectMaxAggregateOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
-  isDeleted: boolean | null
-  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   publishedAt: Date | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type ProjectCountAggregateOutputType = {
@@ -150,11 +150,11 @@ export type ProjectCountAggregateOutputType = {
   contactEmail: number
   contactPhone: number
   contactWhatsapp: number
-  isDeleted: number
-  deletedAt: number
   createdAt: number
   updatedAt: number
   publishedAt: number
+  isDeleted: number
+  deletedAt: number
   _all: number
 }
 
@@ -206,11 +206,11 @@ export type ProjectMinAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
-  isDeleted?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
 }
 
 export type ProjectMaxAggregateInputType = {
@@ -242,11 +242,11 @@ export type ProjectMaxAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
-  isDeleted?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
 }
 
 export type ProjectCountAggregateInputType = {
@@ -283,11 +283,11 @@ export type ProjectCountAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
-  isDeleted?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -411,11 +411,11 @@ export type ProjectGroupByOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
-  isDeleted: boolean
-  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   publishedAt: Date | null
+  isDeleted: boolean
+  deletedAt: Date | null
   _count: ProjectCountAggregateOutputType | null
   _avg: ProjectAvgAggregateOutputType | null
   _sum: ProjectSumAggregateOutputType | null
@@ -475,18 +475,18 @@ export type ProjectWhereInput = {
   contactEmail?: Prisma.StringNullableFilter<"Project"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Project"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Project"> | string | null
-  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   adminProject?: Prisma.XOR<Prisma.AdminProjectNullableScalarRelationFilter, Prisma.AdminProjectWhereInput> | null
+  leads?: Prisma.LeadListRelationFilter
   location?: Prisma.XOR<Prisma.ProjectLocationNullableScalarRelationFilter, Prisma.ProjectLocationWhereInput> | null
   lots?: Prisma.ProjectLotListRelationFilter
-  milestones?: Prisma.ProjectMilestoneListRelationFilter
   media?: Prisma.ProjectMediaListRelationFilter
-  leads?: Prisma.LeadListRelationFilter
+  milestones?: Prisma.ProjectMilestoneListRelationFilter
+  agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   referrals?: Prisma.ReferralListRelationFilter
 }
 
@@ -524,18 +524,18 @@ export type ProjectOrderByWithRelationInput = {
   contactEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  agentProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   adminProject?: Prisma.AdminProjectOrderByWithRelationInput
+  leads?: Prisma.LeadOrderByRelationAggregateInput
   location?: Prisma.ProjectLocationOrderByWithRelationInput
   lots?: Prisma.ProjectLotOrderByRelationAggregateInput
-  milestones?: Prisma.ProjectMilestoneOrderByRelationAggregateInput
   media?: Prisma.ProjectMediaOrderByRelationAggregateInput
-  leads?: Prisma.LeadOrderByRelationAggregateInput
+  milestones?: Prisma.ProjectMilestoneOrderByRelationAggregateInput
+  agentProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
   referrals?: Prisma.ReferralOrderByRelationAggregateInput
 }
 
@@ -576,18 +576,18 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   contactEmail?: Prisma.StringNullableFilter<"Project"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Project"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Project"> | string | null
-  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
-  agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   adminProject?: Prisma.XOR<Prisma.AdminProjectNullableScalarRelationFilter, Prisma.AdminProjectWhereInput> | null
+  leads?: Prisma.LeadListRelationFilter
   location?: Prisma.XOR<Prisma.ProjectLocationNullableScalarRelationFilter, Prisma.ProjectLocationWhereInput> | null
   lots?: Prisma.ProjectLotListRelationFilter
-  milestones?: Prisma.ProjectMilestoneListRelationFilter
   media?: Prisma.ProjectMediaListRelationFilter
-  leads?: Prisma.LeadListRelationFilter
+  milestones?: Prisma.ProjectMilestoneListRelationFilter
+  agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileNullableScalarRelationFilter, Prisma.ProfessionalProfileWhereInput> | null
   referrals?: Prisma.ReferralListRelationFilter
 }, "id" | "slug">
 
@@ -625,11 +625,11 @@ export type ProjectOrderByWithAggregationInput = {
   contactEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ProjectCountOrderByAggregateInput
   _avg?: Prisma.ProjectAvgOrderByAggregateInput
   _max?: Prisma.ProjectMaxOrderByAggregateInput
@@ -674,11 +674,11 @@ export type ProjectScalarWhereWithAggregatesInput = {
   contactEmail?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   contactPhone?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
   contactWhatsapp?: Prisma.StringNullableWithAggregatesFilter<"Project"> | string | null
-  isDeleted?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
-  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Project"> | Date | string | null
 }
 
 export type ProjectCreateInput = {
@@ -714,18 +714,18 @@ export type ProjectCreateInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
 }
 
@@ -763,17 +763,17 @@ export type ProjectUncheckedCreateInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -810,18 +810,18 @@ export type ProjectUpdateInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
 }
 
@@ -859,17 +859,17 @@ export type ProjectUncheckedUpdateInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -907,11 +907,11 @@ export type ProjectCreateManyInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type ProjectUpdateManyMutationInput = {
@@ -947,11 +947,11 @@ export type ProjectUpdateManyMutationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProjectUncheckedUpdateManyInput = {
@@ -988,11 +988,11 @@ export type ProjectUncheckedUpdateManyInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ProjectListRelationFilter = {
@@ -1039,11 +1039,11 @@ export type ProjectCountOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type ProjectAvgOrderByAggregateInput = {
@@ -1084,11 +1084,11 @@ export type ProjectMaxOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type ProjectMinOrderByAggregateInput = {
@@ -1120,11 +1120,11 @@ export type ProjectMinOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type ProjectSumOrderByAggregateInput = {
@@ -1375,17 +1375,17 @@ export type ProjectCreateWithoutAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
 }
 
@@ -1422,17 +1422,17 @@ export type ProjectUncheckedCreateWithoutAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1499,11 +1499,11 @@ export type ProjectScalarWhereInput = {
   contactEmail?: Prisma.StringNullableFilter<"Project"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Project"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Project"> | string | null
-  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
+  isDeleted?: Prisma.BoolFilter<"Project"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Project"> | Date | string | null
 }
 
 export type ProjectCreateWithoutReferralsInput = {
@@ -1539,18 +1539,18 @@ export type ProjectCreateWithoutReferralsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
 }
 
 export type ProjectUncheckedCreateWithoutReferralsInput = {
@@ -1587,17 +1587,17 @@ export type ProjectUncheckedCreateWithoutReferralsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutReferralsInput = {
@@ -1649,18 +1649,18 @@ export type ProjectUpdateWithoutReferralsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutReferralsInput = {
@@ -1697,17 +1697,17 @@ export type ProjectUncheckedUpdateWithoutReferralsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutAdminProjectInput = {
@@ -1743,17 +1743,17 @@ export type ProjectCreateWithoutAdminProjectInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
 }
 
@@ -1791,16 +1791,16 @@ export type ProjectUncheckedCreateWithoutAdminProjectInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -1853,17 +1853,17 @@ export type ProjectUpdateWithoutAdminProjectInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
 }
 
@@ -1901,16 +1901,16 @@ export type ProjectUncheckedUpdateWithoutAdminProjectInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -1947,17 +1947,17 @@ export type ProjectCreateWithoutLocationInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
-  lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
-  media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
+  media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
 }
 
@@ -1995,16 +1995,16 @@ export type ProjectUncheckedCreateWithoutLocationInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
-  lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
-  media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
+  media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -2057,17 +2057,17 @@ export type ProjectUpdateWithoutLocationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
-  lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
-  media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
+  media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
 }
 
@@ -2105,16 +2105,16 @@ export type ProjectUncheckedUpdateWithoutLocationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
-  lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
-  media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
+  media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2151,17 +2151,17 @@ export type ProjectCreateWithoutLotsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
-  location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
-  media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
+  media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
 }
 
@@ -2199,16 +2199,16 @@ export type ProjectUncheckedCreateWithoutLotsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
-  location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
-  media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
+  media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -2261,17 +2261,17 @@ export type ProjectUpdateWithoutLotsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
-  location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
-  media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
+  media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
 }
 
@@ -2309,16 +2309,16 @@ export type ProjectUncheckedUpdateWithoutLotsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
-  location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
-  media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
+  media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2355,17 +2355,17 @@ export type ProjectCreateWithoutMilestonesInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
 }
 
@@ -2403,16 +2403,16 @@ export type ProjectUncheckedCreateWithoutMilestonesInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -2465,17 +2465,17 @@ export type ProjectUpdateWithoutMilestonesInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
 }
 
@@ -2513,16 +2513,16 @@ export type ProjectUncheckedUpdateWithoutMilestonesInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2559,17 +2559,17 @@ export type ProjectCreateWithoutMediaInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
   milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
 }
 
@@ -2607,16 +2607,16 @@ export type ProjectUncheckedCreateWithoutMediaInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
   milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -2669,17 +2669,17 @@ export type ProjectUpdateWithoutMediaInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
   milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
 }
 
@@ -2717,16 +2717,16 @@ export type ProjectUncheckedUpdateWithoutMediaInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
   milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2763,17 +2763,17 @@ export type ProjectCreateWithoutLeadsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
 }
 
@@ -2811,16 +2811,16 @@ export type ProjectUncheckedCreateWithoutLeadsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
   location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
   lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
-  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -2873,17 +2873,17 @@ export type ProjectUpdateWithoutLeadsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
 }
 
@@ -2921,16 +2921,16 @@ export type ProjectUncheckedUpdateWithoutLeadsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -2967,11 +2967,11 @@ export type ProjectCreateManyAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type ProjectUpdateWithoutAgentProfileInput = {
@@ -3007,17 +3007,17 @@ export type ProjectUpdateWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
 }
 
@@ -3054,17 +3054,17 @@ export type ProjectUncheckedUpdateWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
   lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
-  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -3101,11 +3101,11 @@ export type ProjectUncheckedUpdateManyWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -3114,18 +3114,18 @@ export type ProjectUncheckedUpdateManyWithoutAgentProfileInput = {
  */
 
 export type ProjectCountOutputType = {
-  lots: number
-  milestones: number
-  media: number
   leads: number
+  lots: number
+  media: number
+  milestones: number
   referrals: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  lots?: boolean | ProjectCountOutputTypeCountLotsArgs
-  milestones?: boolean | ProjectCountOutputTypeCountMilestonesArgs
-  media?: boolean | ProjectCountOutputTypeCountMediaArgs
   leads?: boolean | ProjectCountOutputTypeCountLeadsArgs
+  lots?: boolean | ProjectCountOutputTypeCountLotsArgs
+  media?: boolean | ProjectCountOutputTypeCountMediaArgs
+  milestones?: boolean | ProjectCountOutputTypeCountMilestonesArgs
   referrals?: boolean | ProjectCountOutputTypeCountReferralsArgs
 }
 
@@ -3142,15 +3142,15 @@ export type ProjectCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
 /**
  * ProjectCountOutputType without action
  */
-export type ProjectCountOutputTypeCountLotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProjectLotWhereInput
+export type ProjectCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadWhereInput
 }
 
 /**
  * ProjectCountOutputType without action
  */
-export type ProjectCountOutputTypeCountMilestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ProjectMilestoneWhereInput
+export type ProjectCountOutputTypeCountLotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectLotWhereInput
 }
 
 /**
@@ -3163,8 +3163,8 @@ export type ProjectCountOutputTypeCountMediaArgs<ExtArgs extends runtime.Types.E
 /**
  * ProjectCountOutputType without action
  */
-export type ProjectCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadWhereInput
+export type ProjectCountOutputTypeCountMilestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProjectMilestoneWhereInput
 }
 
 /**
@@ -3209,18 +3209,18 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
-  isDeleted?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
-  agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
+  isDeleted?: boolean
+  deletedAt?: boolean
   adminProject?: boolean | Prisma.Project$adminProjectArgs<ExtArgs>
+  leads?: boolean | Prisma.Project$leadsArgs<ExtArgs>
   location?: boolean | Prisma.Project$locationArgs<ExtArgs>
   lots?: boolean | Prisma.Project$lotsArgs<ExtArgs>
-  milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
   media?: boolean | Prisma.Project$mediaArgs<ExtArgs>
-  leads?: boolean | Prisma.Project$leadsArgs<ExtArgs>
+  milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
+  agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
   referrals?: boolean | Prisma.Project$referralsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
@@ -3259,11 +3259,11 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
-  isDeleted?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -3301,11 +3301,11 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
-  isDeleted?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -3343,22 +3343,22 @@ export type ProjectSelectScalar = {
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
-  isDeleted?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "category" | "stage" | "slug" | "name" | "description" | "currency" | "priceFrom" | "priceTo" | "ruc" | "businessName" | "downPayment" | "monthlyPayment" | "financing" | "totalBlocks" | "totalLots" | "social" | "services" | "urbanizationName" | "registryEntry" | "amenities" | "lotMode" | "constructionStart" | "estimatedDelivery" | "certifications" | "status" | "featured" | "tourUrl" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "publishedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "category" | "stage" | "slug" | "name" | "description" | "currency" | "priceFrom" | "priceTo" | "ruc" | "businessName" | "downPayment" | "monthlyPayment" | "financing" | "totalBlocks" | "totalLots" | "social" | "services" | "urbanizationName" | "registryEntry" | "amenities" | "lotMode" | "constructionStart" | "estimatedDelivery" | "certifications" | "status" | "featured" | "tourUrl" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "createdAt" | "updatedAt" | "publishedAt" | "isDeleted" | "deletedAt", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
   adminProject?: boolean | Prisma.Project$adminProjectArgs<ExtArgs>
+  leads?: boolean | Prisma.Project$leadsArgs<ExtArgs>
   location?: boolean | Prisma.Project$locationArgs<ExtArgs>
   lots?: boolean | Prisma.Project$lotsArgs<ExtArgs>
-  milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
   media?: boolean | Prisma.Project$mediaArgs<ExtArgs>
-  leads?: boolean | Prisma.Project$leadsArgs<ExtArgs>
+  milestones?: boolean | Prisma.Project$milestonesArgs<ExtArgs>
+  agentProfile?: boolean | Prisma.Project$agentProfileArgs<ExtArgs>
   referrals?: boolean | Prisma.Project$referralsArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -3372,13 +3372,13 @@ export type ProjectIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Project"
   objects: {
-    agentProfile: Prisma.$ProfessionalProfilePayload<ExtArgs> | null
     adminProject: Prisma.$AdminProjectPayload<ExtArgs> | null
+    leads: Prisma.$LeadPayload<ExtArgs>[]
     location: Prisma.$ProjectLocationPayload<ExtArgs> | null
     lots: Prisma.$ProjectLotPayload<ExtArgs>[]
-    milestones: Prisma.$ProjectMilestonePayload<ExtArgs>[]
     media: Prisma.$ProjectMediaPayload<ExtArgs>[]
-    leads: Prisma.$LeadPayload<ExtArgs>[]
+    milestones: Prisma.$ProjectMilestonePayload<ExtArgs>[]
+    agentProfile: Prisma.$ProfessionalProfilePayload<ExtArgs> | null
     referrals: Prisma.$ReferralPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -3415,14 +3415,14 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     contactEmail: string | null
     contactPhone: string | null
     contactWhatsapp: string | null
+    createdAt: Date
+    updatedAt: Date
+    publishedAt: Date | null
     /**
      * * Baja logica: eliminado por su dueño o por un admin. No se borra la fila.
      */
     isDeleted: boolean
     deletedAt: Date | null
-    createdAt: Date
-    updatedAt: Date
-    publishedAt: Date | null
   }, ExtArgs["result"]["project"]>
   composites: {}
 }
@@ -3817,13 +3817,13 @@ readonly fields: ProjectFieldRefs;
  */
 export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  agentProfile<T extends Prisma.Project$agentProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$agentProfileArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   adminProject<T extends Prisma.Project$adminProjectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$adminProjectArgs<ExtArgs>>): Prisma.Prisma__AdminProjectClient<runtime.Types.Result.GetResult<Prisma.$AdminProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  leads<T extends Prisma.Project$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   location<T extends Prisma.Project$locationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$locationArgs<ExtArgs>>): Prisma.Prisma__ProjectLocationClient<runtime.Types.Result.GetResult<Prisma.$ProjectLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   lots<T extends Prisma.Project$lotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$lotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectLotPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  milestones<T extends Prisma.Project$milestonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   media<T extends Prisma.Project$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  leads<T extends Prisma.Project$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  milestones<T extends Prisma.Project$milestonesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$milestonesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMilestonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  agentProfile<T extends Prisma.Project$agentProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$agentProfileArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   referrals<T extends Prisma.Project$referralsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$referralsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3887,11 +3887,11 @@ export interface ProjectFieldRefs {
   readonly contactEmail: Prisma.FieldRef<"Project", 'String'>
   readonly contactPhone: Prisma.FieldRef<"Project", 'String'>
   readonly contactWhatsapp: Prisma.FieldRef<"Project", 'String'>
-  readonly isDeleted: Prisma.FieldRef<"Project", 'Boolean'>
-  readonly deletedAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly publishedAt: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly isDeleted: Prisma.FieldRef<"Project", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Project", 'DateTime'>
 }
     
 
@@ -4293,25 +4293,6 @@ export type ProjectDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Project.agentProfile
- */
-export type Project$agentProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProfessionalProfile
-   */
-  select?: Prisma.ProfessionalProfileSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProfessionalProfile
-   */
-  omit?: Prisma.ProfessionalProfileOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProfessionalProfileInclude<ExtArgs> | null
-  where?: Prisma.ProfessionalProfileWhereInput
-}
-
-/**
  * Project.adminProject
  */
 export type Project$adminProjectArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4328,6 +4309,30 @@ export type Project$adminProjectArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.AdminProjectInclude<ExtArgs> | null
   where?: Prisma.AdminProjectWhereInput
+}
+
+/**
+ * Project.leads
+ */
+export type Project$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Lead
+   */
+  select?: Prisma.LeadSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Lead
+   */
+  omit?: Prisma.LeadOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadInclude<ExtArgs> | null
+  where?: Prisma.LeadWhereInput
+  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
+  cursor?: Prisma.LeadWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
 }
 
 /**
@@ -4374,30 +4379,6 @@ export type Project$lotsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
- * Project.milestones
- */
-export type Project$milestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ProjectMilestone
-   */
-  select?: Prisma.ProjectMilestoneSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ProjectMilestone
-   */
-  omit?: Prisma.ProjectMilestoneOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ProjectMilestoneInclude<ExtArgs> | null
-  where?: Prisma.ProjectMilestoneWhereInput
-  orderBy?: Prisma.ProjectMilestoneOrderByWithRelationInput | Prisma.ProjectMilestoneOrderByWithRelationInput[]
-  cursor?: Prisma.ProjectMilestoneWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ProjectMilestoneScalarFieldEnum | Prisma.ProjectMilestoneScalarFieldEnum[]
-}
-
-/**
  * Project.media
  */
 export type Project$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4422,27 +4403,46 @@ export type Project$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
- * Project.leads
+ * Project.milestones
  */
-export type Project$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Project$milestonesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Lead
+   * Select specific fields to fetch from the ProjectMilestone
    */
-  select?: Prisma.LeadSelect<ExtArgs> | null
+  select?: Prisma.ProjectMilestoneSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Lead
+   * Omit specific fields from the ProjectMilestone
    */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
+  omit?: Prisma.ProjectMilestoneOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
-  cursor?: Prisma.LeadWhereUniqueInput
+  include?: Prisma.ProjectMilestoneInclude<ExtArgs> | null
+  where?: Prisma.ProjectMilestoneWhereInput
+  orderBy?: Prisma.ProjectMilestoneOrderByWithRelationInput | Prisma.ProjectMilestoneOrderByWithRelationInput[]
+  cursor?: Prisma.ProjectMilestoneWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+  distinct?: Prisma.ProjectMilestoneScalarFieldEnum | Prisma.ProjectMilestoneScalarFieldEnum[]
+}
+
+/**
+ * Project.agentProfile
+ */
+export type Project$agentProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfessionalProfile
+   */
+  select?: Prisma.ProfessionalProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProfessionalProfile
+   */
+  omit?: Prisma.ProfessionalProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProfessionalProfileInclude<ExtArgs> | null
+  where?: Prisma.ProfessionalProfileWhereInput
 }
 
 /**

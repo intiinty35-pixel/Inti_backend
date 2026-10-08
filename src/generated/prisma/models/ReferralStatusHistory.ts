@@ -232,8 +232,8 @@ export type ReferralStatusHistoryWhereInput = {
   pointsAwarded?: Prisma.IntFilter<"ReferralStatusHistory"> | number
   changedById?: Prisma.StringNullableFilter<"ReferralStatusHistory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ReferralStatusHistory"> | Date | string
-  referral?: Prisma.XOR<Prisma.ReferralScalarRelationFilter, Prisma.ReferralWhereInput>
   changedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  referral?: Prisma.XOR<Prisma.ReferralScalarRelationFilter, Prisma.ReferralWhereInput>
 }
 
 export type ReferralStatusHistoryOrderByWithRelationInput = {
@@ -244,8 +244,8 @@ export type ReferralStatusHistoryOrderByWithRelationInput = {
   pointsAwarded?: Prisma.SortOrder
   changedById?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  referral?: Prisma.ReferralOrderByWithRelationInput
   changedBy?: Prisma.UserOrderByWithRelationInput
+  referral?: Prisma.ReferralOrderByWithRelationInput
 }
 
 export type ReferralStatusHistoryWhereUniqueInput = Prisma.AtLeast<{
@@ -260,8 +260,8 @@ export type ReferralStatusHistoryWhereUniqueInput = Prisma.AtLeast<{
   pointsAwarded?: Prisma.IntFilter<"ReferralStatusHistory"> | number
   changedById?: Prisma.StringNullableFilter<"ReferralStatusHistory"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ReferralStatusHistory"> | Date | string
-  referral?: Prisma.XOR<Prisma.ReferralScalarRelationFilter, Prisma.ReferralWhereInput>
   changedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  referral?: Prisma.XOR<Prisma.ReferralScalarRelationFilter, Prisma.ReferralWhereInput>
 }, "id" | "referralId_toStatus">
 
 export type ReferralStatusHistoryOrderByWithAggregationInput = {
@@ -298,8 +298,8 @@ export type ReferralStatusHistoryCreateInput = {
   toStatus: $Enums.ReferralStatus
   pointsAwarded?: number
   createdAt?: Date | string
-  referral: Prisma.ReferralCreateNestedOneWithoutHistoryInput
   changedBy?: Prisma.UserCreateNestedOneWithoutReferralChangesInput
+  referral: Prisma.ReferralCreateNestedOneWithoutHistoryInput
 }
 
 export type ReferralStatusHistoryUncheckedCreateInput = {
@@ -318,8 +318,8 @@ export type ReferralStatusHistoryUpdateInput = {
   toStatus?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
   pointsAwarded?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  referral?: Prisma.ReferralUpdateOneRequiredWithoutHistoryNestedInput
   changedBy?: Prisma.UserUpdateOneWithoutReferralChangesNestedInput
+  referral?: Prisma.ReferralUpdateOneRequiredWithoutHistoryNestedInput
 }
 
 export type ReferralStatusHistoryUncheckedUpdateInput = {
@@ -684,8 +684,8 @@ export type ReferralStatusHistorySelect<ExtArgs extends runtime.Types.Extensions
   pointsAwarded?: boolean
   changedById?: boolean
   createdAt?: boolean
-  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
   changedBy?: boolean | Prisma.ReferralStatusHistory$changedByArgs<ExtArgs>
+  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["referralStatusHistory"]>
 
 export type ReferralStatusHistorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -696,8 +696,8 @@ export type ReferralStatusHistorySelectCreateManyAndReturn<ExtArgs extends runti
   pointsAwarded?: boolean
   changedById?: boolean
   createdAt?: boolean
-  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
   changedBy?: boolean | Prisma.ReferralStatusHistory$changedByArgs<ExtArgs>
+  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["referralStatusHistory"]>
 
 export type ReferralStatusHistorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -708,8 +708,8 @@ export type ReferralStatusHistorySelectUpdateManyAndReturn<ExtArgs extends runti
   pointsAwarded?: boolean
   changedById?: boolean
   createdAt?: boolean
-  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
   changedBy?: boolean | Prisma.ReferralStatusHistory$changedByArgs<ExtArgs>
+  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["referralStatusHistory"]>
 
 export type ReferralStatusHistorySelectScalar = {
@@ -724,23 +724,23 @@ export type ReferralStatusHistorySelectScalar = {
 
 export type ReferralStatusHistoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "referralId" | "fromStatus" | "toStatus" | "pointsAwarded" | "changedById" | "createdAt", ExtArgs["result"]["referralStatusHistory"]>
 export type ReferralStatusHistoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
   changedBy?: boolean | Prisma.ReferralStatusHistory$changedByArgs<ExtArgs>
+  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
 }
 export type ReferralStatusHistoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
   changedBy?: boolean | Prisma.ReferralStatusHistory$changedByArgs<ExtArgs>
+  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
 }
 export type ReferralStatusHistoryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
   changedBy?: boolean | Prisma.ReferralStatusHistory$changedByArgs<ExtArgs>
+  referral?: boolean | Prisma.ReferralDefaultArgs<ExtArgs>
 }
 
 export type $ReferralStatusHistoryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ReferralStatusHistory"
   objects: {
-    referral: Prisma.$ReferralPayload<ExtArgs>
     changedBy: Prisma.$UserPayload<ExtArgs> | null
+    referral: Prisma.$ReferralPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1144,8 +1144,8 @@ readonly fields: ReferralStatusHistoryFieldRefs;
  */
 export interface Prisma__ReferralStatusHistoryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  referral<T extends Prisma.ReferralDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReferralDefaultArgs<ExtArgs>>): Prisma.Prisma__ReferralClient<runtime.Types.Result.GetResult<Prisma.$ReferralPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   changedBy<T extends Prisma.ReferralStatusHistory$changedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReferralStatusHistory$changedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  referral<T extends Prisma.ReferralDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReferralDefaultArgs<ExtArgs>>): Prisma.Prisma__ReferralClient<runtime.Types.Result.GetResult<Prisma.$ReferralPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

@@ -232,8 +232,8 @@ export type PointMovementWhereInput = {
   referenceId?: Prisma.StringNullableFilter<"PointMovement"> | string | null
   description?: Prisma.StringFilter<"PointMovement"> | string
   createdAt?: Prisma.DateTimeFilter<"PointMovement"> | Date | string
-  referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
   redemption?: Prisma.XOR<Prisma.RedemptionNullableScalarRelationFilter, Prisma.RedemptionWhereInput> | null
+  referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
 }
 
 export type PointMovementOrderByWithRelationInput = {
@@ -244,8 +244,8 @@ export type PointMovementOrderByWithRelationInput = {
   referenceId?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  referrer?: Prisma.ReferrerOrderByWithRelationInput
   redemption?: Prisma.RedemptionOrderByWithRelationInput
+  referrer?: Prisma.ReferrerOrderByWithRelationInput
 }
 
 export type PointMovementWhereUniqueInput = Prisma.AtLeast<{
@@ -259,8 +259,8 @@ export type PointMovementWhereUniqueInput = Prisma.AtLeast<{
   referenceId?: Prisma.StringNullableFilter<"PointMovement"> | string | null
   description?: Prisma.StringFilter<"PointMovement"> | string
   createdAt?: Prisma.DateTimeFilter<"PointMovement"> | Date | string
-  referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
   redemption?: Prisma.XOR<Prisma.RedemptionNullableScalarRelationFilter, Prisma.RedemptionWhereInput> | null
+  referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
 }, "id">
 
 export type PointMovementOrderByWithAggregationInput = {
@@ -297,8 +297,8 @@ export type PointMovementCreateInput = {
   type: $Enums.PointMovementType
   description: string
   createdAt?: Date | string
-  referrer: Prisma.ReferrerCreateNestedOneWithoutPointMovementsInput
   redemption?: Prisma.RedemptionCreateNestedOneWithoutPointMovementsInput
+  referrer: Prisma.ReferrerCreateNestedOneWithoutPointMovementsInput
 }
 
 export type PointMovementUncheckedCreateInput = {
@@ -317,8 +317,8 @@ export type PointMovementUpdateInput = {
   type?: Prisma.EnumPointMovementTypeFieldUpdateOperationsInput | $Enums.PointMovementType
   description?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutPointMovementsNestedInput
   redemption?: Prisma.RedemptionUpdateOneWithoutPointMovementsNestedInput
+  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutPointMovementsNestedInput
 }
 
 export type PointMovementUncheckedUpdateInput = {
@@ -678,8 +678,8 @@ export type PointMovementSelect<ExtArgs extends runtime.Types.Extensions.Interna
   referenceId?: boolean
   description?: boolean
   createdAt?: boolean
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   redemption?: boolean | Prisma.PointMovement$redemptionArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pointMovement"]>
 
 export type PointMovementSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -690,8 +690,8 @@ export type PointMovementSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   referenceId?: boolean
   description?: boolean
   createdAt?: boolean
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   redemption?: boolean | Prisma.PointMovement$redemptionArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pointMovement"]>
 
 export type PointMovementSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -702,8 +702,8 @@ export type PointMovementSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   referenceId?: boolean
   description?: boolean
   createdAt?: boolean
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   redemption?: boolean | Prisma.PointMovement$redemptionArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pointMovement"]>
 
 export type PointMovementSelectScalar = {
@@ -718,23 +718,23 @@ export type PointMovementSelectScalar = {
 
 export type PointMovementOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "referrerId" | "points" | "type" | "referenceId" | "description" | "createdAt", ExtArgs["result"]["pointMovement"]>
 export type PointMovementInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   redemption?: boolean | Prisma.PointMovement$redemptionArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }
 export type PointMovementIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   redemption?: boolean | Prisma.PointMovement$redemptionArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }
 export type PointMovementIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   redemption?: boolean | Prisma.PointMovement$redemptionArgs<ExtArgs>
+  referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
 }
 
 export type $PointMovementPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PointMovement"
   objects: {
-    referrer: Prisma.$ReferrerPayload<ExtArgs>
     redemption: Prisma.$RedemptionPayload<ExtArgs> | null
+    referrer: Prisma.$ReferrerPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1138,8 +1138,8 @@ readonly fields: PointMovementFieldRefs;
  */
 export interface Prisma__PointMovementClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  referrer<T extends Prisma.ReferrerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReferrerDefaultArgs<ExtArgs>>): Prisma.Prisma__ReferrerClient<runtime.Types.Result.GetResult<Prisma.$ReferrerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   redemption<T extends Prisma.PointMovement$redemptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PointMovement$redemptionArgs<ExtArgs>>): Prisma.Prisma__RedemptionClient<runtime.Types.Result.GetResult<Prisma.$RedemptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  referrer<T extends Prisma.ReferrerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReferrerDefaultArgs<ExtArgs>>): Prisma.Prisma__ReferrerClient<runtime.Types.Result.GetResult<Prisma.$ReferrerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

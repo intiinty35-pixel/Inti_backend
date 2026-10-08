@@ -54,11 +54,11 @@ export type PropertyMinAggregateOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
-  isDeleted: boolean | null
-  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   publishedAt: Date | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type PropertyMaxAggregateOutputType = {
@@ -79,11 +79,11 @@ export type PropertyMaxAggregateOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
-  isDeleted: boolean | null
-  deletedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   publishedAt: Date | null
+  isDeleted: boolean | null
+  deletedAt: Date | null
 }
 
 export type PropertyCountAggregateOutputType = {
@@ -104,11 +104,11 @@ export type PropertyCountAggregateOutputType = {
   contactEmail: number
   contactPhone: number
   contactWhatsapp: number
-  isDeleted: number
-  deletedAt: number
   createdAt: number
   updatedAt: number
   publishedAt: number
+  isDeleted: number
+  deletedAt: number
   _all: number
 }
 
@@ -141,11 +141,11 @@ export type PropertyMinAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
-  isDeleted?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
 }
 
 export type PropertyMaxAggregateInputType = {
@@ -166,11 +166,11 @@ export type PropertyMaxAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
-  isDeleted?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
 }
 
 export type PropertyCountAggregateInputType = {
@@ -191,11 +191,11 @@ export type PropertyCountAggregateInputType = {
   contactEmail?: true
   contactPhone?: true
   contactWhatsapp?: true
-  isDeleted?: true
-  deletedAt?: true
   createdAt?: true
   updatedAt?: true
   publishedAt?: true
+  isDeleted?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -303,11 +303,11 @@ export type PropertyGroupByOutputType = {
   contactEmail: string | null
   contactPhone: string | null
   contactWhatsapp: string | null
-  isDeleted: boolean
-  deletedAt: Date | null
   createdAt: Date
   updatedAt: Date
   publishedAt: Date | null
+  isDeleted: boolean
+  deletedAt: Date | null
   _count: PropertyCountAggregateOutputType | null
   _avg: PropertyAvgAggregateOutputType | null
   _sum: PropertySumAggregateOutputType | null
@@ -351,19 +351,19 @@ export type PropertyWhereInput = {
   contactEmail?: Prisma.StringNullableFilter<"Property"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Property"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Property"> | string | null
-  isDeleted?: Prisma.BoolFilter<"Property"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  isDeleted?: Prisma.BoolFilter<"Property"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  favorites?: Prisma.FavoriteListRelationFilter
   leads?: Prisma.LeadListRelationFilter
+  priceAlerts?: Prisma.PriceAlertListRelationFilter
   agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileScalarRelationFilter, Prisma.ProfessionalProfileWhereInput>
   amenities?: Prisma.PropertyAmenityListRelationFilter
   details?: Prisma.XOR<Prisma.PropertyDetailsNullableScalarRelationFilter, Prisma.PropertyDetailsWhereInput> | null
   location?: Prisma.XOR<Prisma.PropertyLocationNullableScalarRelationFilter, Prisma.PropertyLocationWhereInput> | null
   media?: Prisma.PropertyMediaListRelationFilter
-  favorites?: Prisma.FavoriteListRelationFilter
-  priceAlerts?: Prisma.PriceAlertListRelationFilter
 }
 
 export type PropertyOrderByWithRelationInput = {
@@ -384,19 +384,19 @@ export type PropertyOrderByWithRelationInput = {
   contactEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  favorites?: Prisma.FavoriteOrderByRelationAggregateInput
   leads?: Prisma.LeadOrderByRelationAggregateInput
+  priceAlerts?: Prisma.PriceAlertOrderByRelationAggregateInput
   agentProfile?: Prisma.ProfessionalProfileOrderByWithRelationInput
   amenities?: Prisma.PropertyAmenityOrderByRelationAggregateInput
   details?: Prisma.PropertyDetailsOrderByWithRelationInput
   location?: Prisma.PropertyLocationOrderByWithRelationInput
   media?: Prisma.PropertyMediaOrderByRelationAggregateInput
-  favorites?: Prisma.FavoriteOrderByRelationAggregateInput
-  priceAlerts?: Prisma.PriceAlertOrderByRelationAggregateInput
 }
 
 export type PropertyWhereUniqueInput = Prisma.AtLeast<{
@@ -420,19 +420,19 @@ export type PropertyWhereUniqueInput = Prisma.AtLeast<{
   contactEmail?: Prisma.StringNullableFilter<"Property"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Property"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Property"> | string | null
-  isDeleted?: Prisma.BoolFilter<"Property"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  isDeleted?: Prisma.BoolFilter<"Property"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  favorites?: Prisma.FavoriteListRelationFilter
   leads?: Prisma.LeadListRelationFilter
+  priceAlerts?: Prisma.PriceAlertListRelationFilter
   agentProfile?: Prisma.XOR<Prisma.ProfessionalProfileScalarRelationFilter, Prisma.ProfessionalProfileWhereInput>
   amenities?: Prisma.PropertyAmenityListRelationFilter
   details?: Prisma.XOR<Prisma.PropertyDetailsNullableScalarRelationFilter, Prisma.PropertyDetailsWhereInput> | null
   location?: Prisma.XOR<Prisma.PropertyLocationNullableScalarRelationFilter, Prisma.PropertyLocationWhereInput> | null
   media?: Prisma.PropertyMediaListRelationFilter
-  favorites?: Prisma.FavoriteListRelationFilter
-  priceAlerts?: Prisma.PriceAlertListRelationFilter
 }, "id" | "slug">
 
 export type PropertyOrderByWithAggregationInput = {
@@ -453,11 +453,11 @@ export type PropertyOrderByWithAggregationInput = {
   contactEmail?: Prisma.SortOrderInput | Prisma.SortOrder
   contactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrderInput | Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PropertyCountOrderByAggregateInput
   _avg?: Prisma.PropertyAvgOrderByAggregateInput
   _max?: Prisma.PropertyMaxOrderByAggregateInput
@@ -486,11 +486,11 @@ export type PropertyScalarWhereWithAggregatesInput = {
   contactEmail?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
   contactPhone?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
   contactWhatsapp?: Prisma.StringNullableWithAggregatesFilter<"Property"> | string | null
-  isDeleted?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
-  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Property"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Property"> | Date | string
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Property"> | Date | string | null
+  isDeleted?: Prisma.BoolWithAggregatesFilter<"Property"> | boolean
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Property"> | Date | string | null
 }
 
 export type PropertyCreateInput = {
@@ -510,19 +510,19 @@ export type PropertyCreateInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateInput = {
@@ -543,18 +543,18 @@ export type PropertyUncheckedCreateInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUpdateInput = {
@@ -574,19 +574,19 @@ export type PropertyUpdateInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateInput = {
@@ -607,18 +607,18 @@ export type PropertyUncheckedUpdateInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyCreateManyInput = {
@@ -639,11 +639,11 @@ export type PropertyCreateManyInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type PropertyUpdateManyMutationInput = {
@@ -663,11 +663,11 @@ export type PropertyUpdateManyMutationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PropertyUncheckedUpdateManyInput = {
@@ -688,11 +688,11 @@ export type PropertyUncheckedUpdateManyInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PropertyListRelationFilter = {
@@ -728,11 +728,11 @@ export type PropertyCountOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type PropertyAvgOrderByAggregateInput = {
@@ -758,11 +758,11 @@ export type PropertyMaxOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type PropertyMinOrderByAggregateInput = {
@@ -783,11 +783,11 @@ export type PropertyMinOrderByAggregateInput = {
   contactEmail?: Prisma.SortOrder
   contactPhone?: Prisma.SortOrder
   contactWhatsapp?: Prisma.SortOrder
-  isDeleted?: Prisma.SortOrder
-  deletedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
+  isDeleted?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type PropertySumOrderByAggregateInput = {
@@ -971,18 +971,18 @@ export type PropertyCreateWithoutAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateWithoutAgentProfileInput = {
@@ -1002,18 +1002,18 @@ export type PropertyUncheckedCreateWithoutAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyCreateOrConnectWithoutAgentProfileInput = {
@@ -1063,11 +1063,11 @@ export type PropertyScalarWhereInput = {
   contactEmail?: Prisma.StringNullableFilter<"Property"> | string | null
   contactPhone?: Prisma.StringNullableFilter<"Property"> | string | null
   contactWhatsapp?: Prisma.StringNullableFilter<"Property"> | string | null
-  isDeleted?: Prisma.BoolFilter<"Property"> | boolean
-  deletedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Property"> | Date | string
   publishedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
+  isDeleted?: Prisma.BoolFilter<"Property"> | boolean
+  deletedAt?: Prisma.DateTimeNullableFilter<"Property"> | Date | string | null
 }
 
 export type PropertyCreateWithoutFavoritesInput = {
@@ -1087,18 +1087,18 @@ export type PropertyCreateWithoutFavoritesInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateWithoutFavoritesInput = {
@@ -1119,17 +1119,17 @@ export type PropertyUncheckedCreateWithoutFavoritesInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyCreateOrConnectWithoutFavoritesInput = {
@@ -1165,18 +1165,18 @@ export type PropertyUpdateWithoutFavoritesInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateWithoutFavoritesInput = {
@@ -1197,17 +1197,17 @@ export type PropertyUncheckedUpdateWithoutFavoritesInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyCreateWithoutPriceAlertsInput = {
@@ -1227,18 +1227,18 @@ export type PropertyCreateWithoutPriceAlertsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateWithoutPriceAlertsInput = {
@@ -1259,17 +1259,17 @@ export type PropertyUncheckedCreateWithoutPriceAlertsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyCreateOrConnectWithoutPriceAlertsInput = {
@@ -1305,18 +1305,18 @@ export type PropertyUpdateWithoutPriceAlertsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateWithoutPriceAlertsInput = {
@@ -1337,17 +1337,17 @@ export type PropertyUncheckedUpdateWithoutPriceAlertsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyCreateWithoutLocationInput = {
@@ -1367,18 +1367,18 @@ export type PropertyCreateWithoutLocationInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateWithoutLocationInput = {
@@ -1399,17 +1399,17 @@ export type PropertyUncheckedCreateWithoutLocationInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyCreateOrConnectWithoutLocationInput = {
@@ -1445,18 +1445,18 @@ export type PropertyUpdateWithoutLocationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateWithoutLocationInput = {
@@ -1477,17 +1477,17 @@ export type PropertyUncheckedUpdateWithoutLocationInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyCreateWithoutDetailsInput = {
@@ -1507,18 +1507,18 @@ export type PropertyCreateWithoutDetailsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateWithoutDetailsInput = {
@@ -1539,17 +1539,17 @@ export type PropertyUncheckedCreateWithoutDetailsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyCreateOrConnectWithoutDetailsInput = {
@@ -1585,18 +1585,18 @@ export type PropertyUpdateWithoutDetailsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateWithoutDetailsInput = {
@@ -1617,17 +1617,17 @@ export type PropertyUncheckedUpdateWithoutDetailsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyCreateWithoutAmenitiesInput = {
@@ -1647,18 +1647,18 @@ export type PropertyCreateWithoutAmenitiesInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
   details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateWithoutAmenitiesInput = {
@@ -1679,17 +1679,17 @@ export type PropertyUncheckedCreateWithoutAmenitiesInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyCreateOrConnectWithoutAmenitiesInput = {
@@ -1725,18 +1725,18 @@ export type PropertyUpdateWithoutAmenitiesInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
   details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateWithoutAmenitiesInput = {
@@ -1757,17 +1757,17 @@ export type PropertyUncheckedUpdateWithoutAmenitiesInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyCreateWithoutMediaInput = {
@@ -1787,18 +1787,18 @@ export type PropertyCreateWithoutMediaInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateWithoutMediaInput = {
@@ -1819,17 +1819,17 @@ export type PropertyUncheckedCreateWithoutMediaInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyCreateOrConnectWithoutMediaInput = {
@@ -1865,18 +1865,18 @@ export type PropertyUpdateWithoutMediaInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateWithoutMediaInput = {
@@ -1897,17 +1897,17 @@ export type PropertyUncheckedUpdateWithoutMediaInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyCreateWithoutLeadsInput = {
@@ -1927,18 +1927,18 @@ export type PropertyCreateWithoutLeadsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
   agentProfile: Prisma.ProfessionalProfileCreateNestedOneWithoutPropertiesInput
   amenities?: Prisma.PropertyAmenityCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyUncheckedCreateWithoutLeadsInput = {
@@ -1959,17 +1959,17 @@ export type PropertyUncheckedCreateWithoutLeadsInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
+  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
   amenities?: Prisma.PropertyAmenityUncheckedCreateNestedManyWithoutPropertyInput
   details?: Prisma.PropertyDetailsUncheckedCreateNestedOneWithoutPropertyInput
   location?: Prisma.PropertyLocationUncheckedCreateNestedOneWithoutPropertyInput
   media?: Prisma.PropertyMediaUncheckedCreateNestedManyWithoutPropertyInput
-  favorites?: Prisma.FavoriteUncheckedCreateNestedManyWithoutPropertyInput
-  priceAlerts?: Prisma.PriceAlertUncheckedCreateNestedManyWithoutPropertyInput
 }
 
 export type PropertyCreateOrConnectWithoutLeadsInput = {
@@ -2005,18 +2005,18 @@ export type PropertyUpdateWithoutLeadsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
   agentProfile?: Prisma.ProfessionalProfileUpdateOneRequiredWithoutPropertiesNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateWithoutLeadsInput = {
@@ -2037,17 +2037,17 @@ export type PropertyUncheckedUpdateWithoutLeadsInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyCreateManyAgentProfileInput = {
@@ -2067,11 +2067,11 @@ export type PropertyCreateManyAgentProfileInput = {
   contactEmail?: string | null
   contactPhone?: string | null
   contactWhatsapp?: string | null
-  isDeleted?: boolean
-  deletedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
 }
 
 export type PropertyUpdateWithoutAgentProfileInput = {
@@ -2091,18 +2091,18 @@ export type PropertyUpdateWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateWithoutAgentProfileInput = {
@@ -2122,18 +2122,18 @@ export type PropertyUncheckedUpdateWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutPropertyNestedInput
+  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
   amenities?: Prisma.PropertyAmenityUncheckedUpdateManyWithoutPropertyNestedInput
   details?: Prisma.PropertyDetailsUncheckedUpdateOneWithoutPropertyNestedInput
   location?: Prisma.PropertyLocationUncheckedUpdateOneWithoutPropertyNestedInput
   media?: Prisma.PropertyMediaUncheckedUpdateManyWithoutPropertyNestedInput
-  favorites?: Prisma.FavoriteUncheckedUpdateManyWithoutPropertyNestedInput
-  priceAlerts?: Prisma.PriceAlertUncheckedUpdateManyWithoutPropertyNestedInput
 }
 
 export type PropertyUncheckedUpdateManyWithoutAgentProfileInput = {
@@ -2153,11 +2153,11 @@ export type PropertyUncheckedUpdateManyWithoutAgentProfileInput = {
   contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -2166,19 +2166,19 @@ export type PropertyUncheckedUpdateManyWithoutAgentProfileInput = {
  */
 
 export type PropertyCountOutputType = {
+  favorites: number
   leads: number
+  priceAlerts: number
   amenities: number
   media: number
-  favorites: number
-  priceAlerts: number
 }
 
 export type PropertyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  favorites?: boolean | PropertyCountOutputTypeCountFavoritesArgs
   leads?: boolean | PropertyCountOutputTypeCountLeadsArgs
+  priceAlerts?: boolean | PropertyCountOutputTypeCountPriceAlertsArgs
   amenities?: boolean | PropertyCountOutputTypeCountAmenitiesArgs
   media?: boolean | PropertyCountOutputTypeCountMediaArgs
-  favorites?: boolean | PropertyCountOutputTypeCountFavoritesArgs
-  priceAlerts?: boolean | PropertyCountOutputTypeCountPriceAlertsArgs
 }
 
 /**
@@ -2194,8 +2194,22 @@ export type PropertyCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
 /**
  * PropertyCountOutputType without action
  */
+export type PropertyCountOutputTypeCountFavoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FavoriteWhereInput
+}
+
+/**
+ * PropertyCountOutputType without action
+ */
 export type PropertyCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LeadWhereInput
+}
+
+/**
+ * PropertyCountOutputType without action
+ */
+export type PropertyCountOutputTypeCountPriceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PriceAlertWhereInput
 }
 
 /**
@@ -2210,20 +2224,6 @@ export type PropertyCountOutputTypeCountAmenitiesArgs<ExtArgs extends runtime.Ty
  */
 export type PropertyCountOutputTypeCountMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PropertyMediaWhereInput
-}
-
-/**
- * PropertyCountOutputType without action
- */
-export type PropertyCountOutputTypeCountFavoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FavoriteWhereInput
-}
-
-/**
- * PropertyCountOutputType without action
- */
-export type PropertyCountOutputTypeCountPriceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PriceAlertWhereInput
 }
 
 
@@ -2245,19 +2245,19 @@ export type PropertySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
-  isDeleted?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
+  favorites?: boolean | Prisma.Property$favoritesArgs<ExtArgs>
   leads?: boolean | Prisma.Property$leadsArgs<ExtArgs>
+  priceAlerts?: boolean | Prisma.Property$priceAlertsArgs<ExtArgs>
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
   amenities?: boolean | Prisma.Property$amenitiesArgs<ExtArgs>
   details?: boolean | Prisma.Property$detailsArgs<ExtArgs>
   location?: boolean | Prisma.Property$locationArgs<ExtArgs>
   media?: boolean | Prisma.Property$mediaArgs<ExtArgs>
-  favorites?: boolean | Prisma.Property$favoritesArgs<ExtArgs>
-  priceAlerts?: boolean | Prisma.Property$priceAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.PropertyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["property"]>
 
@@ -2279,11 +2279,11 @@ export type PropertySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
-  isDeleted?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["property"]>
 
@@ -2305,11 +2305,11 @@ export type PropertySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
-  isDeleted?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["property"]>
 
@@ -2331,23 +2331,23 @@ export type PropertySelectScalar = {
   contactEmail?: boolean
   contactPhone?: boolean
   contactWhatsapp?: boolean
-  isDeleted?: boolean
-  deletedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   publishedAt?: boolean
+  isDeleted?: boolean
+  deletedAt?: boolean
 }
 
-export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "operationType" | "propertyType" | "slug" | "title" | "description" | "price" | "currency" | "negotiable" | "maintenanceFee" | "status" | "featured" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "isDeleted" | "deletedAt" | "createdAt" | "updatedAt" | "publishedAt", ExtArgs["result"]["property"]>
+export type PropertyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "agentProfileId" | "operationType" | "propertyType" | "slug" | "title" | "description" | "price" | "currency" | "negotiable" | "maintenanceFee" | "status" | "featured" | "contactName" | "contactEmail" | "contactPhone" | "contactWhatsapp" | "createdAt" | "updatedAt" | "publishedAt" | "isDeleted" | "deletedAt", ExtArgs["result"]["property"]>
 export type PropertyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  favorites?: boolean | Prisma.Property$favoritesArgs<ExtArgs>
   leads?: boolean | Prisma.Property$leadsArgs<ExtArgs>
+  priceAlerts?: boolean | Prisma.Property$priceAlertsArgs<ExtArgs>
   agentProfile?: boolean | Prisma.ProfessionalProfileDefaultArgs<ExtArgs>
   amenities?: boolean | Prisma.Property$amenitiesArgs<ExtArgs>
   details?: boolean | Prisma.Property$detailsArgs<ExtArgs>
   location?: boolean | Prisma.Property$locationArgs<ExtArgs>
   media?: boolean | Prisma.Property$mediaArgs<ExtArgs>
-  favorites?: boolean | Prisma.Property$favoritesArgs<ExtArgs>
-  priceAlerts?: boolean | Prisma.Property$priceAlertsArgs<ExtArgs>
   _count?: boolean | Prisma.PropertyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type PropertyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2360,14 +2360,14 @@ export type PropertyIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Property"
   objects: {
+    favorites: Prisma.$FavoritePayload<ExtArgs>[]
     leads: Prisma.$LeadPayload<ExtArgs>[]
+    priceAlerts: Prisma.$PriceAlertPayload<ExtArgs>[]
     agentProfile: Prisma.$ProfessionalProfilePayload<ExtArgs>
     amenities: Prisma.$PropertyAmenityPayload<ExtArgs>[]
     details: Prisma.$PropertyDetailsPayload<ExtArgs> | null
     location: Prisma.$PropertyLocationPayload<ExtArgs> | null
     media: Prisma.$PropertyMediaPayload<ExtArgs>[]
-    favorites: Prisma.$FavoritePayload<ExtArgs>[]
-    priceAlerts: Prisma.$PriceAlertPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2387,14 +2387,14 @@ export type $PropertyPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     contactEmail: string | null
     contactPhone: string | null
     contactWhatsapp: string | null
+    createdAt: Date
+    updatedAt: Date
+    publishedAt: Date | null
     /**
      * * Baja logica: eliminada por su dueño o por un admin. No se borra la fila.
      */
     isDeleted: boolean
     deletedAt: Date | null
-    createdAt: Date
-    updatedAt: Date
-    publishedAt: Date | null
   }, ExtArgs["result"]["property"]>
   composites: {}
 }
@@ -2789,14 +2789,14 @@ readonly fields: PropertyFieldRefs;
  */
 export interface Prisma__PropertyClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  favorites<T extends Prisma.Property$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leads<T extends Prisma.Property$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  priceAlerts<T extends Prisma.Property$priceAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$priceAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   agentProfile<T extends Prisma.ProfessionalProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProfessionalProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__ProfessionalProfileClient<runtime.Types.Result.GetResult<Prisma.$ProfessionalProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   amenities<T extends Prisma.Property$amenitiesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$amenitiesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyAmenityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   details<T extends Prisma.Property$detailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$detailsArgs<ExtArgs>>): Prisma.Prisma__PropertyDetailsClient<runtime.Types.Result.GetResult<Prisma.$PropertyDetailsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   location<T extends Prisma.Property$locationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$locationArgs<ExtArgs>>): Prisma.Prisma__PropertyLocationClient<runtime.Types.Result.GetResult<Prisma.$PropertyLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   media<T extends Prisma.Property$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PropertyMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  favorites<T extends Prisma.Property$favoritesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  priceAlerts<T extends Prisma.Property$priceAlertsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Property$priceAlertsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PriceAlertPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2843,11 +2843,11 @@ export interface PropertyFieldRefs {
   readonly contactEmail: Prisma.FieldRef<"Property", 'String'>
   readonly contactPhone: Prisma.FieldRef<"Property", 'String'>
   readonly contactWhatsapp: Prisma.FieldRef<"Property", 'String'>
-  readonly isDeleted: Prisma.FieldRef<"Property", 'Boolean'>
-  readonly deletedAt: Prisma.FieldRef<"Property", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Property", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Property", 'DateTime'>
   readonly publishedAt: Prisma.FieldRef<"Property", 'DateTime'>
+  readonly isDeleted: Prisma.FieldRef<"Property", 'Boolean'>
+  readonly deletedAt: Prisma.FieldRef<"Property", 'DateTime'>
 }
     
 
@@ -3249,6 +3249,30 @@ export type PropertyDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Property.favorites
+ */
+export type Property$favoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Favorite
+   */
+  select?: Prisma.FavoriteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Favorite
+   */
+  omit?: Prisma.FavoriteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FavoriteInclude<ExtArgs> | null
+  where?: Prisma.FavoriteWhereInput
+  orderBy?: Prisma.FavoriteOrderByWithRelationInput | Prisma.FavoriteOrderByWithRelationInput[]
+  cursor?: Prisma.FavoriteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FavoriteScalarFieldEnum | Prisma.FavoriteScalarFieldEnum[]
+}
+
+/**
  * Property.leads
  */
 export type Property$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3270,6 +3294,30 @@ export type Property$leadsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+}
+
+/**
+ * Property.priceAlerts
+ */
+export type Property$priceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PriceAlert
+   */
+  select?: Prisma.PriceAlertSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PriceAlert
+   */
+  omit?: Prisma.PriceAlertOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PriceAlertInclude<ExtArgs> | null
+  where?: Prisma.PriceAlertWhereInput
+  orderBy?: Prisma.PriceAlertOrderByWithRelationInput | Prisma.PriceAlertOrderByWithRelationInput[]
+  cursor?: Prisma.PriceAlertWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PriceAlertScalarFieldEnum | Prisma.PriceAlertScalarFieldEnum[]
 }
 
 /**
@@ -3356,54 +3404,6 @@ export type Property$mediaArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.PropertyMediaScalarFieldEnum | Prisma.PropertyMediaScalarFieldEnum[]
-}
-
-/**
- * Property.favorites
- */
-export type Property$favoritesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Favorite
-   */
-  select?: Prisma.FavoriteSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Favorite
-   */
-  omit?: Prisma.FavoriteOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FavoriteInclude<ExtArgs> | null
-  where?: Prisma.FavoriteWhereInput
-  orderBy?: Prisma.FavoriteOrderByWithRelationInput | Prisma.FavoriteOrderByWithRelationInput[]
-  cursor?: Prisma.FavoriteWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FavoriteScalarFieldEnum | Prisma.FavoriteScalarFieldEnum[]
-}
-
-/**
- * Property.priceAlerts
- */
-export type Property$priceAlertsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PriceAlert
-   */
-  select?: Prisma.PriceAlertSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PriceAlert
-   */
-  omit?: Prisma.PriceAlertOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PriceAlertInclude<ExtArgs> | null
-  where?: Prisma.PriceAlertWhereInput
-  orderBy?: Prisma.PriceAlertOrderByWithRelationInput | Prisma.PriceAlertOrderByWithRelationInput[]
-  cursor?: Prisma.PriceAlertWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PriceAlertScalarFieldEnum | Prisma.PriceAlertScalarFieldEnum[]
 }
 
 /**
