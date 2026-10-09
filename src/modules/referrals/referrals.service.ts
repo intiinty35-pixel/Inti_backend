@@ -4,6 +4,8 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
+import * as XLSX from 'xlsx';
+import PDFDocument from 'pdfkit';
 import { Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
@@ -491,5 +493,233 @@ export class ReferralsService {
             select: { id: true },
           });
     return exists ? this.uniqueCode(prefix) : code;
+  }
+
+  async exportExcel(): Promise<Buffer> {
+    const referrers = await this.prisma.referrer.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        referrals: {
+          orderBy: { createdAt: 'asc' },
+          include: {
+            project: { select: { id: true, name: true } },
+            history: { orderBy: { createdAt: 'asc' } },
+          },
+        },
+      },
+    });
+
+    const data: any[] = [];
+
+    referrers.forEach((referrer) => {
+      referrer.referrals.forEach((referral) => {
+        const totalPoints = referral.history.reduce(
+          (sum, item) => sum + item.pointsAwarded,
+          0,
+        );
+        const lastStatus =
+          referral.history.length > 0
+            ? STATUS_LABELS[
+                referral.history[referral.history.length - 1].toStatus
+              ]
+            : 'Sin estado';
+
+        data.push({
+          'Código Referrer': referrer.code,
+          'Nombre Referrer': referrer.name,
+          'Email Referrer': referrer.email,
+          'Teléfono Referrer': referrer.phone,
+          'Código Referido': referral.code,
+          'Nombre Referido': referral.name,
+          'Email Referido': referral.email,
+          'Teléfono Referido': referral.phone,
+          Interés:
+            INTEREST_LABELS[String(referral.interest)] ??
+            String(referral.interest),
+          Disponibilidad:
+            AVAILABILITY_LABELS[String(referral.availability)] ??
+            String(referral.availability),
+          'Último Estado': lastStatus,
+          Puntos: totalPoints,
+          Proyecto: referral.project?.name ?? 'Sin proyecto',
+          'Fecha Registro': new Date(referral.createdAt).toLocaleDateString(
+            'es-PE',
+          ),
+        });
+      });
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Referidos');
+
+    const colWidths = [
+      { wch: 18 },
+      { wch: 25 },
+      { wch: 30 },
+      { wch: 15 },
+      { wch: 18 },
+      { wch: 25 },
+      { wch: 30 },
+      { wch: 15 },
+      { wch: 15 },
+      { wch: 15 },
+      { wch: 22 },
+      { wch: 10 },
+      { wch: 25 },
+      { wch: 15 },
+    ];
+    worksheet['!cols'] = colWidths;
+
+    return XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+  }
+
+  async exportPdf(): Promise<Buffer> {
+    const referrers = await this.prisma.referrer.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        referrals: {
+          orderBy: { createdAt: 'asc' },
+          include: {
+            project: { select: { id: true, name: true } },
+            history: { orderBy: { createdAt: 'asc' } },
+          },
+        },
+      },
+    });
+
+    return new Promise((resolve, reject) => {
+      const doc = new PDFDocument({
+        margin: 30,
+        size: 'A4',
+        layout: 'landscape',
+      });
+      const chunks: Buffer[] = [];
+
+      doc.on('data', (chunk: Buffer) => chunks.push(chunk));
+      doc.on('end', () => resolve(Buffer.concat(chunks)));
+      doc.on('error', reject);
+
+      doc
+        .fontSize(18)
+        .font('Helvetica-Bold')
+        .text('Reporte de Referidos', { align: 'center' });
+      doc.moveDown(0.2);
+      doc
+        .fontSize(9)
+        .font('Helvetica')
+        .text(`Generado: ${new Date().toLocaleDateString('es-PE')}`, {
+          align: 'center',
+        });
+      doc.moveDown(1);
+
+      const left = doc.page.margins.left;
+      const columnRatios = [0.105, 0.155, 0.105, 0.17, 0.16, 0.24, 0.065];
+      const tableWidth = doc.page.width - left - doc.page.margins.right;
+      const colWidths = columnRatios.map((ratio) => tableWidth * ratio);
+      const headers = [
+        'Código Ref.',
+        'Referente',
+        'Código Refdo.',
+        'Referido',
+        'Estado',
+        'Proyecto',
+        'Puntos',
+      ];
+      const headerHeight = 25;
+      const rowHeight = 22;
+
+      const drawHeader = () => {
+        const headerY = doc.y;
+
+        doc.save();
+        doc.rect(left, headerY, tableWidth, headerHeight).fill('#0f2e5c');
+        doc.restore();
+
+        doc.fontSize(8).font('Helvetica-Bold').fillColor('#ffffff');
+        let x = left;
+        headers.forEach((header, i) => {
+          doc.text(header, x + 4, headerY + 8, {
+            width: colWidths[i] - 8,
+            height: headerHeight - 8,
+            align: 'left',
+            lineBreak: false,
+            ellipsis: true,
+          });
+          x += colWidths[i];
+        });
+        doc.fillColor('#000000');
+        doc.y = headerY + headerHeight;
+      };
+
+      drawHeader();
+
+      doc.fontSize(8).font('Helvetica');
+      let rowIndex = 0;
+      let referralCount = 0;
+
+      referrers.forEach((referrer) => {
+        referrer.referrals.forEach((referral) => {
+          if (doc.y + rowHeight > doc.page.height - doc.page.margins.bottom) {
+            doc.addPage();
+            drawHeader();
+            doc.fontSize(8).font('Helvetica');
+            rowIndex = 0;
+          }
+
+          const rowY = doc.y;
+
+          if (rowIndex % 2 === 0) {
+            doc.save();
+            doc.rect(left, rowY, tableWidth, rowHeight).fill('#f4f7fb');
+            doc.restore();
+          }
+
+          const totalPoints = referral.history.reduce(
+            (sum, item) => sum + item.pointsAwarded,
+            0,
+          );
+          const lastStatus =
+            referral.history.length > 0
+              ? STATUS_LABELS[
+                  referral.history[referral.history.length - 1].toStatus
+                ]
+              : '-';
+
+          const values = [
+            referrer.code,
+            referrer.name,
+            referral.code,
+            referral.name,
+            lastStatus,
+            referral.project?.name ?? '-',
+            totalPoints.toString(),
+          ];
+
+          let rx = left;
+          values.forEach((val, i) => {
+            doc.text(val, rx + 4, rowY + 6, {
+              width: colWidths[i] - 8,
+              height: rowHeight - 6,
+              align: 'left',
+              lineBreak: false,
+              ellipsis: true,
+            });
+            rx += colWidths[i];
+          });
+          doc.y = rowY + rowHeight;
+          rowIndex++;
+          referralCount++;
+        });
+      });
+
+      if (referralCount === 0) {
+        doc
+          .fontSize(10)
+          .text('No hay referidos registrados.', { align: 'center' });
+      }
+
+      doc.end();
+    });
   }
 }

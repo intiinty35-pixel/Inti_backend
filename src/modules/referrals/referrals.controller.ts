@@ -7,7 +7,9 @@ import {
   Patch,
   Post,
   Query,
+  Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Roles } from '../../common/decorators/roles.decorator';
 import type { AuthUser } from '../../common/types/auth-user';
@@ -26,6 +28,33 @@ export class ReferralsController {
   @Get()
   list(@Query() query: ReferralQueryDto) {
     return this.referrals.list(query);
+  }
+
+  @Get('export/excel')
+  async exportExcel(@Res() res: Response) {
+    const buffer = await this.referrals.exportExcel();
+    const filename = `referidos-${new Date().toISOString().split('T')[0]}.xlsx`;
+
+    res.set({
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': `attachment; filename="${filename}"`,
+      'Content-Length': buffer.length,
+    });
+
+    res.send(buffer);
+  }
+
+  @Get('export/pdf')
+  async exportPdf(@Res() res: Response) {
+    const buffer = await this.referrals.exportPdf();
+
+    res.set({
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': `attachment; filename="referidos-${new Date().toISOString().split('T')[0]}.pdf"`,
+      'Content-Length': buffer.length,
+    });
+
+    res.send(buffer);
   }
 
   @Get('referrers/:id')
