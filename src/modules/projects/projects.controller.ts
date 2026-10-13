@@ -39,6 +39,15 @@ export class ProjectsController {
     return this.projects.createDraft(user, dto);
   }
 
+  @Patch(':id')
+  update(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: CreateProjectDto,
+  ) {
+    return this.projects.update(user, id, dto);
+  }
+
   @Patch(':id/publish')
   publish(@CurrentUser() user: AuthUser, @Param('id', ParseUUIDPipe) id: string) {
     return this.projects.publish(user, id);

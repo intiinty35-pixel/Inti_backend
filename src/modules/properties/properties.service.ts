@@ -211,6 +211,172 @@ export class PropertiesService {
     return this.toDetail(property);
   }
 
+  /** Datos completos de una propiedad propia, tal como los necesita el formulario de edicion. */
+  async getMineForEdit(user: AuthUser, id: string) {
+    const property = await this.prisma.property.findUnique({
+      where: { id },
+      include: PROPERTY_INCLUDE,
+    });
+    if (!property || property.isDeleted) {
+      throw new NotFoundException('Propiedad no encontrada');
+    }
+    if (property.agentProfile.userId !== user.id && user.role !== 'ADMIN') {
+      throw new ForbiddenException('No puedes editar esta propiedad');
+    }
+
+    const location = property.location;
+    const details = property.details;
+    return {
+      id: property.id,
+      slug: property.slug,
+      status: property.status,
+      operationType: property.operationType,
+      propertyType: property.propertyType,
+      title: property.title,
+      description: property.description,
+      price: Number(property.price),
+      currency: property.currency,
+      negotiable: property.negotiable,
+      maintenanceFee: property.maintenanceFee
+        ? Number(property.maintenanceFee)
+        : null,
+      contactName: property.contactName,
+      contactEmail: property.contactEmail,
+      contactPhone: property.contactPhone,
+      contactWhatsapp: property.contactWhatsapp,
+      location: location && {
+        department: location.department,
+        province: location.province,
+        district: location.district,
+        address: location.address,
+        number: location.number,
+        sector: location.sector,
+        reference: location.reference,
+        latitude: location.latitude ? Number(location.latitude) : null,
+        longitude: location.longitude ? Number(location.longitude) : null,
+        approximateLocation: location.approximateLocation,
+      },
+      details: details && {
+        totalArea: details.totalArea ? Number(details.totalArea) : null,
+        constructedArea: details.constructedArea
+          ? Number(details.constructedArea)
+          : null,
+        bedrooms: details.bedrooms,
+        bathrooms: details.bathrooms,
+        halfBathrooms: details.halfBathrooms,
+        parkingSpaces: details.parkingSpaces,
+        floor: details.floor,
+        floors: details.floors,
+        constructionYear: details.constructionYear,
+        conservationStatus: details.conservationStatus,
+        specificDetails: details.specificDetails,
+      },
+      amenityCodes: property.amenities.map(({ amenity }) => amenity.code),
+      media: property.media.map((media) => ({
+        url: media.url,
+        publicId: media.publicId,
+        position: media.position,
+        isCover: media.isCover,
+      })),
+    };
+  }
+
+  /**
+   * Edita una propiedad ya creada. El cuerpo reemplaza al anterior; el estado y
+   * la fecha de publicacion no cambian, asi que una publicacion editada sigue
+   * visible.
+   */
+  async update(user: AuthUser, id: string, dto: CreatePropertyDto) {
+    const property = await this.prisma.property.findUnique({
+      where: { id },
+      include: { agentProfile: true },
+    });
+    if (!property || property.isDeleted) {
+      throw new NotFoundException('Propiedad no encontrada');
+    }
+    if (property.agentProfile.userId !== user.id && user.role !== 'ADMIN') {
+      throw new ForbiddenException('No puedes editar esta propiedad');
+    }
+    this.validateProperty(dto);
+
+    const details = {
+      totalArea: dto.details.totalArea ?? null,
+      constructedArea: dto.details.constructedArea ?? null,
+      bedrooms: dto.details.bedrooms ?? null,
+      bathrooms: dto.details.bathrooms ?? null,
+      halfBathrooms: dto.details.halfBathrooms ?? null,
+      parkingSpaces: dto.details.parkingSpaces ?? null,
+      floor: dto.details.floor ?? null,
+      floors: dto.details.floors ?? null,
+      constructionYear: dto.details.constructionYear ?? null,
+      conservationStatus: dto.details.conservationStatus ?? null,
+      specificDetails:
+        (dto.details.specificDetails as Prisma.InputJsonValue | undefined) ??
+        Prisma.DbNull,
+    };
+
+    const updated = await this.prisma.$transaction(async (tx) => {
+      await tx.propertyMedia.deleteMany({ where: { propertyId: id } });
+      await tx.propertyAmenity.deleteMany({ where: { propertyId: id } });
+
+      return tx.property.update({
+        where: { id },
+        data: {
+          operationType: dto.operationType,
+          propertyType: dto.propertyType,
+          title: dto.title,
+          description: dto.description,
+          price: dto.price,
+          currency: dto.currency,
+          negotiable: dto.negotiable ?? false,
+          maintenanceFee: dto.maintenanceFee ?? null,
+          contactName: dto.contactName,
+          contactEmail: dto.contactEmail,
+          contactPhone: dto.contactPhone,
+          contactWhatsapp: dto.contactWhatsapp,
+          location: {
+            upsert: {
+              create: dto.location,
+              update: {
+                ...dto.location,
+                latitude: dto.location.latitude ?? null,
+                longitude: dto.location.longitude ?? null,
+              },
+            },
+          },
+          details: { upsert: { create: details, update: details } },
+          media: {
+            create: dto.media.map((media, index) => ({
+              url: media.url,
+              publicId: media.publicId,
+              position: media.position ?? index,
+              isCover: media.isCover ?? index === 0,
+            })),
+          },
+          amenities: dto.amenityCodes?.length
+            ? {
+                create: dto.amenityCodes.map((code) => ({
+                  amenity: {
+                    connectOrCreate: {
+                      where: { code },
+                      create: {
+                        code,
+                        name: this.humanizeAmenity(code),
+                        category: AmenityCategory.INTERIOR,
+                      },
+                    },
+                  },
+                })),
+              }
+            : undefined,
+        },
+        include: PROPERTY_INCLUDE,
+      });
+    });
+
+    return this.toDetail(updated);
+  }
+
   async publish(user: AuthUser, id: string) {
     const property = await this.prisma.property.findUnique({
       where: { id },

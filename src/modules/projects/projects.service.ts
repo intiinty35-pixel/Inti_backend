@@ -237,6 +237,92 @@ export class ProjectsService {
     return this.createDraftRecord(dto, { createdByAdminId: user.id });
   }
 
+  /**
+   * Edita un proyecto ya creado. El cuerpo reemplaza al anterior (lotes, hitos y
+   * multimedia se recrean); el estado y la fecha de publicacion no cambian, asi
+   * que una publicacion editada sigue visible.
+   */
+  async update(user: AuthUser, id: string, dto: CreateProjectDto) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { agentProfile: true, adminProject: true },
+    });
+    if (!project || project.isDeleted) {
+      throw new NotFoundException('Proyecto no encontrado');
+    }
+
+    const isAdmin = user.role === 'ADMIN';
+    const isOwner =
+      project.agentProfile !== null && project.agentProfile.userId === user.id;
+    if (!isAdmin && !isOwner) {
+      throw new ForbiddenException('No puedes editar este proyecto');
+    }
+    if (!isAdmin && project.adminProject !== null) {
+      throw new ForbiddenException('Este proyecto lo administra ARIZ');
+    }
+    if (project.agentProfile && !isAdmin) {
+      this.ensureCanManageProjects(project.agentProfile.type);
+    }
+    this.validateProject(dto);
+
+    const updated = await this.prisma.$transaction(async (tx) => {
+      await tx.projectLot.deleteMany({ where: { projectId: id } });
+      await tx.projectMilestone.deleteMany({ where: { projectId: id } });
+      await tx.projectMedia.deleteMany({ where: { projectId: id } });
+
+      return tx.project.update({
+        where: { id },
+        data: {
+          stage: dto.stage,
+          name: dto.name,
+          description: dto.description,
+          currency: dto.currency ?? Currency.PEN,
+          priceFrom: dto.priceFrom,
+          priceTo: dto.priceTo,
+          ruc: dto.ruc ?? null,
+          businessName: dto.businessName ?? null,
+          downPayment: dto.downPayment ?? null,
+          monthlyPayment: dto.monthlyPayment ?? null,
+          financing: dto.financing ?? ['cash'],
+          totalBlocks: dto.totalBlocks ?? null,
+          totalLots: dto.totalLots ?? null,
+          social: (dto.social as Prisma.InputJsonValue | undefined) ?? Prisma.DbNull,
+          services: dto.services ?? [],
+          urbanizationName: dto.urbanizationName ?? null,
+          registryEntry: dto.registryEntry ?? null,
+          amenities: dto.amenities ?? [],
+          lotMode: dto.lotMode,
+          constructionStart: dto.constructionStart
+            ? new Date(dto.constructionStart)
+            : null,
+          estimatedDelivery: new Date(dto.estimatedDelivery),
+          certifications: dto.certifications ?? [],
+          tourUrl: dto.tourUrl ?? null,
+          contactEmail: dto.contactEmail,
+          contactPhone: dto.contactPhone,
+          contactWhatsapp: dto.contactWhatsapp,
+          location: {
+            upsert: {
+              create: dto.location,
+              update: {
+                ...dto.location,
+                zone: dto.location.zone ?? null,
+                latitude: dto.location.latitude ?? null,
+                longitude: dto.location.longitude ?? null,
+              },
+            },
+          },
+          lots: { create: this.buildLotRows(dto) },
+          milestones: { create: this.buildMilestoneRows(dto) },
+          media: { create: this.buildMediaRows(dto) },
+        },
+        include: PROJECT_INCLUDE,
+      });
+    });
+
+    return this.toDetail(updated);
+  }
+
   private async createDraftRecord(
     dto: CreateProjectDto,
     owner: { agentProfileId?: string; createdByAdminId?: string },
@@ -281,36 +367,9 @@ export class ProjectsService {
           ? { create: { createdByAdminId: owner.createdByAdminId } }
           : undefined,
         location: { create: dto.location },
-        lots: {
-          create: dto.lots.map((lot, index) => ({
-            lotNumber: lot.lotNumber,
-            block: lot.block,
-            areaM2: lot.areaM2,
-            frontM: lot.frontM,
-            price: lot.price,
-            status: lot.status,
-            planLocation: lot.planLocation,
-            lotCount: dto.lotMode === LotMode.GROUP ? lot.lotCount : null,
-            position: index,
-          })),
-        },
-        milestones: {
-          create: (dto.milestones ?? []).map((milestone, index) => ({
-            title: milestone.title,
-            date: new Date(milestone.date),
-            note: milestone.note,
-            position: index,
-          })),
-        },
-        media: {
-          create: dto.media.map((media, index) => ({
-            type: media.type,
-            url: media.url,
-            publicId: media.publicId,
-            position: media.position ?? index,
-            isCover: media.isCover ?? false,
-          })),
-        },
+        lots: { create: this.buildLotRows(dto) },
+        milestones: { create: this.buildMilestoneRows(dto) },
+        media: { create: this.buildMediaRows(dto) },
       },
       include: PROJECT_INCLUDE,
     });
@@ -725,6 +784,39 @@ export class ProjectsService {
         `No tienes crédito disponible para publicar otro proyecto. Tus suscripciones activas permiten hasta ${maxProjectLimit} proyectos activos. Solicita una nueva suscripción al administrador.`,
       );
     }
+  }
+
+  private buildLotRows(dto: CreateProjectDto) {
+    return dto.lots.map((lot, index) => ({
+      lotNumber: lot.lotNumber,
+      block: lot.block,
+      areaM2: lot.areaM2,
+      frontM: lot.frontM,
+      price: lot.price,
+      status: lot.status,
+      planLocation: lot.planLocation,
+      lotCount: dto.lotMode === LotMode.GROUP ? lot.lotCount : null,
+      position: index,
+    }));
+  }
+
+  private buildMilestoneRows(dto: CreateProjectDto) {
+    return (dto.milestones ?? []).map((milestone, index) => ({
+      title: milestone.title,
+      date: new Date(milestone.date),
+      note: milestone.note,
+      position: index,
+    }));
+  }
+
+  private buildMediaRows(dto: CreateProjectDto) {
+    return dto.media.map((media, index) => ({
+      type: media.type,
+      url: media.url,
+      publicId: media.publicId,
+      position: media.position ?? index,
+      isCover: media.isCover ?? false,
+    }));
   }
 
   private validateProject(dto: CreateProjectDto) {
