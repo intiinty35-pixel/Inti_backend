@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Public } from '../../common/decorators/public.decorator';
 import type { AuthUser } from '../../common/types/auth-user';
-import { CreateProjectDto } from './dto/create-project.dto';
+import { CreateProjectDto, ProjectLocationDto } from './dto/create-project.dto';
 import { OwnerProjectQueryDto } from './dto/owner-project-query.dto';
 import { ProjectQueryDto } from './dto/project-query.dto';
 import { ProjectsService } from './projects.service';
@@ -51,6 +51,15 @@ export class ProjectsController {
   @Patch(':id/publish')
   publish(@CurrentUser() user: AuthUser, @Param('id', ParseUUIDPipe) id: string) {
     return this.projects.publish(user, id);
+  }
+
+  @Patch(':id/location')
+  updateLocation(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ProjectLocationDto,
+  ) {
+    return this.projects.updateLocation(user, id, dto);
   }
 
   @Delete(':id')

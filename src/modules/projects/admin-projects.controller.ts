@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -12,7 +13,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Roles } from '../../common/decorators/roles.decorator';
 import type { AuthUser } from '../../common/types/auth-user';
 import { Role } from '../../generated/prisma/enums';
-import { CreateProjectDto } from './dto/create-project.dto';
+import { CreateProjectDto, ProjectLocationDto } from './dto/create-project.dto';
 import { AdminProjectQueryDto } from './dto/admin-project-query.dto';
 import { ProjectsService } from './projects.service';
 
@@ -26,6 +27,11 @@ export class AdminProjectsController {
     return this.projects.listAdminProjects(query);
   }
 
+  @Get(':id')
+  detail(@Param('id', ParseUUIDPipe) id: string) {
+    return this.projects.getAdminProject(id);
+  }
+
   @Post()
   create(@CurrentUser() user: AuthUser, @Body() dto: CreateProjectDto) {
     return this.projects.createAdminDraft(user, dto);
@@ -37,5 +43,19 @@ export class AdminProjectsController {
     @Param('id', ParseUUIDPipe) id: string,
   ) {
     return this.projects.publishAdminProject(user, id);
+  }
+
+  @Delete(':id')
+  remove(@CurrentUser() user: AuthUser, @Param('id', ParseUUIDPipe) id: string) {
+    return this.projects.removeAdminProject(user, id);
+  }
+
+  @Patch(':id/location')
+  updateLocation(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ProjectLocationDto,
+  ) {
+    return this.projects.updateAdminLocation(user, id, dto);
   }
 }

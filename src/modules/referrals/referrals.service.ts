@@ -124,6 +124,35 @@ export class ReferralsService {
     return this.toReferrerResponse(referrer);
   }
 
+  async deleteReferrer(id: string) {
+    const referrer = await this.prisma.referrer.findUnique({
+      where: { id },
+      select: { id: true },
+    });
+    if (!referrer) throw new NotFoundException('Referente no encontrado');
+
+    await this.prisma.$transaction(async (tx) => {
+      const referrals = await tx.referral.findMany({
+        where: { referrerId: id },
+        select: { id: true },
+      });
+      const referralIds = referrals.map((referral) => referral.id);
+
+      if (referralIds.length > 0) {
+        await tx.referralStatusHistory.deleteMany({
+          where: { referralId: { in: referralIds } },
+        });
+        await tx.referral.deleteMany({ where: { id: { in: referralIds } } });
+      }
+
+      await tx.pointMovement.deleteMany({ where: { referrerId: id } });
+      await tx.redemption.deleteMany({ where: { referrerId: id } });
+      await tx.referrer.delete({ where: { id } });
+    });
+
+    return { id, deleted: true };
+  }
+
   async getReferrerByCode(code: string) {
     const referrer = await this.prisma.referrer.findUnique({
       where: { code: code.toUpperCase() },

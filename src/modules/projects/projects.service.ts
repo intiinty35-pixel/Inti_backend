@@ -19,7 +19,7 @@ import {
 } from '../../generated/prisma/enums';
 import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
-import { CreateProjectDto } from './dto/create-project.dto';
+import { CreateProjectDto, ProjectLocationDto } from './dto/create-project.dto';
 import { OwnerProjectQueryDto } from './dto/owner-project-query.dto';
 import { AdminProjectQueryDto } from './dto/admin-project-query.dto';
 import { ProjectQueryDto, ProjectSort } from './dto/project-query.dto';
@@ -189,11 +189,20 @@ export class ProjectsService {
     };
   }
 
+  async getAdminProject(id: string) {
+    const project = await this.prisma.project.findFirst({
+      where: { id, adminProject: { isNot: null }, isDeleted: false },
+      include: PROJECT_INCLUDE,
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    return this.toDetail(project);
+  }
+
   /** El inventario del proyecto se expone como "unidades" para el listado público. */
   async listUnits(slugOrId: string) {
     const project = await this.prisma.project.findFirst({
       where: { OR: [{ id: slugOrId }, { slug: slugOrId }] },
-      select: { id: true },
+      select: { id: true, currency: true },
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
 
@@ -209,7 +218,7 @@ export class ProjectsService {
         ? `Mza. ${lot.block} · Lote ${lot.lotNumber}`
         : `Lote ${lot.lotNumber}`,
       operation: 'buy',
-      price: { amount: Number(lot.price), currency: 'PEN', period: 'total' },
+      price: { amount: Number(lot.price), currency: project.currency, period: 'total' },
       bedrooms: 0,
       bathrooms: 0,
       areaM2: Number(lot.areaM2),
@@ -264,6 +273,7 @@ export class ProjectsService {
       this.ensureCanManageProjects(project.agentProfile.type);
     }
     this.validateProject(dto);
+    const location = this.normalizeLocation(dto.location);
 
     const updated = await this.prisma.$transaction(async (tx) => {
       await tx.projectLot.deleteMany({ where: { projectId: id } });
@@ -303,12 +313,12 @@ export class ProjectsService {
           contactWhatsapp: dto.contactWhatsapp,
           location: {
             upsert: {
-              create: dto.location,
+              create: location,
               update: {
-                ...dto.location,
-                zone: dto.location.zone ?? null,
-                latitude: dto.location.latitude ?? null,
-                longitude: dto.location.longitude ?? null,
+                ...location,
+                zone: location.zone ?? null,
+                latitude: location.latitude ?? null,
+                longitude: location.longitude ?? null,
               },
             },
           },
@@ -366,7 +376,7 @@ export class ProjectsService {
         adminProject: owner.createdByAdminId
           ? { create: { createdByAdminId: owner.createdByAdminId } }
           : undefined,
-        location: { create: dto.location },
+        location: { create: this.normalizeLocation(dto.location) },
         lots: { create: this.buildLotRows(dto) },
         milestones: { create: this.buildMilestoneRows(dto) },
         media: { create: this.buildMediaRows(dto) },
@@ -400,15 +410,7 @@ export class ProjectsService {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
     this.ensureCanManageProjects(project.agentProfile.type);
-    if (
-      !project.location ||
-      project.lots.length === 0 ||
-      !project.media.some((media) => media.type === MediaType.IMAGE)
-    ) {
-      throw new BadRequestException(
-        'Falta completar ubicación, lotes o imágenes del proyecto',
-      );
-    }
+    this.validatePublishableProject(project);
 
     if (
       project.agentProfile.type === ProfessionalType.DEVELOPER ||
@@ -450,6 +452,32 @@ export class ProjectsService {
       where: { id },
       data: { isDeleted: true, deletedAt: new Date() },
     });
+  }
+
+  async removeAdminProject(user: AuthUser, id: string) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException(
+        'Solo un administrador puede eliminar proyectos de ARIZ',
+      );
+    }
+
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { adminProject: true },
+    });
+    if (!project || project.isDeleted) {
+      throw new NotFoundException('Proyecto no encontrado');
+    }
+    if (!project.adminProject) {
+      throw new ForbiddenException('Este proyecto no pertenece a ARIZ');
+    }
+
+    await this.prisma.project.update({
+      where: { id },
+      data: { isDeleted: true, deletedAt: new Date() },
+    });
+
+    return { id, deleted: true };
   }
 
   /** Baja logica de todos los proyectos de un agente, usada al eliminar su cuenta desde el admin. */
@@ -565,18 +593,87 @@ export class ProjectsService {
     return this.toDetail(updated);
   }
 
+  async updateLocation(user: AuthUser, id: string, dto: ProjectLocationDto) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { agentProfile: true, adminProject: true },
+    });
+    if (!project || project.isDeleted) {
+      throw new NotFoundException('Proyecto no encontrado');
+    }
+
+    const isOwner = project.agentProfile?.userId === user.id;
+    if (!isOwner && user.role !== 'ADMIN') {
+      throw new ForbiddenException('No puedes editar la ubicacion de este proyecto');
+    }
+
+    return this.saveLocation(id, dto);
+  }
+
+  async updateAdminLocation(user: AuthUser, id: string, dto: ProjectLocationDto) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException(
+        'Solo un administrador puede editar proyectos de ARIZ',
+      );
+    }
+
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { adminProject: true },
+    });
+    if (!project || project.isDeleted) {
+      throw new NotFoundException('Proyecto no encontrado');
+    }
+    if (!project.adminProject) {
+      throw new ForbiddenException('Este proyecto no pertenece a ARIZ');
+    }
+
+    return this.saveLocation(id, dto);
+  }
+
+  private async saveLocation(id: string, dto: ProjectLocationDto) {
+    const location = this.normalizeLocation(dto);
+
+    const updated = await this.prisma.project.update({
+      where: { id },
+      data: {
+        location: {
+          upsert: {
+            create: location,
+            update: location,
+          },
+        },
+      },
+      include: PROJECT_INCLUDE,
+    });
+
+    return this.toDetail(updated);
+  }
+
+  private normalizeLocation(dto: ProjectLocationDto) {
+    return {
+      ...dto,
+      street: dto.street?.trim() ?? '',
+      streetNumber: dto.streetNumber?.trim() ?? '',
+    };
+  }
+
   private validatePublishableProject(project: {
-    location: unknown;
+    location: { latitude?: unknown; longitude?: unknown } | null;
     lots: unknown[];
     media: Array<{ type: MediaType }>;
   }) {
     if (
       !project.location ||
+      project.location.latitude === null ||
+      project.location.latitude === undefined ||
+      project.location.longitude === null ||
+      project.location.longitude === undefined ||
       project.lots.length === 0 ||
       !project.media.some((media) => media.type === MediaType.IMAGE)
     ) {
       throw new BadRequestException(
-        'Falta completar ubicación, lotes o imágenes del proyecto',
+        'Falta completar ubicacion con punto en el mapa, lotes o imagenes del proyecto',
       );
     }
   }
