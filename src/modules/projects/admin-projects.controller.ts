@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -26,6 +27,11 @@ export class AdminProjectsController {
     return this.projects.listAdminProjects(query);
   }
 
+  @Get(':id')
+  detail(@Param('id', ParseUUIDPipe) id: string) {
+    return this.projects.getAdminProject(id);
+  }
+
   @Post()
   create(@CurrentUser() user: AuthUser, @Body() dto: CreateProjectDto) {
     return this.projects.createAdminDraft(user, dto);
@@ -37,6 +43,11 @@ export class AdminProjectsController {
     @Param('id', ParseUUIDPipe) id: string,
   ) {
     return this.projects.publishAdminProject(user, id);
+  }
+
+  @Delete(':id')
+  remove(@CurrentUser() user: AuthUser, @Param('id', ParseUUIDPipe) id: string) {
+    return this.projects.removeAdminProject(user, id);
   }
 
   @Patch(':id/location')

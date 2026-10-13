@@ -189,6 +189,15 @@ export class ProjectsService {
     };
   }
 
+  async getAdminProject(id: string) {
+    const project = await this.prisma.project.findFirst({
+      where: { id, adminProject: { isNot: null }, isDeleted: false },
+      include: PROJECT_INCLUDE,
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    return this.toDetail(project);
+  }
+
   /** El inventario del proyecto se expone como "unidades" para el listado público. */
   async listUnits(slugOrId: string) {
     const project = await this.prisma.project.findFirst({
@@ -264,6 +273,7 @@ export class ProjectsService {
       this.ensureCanManageProjects(project.agentProfile.type);
     }
     this.validateProject(dto);
+    const location = this.normalizeLocation(dto.location);
 
     const updated = await this.prisma.$transaction(async (tx) => {
       await tx.projectLot.deleteMany({ where: { projectId: id } });
@@ -303,12 +313,12 @@ export class ProjectsService {
           contactWhatsapp: dto.contactWhatsapp,
           location: {
             upsert: {
-              create: dto.location,
+              create: location,
               update: {
-                ...dto.location,
-                zone: dto.location.zone ?? null,
-                latitude: dto.location.latitude ?? null,
-                longitude: dto.location.longitude ?? null,
+                ...location,
+                zone: location.zone ?? null,
+                latitude: location.latitude ?? null,
+                longitude: location.longitude ?? null,
               },
             },
           },
@@ -366,7 +376,7 @@ export class ProjectsService {
         adminProject: owner.createdByAdminId
           ? { create: { createdByAdminId: owner.createdByAdminId } }
           : undefined,
-        location: { create: dto.location },
+        location: { create: this.normalizeLocation(dto.location) },
         lots: { create: this.buildLotRows(dto) },
         milestones: { create: this.buildMilestoneRows(dto) },
         media: { create: this.buildMediaRows(dto) },
@@ -442,6 +452,32 @@ export class ProjectsService {
       where: { id },
       data: { isDeleted: true, deletedAt: new Date() },
     });
+  }
+
+  async removeAdminProject(user: AuthUser, id: string) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException(
+        'Solo un administrador puede eliminar proyectos de ARIZ',
+      );
+    }
+
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { adminProject: true },
+    });
+    if (!project || project.isDeleted) {
+      throw new NotFoundException('Proyecto no encontrado');
+    }
+    if (!project.adminProject) {
+      throw new ForbiddenException('Este proyecto no pertenece a ARIZ');
+    }
+
+    await this.prisma.project.update({
+      where: { id },
+      data: { isDeleted: true, deletedAt: new Date() },
+    });
+
+    return { id, deleted: true };
   }
 
   /** Baja logica de todos los proyectos de un agente, usada al eliminar su cuenta desde el admin. */
@@ -596,13 +632,15 @@ export class ProjectsService {
   }
 
   private async saveLocation(id: string, dto: ProjectLocationDto) {
+    const location = this.normalizeLocation(dto);
+
     const updated = await this.prisma.project.update({
       where: { id },
       data: {
         location: {
           upsert: {
-            create: dto,
-            update: dto,
+            create: location,
+            update: location,
           },
         },
       },
@@ -610,6 +648,14 @@ export class ProjectsService {
     });
 
     return this.toDetail(updated);
+  }
+
+  private normalizeLocation(dto: ProjectLocationDto) {
+    return {
+      ...dto,
+      street: dto.street?.trim() ?? '',
+      streetNumber: dto.streetNumber?.trim() ?? '',
+    };
   }
 
   private validatePublishableProject(project: {

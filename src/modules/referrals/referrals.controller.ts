@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -60,6 +61,11 @@ export class ReferralsController {
   @Get('referrers/:id')
   referrerDetail(@Param('id', ParseUUIDPipe) id: string) {
     return this.referrals.getReferrer(id);
+  }
+
+  @Delete('referrers/:id')
+  deleteReferrer(@Param('id', ParseUUIDPipe) id: string) {
+    return this.referrals.deleteReferrer(id);
   }
 
   @Patch('status-points')

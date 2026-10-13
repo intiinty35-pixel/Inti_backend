@@ -44,12 +44,12 @@ export class ProjectLocationDto {
   zone?: string;
 
   @IsString()
-  @IsNotEmpty()
-  street!: string;
+  @IsOptional()
+  street?: string;
 
   @IsString()
-  @IsNotEmpty()
-  streetNumber!: string;
+  @IsOptional()
+  streetNumber?: string;
 
   @IsOptional()
   @IsNumber()
