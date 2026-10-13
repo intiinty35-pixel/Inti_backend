@@ -15,6 +15,7 @@ import { AlertsModule } from './modules/alerts/alerts.module';
 import { FavoritesModule } from './modules/favorites/favorites.module';
 import { LeadsModule } from './modules/leads/leads.module';
 import { MailModule } from './modules/mail/mail.module';
+import { GeoModule } from './modules/geo/geo.module';
 import { MediaModule } from './modules/media/media.module';
 import { PropertiesModule } from './modules/properties/properties.module';
 import { ProjectsModule } from './modules/projects/projects.module';
@@ -49,6 +50,7 @@ import { ClaimsModule } from './modules/claims/claims.module';
     ProjectsModule,
     LeadsModule,
     MailModule,
+    GeoModule,
     MediaModule,
     ProfessionalsModule,
     PlansModule,
