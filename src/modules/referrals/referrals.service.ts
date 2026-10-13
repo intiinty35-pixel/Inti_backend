@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import * as XLSX from 'xlsx';
@@ -9,6 +10,8 @@ import PDFDocument from 'pdfkit';
 import { Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
+import { CampaignsService } from '../campaigns/campaigns.service';
+import { CampaignPointsTracker } from '../campaigns/campaign-points-tracker';
 import { ReferralStatus } from '../../generated/prisma/enums';
 import { ReferralAvailability } from '../../generated/prisma/enums';
 import { CreateReferralDto } from './dto/create-referral.dto';
@@ -62,6 +65,8 @@ export class ReferralsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly mail: MailService,
+    private readonly campaignsService: CampaignsService,
+    private readonly campaignTracker: CampaignPointsTracker,
   ) {}
 
   async list(query: ReferralQueryDto) {
@@ -215,6 +220,22 @@ export class ReferralsService {
     const referrerEmail = dto.referrerEmail.trim().toLowerCase();
     const referralCode = await this.uniqueCode('RFD');
     let isNewReferrer = false;
+    let campaignId: string | null = null;
+
+    // Validar código de campaña si se proporciona
+    if (dto.campaignCode) {
+      const campaignValidation = await this.campaignsService.validateCampaignCode(
+        dto.campaignCode,
+      );
+      if (!campaignValidation || !campaignValidation.isValid) {
+        throw new BadRequestException(
+          campaignValidation
+            ? 'La campaña no está activa o ha expirado'
+            : 'Código de campaña no válido',
+        );
+      }
+      campaignId = campaignValidation.id;
+    }
 
     try {
       const created = await this.prisma.$transaction(async (tx) => {
@@ -243,7 +264,7 @@ export class ReferralsService {
           isNewReferrer = true;
         }
 
-        return tx.referral.create({
+        const referral = await tx.referral.create({
           data: {
             referrerId: referrer.id,
             name: dto.name.trim(),
@@ -251,6 +272,8 @@ export class ReferralsService {
             phone: dto.phone.trim(),
             interest: dto.interest,
             availability: dto.availability ?? ReferralAvailability.INMEDIATA,
+            projectId: dto.projectId || null,
+            campaignId: campaignId,
             code: referralCode,
             status: ReferralStatus.CONTACTED,
             history: {
@@ -265,6 +288,20 @@ export class ReferralsService {
             referrer: true,
           },
         });
+
+        // Si el referido tiene campaña, registrar puntos de campaña para el estado inicial
+        // Esto debe hacerse dentro de la transacción para garantizar consistencia
+        if (campaignId) {
+          await this.campaignTracker.processReferralStatusChange(
+            referrer.id,
+            referral.id,
+            campaignId,
+            ReferralStatus.CONTACTED,
+            tx, // Pasar el cliente de transacción
+          );
+        }
+
+        return referral;
       });
 
       const persisted = await this.prisma.referral.findUnique({
@@ -356,8 +393,26 @@ export class ReferralsService {
         });
       }
 
+      // Procesar puntos de campaña si el referido está asociado a una campaña
+      let campaignPointsAwarded = 0;
+      if (current.campaignId && !reached) {
+        campaignPointsAwarded = await this.campaignTracker.processReferralStatusChange(
+          current.referrerId,
+          id,
+          current.campaignId,
+          status,
+          tx, // Pasar el cliente de transacción
+        );
+      }
+
       const updated = { ...current, status };
-      return this.responseWithTotals(tx, updated, pointsAwarded, true);
+      const response = await this.responseWithTotals(tx, updated, pointsAwarded, true);
+      
+      // Agregar información de puntos de campaña a la respuesta
+      return {
+        ...response,
+        campaignPointsAwarded,
+      };
     });
 
     if (result.changed) {

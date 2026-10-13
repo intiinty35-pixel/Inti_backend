@@ -28,6 +28,7 @@ import { IncentivesModule } from './modules/incentives/incentives.module';
 import { RedemptionsModule } from './modules/redemptions/redemptions.module';
 import { ContactReportsModule } from './modules/contact-reports/contact-reports.module';
 import { ClaimsModule } from './modules/claims/claims.module';
+import { CampaignsModule } from './modules/campaigns/campaigns.module';
 
 @Module({
   imports: [
@@ -60,6 +61,7 @@ import { ClaimsModule } from './modules/claims/claims.module';
     RedemptionsModule,
     ContactReportsModule,
     ClaimsModule,
+    CampaignsModule,
   ],
   controllers: [AppController],
   providers: [

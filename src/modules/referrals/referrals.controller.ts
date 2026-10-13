@@ -14,6 +14,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Roles } from '../../common/decorators/roles.decorator';
 import type { AuthUser } from '../../common/types/auth-user';
 import { Role } from '../../generated/prisma/enums';
+import { CampaignPointsTracker } from '../campaigns/campaign-points-tracker';
 import { CreateReferralDto } from './dto/create-referral.dto';
 import { ReferralQueryDto } from './dto/referral-query.dto';
 import { UpdateReferralPointsDto } from './dto/update-referral-points.dto';
@@ -23,7 +24,10 @@ import { ReferralsService } from './referrals.service';
 @Roles(Role.ADMIN)
 @Controller('admin/referrals')
 export class ReferralsController {
-  constructor(private readonly referrals: ReferralsService) {}
+  constructor(
+    private readonly referrals: ReferralsService,
+    private readonly campaignTracker: CampaignPointsTracker,
+  ) {}
 
   @Get()
   list(@Query() query: ReferralQueryDto) {
@@ -58,8 +62,19 @@ export class ReferralsController {
   }
 
   @Get('referrers/:id')
-  referrerDetail(@Param('id', ParseUUIDPipe) id: string) {
-    return this.referrals.getReferrer(id);
+  async referrerDetail(@Param('id', ParseUUIDPipe) id: string) {
+    const referrer = await this.referrals.getReferrer(id);
+    const campaignPoints = await this.campaignTracker.getReferrerCampaignPointsBreakdown(id);
+    
+    return {
+      ...referrer,
+      campaignPoints,
+    };
+  }
+
+  @Get('referrers/:id/campaign-points')
+  referrerCampaignPoints(@Param('id', ParseUUIDPipe) id: string) {
+    return this.campaignTracker.getReferrerCampaignPointsBreakdown(id);
   }
 
   @Patch('status-points')

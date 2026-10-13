@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUUID,
   MaxLength,
 } from 'class-validator';
 import {
@@ -64,4 +65,13 @@ export class CreateReferralDto {
   @IsOptional()
   @IsEnum(ReferralAvailability)
   availability?: ReferralAvailability;
+
+  @IsOptional()
+  @IsUUID()
+  projectId?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(30)
+  campaignCode?: string;
 }

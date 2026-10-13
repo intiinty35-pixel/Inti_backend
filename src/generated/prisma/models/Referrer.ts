@@ -225,6 +225,7 @@ export type ReferrerWhereInput = {
   referrals?: Prisma.ReferralListRelationFilter
   redemptions?: Prisma.RedemptionListRelationFilter
   pointMovements?: Prisma.PointMovementListRelationFilter
+  campaignPoints?: Prisma.CampaignReferralPointsListRelationFilter
 }
 
 export type ReferrerOrderByWithRelationInput = {
@@ -241,6 +242,7 @@ export type ReferrerOrderByWithRelationInput = {
   referrals?: Prisma.ReferralOrderByRelationAggregateInput
   redemptions?: Prisma.RedemptionOrderByRelationAggregateInput
   pointMovements?: Prisma.PointMovementOrderByRelationAggregateInput
+  campaignPoints?: Prisma.CampaignReferralPointsOrderByRelationAggregateInput
 }
 
 export type ReferrerWhereUniqueInput = Prisma.AtLeast<{
@@ -260,6 +262,7 @@ export type ReferrerWhereUniqueInput = Prisma.AtLeast<{
   referrals?: Prisma.ReferralListRelationFilter
   redemptions?: Prisma.RedemptionListRelationFilter
   pointMovements?: Prisma.PointMovementListRelationFilter
+  campaignPoints?: Prisma.CampaignReferralPointsListRelationFilter
 }, "id" | "code" | "email">
 
 export type ReferrerOrderByWithAggregationInput = {
@@ -308,6 +311,7 @@ export type ReferrerCreateInput = {
   referrals?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   redemptions?: Prisma.RedemptionCreateNestedManyWithoutReferrerInput
   pointMovements?: Prisma.PointMovementCreateNestedManyWithoutReferrerInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferrerInput
 }
 
 export type ReferrerUncheckedCreateInput = {
@@ -324,6 +328,7 @@ export type ReferrerUncheckedCreateInput = {
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   redemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutReferrerInput
   pointMovements?: Prisma.PointMovementUncheckedCreateNestedManyWithoutReferrerInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferrerInput
 }
 
 export type ReferrerUpdateInput = {
@@ -340,6 +345,7 @@ export type ReferrerUpdateInput = {
   referrals?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   redemptions?: Prisma.RedemptionUpdateManyWithoutReferrerNestedInput
   pointMovements?: Prisma.PointMovementUpdateManyWithoutReferrerNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferrerNestedInput
 }
 
 export type ReferrerUncheckedUpdateInput = {
@@ -356,6 +362,7 @@ export type ReferrerUncheckedUpdateInput = {
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   redemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutReferrerNestedInput
   pointMovements?: Prisma.PointMovementUncheckedUpdateManyWithoutReferrerNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferrerNestedInput
 }
 
 export type ReferrerCreateManyInput = {
@@ -483,6 +490,20 @@ export type ReferrerUpdateOneRequiredWithoutPointMovementsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ReferrerUpdateToOneWithWhereWithoutPointMovementsInput, Prisma.ReferrerUpdateWithoutPointMovementsInput>, Prisma.ReferrerUncheckedUpdateWithoutPointMovementsInput>
 }
 
+export type ReferrerCreateNestedOneWithoutCampaignPointsInput = {
+  create?: Prisma.XOR<Prisma.ReferrerCreateWithoutCampaignPointsInput, Prisma.ReferrerUncheckedCreateWithoutCampaignPointsInput>
+  connectOrCreate?: Prisma.ReferrerCreateOrConnectWithoutCampaignPointsInput
+  connect?: Prisma.ReferrerWhereUniqueInput
+}
+
+export type ReferrerUpdateOneRequiredWithoutCampaignPointsNestedInput = {
+  create?: Prisma.XOR<Prisma.ReferrerCreateWithoutCampaignPointsInput, Prisma.ReferrerUncheckedCreateWithoutCampaignPointsInput>
+  connectOrCreate?: Prisma.ReferrerCreateOrConnectWithoutCampaignPointsInput
+  upsert?: Prisma.ReferrerUpsertWithoutCampaignPointsInput
+  connect?: Prisma.ReferrerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReferrerUpdateToOneWithWhereWithoutCampaignPointsInput, Prisma.ReferrerUpdateWithoutCampaignPointsInput>, Prisma.ReferrerUncheckedUpdateWithoutCampaignPointsInput>
+}
+
 export type ReferrerCreateWithoutReferralsInput = {
   id?: string
   code: string
@@ -496,6 +517,7 @@ export type ReferrerCreateWithoutReferralsInput = {
   updatedAt?: Date | string
   redemptions?: Prisma.RedemptionCreateNestedManyWithoutReferrerInput
   pointMovements?: Prisma.PointMovementCreateNestedManyWithoutReferrerInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferrerInput
 }
 
 export type ReferrerUncheckedCreateWithoutReferralsInput = {
@@ -511,6 +533,7 @@ export type ReferrerUncheckedCreateWithoutReferralsInput = {
   updatedAt?: Date | string
   redemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutReferrerInput
   pointMovements?: Prisma.PointMovementUncheckedCreateNestedManyWithoutReferrerInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferrerInput
 }
 
 export type ReferrerCreateOrConnectWithoutReferralsInput = {
@@ -542,6 +565,7 @@ export type ReferrerUpdateWithoutReferralsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redemptions?: Prisma.RedemptionUpdateManyWithoutReferrerNestedInput
   pointMovements?: Prisma.PointMovementUpdateManyWithoutReferrerNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferrerNestedInput
 }
 
 export type ReferrerUncheckedUpdateWithoutReferralsInput = {
@@ -557,6 +581,7 @@ export type ReferrerUncheckedUpdateWithoutReferralsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutReferrerNestedInput
   pointMovements?: Prisma.PointMovementUncheckedUpdateManyWithoutReferrerNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferrerNestedInput
 }
 
 export type ReferrerCreateWithoutRedemptionsInput = {
@@ -572,6 +597,7 @@ export type ReferrerCreateWithoutRedemptionsInput = {
   updatedAt?: Date | string
   referrals?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   pointMovements?: Prisma.PointMovementCreateNestedManyWithoutReferrerInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferrerInput
 }
 
 export type ReferrerUncheckedCreateWithoutRedemptionsInput = {
@@ -587,6 +613,7 @@ export type ReferrerUncheckedCreateWithoutRedemptionsInput = {
   updatedAt?: Date | string
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   pointMovements?: Prisma.PointMovementUncheckedCreateNestedManyWithoutReferrerInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferrerInput
 }
 
 export type ReferrerCreateOrConnectWithoutRedemptionsInput = {
@@ -618,6 +645,7 @@ export type ReferrerUpdateWithoutRedemptionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   pointMovements?: Prisma.PointMovementUpdateManyWithoutReferrerNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferrerNestedInput
 }
 
 export type ReferrerUncheckedUpdateWithoutRedemptionsInput = {
@@ -633,6 +661,7 @@ export type ReferrerUncheckedUpdateWithoutRedemptionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   pointMovements?: Prisma.PointMovementUncheckedUpdateManyWithoutReferrerNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferrerNestedInput
 }
 
 export type ReferrerCreateWithoutPointMovementsInput = {
@@ -648,6 +677,7 @@ export type ReferrerCreateWithoutPointMovementsInput = {
   updatedAt?: Date | string
   referrals?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
   redemptions?: Prisma.RedemptionCreateNestedManyWithoutReferrerInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferrerInput
 }
 
 export type ReferrerUncheckedCreateWithoutPointMovementsInput = {
@@ -663,6 +693,7 @@ export type ReferrerUncheckedCreateWithoutPointMovementsInput = {
   updatedAt?: Date | string
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
   redemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutReferrerInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferrerInput
 }
 
 export type ReferrerCreateOrConnectWithoutPointMovementsInput = {
@@ -694,6 +725,7 @@ export type ReferrerUpdateWithoutPointMovementsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
   redemptions?: Prisma.RedemptionUpdateManyWithoutReferrerNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferrerNestedInput
 }
 
 export type ReferrerUncheckedUpdateWithoutPointMovementsInput = {
@@ -709,6 +741,87 @@ export type ReferrerUncheckedUpdateWithoutPointMovementsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
   redemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutReferrerNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferrerNestedInput
+}
+
+export type ReferrerCreateWithoutCampaignPointsInput = {
+  id?: string
+  code: string
+  name: string
+  email: string
+  phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  referrals?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
+  redemptions?: Prisma.RedemptionCreateNestedManyWithoutReferrerInput
+  pointMovements?: Prisma.PointMovementCreateNestedManyWithoutReferrerInput
+}
+
+export type ReferrerUncheckedCreateWithoutCampaignPointsInput = {
+  id?: string
+  code: string
+  name: string
+  email: string
+  phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
+  redemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutReferrerInput
+  pointMovements?: Prisma.PointMovementUncheckedCreateNestedManyWithoutReferrerInput
+}
+
+export type ReferrerCreateOrConnectWithoutCampaignPointsInput = {
+  where: Prisma.ReferrerWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReferrerCreateWithoutCampaignPointsInput, Prisma.ReferrerUncheckedCreateWithoutCampaignPointsInput>
+}
+
+export type ReferrerUpsertWithoutCampaignPointsInput = {
+  update: Prisma.XOR<Prisma.ReferrerUpdateWithoutCampaignPointsInput, Prisma.ReferrerUncheckedUpdateWithoutCampaignPointsInput>
+  create: Prisma.XOR<Prisma.ReferrerCreateWithoutCampaignPointsInput, Prisma.ReferrerUncheckedCreateWithoutCampaignPointsInput>
+  where?: Prisma.ReferrerWhereInput
+}
+
+export type ReferrerUpdateToOneWithWhereWithoutCampaignPointsInput = {
+  where?: Prisma.ReferrerWhereInput
+  data: Prisma.XOR<Prisma.ReferrerUpdateWithoutCampaignPointsInput, Prisma.ReferrerUncheckedUpdateWithoutCampaignPointsInput>
+}
+
+export type ReferrerUpdateWithoutCampaignPointsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  referrals?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
+  redemptions?: Prisma.RedemptionUpdateManyWithoutReferrerNestedInput
+  pointMovements?: Prisma.PointMovementUpdateManyWithoutReferrerNestedInput
+}
+
+export type ReferrerUncheckedUpdateWithoutCampaignPointsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  referrals?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
+  redemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutReferrerNestedInput
+  pointMovements?: Prisma.PointMovementUncheckedUpdateManyWithoutReferrerNestedInput
 }
 
 
@@ -720,12 +833,14 @@ export type ReferrerCountOutputType = {
   referrals: number
   redemptions: number
   pointMovements: number
+  campaignPoints: number
 }
 
 export type ReferrerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referrals?: boolean | ReferrerCountOutputTypeCountReferralsArgs
   redemptions?: boolean | ReferrerCountOutputTypeCountRedemptionsArgs
   pointMovements?: boolean | ReferrerCountOutputTypeCountPointMovementsArgs
+  campaignPoints?: boolean | ReferrerCountOutputTypeCountCampaignPointsArgs
 }
 
 /**
@@ -759,6 +874,13 @@ export type ReferrerCountOutputTypeCountPointMovementsArgs<ExtArgs extends runti
   where?: Prisma.PointMovementWhereInput
 }
 
+/**
+ * ReferrerCountOutputType without action
+ */
+export type ReferrerCountOutputTypeCountCampaignPointsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CampaignReferralPointsWhereInput
+}
+
 
 export type ReferrerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -774,6 +896,7 @@ export type ReferrerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   referrals?: boolean | Prisma.Referrer$referralsArgs<ExtArgs>
   redemptions?: boolean | Prisma.Referrer$redemptionsArgs<ExtArgs>
   pointMovements?: boolean | Prisma.Referrer$pointMovementsArgs<ExtArgs>
+  campaignPoints?: boolean | Prisma.Referrer$campaignPointsArgs<ExtArgs>
   _count?: boolean | Prisma.ReferrerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["referrer"]>
 
@@ -821,6 +944,7 @@ export type ReferrerInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   referrals?: boolean | Prisma.Referrer$referralsArgs<ExtArgs>
   redemptions?: boolean | Prisma.Referrer$redemptionsArgs<ExtArgs>
   pointMovements?: boolean | Prisma.Referrer$pointMovementsArgs<ExtArgs>
+  campaignPoints?: boolean | Prisma.Referrer$campaignPointsArgs<ExtArgs>
   _count?: boolean | Prisma.ReferrerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ReferrerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -832,6 +956,7 @@ export type $ReferrerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     referrals: Prisma.$ReferralPayload<ExtArgs>[]
     redemptions: Prisma.$RedemptionPayload<ExtArgs>[]
     pointMovements: Prisma.$PointMovementPayload<ExtArgs>[]
+    campaignPoints: Prisma.$CampaignReferralPointsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1241,6 +1366,7 @@ export interface Prisma__ReferrerClient<T, Null = never, ExtArgs extends runtime
   referrals<T extends Prisma.Referrer$referralsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Referrer$referralsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   redemptions<T extends Prisma.Referrer$redemptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Referrer$redemptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RedemptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pointMovements<T extends Prisma.Referrer$pointMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Referrer$pointMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PointMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  campaignPoints<T extends Prisma.Referrer$campaignPointsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Referrer$campaignPointsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignReferralPointsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1742,6 +1868,30 @@ export type Referrer$pointMovementsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.PointMovementScalarFieldEnum | Prisma.PointMovementScalarFieldEnum[]
+}
+
+/**
+ * Referrer.campaignPoints
+ */
+export type Referrer$campaignPointsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CampaignReferralPoints
+   */
+  select?: Prisma.CampaignReferralPointsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CampaignReferralPoints
+   */
+  omit?: Prisma.CampaignReferralPointsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignReferralPointsInclude<ExtArgs> | null
+  where?: Prisma.CampaignReferralPointsWhereInput
+  orderBy?: Prisma.CampaignReferralPointsOrderByWithRelationInput | Prisma.CampaignReferralPointsOrderByWithRelationInput[]
+  cursor?: Prisma.CampaignReferralPointsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CampaignReferralPointsScalarFieldEnum | Prisma.CampaignReferralPointsScalarFieldEnum[]
 }
 
 /**

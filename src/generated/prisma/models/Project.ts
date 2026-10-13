@@ -488,6 +488,8 @@ export type ProjectWhereInput = {
   media?: Prisma.ProjectMediaListRelationFilter
   leads?: Prisma.LeadListRelationFilter
   referrals?: Prisma.ReferralListRelationFilter
+  campaignProjects?: Prisma.CampaignProjectListRelationFilter
+  pointsConfig?: Prisma.XOR<Prisma.ProjectPointsConfigNullableScalarRelationFilter, Prisma.ProjectPointsConfigWhereInput> | null
 }
 
 export type ProjectOrderByWithRelationInput = {
@@ -537,6 +539,8 @@ export type ProjectOrderByWithRelationInput = {
   media?: Prisma.ProjectMediaOrderByRelationAggregateInput
   leads?: Prisma.LeadOrderByRelationAggregateInput
   referrals?: Prisma.ReferralOrderByRelationAggregateInput
+  campaignProjects?: Prisma.CampaignProjectOrderByRelationAggregateInput
+  pointsConfig?: Prisma.ProjectPointsConfigOrderByWithRelationInput
 }
 
 export type ProjectWhereUniqueInput = Prisma.AtLeast<{
@@ -589,6 +593,8 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   media?: Prisma.ProjectMediaListRelationFilter
   leads?: Prisma.LeadListRelationFilter
   referrals?: Prisma.ReferralListRelationFilter
+  campaignProjects?: Prisma.CampaignProjectListRelationFilter
+  pointsConfig?: Prisma.XOR<Prisma.ProjectPointsConfigNullableScalarRelationFilter, Prisma.ProjectPointsConfigWhereInput> | null
 }, "id" | "slug">
 
 export type ProjectOrderByWithAggregationInput = {
@@ -727,6 +733,8 @@ export type ProjectCreateInput = {
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateInput = {
@@ -775,6 +783,8 @@ export type ProjectUncheckedCreateInput = {
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUpdateInput = {
@@ -823,6 +833,8 @@ export type ProjectUpdateInput = {
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateInput = {
@@ -871,6 +883,8 @@ export type ProjectUncheckedUpdateInput = {
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyInput = {
@@ -1342,6 +1356,34 @@ export type ProjectUpdateOneWithoutLeadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutLeadsInput, Prisma.ProjectUpdateWithoutLeadsInput>, Prisma.ProjectUncheckedUpdateWithoutLeadsInput>
 }
 
+export type ProjectCreateNestedOneWithoutCampaignProjectsInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCampaignProjectsInput, Prisma.ProjectUncheckedCreateWithoutCampaignProjectsInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCampaignProjectsInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutCampaignProjectsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutCampaignProjectsInput, Prisma.ProjectUncheckedCreateWithoutCampaignProjectsInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutCampaignProjectsInput
+  upsert?: Prisma.ProjectUpsertWithoutCampaignProjectsInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutCampaignProjectsInput, Prisma.ProjectUpdateWithoutCampaignProjectsInput>, Prisma.ProjectUncheckedUpdateWithoutCampaignProjectsInput>
+}
+
+export type ProjectCreateNestedOneWithoutPointsConfigInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutPointsConfigInput, Prisma.ProjectUncheckedCreateWithoutPointsConfigInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPointsConfigInput
+  connect?: Prisma.ProjectWhereUniqueInput
+}
+
+export type ProjectUpdateOneRequiredWithoutPointsConfigNestedInput = {
+  create?: Prisma.XOR<Prisma.ProjectCreateWithoutPointsConfigInput, Prisma.ProjectUncheckedCreateWithoutPointsConfigInput>
+  connectOrCreate?: Prisma.ProjectCreateOrConnectWithoutPointsConfigInput
+  upsert?: Prisma.ProjectUpsertWithoutPointsConfigInput
+  connect?: Prisma.ProjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProjectUpdateToOneWithWhereWithoutPointsConfigInput, Prisma.ProjectUpdateWithoutPointsConfigInput>, Prisma.ProjectUncheckedUpdateWithoutPointsConfigInput>
+}
+
 export type ProjectCreateWithoutAgentProfileInput = {
   id?: string
   category?: $Enums.ProjectCategory
@@ -1387,6 +1429,8 @@ export type ProjectCreateWithoutAgentProfileInput = {
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutAgentProfileInput = {
@@ -1434,6 +1478,8 @@ export type ProjectUncheckedCreateWithoutAgentProfileInput = {
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutAgentProfileInput = {
@@ -1551,6 +1597,8 @@ export type ProjectCreateWithoutReferralsInput = {
   milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutReferralsInput = {
@@ -1598,6 +1646,8 @@ export type ProjectUncheckedCreateWithoutReferralsInput = {
   milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutReferralsInput = {
@@ -1661,6 +1711,8 @@ export type ProjectUpdateWithoutReferralsInput = {
   milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutReferralsInput = {
@@ -1708,6 +1760,8 @@ export type ProjectUncheckedUpdateWithoutReferralsInput = {
   milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutAdminProjectInput = {
@@ -1755,6 +1809,8 @@ export type ProjectCreateWithoutAdminProjectInput = {
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutAdminProjectInput = {
@@ -1802,6 +1858,8 @@ export type ProjectUncheckedCreateWithoutAdminProjectInput = {
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutAdminProjectInput = {
@@ -1865,6 +1923,8 @@ export type ProjectUpdateWithoutAdminProjectInput = {
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutAdminProjectInput = {
@@ -1912,6 +1972,8 @@ export type ProjectUncheckedUpdateWithoutAdminProjectInput = {
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutLocationInput = {
@@ -1959,6 +2021,8 @@ export type ProjectCreateWithoutLocationInput = {
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutLocationInput = {
@@ -2006,6 +2070,8 @@ export type ProjectUncheckedCreateWithoutLocationInput = {
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutLocationInput = {
@@ -2069,6 +2135,8 @@ export type ProjectUpdateWithoutLocationInput = {
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutLocationInput = {
@@ -2116,6 +2184,8 @@ export type ProjectUncheckedUpdateWithoutLocationInput = {
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutLotsInput = {
@@ -2163,6 +2233,8 @@ export type ProjectCreateWithoutLotsInput = {
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutLotsInput = {
@@ -2210,6 +2282,8 @@ export type ProjectUncheckedCreateWithoutLotsInput = {
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutLotsInput = {
@@ -2273,6 +2347,8 @@ export type ProjectUpdateWithoutLotsInput = {
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutLotsInput = {
@@ -2320,6 +2396,8 @@ export type ProjectUncheckedUpdateWithoutLotsInput = {
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutMilestonesInput = {
@@ -2367,6 +2445,8 @@ export type ProjectCreateWithoutMilestonesInput = {
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutMilestonesInput = {
@@ -2414,6 +2494,8 @@ export type ProjectUncheckedCreateWithoutMilestonesInput = {
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutMilestonesInput = {
@@ -2477,6 +2559,8 @@ export type ProjectUpdateWithoutMilestonesInput = {
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutMilestonesInput = {
@@ -2524,6 +2608,8 @@ export type ProjectUncheckedUpdateWithoutMilestonesInput = {
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutMediaInput = {
@@ -2571,6 +2657,8 @@ export type ProjectCreateWithoutMediaInput = {
   milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutMediaInput = {
@@ -2618,6 +2706,8 @@ export type ProjectUncheckedCreateWithoutMediaInput = {
   milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutMediaInput = {
@@ -2681,6 +2771,8 @@ export type ProjectUpdateWithoutMediaInput = {
   milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutMediaInput = {
@@ -2728,6 +2820,8 @@ export type ProjectUncheckedUpdateWithoutMediaInput = {
   milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectCreateWithoutLeadsInput = {
@@ -2775,6 +2869,8 @@ export type ProjectCreateWithoutLeadsInput = {
   milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectUncheckedCreateWithoutLeadsInput = {
@@ -2822,6 +2918,8 @@ export type ProjectUncheckedCreateWithoutLeadsInput = {
   milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
   media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
 }
 
 export type ProjectCreateOrConnectWithoutLeadsInput = {
@@ -2885,6 +2983,8 @@ export type ProjectUpdateWithoutLeadsInput = {
   milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutLeadsInput = {
@@ -2932,6 +3032,432 @@ export type ProjectUncheckedUpdateWithoutLeadsInput = {
   milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutCampaignProjectsInput = {
+  id?: string
+  category?: $Enums.ProjectCategory
+  stage: $Enums.ProjectStage
+  slug: string
+  name: string
+  description: string
+  currency: $Enums.Currency
+  priceFrom: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceTo: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ruc?: string | null
+  businessName?: string | null
+  downPayment?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  monthlyPayment?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  financing?: Prisma.ProjectCreatefinancingInput | string[]
+  totalBlocks?: number | null
+  totalLots?: number | null
+  social?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  services?: Prisma.ProjectCreateservicesInput | string[]
+  urbanizationName?: string | null
+  registryEntry?: string | null
+  amenities?: Prisma.ProjectCreateamenitiesInput | string[]
+  lotMode: $Enums.LotMode
+  constructionStart?: Date | string | null
+  estimatedDelivery: Date | string
+  certifications?: Prisma.ProjectCreatecertificationsInput | string[]
+  status?: $Enums.ProjectStatus
+  featured?: boolean
+  tourUrl?: string | null
+  contactName?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactWhatsapp?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
+  location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
+  lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
+  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigCreateNestedOneWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutCampaignProjectsInput = {
+  id?: string
+  agentProfileId?: string | null
+  category?: $Enums.ProjectCategory
+  stage: $Enums.ProjectStage
+  slug: string
+  name: string
+  description: string
+  currency: $Enums.Currency
+  priceFrom: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceTo: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ruc?: string | null
+  businessName?: string | null
+  downPayment?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  monthlyPayment?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  financing?: Prisma.ProjectCreatefinancingInput | string[]
+  totalBlocks?: number | null
+  totalLots?: number | null
+  social?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  services?: Prisma.ProjectCreateservicesInput | string[]
+  urbanizationName?: string | null
+  registryEntry?: string | null
+  amenities?: Prisma.ProjectCreateamenitiesInput | string[]
+  lotMode: $Enums.LotMode
+  constructionStart?: Date | string | null
+  estimatedDelivery: Date | string
+  certifications?: Prisma.ProjectCreatecertificationsInput | string[]
+  status?: $Enums.ProjectStatus
+  featured?: boolean
+  tourUrl?: string | null
+  contactName?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactWhatsapp?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
+  location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
+  lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
+  media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedCreateNestedOneWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutCampaignProjectsInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutCampaignProjectsInput, Prisma.ProjectUncheckedCreateWithoutCampaignProjectsInput>
+}
+
+export type ProjectUpsertWithoutCampaignProjectsInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutCampaignProjectsInput, Prisma.ProjectUncheckedUpdateWithoutCampaignProjectsInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutCampaignProjectsInput, Prisma.ProjectUncheckedCreateWithoutCampaignProjectsInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutCampaignProjectsInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutCampaignProjectsInput, Prisma.ProjectUncheckedUpdateWithoutCampaignProjectsInput>
+}
+
+export type ProjectUpdateWithoutCampaignProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumProjectCategoryFieldUpdateOperationsInput | $Enums.ProjectCategory
+  stage?: Prisma.EnumProjectStageFieldUpdateOperationsInput | $Enums.ProjectStage
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  priceFrom?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceTo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ruc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  downPayment?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  monthlyPayment?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  financing?: Prisma.ProjectUpdatefinancingInput | string[]
+  totalBlocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalLots?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  social?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  services?: Prisma.ProjectUpdateservicesInput | string[]
+  urbanizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registryEntry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.ProjectUpdateamenitiesInput | string[]
+  lotMode?: Prisma.EnumLotModeFieldUpdateOperationsInput | $Enums.LotMode
+  constructionStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedDelivery?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  certifications?: Prisma.ProjectUpdatecertificationsInput | string[]
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
+  location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
+  lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutCampaignProjectsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  agentProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.EnumProjectCategoryFieldUpdateOperationsInput | $Enums.ProjectCategory
+  stage?: Prisma.EnumProjectStageFieldUpdateOperationsInput | $Enums.ProjectStage
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  priceFrom?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceTo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ruc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  downPayment?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  monthlyPayment?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  financing?: Prisma.ProjectUpdatefinancingInput | string[]
+  totalBlocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalLots?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  social?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  services?: Prisma.ProjectUpdateservicesInput | string[]
+  urbanizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registryEntry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.ProjectUpdateamenitiesInput | string[]
+  lotMode?: Prisma.EnumLotModeFieldUpdateOperationsInput | $Enums.LotMode
+  constructionStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedDelivery?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  certifications?: Prisma.ProjectUpdatecertificationsInput | string[]
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
+  location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
+  lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
+  media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
+}
+
+export type ProjectCreateWithoutPointsConfigInput = {
+  id?: string
+  category?: $Enums.ProjectCategory
+  stage: $Enums.ProjectStage
+  slug: string
+  name: string
+  description: string
+  currency: $Enums.Currency
+  priceFrom: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceTo: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ruc?: string | null
+  businessName?: string | null
+  downPayment?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  monthlyPayment?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  financing?: Prisma.ProjectCreatefinancingInput | string[]
+  totalBlocks?: number | null
+  totalLots?: number | null
+  social?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  services?: Prisma.ProjectCreateservicesInput | string[]
+  urbanizationName?: string | null
+  registryEntry?: string | null
+  amenities?: Prisma.ProjectCreateamenitiesInput | string[]
+  lotMode: $Enums.LotMode
+  constructionStart?: Date | string | null
+  estimatedDelivery: Date | string
+  certifications?: Prisma.ProjectCreatecertificationsInput | string[]
+  status?: $Enums.ProjectStatus
+  featured?: boolean
+  tourUrl?: string | null
+  contactName?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactWhatsapp?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  agentProfile?: Prisma.ProfessionalProfileCreateNestedOneWithoutProjectsInput
+  adminProject?: Prisma.AdminProjectCreateNestedOneWithoutProjectInput
+  location?: Prisma.ProjectLocationCreateNestedOneWithoutProjectInput
+  lots?: Prisma.ProjectLotCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneCreateNestedManyWithoutProjectInput
+  media?: Prisma.ProjectMediaCreateNestedManyWithoutProjectInput
+  leads?: Prisma.LeadCreateNestedManyWithoutProjectInput
+  referrals?: Prisma.ReferralCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectUncheckedCreateWithoutPointsConfigInput = {
+  id?: string
+  agentProfileId?: string | null
+  category?: $Enums.ProjectCategory
+  stage: $Enums.ProjectStage
+  slug: string
+  name: string
+  description: string
+  currency: $Enums.Currency
+  priceFrom: runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceTo: runtime.Decimal | runtime.DecimalJsLike | number | string
+  ruc?: string | null
+  businessName?: string | null
+  downPayment?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  monthlyPayment?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  financing?: Prisma.ProjectCreatefinancingInput | string[]
+  totalBlocks?: number | null
+  totalLots?: number | null
+  social?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  services?: Prisma.ProjectCreateservicesInput | string[]
+  urbanizationName?: string | null
+  registryEntry?: string | null
+  amenities?: Prisma.ProjectCreateamenitiesInput | string[]
+  lotMode: $Enums.LotMode
+  constructionStart?: Date | string | null
+  estimatedDelivery: Date | string
+  certifications?: Prisma.ProjectCreatecertificationsInput | string[]
+  status?: $Enums.ProjectStatus
+  featured?: boolean
+  tourUrl?: string | null
+  contactName?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactWhatsapp?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  publishedAt?: Date | string | null
+  isDeleted?: boolean
+  deletedAt?: Date | string | null
+  adminProject?: Prisma.AdminProjectUncheckedCreateNestedOneWithoutProjectInput
+  location?: Prisma.ProjectLocationUncheckedCreateNestedOneWithoutProjectInput
+  lots?: Prisma.ProjectLotUncheckedCreateNestedManyWithoutProjectInput
+  milestones?: Prisma.ProjectMilestoneUncheckedCreateNestedManyWithoutProjectInput
+  media?: Prisma.ProjectMediaUncheckedCreateNestedManyWithoutProjectInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutProjectInput
+  referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutProjectInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedCreateNestedManyWithoutProjectInput
+}
+
+export type ProjectCreateOrConnectWithoutPointsConfigInput = {
+  where: Prisma.ProjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutPointsConfigInput, Prisma.ProjectUncheckedCreateWithoutPointsConfigInput>
+}
+
+export type ProjectUpsertWithoutPointsConfigInput = {
+  update: Prisma.XOR<Prisma.ProjectUpdateWithoutPointsConfigInput, Prisma.ProjectUncheckedUpdateWithoutPointsConfigInput>
+  create: Prisma.XOR<Prisma.ProjectCreateWithoutPointsConfigInput, Prisma.ProjectUncheckedCreateWithoutPointsConfigInput>
+  where?: Prisma.ProjectWhereInput
+}
+
+export type ProjectUpdateToOneWithWhereWithoutPointsConfigInput = {
+  where?: Prisma.ProjectWhereInput
+  data: Prisma.XOR<Prisma.ProjectUpdateWithoutPointsConfigInput, Prisma.ProjectUncheckedUpdateWithoutPointsConfigInput>
+}
+
+export type ProjectUpdateWithoutPointsConfigInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  category?: Prisma.EnumProjectCategoryFieldUpdateOperationsInput | $Enums.ProjectCategory
+  stage?: Prisma.EnumProjectStageFieldUpdateOperationsInput | $Enums.ProjectStage
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  priceFrom?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceTo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ruc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  downPayment?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  monthlyPayment?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  financing?: Prisma.ProjectUpdatefinancingInput | string[]
+  totalBlocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalLots?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  social?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  services?: Prisma.ProjectUpdateservicesInput | string[]
+  urbanizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registryEntry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.ProjectUpdateamenitiesInput | string[]
+  lotMode?: Prisma.EnumLotModeFieldUpdateOperationsInput | $Enums.LotMode
+  constructionStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedDelivery?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  certifications?: Prisma.ProjectUpdatecertificationsInput | string[]
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  agentProfile?: Prisma.ProfessionalProfileUpdateOneWithoutProjectsNestedInput
+  adminProject?: Prisma.AdminProjectUpdateOneWithoutProjectNestedInput
+  location?: Prisma.ProjectLocationUpdateOneWithoutProjectNestedInput
+  lots?: Prisma.ProjectLotUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUpdateManyWithoutProjectNestedInput
+  media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
+  referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+}
+
+export type ProjectUncheckedUpdateWithoutPointsConfigInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  agentProfileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  category?: Prisma.EnumProjectCategoryFieldUpdateOperationsInput | $Enums.ProjectCategory
+  stage?: Prisma.EnumProjectStageFieldUpdateOperationsInput | $Enums.ProjectStage
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.EnumCurrencyFieldUpdateOperationsInput | $Enums.Currency
+  priceFrom?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  priceTo?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  ruc?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  downPayment?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  monthlyPayment?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  financing?: Prisma.ProjectUpdatefinancingInput | string[]
+  totalBlocks?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  totalLots?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  social?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  services?: Prisma.ProjectUpdateservicesInput | string[]
+  urbanizationName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  registryEntry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  amenities?: Prisma.ProjectUpdateamenitiesInput | string[]
+  lotMode?: Prisma.EnumLotModeFieldUpdateOperationsInput | $Enums.LotMode
+  constructionStart?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  estimatedDelivery?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  certifications?: Prisma.ProjectUpdatecertificationsInput | string[]
+  status?: Prisma.EnumProjectStatusFieldUpdateOperationsInput | $Enums.ProjectStatus
+  featured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  tourUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactWhatsapp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  adminProject?: Prisma.AdminProjectUncheckedUpdateOneWithoutProjectNestedInput
+  location?: Prisma.ProjectLocationUncheckedUpdateOneWithoutProjectNestedInput
+  lots?: Prisma.ProjectLotUncheckedUpdateManyWithoutProjectNestedInput
+  milestones?: Prisma.ProjectMilestoneUncheckedUpdateManyWithoutProjectNestedInput
+  media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
+  referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
 }
 
 export type ProjectCreateManyAgentProfileInput = {
@@ -3019,6 +3545,8 @@ export type ProjectUpdateWithoutAgentProfileInput = {
   media?: Prisma.ProjectMediaUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateWithoutAgentProfileInput = {
@@ -3066,6 +3594,8 @@ export type ProjectUncheckedUpdateWithoutAgentProfileInput = {
   media?: Prisma.ProjectMediaUncheckedUpdateManyWithoutProjectNestedInput
   leads?: Prisma.LeadUncheckedUpdateManyWithoutProjectNestedInput
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutProjectNestedInput
+  campaignProjects?: Prisma.CampaignProjectUncheckedUpdateManyWithoutProjectNestedInput
+  pointsConfig?: Prisma.ProjectPointsConfigUncheckedUpdateOneWithoutProjectNestedInput
 }
 
 export type ProjectUncheckedUpdateManyWithoutAgentProfileInput = {
@@ -3119,6 +3649,7 @@ export type ProjectCountOutputType = {
   media: number
   leads: number
   referrals: number
+  campaignProjects: number
 }
 
 export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3127,6 +3658,7 @@ export type ProjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   media?: boolean | ProjectCountOutputTypeCountMediaArgs
   leads?: boolean | ProjectCountOutputTypeCountLeadsArgs
   referrals?: boolean | ProjectCountOutputTypeCountReferralsArgs
+  campaignProjects?: boolean | ProjectCountOutputTypeCountCampaignProjectsArgs
 }
 
 /**
@@ -3172,6 +3704,13 @@ export type ProjectCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.E
  */
 export type ProjectCountOutputTypeCountReferralsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ReferralWhereInput
+}
+
+/**
+ * ProjectCountOutputType without action
+ */
+export type ProjectCountOutputTypeCountCampaignProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CampaignProjectWhereInput
 }
 
 
@@ -3222,6 +3761,8 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   media?: boolean | Prisma.Project$mediaArgs<ExtArgs>
   leads?: boolean | Prisma.Project$leadsArgs<ExtArgs>
   referrals?: boolean | Prisma.Project$referralsArgs<ExtArgs>
+  campaignProjects?: boolean | Prisma.Project$campaignProjectsArgs<ExtArgs>
+  pointsConfig?: boolean | Prisma.Project$pointsConfigArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -3360,6 +3901,8 @@ export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   media?: boolean | Prisma.Project$mediaArgs<ExtArgs>
   leads?: boolean | Prisma.Project$leadsArgs<ExtArgs>
   referrals?: boolean | Prisma.Project$referralsArgs<ExtArgs>
+  campaignProjects?: boolean | Prisma.Project$campaignProjectsArgs<ExtArgs>
+  pointsConfig?: boolean | Prisma.Project$pointsConfigArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3380,6 +3923,8 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     media: Prisma.$ProjectMediaPayload<ExtArgs>[]
     leads: Prisma.$LeadPayload<ExtArgs>[]
     referrals: Prisma.$ReferralPayload<ExtArgs>[]
+    campaignProjects: Prisma.$CampaignProjectPayload<ExtArgs>[]
+    pointsConfig: Prisma.$ProjectPointsConfigPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3822,6 +4367,8 @@ export interface Prisma__ProjectClient<T, Null = never, ExtArgs extends runtime.
   media<T extends Prisma.Project$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProjectMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   leads<T extends Prisma.Project$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   referrals<T extends Prisma.Project$referralsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$referralsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  campaignProjects<T extends Prisma.Project$campaignProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$campaignProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pointsConfig<T extends Prisma.Project$pointsConfigArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Project$pointsConfigArgs<ExtArgs>>): Prisma.Prisma__ProjectPointsConfigClient<runtime.Types.Result.GetResult<Prisma.$ProjectPointsConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4464,6 +5011,49 @@ export type Project$referralsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ReferralScalarFieldEnum | Prisma.ReferralScalarFieldEnum[]
+}
+
+/**
+ * Project.campaignProjects
+ */
+export type Project$campaignProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CampaignProject
+   */
+  select?: Prisma.CampaignProjectSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CampaignProject
+   */
+  omit?: Prisma.CampaignProjectOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignProjectInclude<ExtArgs> | null
+  where?: Prisma.CampaignProjectWhereInput
+  orderBy?: Prisma.CampaignProjectOrderByWithRelationInput | Prisma.CampaignProjectOrderByWithRelationInput[]
+  cursor?: Prisma.CampaignProjectWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CampaignProjectScalarFieldEnum | Prisma.CampaignProjectScalarFieldEnum[]
+}
+
+/**
+ * Project.pointsConfig
+ */
+export type Project$pointsConfigArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProjectPointsConfig
+   */
+  select?: Prisma.ProjectPointsConfigSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProjectPointsConfig
+   */
+  omit?: Prisma.ProjectPointsConfigOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProjectPointsConfigInclude<ExtArgs> | null
+  where?: Prisma.ProjectPointsConfigWhereInput
 }
 
 /**

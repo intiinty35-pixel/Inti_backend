@@ -331,6 +331,8 @@ model Project {
   media             ProjectMedia[]
   leads             Lead[]
   referrals         Referral[]
+  campaignProjects  CampaignProject[]
+  pointsConfig      ProjectPointsConfig?
 
   @@index([status, featured, publishedAt])
   @@index([category, stage, status])
@@ -352,6 +354,7 @@ model Referrer {
   referrals      Referral[]
   redemptions    Redemption[]
   pointMovements PointMovement[]
+  campaignPoints CampaignReferralPoints[]
 
   @@map("referrers")
 }
@@ -365,16 +368,20 @@ model Referral {
   interest     ReferralInterest         @default(VENTA)
   availability ReferralAvailability     @default(INMEDIATA)
   projectId    String?
+  campaignId   String?
   status       ReferralStatus            @default(CONTACTED)
   code         String                   @unique
   createdAt    DateTime                 @default(now())
   updatedAt    DateTime                 @updatedAt
   referrer     Referrer                 @relation(fields: [referrerId], references: [id], onDelete: Restrict)
   project      Project?                 @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  campaign     Campaign?                @relation(fields: [campaignId], references: [id], onDelete: SetNull)
   history      ReferralStatusHistory[]
+  campaignPoints CampaignReferralPoints[]
 
   @@index([referrerId, createdAt])
   @@index([projectId, createdAt])
+  @@index([campaignId, createdAt])
   @@index([status, createdAt])
   @@map("referrals")
 }
@@ -822,4 +829,74 @@ model Claim {
 
   @@index([isDeleted])
   @@map("claims")
+}
+
+model Campaign {
+  id          String         @id @default(uuid())
+  code        String?        @unique
+  name        String
+  description String?
+  startDate   DateTime
+  endDate     DateTime
+  isActive    Boolean        @default(true)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  points      CampaignPoint[]
+  projects    CampaignProject[]
+  referralPoints CampaignReferralPoints[]
+  referrals   Referral[]
+
+  @@map("campaigns")
+}
+
+model CampaignPoint {
+  id            String         @id @default(uuid())
+  campaignId    String
+  status        ReferralStatus
+  points        Int            @default(0)
+  campaign      Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, status])
+  @@map("campaign_points")
+}
+
+model CampaignProject {
+  id         String   @id @default(uuid())
+  campaignId String
+  projectId  String
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, projectId])
+  @@map("campaign_projects")
+}
+
+model ProjectPointsConfig {
+  id                    String   @id @default(uuid())
+  projectId             String   @unique
+  contactedPoints       Int      @default(0)
+  visitPoints           Int      @default(0)
+  operationCompletedPoints Int   @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  project               Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@map("project_points_configs")
+}
+
+model CampaignReferralPoints {
+  id              String         @id @default(uuid())
+  referrerId      String
+  campaignId      String
+  referralId      String
+  status          ReferralStatus
+  points          Int            @default(0)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  referrer        Referrer       @relation(fields: [referrerId], references: [id], onDelete: Cascade)
+  campaign        Campaign       @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  referral        Referral       @relation(fields: [referralId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, referralId, status])
+  @@map("campaign_referral_points")
 }

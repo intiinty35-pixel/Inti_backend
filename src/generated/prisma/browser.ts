@@ -177,3 +177,28 @@ export type ContactReport = Prisma.ContactReportModel
  * 
  */
 export type Claim = Prisma.ClaimModel
+/**
+ * Model Campaign
+ * 
+ */
+export type Campaign = Prisma.CampaignModel
+/**
+ * Model CampaignPoint
+ * 
+ */
+export type CampaignPoint = Prisma.CampaignPointModel
+/**
+ * Model CampaignProject
+ * 
+ */
+export type CampaignProject = Prisma.CampaignProjectModel
+/**
+ * Model ProjectPointsConfig
+ * 
+ */
+export type ProjectPointsConfig = Prisma.ProjectPointsConfigModel
+/**
+ * Model CampaignReferralPoints
+ * 
+ */
+export type CampaignReferralPoints = Prisma.CampaignReferralPointsModel

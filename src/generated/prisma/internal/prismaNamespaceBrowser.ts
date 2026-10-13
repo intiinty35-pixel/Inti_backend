@@ -82,7 +82,12 @@ export const ModelName = {
   InvestmentType: 'InvestmentType',
   Lead: 'Lead',
   ContactReport: 'ContactReport',
-  Claim: 'Claim'
+  Claim: 'Claim',
+  Campaign: 'Campaign',
+  CampaignPoint: 'CampaignPoint',
+  CampaignProject: 'CampaignProject',
+  ProjectPointsConfig: 'ProjectPointsConfig',
+  CampaignReferralPoints: 'CampaignReferralPoints'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -400,6 +405,7 @@ export const ReferralScalarFieldEnum = {
   interest: 'interest',
   availability: 'availability',
   projectId: 'projectId',
+  campaignId: 'campaignId',
   status: 'status',
   code: 'code',
   createdAt: 'createdAt',
@@ -665,6 +671,67 @@ export const ClaimScalarFieldEnum = {
 } as const
 
 export type ClaimScalarFieldEnum = (typeof ClaimScalarFieldEnum)[keyof typeof ClaimScalarFieldEnum]
+
+
+export const CampaignScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum]
+
+
+export const CampaignPointScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  status: 'status',
+  points: 'points'
+} as const
+
+export type CampaignPointScalarFieldEnum = (typeof CampaignPointScalarFieldEnum)[keyof typeof CampaignPointScalarFieldEnum]
+
+
+export const CampaignProjectScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  projectId: 'projectId'
+} as const
+
+export type CampaignProjectScalarFieldEnum = (typeof CampaignProjectScalarFieldEnum)[keyof typeof CampaignProjectScalarFieldEnum]
+
+
+export const ProjectPointsConfigScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  contactedPoints: 'contactedPoints',
+  visitPoints: 'visitPoints',
+  operationCompletedPoints: 'operationCompletedPoints',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectPointsConfigScalarFieldEnum = (typeof ProjectPointsConfigScalarFieldEnum)[keyof typeof ProjectPointsConfigScalarFieldEnum]
+
+
+export const CampaignReferralPointsScalarFieldEnum = {
+  id: 'id',
+  referrerId: 'referrerId',
+  campaignId: 'campaignId',
+  referralId: 'referralId',
+  status: 'status',
+  points: 'points',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CampaignReferralPointsScalarFieldEnum = (typeof CampaignReferralPointsScalarFieldEnum)[keyof typeof CampaignReferralPointsScalarFieldEnum]
 
 
 export const SortOrder = {

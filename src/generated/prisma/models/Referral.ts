@@ -33,6 +33,7 @@ export type ReferralMinAggregateOutputType = {
   interest: $Enums.ReferralInterest | null
   availability: $Enums.ReferralAvailability | null
   projectId: string | null
+  campaignId: string | null
   status: $Enums.ReferralStatus | null
   code: string | null
   createdAt: Date | null
@@ -48,6 +49,7 @@ export type ReferralMaxAggregateOutputType = {
   interest: $Enums.ReferralInterest | null
   availability: $Enums.ReferralAvailability | null
   projectId: string | null
+  campaignId: string | null
   status: $Enums.ReferralStatus | null
   code: string | null
   createdAt: Date | null
@@ -63,6 +65,7 @@ export type ReferralCountAggregateOutputType = {
   interest: number
   availability: number
   projectId: number
+  campaignId: number
   status: number
   code: number
   createdAt: number
@@ -80,6 +83,7 @@ export type ReferralMinAggregateInputType = {
   interest?: true
   availability?: true
   projectId?: true
+  campaignId?: true
   status?: true
   code?: true
   createdAt?: true
@@ -95,6 +99,7 @@ export type ReferralMaxAggregateInputType = {
   interest?: true
   availability?: true
   projectId?: true
+  campaignId?: true
   status?: true
   code?: true
   createdAt?: true
@@ -110,6 +115,7 @@ export type ReferralCountAggregateInputType = {
   interest?: true
   availability?: true
   projectId?: true
+  campaignId?: true
   status?: true
   code?: true
   createdAt?: true
@@ -198,6 +204,7 @@ export type ReferralGroupByOutputType = {
   interest: $Enums.ReferralInterest
   availability: $Enums.ReferralAvailability
   projectId: string | null
+  campaignId: string | null
   status: $Enums.ReferralStatus
   code: string
   createdAt: Date
@@ -234,13 +241,16 @@ export type ReferralWhereInput = {
   interest?: Prisma.EnumReferralInterestFilter<"Referral"> | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityFilter<"Referral"> | $Enums.ReferralAvailability
   projectId?: Prisma.StringNullableFilter<"Referral"> | string | null
+  campaignId?: Prisma.StringNullableFilter<"Referral"> | string | null
   status?: Prisma.EnumReferralStatusFilter<"Referral"> | $Enums.ReferralStatus
   code?: Prisma.StringFilter<"Referral"> | string
   createdAt?: Prisma.DateTimeFilter<"Referral"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Referral"> | Date | string
   referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
+  campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
   history?: Prisma.ReferralStatusHistoryListRelationFilter
+  campaignPoints?: Prisma.CampaignReferralPointsListRelationFilter
 }
 
 export type ReferralOrderByWithRelationInput = {
@@ -252,13 +262,16 @@ export type ReferralOrderByWithRelationInput = {
   interest?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  campaignId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   code?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   referrer?: Prisma.ReferrerOrderByWithRelationInput
   project?: Prisma.ProjectOrderByWithRelationInput
+  campaign?: Prisma.CampaignOrderByWithRelationInput
   history?: Prisma.ReferralStatusHistoryOrderByRelationAggregateInput
+  campaignPoints?: Prisma.CampaignReferralPointsOrderByRelationAggregateInput
 }
 
 export type ReferralWhereUniqueInput = Prisma.AtLeast<{
@@ -274,12 +287,15 @@ export type ReferralWhereUniqueInput = Prisma.AtLeast<{
   interest?: Prisma.EnumReferralInterestFilter<"Referral"> | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityFilter<"Referral"> | $Enums.ReferralAvailability
   projectId?: Prisma.StringNullableFilter<"Referral"> | string | null
+  campaignId?: Prisma.StringNullableFilter<"Referral"> | string | null
   status?: Prisma.EnumReferralStatusFilter<"Referral"> | $Enums.ReferralStatus
   createdAt?: Prisma.DateTimeFilter<"Referral"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Referral"> | Date | string
   referrer?: Prisma.XOR<Prisma.ReferrerScalarRelationFilter, Prisma.ReferrerWhereInput>
   project?: Prisma.XOR<Prisma.ProjectNullableScalarRelationFilter, Prisma.ProjectWhereInput> | null
+  campaign?: Prisma.XOR<Prisma.CampaignNullableScalarRelationFilter, Prisma.CampaignWhereInput> | null
   history?: Prisma.ReferralStatusHistoryListRelationFilter
+  campaignPoints?: Prisma.CampaignReferralPointsListRelationFilter
 }, "id" | "code">
 
 export type ReferralOrderByWithAggregationInput = {
@@ -291,6 +307,7 @@ export type ReferralOrderByWithAggregationInput = {
   interest?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   projectId?: Prisma.SortOrderInput | Prisma.SortOrder
+  campaignId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   code?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -312,6 +329,7 @@ export type ReferralScalarWhereWithAggregatesInput = {
   interest?: Prisma.EnumReferralInterestWithAggregatesFilter<"Referral"> | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityWithAggregatesFilter<"Referral"> | $Enums.ReferralAvailability
   projectId?: Prisma.StringNullableWithAggregatesFilter<"Referral"> | string | null
+  campaignId?: Prisma.StringNullableWithAggregatesFilter<"Referral"> | string | null
   status?: Prisma.EnumReferralStatusWithAggregatesFilter<"Referral"> | $Enums.ReferralStatus
   code?: Prisma.StringWithAggregatesFilter<"Referral"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Referral"> | Date | string
@@ -331,7 +349,9 @@ export type ReferralCreateInput = {
   updatedAt?: Date | string
   referrer: Prisma.ReferrerCreateNestedOneWithoutReferralsInput
   project?: Prisma.ProjectCreateNestedOneWithoutReferralsInput
+  campaign?: Prisma.CampaignCreateNestedOneWithoutReferralsInput
   history?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutReferralInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferralInput
 }
 
 export type ReferralUncheckedCreateInput = {
@@ -343,11 +363,13 @@ export type ReferralUncheckedCreateInput = {
   interest?: $Enums.ReferralInterest
   availability?: $Enums.ReferralAvailability
   projectId?: string | null
+  campaignId?: string | null
   status?: $Enums.ReferralStatus
   code: string
   createdAt?: Date | string
   updatedAt?: Date | string
   history?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutReferralInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferralInput
 }
 
 export type ReferralUpdateInput = {
@@ -363,7 +385,9 @@ export type ReferralUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrer?: Prisma.ReferrerUpdateOneRequiredWithoutReferralsNestedInput
   project?: Prisma.ProjectUpdateOneWithoutReferralsNestedInput
+  campaign?: Prisma.CampaignUpdateOneWithoutReferralsNestedInput
   history?: Prisma.ReferralStatusHistoryUpdateManyWithoutReferralNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferralNestedInput
 }
 
 export type ReferralUncheckedUpdateInput = {
@@ -375,11 +399,13 @@ export type ReferralUncheckedUpdateInput = {
   interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
   code?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutReferralNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferralNestedInput
 }
 
 export type ReferralCreateManyInput = {
@@ -391,6 +417,7 @@ export type ReferralCreateManyInput = {
   interest?: $Enums.ReferralInterest
   availability?: $Enums.ReferralAvailability
   projectId?: string | null
+  campaignId?: string | null
   status?: $Enums.ReferralStatus
   code: string
   createdAt?: Date | string
@@ -419,6 +446,7 @@ export type ReferralUncheckedUpdateManyInput = {
   interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
   code?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -444,6 +472,7 @@ export type ReferralCountOrderByAggregateInput = {
   interest?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  campaignId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   code?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -459,6 +488,7 @@ export type ReferralMaxOrderByAggregateInput = {
   interest?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  campaignId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   code?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -474,6 +504,7 @@ export type ReferralMinOrderByAggregateInput = {
   interest?: Prisma.SortOrder
   availability?: Prisma.SortOrder
   projectId?: Prisma.SortOrder
+  campaignId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   code?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -595,6 +626,62 @@ export type ReferralUpdateOneRequiredWithoutHistoryNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ReferralUpdateToOneWithWhereWithoutHistoryInput, Prisma.ReferralUpdateWithoutHistoryInput>, Prisma.ReferralUncheckedUpdateWithoutHistoryInput>
 }
 
+export type ReferralCreateNestedManyWithoutCampaignInput = {
+  create?: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignInput, Prisma.ReferralUncheckedCreateWithoutCampaignInput> | Prisma.ReferralCreateWithoutCampaignInput[] | Prisma.ReferralUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ReferralCreateOrConnectWithoutCampaignInput | Prisma.ReferralCreateOrConnectWithoutCampaignInput[]
+  createMany?: Prisma.ReferralCreateManyCampaignInputEnvelope
+  connect?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+}
+
+export type ReferralUncheckedCreateNestedManyWithoutCampaignInput = {
+  create?: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignInput, Prisma.ReferralUncheckedCreateWithoutCampaignInput> | Prisma.ReferralCreateWithoutCampaignInput[] | Prisma.ReferralUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ReferralCreateOrConnectWithoutCampaignInput | Prisma.ReferralCreateOrConnectWithoutCampaignInput[]
+  createMany?: Prisma.ReferralCreateManyCampaignInputEnvelope
+  connect?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+}
+
+export type ReferralUpdateManyWithoutCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignInput, Prisma.ReferralUncheckedCreateWithoutCampaignInput> | Prisma.ReferralCreateWithoutCampaignInput[] | Prisma.ReferralUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ReferralCreateOrConnectWithoutCampaignInput | Prisma.ReferralCreateOrConnectWithoutCampaignInput[]
+  upsert?: Prisma.ReferralUpsertWithWhereUniqueWithoutCampaignInput | Prisma.ReferralUpsertWithWhereUniqueWithoutCampaignInput[]
+  createMany?: Prisma.ReferralCreateManyCampaignInputEnvelope
+  set?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+  disconnect?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+  delete?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+  connect?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+  update?: Prisma.ReferralUpdateWithWhereUniqueWithoutCampaignInput | Prisma.ReferralUpdateWithWhereUniqueWithoutCampaignInput[]
+  updateMany?: Prisma.ReferralUpdateManyWithWhereWithoutCampaignInput | Prisma.ReferralUpdateManyWithWhereWithoutCampaignInput[]
+  deleteMany?: Prisma.ReferralScalarWhereInput | Prisma.ReferralScalarWhereInput[]
+}
+
+export type ReferralUncheckedUpdateManyWithoutCampaignNestedInput = {
+  create?: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignInput, Prisma.ReferralUncheckedCreateWithoutCampaignInput> | Prisma.ReferralCreateWithoutCampaignInput[] | Prisma.ReferralUncheckedCreateWithoutCampaignInput[]
+  connectOrCreate?: Prisma.ReferralCreateOrConnectWithoutCampaignInput | Prisma.ReferralCreateOrConnectWithoutCampaignInput[]
+  upsert?: Prisma.ReferralUpsertWithWhereUniqueWithoutCampaignInput | Prisma.ReferralUpsertWithWhereUniqueWithoutCampaignInput[]
+  createMany?: Prisma.ReferralCreateManyCampaignInputEnvelope
+  set?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+  disconnect?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+  delete?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+  connect?: Prisma.ReferralWhereUniqueInput | Prisma.ReferralWhereUniqueInput[]
+  update?: Prisma.ReferralUpdateWithWhereUniqueWithoutCampaignInput | Prisma.ReferralUpdateWithWhereUniqueWithoutCampaignInput[]
+  updateMany?: Prisma.ReferralUpdateManyWithWhereWithoutCampaignInput | Prisma.ReferralUpdateManyWithWhereWithoutCampaignInput[]
+  deleteMany?: Prisma.ReferralScalarWhereInput | Prisma.ReferralScalarWhereInput[]
+}
+
+export type ReferralCreateNestedOneWithoutCampaignPointsInput = {
+  create?: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignPointsInput, Prisma.ReferralUncheckedCreateWithoutCampaignPointsInput>
+  connectOrCreate?: Prisma.ReferralCreateOrConnectWithoutCampaignPointsInput
+  connect?: Prisma.ReferralWhereUniqueInput
+}
+
+export type ReferralUpdateOneRequiredWithoutCampaignPointsNestedInput = {
+  create?: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignPointsInput, Prisma.ReferralUncheckedCreateWithoutCampaignPointsInput>
+  connectOrCreate?: Prisma.ReferralCreateOrConnectWithoutCampaignPointsInput
+  upsert?: Prisma.ReferralUpsertWithoutCampaignPointsInput
+  connect?: Prisma.ReferralWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ReferralUpdateToOneWithWhereWithoutCampaignPointsInput, Prisma.ReferralUpdateWithoutCampaignPointsInput>, Prisma.ReferralUncheckedUpdateWithoutCampaignPointsInput>
+}
+
 export type ReferralCreateWithoutProjectInput = {
   id?: string
   name: string
@@ -607,7 +694,9 @@ export type ReferralCreateWithoutProjectInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   referrer: Prisma.ReferrerCreateNestedOneWithoutReferralsInput
+  campaign?: Prisma.CampaignCreateNestedOneWithoutReferralsInput
   history?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutReferralInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferralInput
 }
 
 export type ReferralUncheckedCreateWithoutProjectInput = {
@@ -618,11 +707,13 @@ export type ReferralUncheckedCreateWithoutProjectInput = {
   phone: string
   interest?: $Enums.ReferralInterest
   availability?: $Enums.ReferralAvailability
+  campaignId?: string | null
   status?: $Enums.ReferralStatus
   code: string
   createdAt?: Date | string
   updatedAt?: Date | string
   history?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutReferralInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferralInput
 }
 
 export type ReferralCreateOrConnectWithoutProjectInput = {
@@ -663,6 +754,7 @@ export type ReferralScalarWhereInput = {
   interest?: Prisma.EnumReferralInterestFilter<"Referral"> | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityFilter<"Referral"> | $Enums.ReferralAvailability
   projectId?: Prisma.StringNullableFilter<"Referral"> | string | null
+  campaignId?: Prisma.StringNullableFilter<"Referral"> | string | null
   status?: Prisma.EnumReferralStatusFilter<"Referral"> | $Enums.ReferralStatus
   code?: Prisma.StringFilter<"Referral"> | string
   createdAt?: Prisma.DateTimeFilter<"Referral"> | Date | string
@@ -681,7 +773,9 @@ export type ReferralCreateWithoutReferrerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   project?: Prisma.ProjectCreateNestedOneWithoutReferralsInput
+  campaign?: Prisma.CampaignCreateNestedOneWithoutReferralsInput
   history?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutReferralInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferralInput
 }
 
 export type ReferralUncheckedCreateWithoutReferrerInput = {
@@ -692,11 +786,13 @@ export type ReferralUncheckedCreateWithoutReferrerInput = {
   interest?: $Enums.ReferralInterest
   availability?: $Enums.ReferralAvailability
   projectId?: string | null
+  campaignId?: string | null
   status?: $Enums.ReferralStatus
   code: string
   createdAt?: Date | string
   updatedAt?: Date | string
   history?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutReferralInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferralInput
 }
 
 export type ReferralCreateOrConnectWithoutReferrerInput = {
@@ -738,6 +834,8 @@ export type ReferralCreateWithoutHistoryInput = {
   updatedAt?: Date | string
   referrer: Prisma.ReferrerCreateNestedOneWithoutReferralsInput
   project?: Prisma.ProjectCreateNestedOneWithoutReferralsInput
+  campaign?: Prisma.CampaignCreateNestedOneWithoutReferralsInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferralInput
 }
 
 export type ReferralUncheckedCreateWithoutHistoryInput = {
@@ -749,10 +847,12 @@ export type ReferralUncheckedCreateWithoutHistoryInput = {
   interest?: $Enums.ReferralInterest
   availability?: $Enums.ReferralAvailability
   projectId?: string | null
+  campaignId?: string | null
   status?: $Enums.ReferralStatus
   code: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferralInput
 }
 
 export type ReferralCreateOrConnectWithoutHistoryInput = {
@@ -784,6 +884,8 @@ export type ReferralUpdateWithoutHistoryInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrer?: Prisma.ReferrerUpdateOneRequiredWithoutReferralsNestedInput
   project?: Prisma.ProjectUpdateOneWithoutReferralsNestedInput
+  campaign?: Prisma.CampaignUpdateOneWithoutReferralsNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferralNestedInput
 }
 
 export type ReferralUncheckedUpdateWithoutHistoryInput = {
@@ -795,10 +897,156 @@ export type ReferralUncheckedUpdateWithoutHistoryInput = {
   interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
   projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
   code?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferralNestedInput
+}
+
+export type ReferralCreateWithoutCampaignInput = {
+  id?: string
+  name: string
+  email: string
+  phone: string
+  interest?: $Enums.ReferralInterest
+  availability?: $Enums.ReferralAvailability
+  status?: $Enums.ReferralStatus
+  code: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  referrer: Prisma.ReferrerCreateNestedOneWithoutReferralsInput
+  project?: Prisma.ProjectCreateNestedOneWithoutReferralsInput
+  history?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutReferralInput
+  campaignPoints?: Prisma.CampaignReferralPointsCreateNestedManyWithoutReferralInput
+}
+
+export type ReferralUncheckedCreateWithoutCampaignInput = {
+  id?: string
+  referrerId: string
+  name: string
+  email: string
+  phone: string
+  interest?: $Enums.ReferralInterest
+  availability?: $Enums.ReferralAvailability
+  projectId?: string | null
+  status?: $Enums.ReferralStatus
+  code: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  history?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutReferralInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedCreateNestedManyWithoutReferralInput
+}
+
+export type ReferralCreateOrConnectWithoutCampaignInput = {
+  where: Prisma.ReferralWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignInput, Prisma.ReferralUncheckedCreateWithoutCampaignInput>
+}
+
+export type ReferralCreateManyCampaignInputEnvelope = {
+  data: Prisma.ReferralCreateManyCampaignInput | Prisma.ReferralCreateManyCampaignInput[]
+  skipDuplicates?: boolean
+}
+
+export type ReferralUpsertWithWhereUniqueWithoutCampaignInput = {
+  where: Prisma.ReferralWhereUniqueInput
+  update: Prisma.XOR<Prisma.ReferralUpdateWithoutCampaignInput, Prisma.ReferralUncheckedUpdateWithoutCampaignInput>
+  create: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignInput, Prisma.ReferralUncheckedCreateWithoutCampaignInput>
+}
+
+export type ReferralUpdateWithWhereUniqueWithoutCampaignInput = {
+  where: Prisma.ReferralWhereUniqueInput
+  data: Prisma.XOR<Prisma.ReferralUpdateWithoutCampaignInput, Prisma.ReferralUncheckedUpdateWithoutCampaignInput>
+}
+
+export type ReferralUpdateManyWithWhereWithoutCampaignInput = {
+  where: Prisma.ReferralScalarWhereInput
+  data: Prisma.XOR<Prisma.ReferralUpdateManyMutationInput, Prisma.ReferralUncheckedUpdateManyWithoutCampaignInput>
+}
+
+export type ReferralCreateWithoutCampaignPointsInput = {
+  id?: string
+  name: string
+  email: string
+  phone: string
+  interest?: $Enums.ReferralInterest
+  availability?: $Enums.ReferralAvailability
+  status?: $Enums.ReferralStatus
+  code: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  referrer: Prisma.ReferrerCreateNestedOneWithoutReferralsInput
+  project?: Prisma.ProjectCreateNestedOneWithoutReferralsInput
+  campaign?: Prisma.CampaignCreateNestedOneWithoutReferralsInput
+  history?: Prisma.ReferralStatusHistoryCreateNestedManyWithoutReferralInput
+}
+
+export type ReferralUncheckedCreateWithoutCampaignPointsInput = {
+  id?: string
+  referrerId: string
+  name: string
+  email: string
+  phone: string
+  interest?: $Enums.ReferralInterest
+  availability?: $Enums.ReferralAvailability
+  projectId?: string | null
+  campaignId?: string | null
+  status?: $Enums.ReferralStatus
+  code: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  history?: Prisma.ReferralStatusHistoryUncheckedCreateNestedManyWithoutReferralInput
+}
+
+export type ReferralCreateOrConnectWithoutCampaignPointsInput = {
+  where: Prisma.ReferralWhereUniqueInput
+  create: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignPointsInput, Prisma.ReferralUncheckedCreateWithoutCampaignPointsInput>
+}
+
+export type ReferralUpsertWithoutCampaignPointsInput = {
+  update: Prisma.XOR<Prisma.ReferralUpdateWithoutCampaignPointsInput, Prisma.ReferralUncheckedUpdateWithoutCampaignPointsInput>
+  create: Prisma.XOR<Prisma.ReferralCreateWithoutCampaignPointsInput, Prisma.ReferralUncheckedCreateWithoutCampaignPointsInput>
+  where?: Prisma.ReferralWhereInput
+}
+
+export type ReferralUpdateToOneWithWhereWithoutCampaignPointsInput = {
+  where?: Prisma.ReferralWhereInput
+  data: Prisma.XOR<Prisma.ReferralUpdateWithoutCampaignPointsInput, Prisma.ReferralUncheckedUpdateWithoutCampaignPointsInput>
+}
+
+export type ReferralUpdateWithoutCampaignPointsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
+  availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
+  status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutReferralsNestedInput
+  project?: Prisma.ProjectUpdateOneWithoutReferralsNestedInput
+  campaign?: Prisma.CampaignUpdateOneWithoutReferralsNestedInput
+  history?: Prisma.ReferralStatusHistoryUpdateManyWithoutReferralNestedInput
+}
+
+export type ReferralUncheckedUpdateWithoutCampaignPointsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  referrerId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
+  availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutReferralNestedInput
 }
 
 export type ReferralCreateManyProjectInput = {
@@ -809,6 +1057,7 @@ export type ReferralCreateManyProjectInput = {
   phone: string
   interest?: $Enums.ReferralInterest
   availability?: $Enums.ReferralAvailability
+  campaignId?: string | null
   status?: $Enums.ReferralStatus
   code: string
   createdAt?: Date | string
@@ -827,7 +1076,9 @@ export type ReferralUpdateWithoutProjectInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrer?: Prisma.ReferrerUpdateOneRequiredWithoutReferralsNestedInput
+  campaign?: Prisma.CampaignUpdateOneWithoutReferralsNestedInput
   history?: Prisma.ReferralStatusHistoryUpdateManyWithoutReferralNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferralNestedInput
 }
 
 export type ReferralUncheckedUpdateWithoutProjectInput = {
@@ -838,11 +1089,13 @@ export type ReferralUncheckedUpdateWithoutProjectInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
+  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
   code?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutReferralNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferralNestedInput
 }
 
 export type ReferralUncheckedUpdateManyWithoutProjectInput = {
@@ -853,6 +1106,7 @@ export type ReferralUncheckedUpdateManyWithoutProjectInput = {
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
   availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
+  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
   code?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -867,6 +1121,7 @@ export type ReferralCreateManyReferrerInput = {
   interest?: $Enums.ReferralInterest
   availability?: $Enums.ReferralAvailability
   projectId?: string | null
+  campaignId?: string | null
   status?: $Enums.ReferralStatus
   code: string
   createdAt?: Date | string
@@ -885,11 +1140,78 @@ export type ReferralUpdateWithoutReferrerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   project?: Prisma.ProjectUpdateOneWithoutReferralsNestedInput
+  campaign?: Prisma.CampaignUpdateOneWithoutReferralsNestedInput
   history?: Prisma.ReferralStatusHistoryUpdateManyWithoutReferralNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferralNestedInput
 }
 
 export type ReferralUncheckedUpdateWithoutReferrerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
+  availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  history?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutReferralNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferralNestedInput
+}
+
+export type ReferralUncheckedUpdateManyWithoutReferrerInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
+  availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
+  projectId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  campaignId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ReferralCreateManyCampaignInput = {
+  id?: string
+  referrerId: string
+  name: string
+  email: string
+  phone: string
+  interest?: $Enums.ReferralInterest
+  availability?: $Enums.ReferralAvailability
+  projectId?: string | null
+  status?: $Enums.ReferralStatus
+  code: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ReferralUpdateWithoutCampaignInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  interest?: Prisma.EnumReferralInterestFieldUpdateOperationsInput | $Enums.ReferralInterest
+  availability?: Prisma.EnumReferralAvailabilityFieldUpdateOperationsInput | $Enums.ReferralAvailability
+  status?: Prisma.EnumReferralStatusFieldUpdateOperationsInput | $Enums.ReferralStatus
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  referrer?: Prisma.ReferrerUpdateOneRequiredWithoutReferralsNestedInput
+  project?: Prisma.ProjectUpdateOneWithoutReferralsNestedInput
+  history?: Prisma.ReferralStatusHistoryUpdateManyWithoutReferralNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUpdateManyWithoutReferralNestedInput
+}
+
+export type ReferralUncheckedUpdateWithoutCampaignInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  referrerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -901,10 +1223,12 @@ export type ReferralUncheckedUpdateWithoutReferrerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   history?: Prisma.ReferralStatusHistoryUncheckedUpdateManyWithoutReferralNestedInput
+  campaignPoints?: Prisma.CampaignReferralPointsUncheckedUpdateManyWithoutReferralNestedInput
 }
 
-export type ReferralUncheckedUpdateManyWithoutReferrerInput = {
+export type ReferralUncheckedUpdateManyWithoutCampaignInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  referrerId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
@@ -924,10 +1248,12 @@ export type ReferralUncheckedUpdateManyWithoutReferrerInput = {
 
 export type ReferralCountOutputType = {
   history: number
+  campaignPoints: number
 }
 
 export type ReferralCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   history?: boolean | ReferralCountOutputTypeCountHistoryArgs
+  campaignPoints?: boolean | ReferralCountOutputTypeCountCampaignPointsArgs
 }
 
 /**
@@ -947,6 +1273,13 @@ export type ReferralCountOutputTypeCountHistoryArgs<ExtArgs extends runtime.Type
   where?: Prisma.ReferralStatusHistoryWhereInput
 }
 
+/**
+ * ReferralCountOutputType without action
+ */
+export type ReferralCountOutputTypeCountCampaignPointsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CampaignReferralPointsWhereInput
+}
+
 
 export type ReferralSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -957,13 +1290,16 @@ export type ReferralSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   interest?: boolean
   availability?: boolean
   projectId?: boolean
+  campaignId?: boolean
   status?: boolean
   code?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Referral$projectArgs<ExtArgs>
+  campaign?: boolean | Prisma.Referral$campaignArgs<ExtArgs>
   history?: boolean | Prisma.Referral$historyArgs<ExtArgs>
+  campaignPoints?: boolean | Prisma.Referral$campaignPointsArgs<ExtArgs>
   _count?: boolean | Prisma.ReferralCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["referral"]>
 
@@ -976,12 +1312,14 @@ export type ReferralSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   interest?: boolean
   availability?: boolean
   projectId?: boolean
+  campaignId?: boolean
   status?: boolean
   code?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Referral$projectArgs<ExtArgs>
+  campaign?: boolean | Prisma.Referral$campaignArgs<ExtArgs>
 }, ExtArgs["result"]["referral"]>
 
 export type ReferralSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -993,12 +1331,14 @@ export type ReferralSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   interest?: boolean
   availability?: boolean
   projectId?: boolean
+  campaignId?: boolean
   status?: boolean
   code?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Referral$projectArgs<ExtArgs>
+  campaign?: boolean | Prisma.Referral$campaignArgs<ExtArgs>
 }, ExtArgs["result"]["referral"]>
 
 export type ReferralSelectScalar = {
@@ -1010,26 +1350,31 @@ export type ReferralSelectScalar = {
   interest?: boolean
   availability?: boolean
   projectId?: boolean
+  campaignId?: boolean
   status?: boolean
   code?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReferralOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "referrerId" | "name" | "email" | "phone" | "interest" | "availability" | "projectId" | "status" | "code" | "createdAt" | "updatedAt", ExtArgs["result"]["referral"]>
+export type ReferralOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "referrerId" | "name" | "email" | "phone" | "interest" | "availability" | "projectId" | "campaignId" | "status" | "code" | "createdAt" | "updatedAt", ExtArgs["result"]["referral"]>
 export type ReferralInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Referral$projectArgs<ExtArgs>
+  campaign?: boolean | Prisma.Referral$campaignArgs<ExtArgs>
   history?: boolean | Prisma.Referral$historyArgs<ExtArgs>
+  campaignPoints?: boolean | Prisma.Referral$campaignPointsArgs<ExtArgs>
   _count?: boolean | Prisma.ReferralCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ReferralIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Referral$projectArgs<ExtArgs>
+  campaign?: boolean | Prisma.Referral$campaignArgs<ExtArgs>
 }
 export type ReferralIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referrer?: boolean | Prisma.ReferrerDefaultArgs<ExtArgs>
   project?: boolean | Prisma.Referral$projectArgs<ExtArgs>
+  campaign?: boolean | Prisma.Referral$campaignArgs<ExtArgs>
 }
 
 export type $ReferralPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1037,7 +1382,9 @@ export type $ReferralPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     referrer: Prisma.$ReferrerPayload<ExtArgs>
     project: Prisma.$ProjectPayload<ExtArgs> | null
+    campaign: Prisma.$CampaignPayload<ExtArgs> | null
     history: Prisma.$ReferralStatusHistoryPayload<ExtArgs>[]
+    campaignPoints: Prisma.$CampaignReferralPointsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1048,6 +1395,7 @@ export type $ReferralPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     interest: $Enums.ReferralInterest
     availability: $Enums.ReferralAvailability
     projectId: string | null
+    campaignId: string | null
     status: $Enums.ReferralStatus
     code: string
     createdAt: Date
@@ -1448,7 +1796,9 @@ export interface Prisma__ReferralClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   referrer<T extends Prisma.ReferrerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ReferrerDefaultArgs<ExtArgs>>): Prisma.Prisma__ReferrerClient<runtime.Types.Result.GetResult<Prisma.$ReferrerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   project<T extends Prisma.Referral$projectArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Referral$projectArgs<ExtArgs>>): Prisma.Prisma__ProjectClient<runtime.Types.Result.GetResult<Prisma.$ProjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  campaign<T extends Prisma.Referral$campaignArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Referral$campaignArgs<ExtArgs>>): Prisma.Prisma__CampaignClient<runtime.Types.Result.GetResult<Prisma.$CampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   history<T extends Prisma.Referral$historyArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Referral$historyArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReferralStatusHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  campaignPoints<T extends Prisma.Referral$campaignPointsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Referral$campaignPointsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CampaignReferralPointsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1486,6 +1836,7 @@ export interface ReferralFieldRefs {
   readonly interest: Prisma.FieldRef<"Referral", 'ReferralInterest'>
   readonly availability: Prisma.FieldRef<"Referral", 'ReferralAvailability'>
   readonly projectId: Prisma.FieldRef<"Referral", 'String'>
+  readonly campaignId: Prisma.FieldRef<"Referral", 'String'>
   readonly status: Prisma.FieldRef<"Referral", 'ReferralStatus'>
   readonly code: Prisma.FieldRef<"Referral", 'String'>
   readonly createdAt: Prisma.FieldRef<"Referral", 'DateTime'>
@@ -1910,6 +2261,25 @@ export type Referral$projectArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
+ * Referral.campaign
+ */
+export type Referral$campaignArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Campaign
+   */
+  select?: Prisma.CampaignSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Campaign
+   */
+  omit?: Prisma.CampaignOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignInclude<ExtArgs> | null
+  where?: Prisma.CampaignWhereInput
+}
+
+/**
  * Referral.history
  */
 export type Referral$historyArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1931,6 +2301,30 @@ export type Referral$historyArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.ReferralStatusHistoryScalarFieldEnum | Prisma.ReferralStatusHistoryScalarFieldEnum[]
+}
+
+/**
+ * Referral.campaignPoints
+ */
+export type Referral$campaignPointsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CampaignReferralPoints
+   */
+  select?: Prisma.CampaignReferralPointsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CampaignReferralPoints
+   */
+  omit?: Prisma.CampaignReferralPointsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CampaignReferralPointsInclude<ExtArgs> | null
+  where?: Prisma.CampaignReferralPointsWhereInput
+  orderBy?: Prisma.CampaignReferralPointsOrderByWithRelationInput | Prisma.CampaignReferralPointsOrderByWithRelationInput[]
+  cursor?: Prisma.CampaignReferralPointsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CampaignReferralPointsScalarFieldEnum | Prisma.CampaignReferralPointsScalarFieldEnum[]
 }
 
 /**

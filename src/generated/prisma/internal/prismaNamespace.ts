@@ -428,7 +428,12 @@ export const ModelName = {
   InvestmentType: 'InvestmentType',
   Lead: 'Lead',
   ContactReport: 'ContactReport',
-  Claim: 'Claim'
+  Claim: 'Claim',
+  Campaign: 'Campaign',
+  CampaignPoint: 'CampaignPoint',
+  CampaignProject: 'CampaignProject',
+  ProjectPointsConfig: 'ProjectPointsConfig',
+  CampaignReferralPoints: 'CampaignReferralPoints'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -444,7 +449,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "notificationSettings" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "investmentType" | "lead" | "contactReport" | "claim"
+    modelProps: "user" | "notificationSettings" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "investmentType" | "lead" | "contactReport" | "claim" | "campaign" | "campaignPoint" | "campaignProject" | "projectPointsConfig" | "campaignReferralPoints"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2816,6 +2821,376 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Campaign: {
+      payload: Prisma.$CampaignPayload<ExtArgs>
+      fields: Prisma.CampaignFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CampaignFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CampaignFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>
+        }
+        findFirst: {
+          args: Prisma.CampaignFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CampaignFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>
+        }
+        findMany: {
+          args: Prisma.CampaignFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>[]
+        }
+        create: {
+          args: Prisma.CampaignCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>
+        }
+        createMany: {
+          args: Prisma.CampaignCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CampaignCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>[]
+        }
+        delete: {
+          args: Prisma.CampaignDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>
+        }
+        update: {
+          args: Prisma.CampaignUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>
+        }
+        deleteMany: {
+          args: Prisma.CampaignDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CampaignUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CampaignUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>[]
+        }
+        upsert: {
+          args: Prisma.CampaignUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPayload>
+        }
+        aggregate: {
+          args: Prisma.CampaignAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCampaign>
+        }
+        groupBy: {
+          args: Prisma.CampaignGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CampaignGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CampaignCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CampaignCountAggregateOutputType> | number
+        }
+      }
+    }
+    CampaignPoint: {
+      payload: Prisma.$CampaignPointPayload<ExtArgs>
+      fields: Prisma.CampaignPointFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CampaignPointFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CampaignPointFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>
+        }
+        findFirst: {
+          args: Prisma.CampaignPointFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CampaignPointFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>
+        }
+        findMany: {
+          args: Prisma.CampaignPointFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>[]
+        }
+        create: {
+          args: Prisma.CampaignPointCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>
+        }
+        createMany: {
+          args: Prisma.CampaignPointCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CampaignPointCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>[]
+        }
+        delete: {
+          args: Prisma.CampaignPointDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>
+        }
+        update: {
+          args: Prisma.CampaignPointUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>
+        }
+        deleteMany: {
+          args: Prisma.CampaignPointDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CampaignPointUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CampaignPointUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>[]
+        }
+        upsert: {
+          args: Prisma.CampaignPointUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignPointPayload>
+        }
+        aggregate: {
+          args: Prisma.CampaignPointAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCampaignPoint>
+        }
+        groupBy: {
+          args: Prisma.CampaignPointGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CampaignPointGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CampaignPointCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CampaignPointCountAggregateOutputType> | number
+        }
+      }
+    }
+    CampaignProject: {
+      payload: Prisma.$CampaignProjectPayload<ExtArgs>
+      fields: Prisma.CampaignProjectFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CampaignProjectFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CampaignProjectFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>
+        }
+        findFirst: {
+          args: Prisma.CampaignProjectFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CampaignProjectFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>
+        }
+        findMany: {
+          args: Prisma.CampaignProjectFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>[]
+        }
+        create: {
+          args: Prisma.CampaignProjectCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>
+        }
+        createMany: {
+          args: Prisma.CampaignProjectCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CampaignProjectCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>[]
+        }
+        delete: {
+          args: Prisma.CampaignProjectDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>
+        }
+        update: {
+          args: Prisma.CampaignProjectUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>
+        }
+        deleteMany: {
+          args: Prisma.CampaignProjectDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CampaignProjectUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CampaignProjectUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>[]
+        }
+        upsert: {
+          args: Prisma.CampaignProjectUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignProjectPayload>
+        }
+        aggregate: {
+          args: Prisma.CampaignProjectAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCampaignProject>
+        }
+        groupBy: {
+          args: Prisma.CampaignProjectGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CampaignProjectGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CampaignProjectCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CampaignProjectCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProjectPointsConfig: {
+      payload: Prisma.$ProjectPointsConfigPayload<ExtArgs>
+      fields: Prisma.ProjectPointsConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectPointsConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectPointsConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectPointsConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectPointsConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>
+        }
+        findMany: {
+          args: Prisma.ProjectPointsConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>[]
+        }
+        create: {
+          args: Prisma.ProjectPointsConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>
+        }
+        createMany: {
+          args: Prisma.ProjectPointsConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProjectPointsConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.ProjectPointsConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>
+        }
+        update: {
+          args: Prisma.ProjectPointsConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectPointsConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectPointsConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProjectPointsConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProjectPointsConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectPointsConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectPointsConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectPointsConfig>
+        }
+        groupBy: {
+          args: Prisma.ProjectPointsConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectPointsConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectPointsConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectPointsConfigCountAggregateOutputType> | number
+        }
+      }
+    }
+    CampaignReferralPoints: {
+      payload: Prisma.$CampaignReferralPointsPayload<ExtArgs>
+      fields: Prisma.CampaignReferralPointsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CampaignReferralPointsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CampaignReferralPointsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>
+        }
+        findFirst: {
+          args: Prisma.CampaignReferralPointsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CampaignReferralPointsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>
+        }
+        findMany: {
+          args: Prisma.CampaignReferralPointsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>[]
+        }
+        create: {
+          args: Prisma.CampaignReferralPointsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>
+        }
+        createMany: {
+          args: Prisma.CampaignReferralPointsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CampaignReferralPointsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>[]
+        }
+        delete: {
+          args: Prisma.CampaignReferralPointsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>
+        }
+        update: {
+          args: Prisma.CampaignReferralPointsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>
+        }
+        deleteMany: {
+          args: Prisma.CampaignReferralPointsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CampaignReferralPointsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CampaignReferralPointsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>[]
+        }
+        upsert: {
+          args: Prisma.CampaignReferralPointsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CampaignReferralPointsPayload>
+        }
+        aggregate: {
+          args: Prisma.CampaignReferralPointsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCampaignReferralPoints>
+        }
+        groupBy: {
+          args: Prisma.CampaignReferralPointsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CampaignReferralPointsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CampaignReferralPointsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CampaignReferralPointsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3154,6 +3529,7 @@ export const ReferralScalarFieldEnum = {
   interest: 'interest',
   availability: 'availability',
   projectId: 'projectId',
+  campaignId: 'campaignId',
   status: 'status',
   code: 'code',
   createdAt: 'createdAt',
@@ -3419,6 +3795,67 @@ export const ClaimScalarFieldEnum = {
 } as const
 
 export type ClaimScalarFieldEnum = (typeof ClaimScalarFieldEnum)[keyof typeof ClaimScalarFieldEnum]
+
+
+export const CampaignScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  name: 'name',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CampaignScalarFieldEnum = (typeof CampaignScalarFieldEnum)[keyof typeof CampaignScalarFieldEnum]
+
+
+export const CampaignPointScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  status: 'status',
+  points: 'points'
+} as const
+
+export type CampaignPointScalarFieldEnum = (typeof CampaignPointScalarFieldEnum)[keyof typeof CampaignPointScalarFieldEnum]
+
+
+export const CampaignProjectScalarFieldEnum = {
+  id: 'id',
+  campaignId: 'campaignId',
+  projectId: 'projectId'
+} as const
+
+export type CampaignProjectScalarFieldEnum = (typeof CampaignProjectScalarFieldEnum)[keyof typeof CampaignProjectScalarFieldEnum]
+
+
+export const ProjectPointsConfigScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  contactedPoints: 'contactedPoints',
+  visitPoints: 'visitPoints',
+  operationCompletedPoints: 'operationCompletedPoints',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectPointsConfigScalarFieldEnum = (typeof ProjectPointsConfigScalarFieldEnum)[keyof typeof ProjectPointsConfigScalarFieldEnum]
+
+
+export const CampaignReferralPointsScalarFieldEnum = {
+  id: 'id',
+  referrerId: 'referrerId',
+  campaignId: 'campaignId',
+  referralId: 'referralId',
+  status: 'status',
+  points: 'points',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CampaignReferralPointsScalarFieldEnum = (typeof CampaignReferralPointsScalarFieldEnum)[keyof typeof CampaignReferralPointsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -4070,6 +4507,11 @@ export type GlobalOmitConfig = {
   lead?: Prisma.LeadOmit
   contactReport?: Prisma.ContactReportOmit
   claim?: Prisma.ClaimOmit
+  campaign?: Prisma.CampaignOmit
+  campaignPoint?: Prisma.CampaignPointOmit
+  campaignProject?: Prisma.CampaignProjectOmit
+  projectPointsConfig?: Prisma.ProjectPointsConfigOmit
+  campaignReferralPoints?: Prisma.CampaignReferralPointsOmit
 }
 
 /* Types for Logging */
