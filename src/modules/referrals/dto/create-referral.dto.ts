@@ -30,6 +30,21 @@ export class CreateReferralDto {
   @MaxLength(30)
   referrerCode?: string;
 
+  @IsOptional()
+  @IsString()
+  @MaxLength(80)
+  referrerBankAccount?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(30)
+  referrerYape?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(30)
+  referrerPlin?: string;
+
   @IsString()
   @IsNotEmpty()
   @MaxLength(120)

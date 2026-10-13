@@ -381,6 +381,9 @@ export const ReferrerScalarFieldEnum = {
   name: 'name',
   email: 'email',
   phone: 'phone',
+  bankAccount: 'bankAccount',
+  yape: 'yape',
+  plin: 'plin',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

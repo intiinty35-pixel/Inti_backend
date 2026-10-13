@@ -129,7 +129,7 @@ export class ReferralsService {
 
   /**
    * Lista publica de los referidos de un referente identificado por su codigo
-   * REF-XXXXXXXX. Devuelve solo los campos necesarios para que el referente vea
+   * APCOD-XXXXXXXX. Devuelve solo los campos necesarios para que el referente vea
    * el avance de cada referido.
    */
   async getReferralsByCode(code: string) {
@@ -231,10 +231,13 @@ export class ReferralsService {
         if (!referrer) {
           referrer = await tx.referrer.create({
             data: {
-              code: await this.uniqueCode('REF'),
+              code: await this.uniqueCode('APCOD'),
               name: dto.referrerName.trim(),
               email: referrerEmail,
               phone: dto.referrerPhone.trim(),
+              bankAccount: dto.referrerBankAccount?.trim() || null,
+              yape: dto.referrerYape?.trim() || null,
+              plin: dto.referrerPlin?.trim() || null,
             },
           });
           isNewReferrer = true;
@@ -286,6 +289,9 @@ export class ReferralsService {
         referrerEmail: created.referrer.email,
         referrerPhone: created.referrer.phone,
         referrerCode: created.referrer.code,
+        referrerBankAccount: created.referrer.bankAccount,
+        referrerYape: created.referrer.yape,
+        referrerPlin: created.referrer.plin,
         isNewReferrer,
         referralName: created.name,
         referralEmail: created.email,
@@ -483,7 +489,7 @@ export class ReferralsService {
   private async uniqueCode(prefix: string): Promise<string> {
     const code = `${prefix}-${randomUUID().slice(0, 8).toUpperCase()}`;
     const exists =
-      prefix === 'REF'
+      prefix === 'APCOD'
         ? await this.prisma.referrer.findUnique({
             where: { code },
             select: { id: true },

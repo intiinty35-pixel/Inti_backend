@@ -78,6 +78,9 @@ interface ReferralRegisteredAdminInput {
   referrerEmail: string;
   referrerPhone: string;
   referrerCode: string;
+  referrerBankAccount?: string | null;
+  referrerYape?: string | null;
+  referrerPlin?: string | null;
   isNewReferrer: boolean;
   referralName: string;
   referralEmail: string;
@@ -274,11 +277,11 @@ export class MailService {
   async sendReferrerWelcome(input: ReferrerWelcomeInput) {
     return this.send({
       to: [{ email: input.referrerEmail, name: input.referrerName }],
-      subject: '¡Bienvenido al programa de referidos de ARIZ!',
+      subject: '¡Bienvenido al Ariz Club!',
       html: this.layout({
         preheader: 'Tu código de referente está listo para usar.',
-        title: '¡Bienvenido al programa de referidos!',
-        intro: `Hola ${this.escape(input.referrerName)}, gracias por unirte al programa de referidos de ARIZ.`,
+        title: '¡Bienvenido al Ariz Club!',
+        intro: `Hola ${this.escape(input.referrerName)}, gracias por unirte al Ariz Club.`,
         content: `
           <p style="margin:0 0 18px;color:${BRAND.muted};line-height:1.7;">
             Tu registro fue exitoso. A partir de ahora puedes referir personas a nuestros proyectos inmobiliarios y acumular puntos con cada referido.
@@ -425,7 +428,7 @@ export class MailService {
             Tu recompensa está siendo preparada. Pronto nos pondremos en contacto contigo para coordinar la entrega.
           </p>
           <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
-            ¡Gracias por ser parte del programa de referidos de ARIZ!
+            ¡Gracias por ser parte del Ariz Club!
           </p>
         `,
         button: { label: 'Ver mis canjes', url: `${this.frontendUrl()}/rewards/my` },
@@ -469,7 +472,7 @@ export class MailService {
         content: `
           ${this.infoRow('Recompensa', input.incentiveName)}
           <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
-            Esperamos que disfrutes tu recompensa. ¡Gracias por ser parte del programa de referidos de ARIZ!
+            Esperamos que disfrutes tu recompensa. ¡Gracias por ser parte del Ariz Club!
           </p>
           <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
             Sigue refiriendo personas para acumular más puntos y desbloquear nuevas recompensas.
@@ -512,6 +515,9 @@ export class MailService {
           ${this.infoRow('Correo', input.referrerEmail)}
           ${this.infoRow('Teléfono', input.referrerPhone)}
           ${this.infoRow('Código de referente', input.referrerCode)}
+          ${input.referrerBankAccount ? this.infoRow('Número de cuenta', input.referrerBankAccount) : ''}
+          ${input.referrerYape ? this.infoRow('Yape', input.referrerYape) : ''}
+          ${input.referrerPlin ? this.infoRow('Plin', input.referrerPlin) : ''}
           ${this.infoRow('Tipo', input.isNewReferrer ? 'Referente nuevo' : 'Referente existente')}
 
           <p style="margin:24px 0 6px;color:${BRAND.primary};font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;">Referido</p>
@@ -592,7 +598,7 @@ export class MailService {
     content: string;
     button?: { label: string; url: string };
   }) {
-    const logo = `${this.frontendUrl()}/logo/logo.png`;
+    const logo = `${this.emailAssetUrl()}/logo/logo.png`;
 
     return `
       <!doctype html>
@@ -647,6 +653,12 @@ export class MailService {
   private frontendUrl() {
     return this.config
       .get<string>('FRONTEND_URL', 'http://localhost:3000')
+      .replace(/\/$/, '');
+  }
+
+  private emailAssetUrl() {
+    return this.config
+      .get<string>('EMAIL_ASSET_URL', this.frontendUrl())
       .replace(/\/$/, '');
   }
 

@@ -30,6 +30,9 @@ export type ReferrerMinAggregateOutputType = {
   name: string | null
   email: string | null
   phone: string | null
+  bankAccount: string | null
+  yape: string | null
+  plin: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +43,9 @@ export type ReferrerMaxAggregateOutputType = {
   name: string | null
   email: string | null
   phone: string | null
+  bankAccount: string | null
+  yape: string | null
+  plin: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +56,9 @@ export type ReferrerCountAggregateOutputType = {
   name: number
   email: number
   phone: number
+  bankAccount: number
+  yape: number
+  plin: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +71,9 @@ export type ReferrerMinAggregateInputType = {
   name?: true
   email?: true
   phone?: true
+  bankAccount?: true
+  yape?: true
+  plin?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +84,9 @@ export type ReferrerMaxAggregateInputType = {
   name?: true
   email?: true
   phone?: true
+  bankAccount?: true
+  yape?: true
+  plin?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +97,9 @@ export type ReferrerCountAggregateInputType = {
   name?: true
   email?: true
   phone?: true
+  bankAccount?: true
+  yape?: true
+  plin?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -165,6 +183,9 @@ export type ReferrerGroupByOutputType = {
   name: string
   email: string
   phone: string
+  bankAccount: string | null
+  yape: string | null
+  plin: string | null
   createdAt: Date
   updatedAt: Date
   _count: ReferrerCountAggregateOutputType | null
@@ -196,6 +217,9 @@ export type ReferrerWhereInput = {
   name?: Prisma.StringFilter<"Referrer"> | string
   email?: Prisma.StringFilter<"Referrer"> | string
   phone?: Prisma.StringFilter<"Referrer"> | string
+  bankAccount?: Prisma.StringNullableFilter<"Referrer"> | string | null
+  yape?: Prisma.StringNullableFilter<"Referrer"> | string | null
+  plin?: Prisma.StringNullableFilter<"Referrer"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Referrer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Referrer"> | Date | string
   referrals?: Prisma.ReferralListRelationFilter
@@ -209,6 +233,9 @@ export type ReferrerOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  bankAccount?: Prisma.SortOrderInput | Prisma.SortOrder
+  yape?: Prisma.SortOrderInput | Prisma.SortOrder
+  plin?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   referrals?: Prisma.ReferralOrderByRelationAggregateInput
@@ -225,6 +252,9 @@ export type ReferrerWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ReferrerWhereInput | Prisma.ReferrerWhereInput[]
   name?: Prisma.StringFilter<"Referrer"> | string
   phone?: Prisma.StringFilter<"Referrer"> | string
+  bankAccount?: Prisma.StringNullableFilter<"Referrer"> | string | null
+  yape?: Prisma.StringNullableFilter<"Referrer"> | string | null
+  plin?: Prisma.StringNullableFilter<"Referrer"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Referrer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Referrer"> | Date | string
   referrals?: Prisma.ReferralListRelationFilter
@@ -238,6 +268,9 @@ export type ReferrerOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  bankAccount?: Prisma.SortOrderInput | Prisma.SortOrder
+  yape?: Prisma.SortOrderInput | Prisma.SortOrder
+  plin?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ReferrerCountOrderByAggregateInput
@@ -254,6 +287,9 @@ export type ReferrerScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Referrer"> | string
   email?: Prisma.StringWithAggregatesFilter<"Referrer"> | string
   phone?: Prisma.StringWithAggregatesFilter<"Referrer"> | string
+  bankAccount?: Prisma.StringNullableWithAggregatesFilter<"Referrer"> | string | null
+  yape?: Prisma.StringNullableWithAggregatesFilter<"Referrer"> | string | null
+  plin?: Prisma.StringNullableWithAggregatesFilter<"Referrer"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Referrer"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Referrer"> | Date | string
 }
@@ -264,6 +300,9 @@ export type ReferrerCreateInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   referrals?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
@@ -277,6 +316,9 @@ export type ReferrerUncheckedCreateInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
@@ -290,6 +332,9 @@ export type ReferrerUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
@@ -303,6 +348,9 @@ export type ReferrerUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
@@ -316,6 +364,9 @@ export type ReferrerCreateManyInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -326,6 +377,9 @@ export type ReferrerUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -336,6 +390,9 @@ export type ReferrerUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -346,6 +403,9 @@ export type ReferrerCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  bankAccount?: Prisma.SortOrder
+  yape?: Prisma.SortOrder
+  plin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -356,6 +416,9 @@ export type ReferrerMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  bankAccount?: Prisma.SortOrder
+  yape?: Prisma.SortOrder
+  plin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -366,6 +429,9 @@ export type ReferrerMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  bankAccount?: Prisma.SortOrder
+  yape?: Prisma.SortOrder
+  plin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -423,6 +489,9 @@ export type ReferrerCreateWithoutReferralsInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   redemptions?: Prisma.RedemptionCreateNestedManyWithoutReferrerInput
@@ -435,6 +504,9 @@ export type ReferrerUncheckedCreateWithoutReferralsInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   redemptions?: Prisma.RedemptionUncheckedCreateNestedManyWithoutReferrerInput
@@ -463,6 +535,9 @@ export type ReferrerUpdateWithoutReferralsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redemptions?: Prisma.RedemptionUpdateManyWithoutReferrerNestedInput
@@ -475,6 +550,9 @@ export type ReferrerUncheckedUpdateWithoutReferralsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   redemptions?: Prisma.RedemptionUncheckedUpdateManyWithoutReferrerNestedInput
@@ -487,6 +565,9 @@ export type ReferrerCreateWithoutRedemptionsInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   referrals?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
@@ -499,6 +580,9 @@ export type ReferrerUncheckedCreateWithoutRedemptionsInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
@@ -527,6 +611,9 @@ export type ReferrerUpdateWithoutRedemptionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
@@ -539,6 +626,9 @@ export type ReferrerUncheckedUpdateWithoutRedemptionsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
@@ -551,6 +641,9 @@ export type ReferrerCreateWithoutPointMovementsInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   referrals?: Prisma.ReferralCreateNestedManyWithoutReferrerInput
@@ -563,6 +656,9 @@ export type ReferrerUncheckedCreateWithoutPointMovementsInput = {
   name: string
   email: string
   phone: string
+  bankAccount?: string | null
+  yape?: string | null
+  plin?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   referrals?: Prisma.ReferralUncheckedCreateNestedManyWithoutReferrerInput
@@ -591,6 +687,9 @@ export type ReferrerUpdateWithoutPointMovementsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUpdateManyWithoutReferrerNestedInput
@@ -603,6 +702,9 @@ export type ReferrerUncheckedUpdateWithoutPointMovementsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
+  bankAccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  yape?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  plin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   referrals?: Prisma.ReferralUncheckedUpdateManyWithoutReferrerNestedInput
@@ -664,6 +766,9 @@ export type ReferrerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name?: boolean
   email?: boolean
   phone?: boolean
+  bankAccount?: boolean
+  yape?: boolean
+  plin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   referrals?: boolean | Prisma.Referrer$referralsArgs<ExtArgs>
@@ -678,6 +783,9 @@ export type ReferrerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   email?: boolean
   phone?: boolean
+  bankAccount?: boolean
+  yape?: boolean
+  plin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["referrer"]>
@@ -688,6 +796,9 @@ export type ReferrerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   email?: boolean
   phone?: boolean
+  bankAccount?: boolean
+  yape?: boolean
+  plin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["referrer"]>
@@ -698,11 +809,14 @@ export type ReferrerSelectScalar = {
   name?: boolean
   email?: boolean
   phone?: boolean
+  bankAccount?: boolean
+  yape?: boolean
+  plin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ReferrerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "email" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["referrer"]>
+export type ReferrerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "code" | "name" | "email" | "phone" | "bankAccount" | "yape" | "plin" | "createdAt" | "updatedAt", ExtArgs["result"]["referrer"]>
 export type ReferrerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   referrals?: boolean | Prisma.Referrer$referralsArgs<ExtArgs>
   redemptions?: boolean | Prisma.Referrer$redemptionsArgs<ExtArgs>
@@ -725,6 +839,9 @@ export type $ReferrerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     name: string
     email: string
     phone: string
+    bankAccount: string | null
+    yape: string | null
+    plin: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["referrer"]>
@@ -1158,6 +1275,9 @@ export interface ReferrerFieldRefs {
   readonly name: Prisma.FieldRef<"Referrer", 'String'>
   readonly email: Prisma.FieldRef<"Referrer", 'String'>
   readonly phone: Prisma.FieldRef<"Referrer", 'String'>
+  readonly bankAccount: Prisma.FieldRef<"Referrer", 'String'>
+  readonly yape: Prisma.FieldRef<"Referrer", 'String'>
+  readonly plin: Prisma.FieldRef<"Referrer", 'String'>
   readonly createdAt: Prisma.FieldRef<"Referrer", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Referrer", 'DateTime'>
 }

@@ -344,6 +344,9 @@ model Referrer {
   name           String
   email          String           @unique
   phone          String
+  bankAccount    String?
+  yape           String?
+  plin           String?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   referrals      Referral[]
