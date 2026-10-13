@@ -264,13 +264,12 @@ export class PlansService {
       );
     }
 
-    const { propertyLimit, receiptUrl } = dto;
-    const slug = `particular-${propertyLimit}-propiedades-30-dias`;
-    const price = propertyLimit * 20;
-    const name = `Paquete ${propertyLimit} ${propertyLimit === 1 ? 'propiedad' : 'propiedades'}`;
+    const { propertyLimit, durationDays, price, receiptUrl } = dto;
+    const slug = `particular-${propertyLimit}-propiedades-${durationDays}-dias`;
+    const name = `Paquete ${propertyLimit === 5 ? '+5' : propertyLimit} ${propertyLimit === 1 ? 'propiedad' : 'propiedades'}`;
     const features = [
-      `${propertyLimit} ${propertyLimit === 1 ? 'propiedad activa' : 'propiedades activas'}`,
-      '30 días de publicación',
+      `${propertyLimit === 5 ? '+5' : propertyLimit} ${propertyLimit === 1 ? 'propiedad activa' : 'propiedades activas'}`,
+      `${durationDays} días de publicación`,
     ];
     const plan = await this.prisma.plan.upsert({
       where: { slug },
@@ -279,7 +278,7 @@ export class PlansService {
         slug,
         price,
         currency: 'PEN',
-        durationDays: 30,
+        durationDays,
         propertyLimit,
         projectLimit: 0,
         features,
@@ -291,7 +290,7 @@ export class PlansService {
         name,
         price,
         currency: 'PEN',
-        durationDays: 30,
+        durationDays,
         propertyLimit,
         features,
         isFree: false,
