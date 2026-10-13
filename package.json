@@ -23,6 +23,7 @@
     "db:deploy": "prisma migrate deploy",
     "db:deploy:direct": "node scripts/apply-migrations.js",
     "db:seed": "prisma db seed",
+    "db:clean-plans": "tsx scripts/clean-plans.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
