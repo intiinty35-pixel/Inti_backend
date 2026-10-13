@@ -19,7 +19,7 @@ import {
 } from '../../generated/prisma/enums';
 import type { AuthUser } from '../../common/types/auth-user';
 import { PrismaService } from '../../database/prisma/prisma.service';
-import { CreateProjectDto } from './dto/create-project.dto';
+import { CreateProjectDto, ProjectLocationDto } from './dto/create-project.dto';
 import { OwnerProjectQueryDto } from './dto/owner-project-query.dto';
 import { AdminProjectQueryDto } from './dto/admin-project-query.dto';
 import { ProjectQueryDto, ProjectSort } from './dto/project-query.dto';
@@ -193,7 +193,7 @@ export class ProjectsService {
   async listUnits(slugOrId: string) {
     const project = await this.prisma.project.findFirst({
       where: { OR: [{ id: slugOrId }, { slug: slugOrId }] },
-      select: { id: true },
+      select: { id: true, currency: true },
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
 
@@ -209,7 +209,7 @@ export class ProjectsService {
         ? `Mza. ${lot.block} · Lote ${lot.lotNumber}`
         : `Lote ${lot.lotNumber}`,
       operation: 'buy',
-      price: { amount: Number(lot.price), currency: 'PEN', period: 'total' },
+      price: { amount: Number(lot.price), currency: project.currency, period: 'total' },
       bedrooms: 0,
       bathrooms: 0,
       areaM2: Number(lot.areaM2),
@@ -341,15 +341,7 @@ export class ProjectsService {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
     this.ensureCanManageProjects(project.agentProfile.type);
-    if (
-      !project.location ||
-      project.lots.length === 0 ||
-      !project.media.some((media) => media.type === MediaType.IMAGE)
-    ) {
-      throw new BadRequestException(
-        'Falta completar ubicación, lotes o imágenes del proyecto',
-      );
-    }
+    this.validatePublishableProject(project);
 
     if (
       project.agentProfile.type === ProfessionalType.DEVELOPER ||
@@ -506,18 +498,77 @@ export class ProjectsService {
     return this.toDetail(updated);
   }
 
+  async updateLocation(user: AuthUser, id: string, dto: ProjectLocationDto) {
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { agentProfile: true, adminProject: true },
+    });
+    if (!project || project.isDeleted) {
+      throw new NotFoundException('Proyecto no encontrado');
+    }
+
+    const isOwner = project.agentProfile?.userId === user.id;
+    if (!isOwner && user.role !== 'ADMIN') {
+      throw new ForbiddenException('No puedes editar la ubicacion de este proyecto');
+    }
+
+    return this.saveLocation(id, dto);
+  }
+
+  async updateAdminLocation(user: AuthUser, id: string, dto: ProjectLocationDto) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException(
+        'Solo un administrador puede editar proyectos de ARIZ',
+      );
+    }
+
+    const project = await this.prisma.project.findUnique({
+      where: { id },
+      include: { adminProject: true },
+    });
+    if (!project || project.isDeleted) {
+      throw new NotFoundException('Proyecto no encontrado');
+    }
+    if (!project.adminProject) {
+      throw new ForbiddenException('Este proyecto no pertenece a ARIZ');
+    }
+
+    return this.saveLocation(id, dto);
+  }
+
+  private async saveLocation(id: string, dto: ProjectLocationDto) {
+    const updated = await this.prisma.project.update({
+      where: { id },
+      data: {
+        location: {
+          upsert: {
+            create: dto,
+            update: dto,
+          },
+        },
+      },
+      include: PROJECT_INCLUDE,
+    });
+
+    return this.toDetail(updated);
+  }
+
   private validatePublishableProject(project: {
-    location: unknown;
+    location: { latitude?: unknown; longitude?: unknown } | null;
     lots: unknown[];
     media: Array<{ type: MediaType }>;
   }) {
     if (
       !project.location ||
+      project.location.latitude === null ||
+      project.location.latitude === undefined ||
+      project.location.longitude === null ||
+      project.location.longitude === undefined ||
       project.lots.length === 0 ||
       !project.media.some((media) => media.type === MediaType.IMAGE)
     ) {
       throw new BadRequestException(
-        'Falta completar ubicación, lotes o imágenes del proyecto',
+        'Falta completar ubicacion con punto en el mapa, lotes o imagenes del proyecto',
       );
     }
   }

@@ -12,7 +12,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { Roles } from '../../common/decorators/roles.decorator';
 import type { AuthUser } from '../../common/types/auth-user';
 import { Role } from '../../generated/prisma/enums';
-import { CreateProjectDto } from './dto/create-project.dto';
+import { CreateProjectDto, ProjectLocationDto } from './dto/create-project.dto';
 import { AdminProjectQueryDto } from './dto/admin-project-query.dto';
 import { ProjectsService } from './projects.service';
 
@@ -37,5 +37,14 @@ export class AdminProjectsController {
     @Param('id', ParseUUIDPipe) id: string,
   ) {
     return this.projects.publishAdminProject(user, id);
+  }
+
+  @Patch(':id/location')
+  updateLocation(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ProjectLocationDto,
+  ) {
+    return this.projects.updateAdminLocation(user, id, dto);
   }
 }

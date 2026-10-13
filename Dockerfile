@@ -34,4 +34,4 @@ COPY --from=build /app/package.json ./package.json
 RUN mkdir -p /app/uploads && chown nestjs:nodejs /app/uploads
 USER nestjs
 EXPOSE 4000
-CMD ["node", "dist/main"]
+CMD ["node", "dist/src/main.js"]
