@@ -22,6 +22,11 @@ export class PropertiesController {
     return this.properties.listMine(user, query);
   }
 
+  @Get('owner/:id')
+  mineById(@CurrentUser() user: AuthUser, @Param('id', ParseUUIDPipe) id: string) {
+    return this.properties.getMineForEdit(user, id);
+  }
+
   @Public()
   @Get(':slug')
   detail(@Param('slug') slug: string) {
@@ -31,6 +36,15 @@ export class PropertiesController {
   @Post()
   create(@CurrentUser() user: AuthUser, @Body() dto: CreatePropertyDto) {
     return this.properties.createDraft(user, dto);
+  }
+
+  @Patch(':id')
+  update(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: CreatePropertyDto,
+  ) {
+    return this.properties.update(user, id, dto);
   }
 
   @Patch(':id/publish')
