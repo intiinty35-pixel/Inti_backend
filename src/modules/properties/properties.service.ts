@@ -144,12 +144,25 @@ export class PropertiesService {
       user.role === 'USER'
         ? await this.getOrCreateIndividualOwner(user.id, dto.location.district)
         : await this.requireApprovedAgent(user.id);
+    return this.createDraftRecord(agent.id, dto);
+  }
+
+  /** Crea una propiedad ARIZ: la publica el administrador, sin membresia ni limites. */
+  async createAdminDraft(user: AuthUser, dto: CreatePropertyDto) {
+    if (user.role !== 'ADMIN') {
+      throw new ForbiddenException('Solo un administrador puede publicar propiedades de ARIZ');
+    }
+    const owner = await this.getOrCreateArizOwner(user.id, dto.location.district);
+    return this.createDraftRecord(owner.id, dto);
+  }
+
+  private async createDraftRecord(agentProfileId: string, dto: CreatePropertyDto) {
     this.validateProperty(dto);
 
     const slug = await this.createUniqueSlug(dto.title);
     const property = await this.prisma.property.create({
       data: {
-        agentProfileId: agent.id,
+        agentProfileId,
         operationType: dto.operationType,
         propertyType: dto.propertyType,
         slug,
@@ -381,7 +394,7 @@ export class PropertiesService {
     const property = await this.prisma.property.findUnique({
       where: { id },
       include: {
-        agentProfile: true,
+        agentProfile: { include: { user: { select: { role: true } } } },
         location: true,
         details: true,
         media: true,
@@ -402,6 +415,16 @@ export class PropertiesService {
       throw new BadRequestException(
         'Falta completar ubicación, características o fotos',
       );
+    }
+
+    // Las propiedades ARIZ las publica el administrador sin membresia ni limite de plan.
+    if (this.isArizProperty(property)) {
+      const published = await this.prisma.property.update({
+        where: { id },
+        data: { status: PropertyStatus.PUBLISHED, publishedAt: new Date() },
+        include: PROPERTY_INCLUDE,
+      });
+      return this.toDetail(published);
     }
 
     if (
@@ -581,6 +604,57 @@ export class PropertiesService {
       throw new ForbiddenException('Tu perfil anunciante debe estar aprobado');
     }
     return agent;
+  }
+
+  /** Perfil "ARIZ Proyectos" del administrador: es el anunciante de las propiedades ARIZ. */
+  private async getOrCreateArizOwner(userId: string, district: string) {
+    const profile = await this.prisma.professionalProfile.findUnique({ where: { userId } });
+    if (profile) return profile;
+
+    return this.prisma.professionalProfile.create({
+      data: {
+        userId,
+        type: ProfessionalType.INDIVIDUAL_OWNER,
+        status: ApprovalStatus.APPROVED,
+        businessName: 'ARIZ Proyectos',
+        city: district,
+        slug: `ariz-proyectos-${userId}`,
+      },
+    });
+  }
+
+  /** Propiedades publicadas por un administrador (propiedades ARIZ). */
+  private isArizProperty(property: { agentProfile: { user?: { role: string } | null } }) {
+    return property.agentProfile.user?.role === 'ADMIN';
+  }
+
+  async listAdminProperties(query: { page?: number; pageSize?: number; status?: PropertyStatus }) {
+    const page = query.page ?? 1;
+    const pageSize = Math.min(query.pageSize ?? 9, 50);
+    const where: Prisma.PropertyWhereInput = {
+      isDeleted: false,
+      agentProfile: { user: { role: 'ADMIN' } },
+      ...(query.status ? { status: query.status } : {}),
+    };
+
+    const [items, total] = await this.prisma.$transaction([
+      this.prisma.property.findMany({
+        where,
+        orderBy: [{ updatedAt: 'desc' }],
+        include: PROPERTY_INCLUDE,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      this.prisma.property.count({ where }),
+    ]);
+
+    return {
+      items: items.map((property) => this.toDetail(property)),
+      total,
+      page,
+      pageSize,
+      hasMore: page * pageSize < total,
+    };
   }
 
   private async getOrCreateIndividualOwner(userId: string, district: string) {
