@@ -8,6 +8,8 @@ import type { AuthUser } from '../../common/types/auth-user';
 import { AuthResult, AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { GoogleLoginDto } from './dto/google-login.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { RegisterCustomerDto } from './dto/register-customer.dto';
 import { RegisterProfessionalDto } from './dto/register-professional.dto';
 
@@ -52,6 +54,24 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ) {
     return this.respond(res, await this.auth.registerProfessional(dto));
+  }
+
+  @Public()
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
+  @Post('forgot-password')
+  @HttpCode(200)
+  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+    await this.auth.requestPasswordReset(dto);
+    return { ok: true };
+  }
+
+  @Public()
+  @Throttle({ default: { limit: 10, ttl: 60_000 } })
+  @Post('reset-password')
+  @HttpCode(200)
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    await this.auth.resetPassword(dto);
+    return { ok: true };
   }
 
   @Post('logout')

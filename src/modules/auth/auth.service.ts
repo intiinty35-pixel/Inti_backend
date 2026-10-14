@@ -1,6 +1,9 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
+  Logger,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -15,6 +18,8 @@ import { LoginDto } from './dto/login.dto';
 import { RegisterCustomerDto } from './dto/register-customer.dto';
 import { RegisterProfessionalDto } from './dto/register-professional.dto';
 import { GoogleLoginDto } from './dto/google-login.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { FirebaseAdminService } from './firebase-admin.service';
 
 export interface AuthResult {
@@ -23,8 +28,13 @@ export interface AuthResult {
   maxAgeMs: number | undefined;
 }
 
+/** El enlace de recuperacion vence a los 15 minutos. */
+const RESET_TOKEN_TTL_SECONDS = 15 * 60;
+const RESET_PURPOSE = 'password-reset';
+
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
   private dummyHash?: Promise<string>;
 
   constructor(
@@ -143,6 +153,66 @@ export class AuthService {
     }
 
     return this.issue(toAuthUser(user), true);
+  }
+
+  /** Envia el enlace de recuperacion. Avisa si no hay una cuenta activa con ese correo. */
+  async requestPasswordReset(dto: ForgotPasswordDto): Promise<void> {
+    const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
+    if (!user || !user.isActive) {
+      throw new NotFoundException('No encontramos una cuenta con ese correo. Revisa que esté bien escrito.');
+    }
+
+    // El token se firma con un secreto que incluye el hash actual de la clave: al
+    // cambiarla, el hash cambia y el enlace deja de servir (un solo uso).
+    const token = await this.jwt.signAsync(
+      { sub: user.id, purpose: RESET_PURPOSE },
+      { secret: this.resetSecret(user.passwordHash), expiresIn: RESET_TOKEN_TTL_SECONDS },
+    );
+    const frontendUrl = this.config
+      .getOrThrow<string>('FRONTEND_URL')
+      .replace(/\/$/, '');
+
+    try {
+      await this.mail.sendPasswordReset({
+        email: user.email,
+        name: `${user.firstName} ${user.lastName ?? ''}`.trim(),
+        resetUrl: `${frontendUrl}/reset-password?token=${encodeURIComponent(token)}`,
+        minutes: RESET_TOKEN_TTL_SECONDS / 60,
+      });
+    } catch (error) {
+      this.logger.error('No se pudo enviar el correo de recuperacion', error as Error);
+    }
+  }
+
+  async resetPassword(dto: ResetPasswordDto): Promise<void> {
+    const invalid = new BadRequestException(
+      'El enlace no es válido o ya venció. Solicita uno nuevo.',
+    );
+
+    const unverified = this.jwt.decode<{ sub?: string } | null>(dto.token);
+    if (!unverified?.sub) throw invalid;
+
+    const user = await this.prisma.user.findUnique({ where: { id: unverified.sub } });
+    if (!user || !user.isActive) throw invalid;
+
+    let payload: { sub: string; purpose?: string };
+    try {
+      payload = await this.jwt.verifyAsync<{ sub: string; purpose?: string }>(dto.token, {
+        secret: this.resetSecret(user.passwordHash),
+      });
+    } catch {
+      throw invalid;
+    }
+    if (payload.purpose !== RESET_PURPOSE || payload.sub !== user.id) throw invalid;
+
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { passwordHash: await argon2.hash(dto.password) },
+    });
+  }
+
+  private resetSecret(passwordHash: string) {
+    return `${this.config.getOrThrow<string>('JWT_SECRET')}:reset:${passwordHash}`;
   }
 
   private async assertEmailFree(email: string) {
