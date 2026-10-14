@@ -41,6 +41,13 @@ interface WelcomeInput {
   isProfessional?: boolean;
 }
 
+interface PasswordResetInput {
+  email: string;
+  name: string;
+  resetUrl: string;
+  minutes: number;
+}
+
 interface MembershipApprovedInput {
   email: string;
   name: string;
@@ -217,6 +224,28 @@ export class MailService {
           </p>
         `,
         button: { label: 'Ir a ARIZ', url: this.frontendUrl() },
+      }),
+    });
+  }
+
+  async sendPasswordReset(input: PasswordResetInput) {
+    return this.send({
+      to: [{ email: input.email, name: input.name }],
+      subject: 'Recupera tu contraseña de ARIZ',
+      html: this.layout({
+        preheader: `Tu enlace para crear una contraseña nueva vence en ${input.minutes} minutos.`,
+        title: 'Restablece tu contraseña',
+        intro: `Hola ${this.escape(input.name)}, recibimos una solicitud para cambiar la contraseña de tu cuenta.`,
+        content: `
+          <p style="margin:0;color:${BRAND.muted};line-height:1.7;">
+            Pulsa el botón para elegir una contraseña nueva. Por seguridad, el enlace vence en
+            <strong>${input.minutes} minutos</strong> y solo se puede usar una vez.
+          </p>
+          <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
+            Si no pediste este cambio, ignora este correo: tu contraseña seguirá siendo la misma.
+          </p>
+        `,
+        button: { label: 'Crear contraseña nueva', url: input.resetUrl },
       }),
     });
   }
