@@ -267,6 +267,8 @@ export class CampaignsService {
 
   async listProjectPoints() {
     const adminProjects = await this.prisma.adminProject.findMany({
+      where: { project: { isDeleted: false } },
+      orderBy: { project: { name: 'asc' } },
       include: {
         project: {
           select: {

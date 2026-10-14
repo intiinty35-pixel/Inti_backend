@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { randomUUID } from 'node:crypto';
 import * as XLSX from 'xlsx';
+import { Workbook } from 'exceljs';
 import PDFDocument from 'pdfkit';
 import { Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../../database/prisma/prisma.service';
@@ -16,6 +17,8 @@ import { ReferralStatus } from '../../generated/prisma/enums';
 import { ReferralAvailability } from '../../generated/prisma/enums';
 import { CreateReferralDto } from './dto/create-referral.dto';
 import { ReferralQueryDto } from './dto/referral-query.dto';
+import { ReferralRecordsQueryDto } from './dto/referral-records-query.dto';
+import { UpdateReferrerDto } from './dto/update-referrer.dto';
 import { UpdateReferralPointsDto } from './dto/update-referral-points.dto';
 
 const STATUS_LABELS: Record<ReferralStatus, string> = {
@@ -147,6 +150,123 @@ export class ReferralsService {
     };
   }
 
+  async setRecordPoints(id: string, points: number, adminId: string) {
+    return this.prisma.$transaction(async (tx) => {
+      const referral = await tx.referral.findUnique({ where: { id }, include: { history: true } });
+      if (!referral) throw new NotFoundException('Referido no encontrado');
+      const total = referral.history.reduce((sum, entry) => sum + entry.pointsAwarded, 0);
+      const current = referral.history.find((entry) => entry.toStatus === referral.status);
+      // Adjust the current state's contribution so all existing total calculations stay consistent.
+      const contribution = (current?.pointsAwarded ?? 0) + points - total;
+      if (contribution < -2147483648 || contribution > 2147483647) {
+        throw new BadRequestException('El ajuste de puntos excede el rango permitido');
+      }
+      await tx.referralStatusHistory.upsert({
+        where: { referralId_toStatus: { referralId: id, toStatus: referral.status } },
+        update: { pointsAwarded: contribution, changedById: adminId },
+        create: { referralId: id, fromStatus: referral.status, toStatus: referral.status,
+          pointsAwarded: contribution, changedById: adminId },
+      });
+      return { id, points };
+    }, { isolationLevel: 'Serializable' });
+  }
+
+  async deleteRecord(id: string) {
+    const existing = await this.prisma.referral.findUnique({ where: { id }, select: { id: true } });
+    if (!existing) throw new NotFoundException('Referido no encontrado');
+    await this.prisma.referral.delete({ where: { id } });
+    return { deleted: true };
+  }
+
+  private recordFilter(query: ReferralRecordsQueryDto): Prisma.ReferralWhereInput {
+    const search = query.search?.trim();
+    return {
+      referrer: { deletedAt: null },
+      createdAt: this.createdAtRange(query),
+      ...(query.status ? { status: query.status } : {}),
+      ...(search ? { OR: [
+        { name: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
+        { phone: { contains: search } },
+        { code: { contains: search, mode: 'insensitive' } },
+        { referrer: { name: { contains: search, mode: 'insensitive' } } },
+        { referrer: { code: { contains: search, mode: 'insensitive' } } },
+      ] } : {}),
+    };
+  }
+
+  private recordInclude = {
+    referrer: { select: { id: true, name: true, code: true } },
+    project: { select: { id: true, name: true } },
+    history: { select: { pointsAwarded: true } },
+  } as const;
+
+  async listRecords(query: ReferralRecordsQueryDto) {
+    const where = this.recordFilter(query);
+    const [total, completed, visits, points, rows] = await Promise.all([
+      this.prisma.referral.count({ where }),
+      this.prisma.referral.count({ where: { AND: [where, { status: ReferralStatus.OPERATION_COMPLETED }] } }),
+      this.prisma.referral.count({ where: { AND: [where, { status: ReferralStatus.VISIT }] } }),
+      this.prisma.referralStatusHistory.aggregate({ where: { referral: where }, _sum: { pointsAwarded: true } }),
+      this.prisma.referral.findMany({ where, include: this.recordInclude,
+        orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+        skip: (query.page - 1) * query.pageSize, take: query.pageSize }),
+    ]);
+    return {
+      generatedAt: new Date(), total, page: query.page, pageSize: query.pageSize,
+      totals: { referrals: total, completed, visits, points: points._sum.pointsAwarded ?? 0 },
+      items: rows.map(({ history, ...row }) => ({ ...row,
+        points: history.reduce((sum, item) => sum + item.pointsAwarded, 0),
+        interestLabel: INTEREST_LABELS[row.interest] ?? row.interest,
+        availabilityLabel: AVAILABILITY_LABELS[row.availability] ?? row.availability,
+        statusLabel: STATUS_LABELS[row.status],
+      })),
+    };
+  }
+
+  async exportRecordsExcel(query: ReferralRecordsQueryDto): Promise<Buffer> {
+    const rows = await this.prisma.referral.findMany({
+      where: this.recordFilter(query), include: this.recordInclude,
+      orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
+    });
+    const workbook = new Workbook();
+    workbook.creator = 'Ariz Inmobiliaria';
+    const sheet = workbook.addWorksheet('Referidos', {
+      views: [{ state: 'frozen', ySplit: 4, showGridLines: false }],
+    });
+    const headers = ['Código', 'Referido', 'Teléfono', 'Email', 'Miembro Ariz', 'Código Miembro Ariz', 'Estado', 'Interés', 'Disponibilidad', 'Proyecto', 'Puntos', 'Fecha de registro'];
+    sheet.columns = headers.map((key) => ({ key, width: key === 'Email' ? 34 : 26 }));
+    sheet.mergeCells('A1:L1');
+    sheet.getCell('A1').value = 'ARIZ · CONTROL DE REFERIDOS';
+    sheet.getRow(1).height = 40;
+    sheet.mergeCells('A2:L2');
+    sheet.getCell('A2').value = `Periodo: ${query.from || 'Inicio'} al ${query.to || 'Hoy'} · Estado: ${query.status ? STATUS_LABELS[query.status] : 'Todos'} · ${rows.length} referidos${query.search ? ` · Búsqueda: ${query.search}` : ''}`;
+    sheet.getRow(2).height = 28;
+    sheet.addRow([]);
+    sheet.addRow(headers).height = 30;
+    rows.forEach((row) => sheet.addRow([
+      row.code, row.name, row.phone, row.email, row.referrer.name, row.referrer.code,
+      STATUS_LABELS[row.status], INTEREST_LABELS[row.interest] ?? row.interest,
+      AVAILABILITY_LABELS[row.availability] ?? row.availability, row.project?.name ?? 'Sin proyecto',
+      row.history.reduce((sum, item) => sum + item.pointsAwarded, 0),
+      row.createdAt.toLocaleDateString('es-PE', { timeZone: 'America/Lima' }),
+    ]));
+    sheet.eachRow((row, index) => {
+      row.eachCell({ includeEmpty: true }, (cell, column) => {
+        const header = index <= 4;
+        cell.font = { name: 'Aptos', size: index === 1 ? 20 : 11, bold: header,
+          color: { argb: header ? 'FFFFFFFF' : 'FF153C50' } };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb:
+          header ? (index === 2 ? 'FF087F8C' : 'FF153C50') : (index % 2 ? 'FFF0F6F8' : 'FFFFFFFF') } };
+        cell.alignment = { vertical: 'middle', wrapText: true };
+        cell.numFmt = column === 11 && !header ? '#,##0' : '@';
+      });
+      if (index > 4) row.height = 32;
+    });
+    sheet.autoFilter = { from: 'A4', to: `L${Math.max(4, sheet.rowCount)}` };
+    return Buffer.from(await workbook.xlsx.writeBuffer());
+  }
+
   async updateStatusPoints(dto: UpdateReferralPointsDto) {
     const updated = await this.prisma.$transaction(
       STATUS_ORDER.map((status) =>
@@ -179,7 +299,27 @@ export class ReferralsService {
     return this.toReferrerResponse(referrer);
   }
 
-  /** Oculta al miembro (baja logica): se conserva todo su historial de referidos y puntos. */
+  /** Actualiza los datos de contacto y pago del miembro. */
+  async updateReferrer(id: string, dto: UpdateReferrerDto) {
+    const existing = await this.prisma.referrer.findUnique({ where: { id }, select: { deletedAt: true } });
+    if (!existing || existing.deletedAt) throw new NotFoundException('Miembro Ariz no encontrado');
+    try {
+      await this.prisma.referrer.update({ where: { id }, data: {
+        name: dto.name, email: dto.email, phone: dto.phone,
+        ...(dto.bankAccount !== undefined ? { bankAccount: dto.bankAccount?.trim() || null } : {}),
+        ...(dto.yape !== undefined ? { yape: dto.yape?.trim() || null } : {}),
+        ...(dto.plin !== undefined ? { plin: dto.plin?.trim() || null } : {}),
+      } });
+      return { id, updated: true };
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+        throw new ConflictException('Este correo ya pertenece a otro miembro Ariz');
+      }
+      throw error;
+    }
+  }
+
+  /** Oculta al miembro conservando su historial. */
   async deleteReferrer(id: string) {
     const referrer = await this.prisma.referrer.findUnique({
       where: { id },
@@ -776,8 +916,8 @@ export class ReferralsService {
     const { items } = await this.ranking(query);
     const data = items.map((row) => ({
       Puesto: row.rank,
-      Miembro: row.name,
-      'Código Miembro': row.code,
+      'Miembro Ariz': row.name,
+      'Código Miembro Ariz': row.code,
       Teléfono: row.phone,
       Email: row.email,
       'Tipo de pago': row.paymentType,
@@ -816,7 +956,7 @@ export class ReferralsService {
       include: this.referralsIncludeFor(query),
     });
 
-    const data: any[] = [];
+    const data: Record<string, string | number>[] = [];
 
     referrers.forEach((referrer) => {
       referrer.referrals.forEach((referral) => {
@@ -832,11 +972,14 @@ export class ReferralsService {
             : 'Sin estado';
 
         data.push({
-          'Código Miembro': referrer.code,
-          Miembro: referrer.name,
-          'Email Miembro': referrer.email,
-          'Teléfono Miembro': referrer.phone,
+          'Código Miembro Ariz': referrer.code,
+          'Miembro Ariz': referrer.name,
+          'Email Miembro Ariz': referrer.email,
+          'Teléfono Miembro Ariz': referrer.phone,
           'Tipo de pago': this.paymentTypeLabel(referrer),
+          'Cuenta bancaria': referrer.bankAccount ?? '',
+          'Número de Yape': referrer.yape ?? '',
+          'Número de Plin': referrer.plin ?? '',
           'Código Referido': referral.code,
           'Nombre Referido': referral.name,
           'Email Referido': referral.email,
@@ -857,30 +1000,69 @@ export class ReferralsService {
       });
     });
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Miembros y puntos');
-
-    const colWidths = [
-      { wch: 18 },
-      { wch: 25 },
-      { wch: 30 },
-      { wch: 15 },
-      { wch: 22 },
-      { wch: 18 },
-      { wch: 25 },
-      { wch: 30 },
-      { wch: 15 },
-      { wch: 15 },
-      { wch: 15 },
-      { wch: 22 },
-      { wch: 10 },
-      { wch: 25 },
-      { wch: 15 },
+    const workbook = new Workbook();
+    workbook.creator = 'Ariz Inmobiliaria';
+    workbook.created = new Date();
+    const worksheet = workbook.addWorksheet('Miembros Ariz y puntos', {
+      views: [{ state: 'frozen', xSplit: 2, ySplit: 6, showGridLines: false }],
+      pageSetup: { orientation: 'landscape', paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
+    });
+    const headers = [
+      'Código Miembro Ariz', 'Miembro Ariz', 'Email Miembro Ariz', 'Teléfono Miembro Ariz',
+      'Tipo de pago', 'Cuenta bancaria', 'Número de Yape', 'Número de Plin',
+      'Código Referido', 'Nombre Referido', 'Email Referido', 'Teléfono Referido',
+      'Interés', 'Disponibilidad', 'Último Estado', 'Puntos', 'Proyecto', 'Fecha Registro',
     ];
-    worksheet['!cols'] = colWidths;
-
-    return XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+    const widths = [20, 30, 34, 20, 28, 30, 20, 20, 20, 30, 34, 20, 24, 24, 28, 14, 30, 20];
+    worksheet.columns = headers.map((key, index) => ({ key, width: widths[index] }));
+    const navy = 'FF153C50';
+    const teal = 'FF087F8C';
+    const gold = 'FFF2B544';
+    const banner = (row: number, text: string, color: string, size: number) => {
+      worksheet.mergeCells(row, 1, row, headers.length);
+      const cell = worksheet.getCell(row, 1);
+      cell.value = text;
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: color } };
+      cell.font = { name: 'Aptos', size, bold: row === 1, color: { argb: 'FFFFFFFF' } };
+      cell.alignment = { vertical: 'middle', indent: 1 };
+    };
+    banner(1, 'MIEMBROS ARIZ · REFERIDOS Y PUNTOS', navy, 22);
+    worksheet.getRow(1).height = 44;
+    banner(2, 'Programa de referidos · Reporte de seguimiento', navy, 12);
+    worksheet.getRow(2).height = 26;
+    banner(3, `Periodo: ${query.from || 'Inicio'} al ${query.to || 'Hoy'}${query.search ? ` · Búsqueda: ${query.search}` : ''}`, teal, 11);
+    worksheet.getRow(3).height = 26;
+    banner(4, `${referrers.length} miembros Ariz · ${data.length} referidos · ${data.reduce((sum, row) => sum + Number(row.Puntos), 0)} puntos · Emitido: ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' })}`, teal, 11);
+    worksheet.getRow(4).height = 26;
+    worksheet.addRow([]);
+    const header = worksheet.addRow(headers);
+    header.height = 34;
+    header.eachCell((cell, column) => {
+      cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: column >= 5 && column <= 8 ? teal : navy } };
+      cell.font = { name: 'Aptos', size: 11, bold: true, color: { argb: 'FFFFFFFF' } };
+      cell.alignment = { vertical: 'middle', wrapText: true };
+      cell.border = { bottom: { style: 'medium', color: { argb: gold } } };
+    });
+    data.forEach((record, index) => {
+      const row = worksheet.addRow(headers.map((key) => record[key]));
+      row.height = 32;
+      row.eachCell({ includeEmpty: true }, (cell, column) => {
+        cell.font = { name: 'Aptos', size: 11, color: { argb: navy } };
+        cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: index % 2 ? 'FFF0F6F8' : 'FFFFFFFF' } };
+        cell.alignment = { vertical: 'middle', wrapText: true };
+        cell.border = { bottom: { style: 'hair', color: { argb: 'FFDCE7EC' } } };
+        // Keep account and phone numbers as text, preserving leading zeros.
+        cell.numFmt = column === 16 ? '#,##0' : '@';
+        if (column === 16) {
+          cell.font = { name: 'Aptos', size: 12, bold: true, color: { argb: teal } };
+          cell.alignment = { vertical: 'middle', horizontal: 'center' };
+        }
+      });
+    });
+    worksheet.autoFilter = { from: { row: 6, column: 1 }, to: { row: 6 + data.length, column: headers.length } };
+    worksheet.pageSetup.printTitlesRow = '1:6';
+    worksheet.headerFooter.oddFooter = 'Ariz Inmobiliaria | Página &P de &N';
+    return Buffer.from(await workbook.xlsx.writeBuffer());
   }
 
   async exportPdf(query: Pick<ReferralQueryDto, 'search' | 'from' | 'to'> = {}): Promise<Buffer> {

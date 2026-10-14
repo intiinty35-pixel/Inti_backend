@@ -18,6 +18,9 @@ import { Role } from '../../generated/prisma/enums';
 import { CampaignPointsTracker } from '../campaigns/campaign-points-tracker';
 import { CreateReferralDto } from './dto/create-referral.dto';
 import { ReferralQueryDto } from './dto/referral-query.dto';
+import { ReferralRecordsQueryDto } from './dto/referral-records-query.dto';
+import { SetReferralPointsDto } from './dto/set-referral-points.dto';
+import { UpdateReferrerDto } from './dto/update-referrer.dto';
 import { UpdateReferralPointsDto } from './dto/update-referral-points.dto';
 import { UpdateReferralStatusDto } from './dto/update-referral-status.dto';
 import { ReferralsService } from './referrals.service';
@@ -38,6 +41,33 @@ export class ReferralsController {
   @Get('ranking')
   ranking(@Query() query: ReferralQueryDto) {
     return this.referrals.ranking(query);
+  }
+
+  @Get('records')
+  records(@Query() query: ReferralRecordsQueryDto) {
+    return this.referrals.listRecords(query);
+  }
+
+  @Patch('records/:id/points')
+  setRecordPoints(@Param('id', ParseUUIDPipe) id: string, @Body() dto: SetReferralPointsDto,
+    @CurrentUser() user: AuthUser) {
+    return this.referrals.setRecordPoints(id, dto.points, user.id);
+  }
+
+  @Delete('records/:id')
+  deleteRecord(@Param('id', ParseUUIDPipe) id: string) {
+    return this.referrals.deleteRecord(id);
+  }
+
+  @Get('records/export/excel')
+  async exportRecordsExcel(@Query() query: ReferralRecordsQueryDto, @Res() res: Response) {
+    const buffer = await this.referrals.exportRecordsExcel(query);
+    res.set({
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': 'attachment; filename="referidos-ariz.xlsx"',
+      'Content-Length': buffer.length,
+    });
+    res.send(buffer);
   }
 
   @Get('ranking/export/excel')
@@ -99,6 +129,11 @@ export class ReferralsController {
   @Delete('referrers/:id')
   deleteReferrer(@Param('id', ParseUUIDPipe) id: string) {
     return this.referrals.deleteReferrer(id);
+  }
+
+  @Patch('referrers/:id')
+  updateReferrer(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateReferrerDto) {
+    return this.referrals.updateReferrer(id, dto);
   }
 
   @Patch('status-points')
