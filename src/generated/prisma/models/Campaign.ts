@@ -173,7 +173,7 @@ export type CampaignGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 
 export type CampaignGroupByOutputType = {
   id: string
-  code: string
+  code: string | null
   name: string
   description: string | null
   startDate: Date
@@ -206,7 +206,7 @@ export type CampaignWhereInput = {
   OR?: Prisma.CampaignWhereInput[]
   NOT?: Prisma.CampaignWhereInput | Prisma.CampaignWhereInput[]
   id?: Prisma.StringFilter<"Campaign"> | string
-  code?: Prisma.StringFilter<"Campaign"> | string
+  code?: Prisma.StringNullableFilter<"Campaign"> | string | null
   name?: Prisma.StringFilter<"Campaign"> | string
   description?: Prisma.StringNullableFilter<"Campaign"> | string | null
   startDate?: Prisma.DateTimeFilter<"Campaign"> | Date | string
@@ -222,7 +222,7 @@ export type CampaignWhereInput = {
 
 export type CampaignOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  code?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
@@ -257,7 +257,7 @@ export type CampaignWhereUniqueInput = Prisma.AtLeast<{
 
 export type CampaignOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  code?: Prisma.SortOrder
+  code?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   startDate?: Prisma.SortOrder
@@ -275,7 +275,7 @@ export type CampaignScalarWhereWithAggregatesInput = {
   OR?: Prisma.CampaignScalarWhereWithAggregatesInput[]
   NOT?: Prisma.CampaignScalarWhereWithAggregatesInput | Prisma.CampaignScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Campaign"> | string
-  code?: Prisma.StringWithAggregatesFilter<"Campaign"> | string
+  code?: Prisma.StringNullableWithAggregatesFilter<"Campaign"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"Campaign"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Campaign"> | string | null
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Campaign"> | Date | string
@@ -287,7 +287,7 @@ export type CampaignScalarWhereWithAggregatesInput = {
 
 export type CampaignCreateInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -303,7 +303,7 @@ export type CampaignCreateInput = {
 
 export type CampaignUncheckedCreateInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -319,7 +319,7 @@ export type CampaignUncheckedCreateInput = {
 
 export type CampaignUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -335,7 +335,7 @@ export type CampaignUpdateInput = {
 
 export type CampaignUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -351,7 +351,7 @@ export type CampaignUncheckedUpdateInput = {
 
 export type CampaignCreateManyInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -363,7 +363,7 @@ export type CampaignCreateManyInput = {
 
 export type CampaignUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,7 +375,7 @@ export type CampaignUpdateManyMutationInput = {
 
 export type CampaignUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -491,7 +491,7 @@ export type CampaignUpdateOneRequiredWithoutReferralPointsNestedInput = {
 
 export type CampaignCreateWithoutReferralsInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -506,7 +506,7 @@ export type CampaignCreateWithoutReferralsInput = {
 
 export type CampaignUncheckedCreateWithoutReferralsInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -537,7 +537,7 @@ export type CampaignUpdateToOneWithWhereWithoutReferralsInput = {
 
 export type CampaignUpdateWithoutReferralsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -552,7 +552,7 @@ export type CampaignUpdateWithoutReferralsInput = {
 
 export type CampaignUncheckedUpdateWithoutReferralsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -567,7 +567,7 @@ export type CampaignUncheckedUpdateWithoutReferralsInput = {
 
 export type CampaignCreateWithoutPointsInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -582,7 +582,7 @@ export type CampaignCreateWithoutPointsInput = {
 
 export type CampaignUncheckedCreateWithoutPointsInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -613,7 +613,7 @@ export type CampaignUpdateToOneWithWhereWithoutPointsInput = {
 
 export type CampaignUpdateWithoutPointsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -628,7 +628,7 @@ export type CampaignUpdateWithoutPointsInput = {
 
 export type CampaignUncheckedUpdateWithoutPointsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -643,7 +643,7 @@ export type CampaignUncheckedUpdateWithoutPointsInput = {
 
 export type CampaignCreateWithoutProjectsInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -658,7 +658,7 @@ export type CampaignCreateWithoutProjectsInput = {
 
 export type CampaignUncheckedCreateWithoutProjectsInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -689,7 +689,7 @@ export type CampaignUpdateToOneWithWhereWithoutProjectsInput = {
 
 export type CampaignUpdateWithoutProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -704,7 +704,7 @@ export type CampaignUpdateWithoutProjectsInput = {
 
 export type CampaignUncheckedUpdateWithoutProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -719,7 +719,7 @@ export type CampaignUncheckedUpdateWithoutProjectsInput = {
 
 export type CampaignCreateWithoutReferralPointsInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -734,7 +734,7 @@ export type CampaignCreateWithoutReferralPointsInput = {
 
 export type CampaignUncheckedCreateWithoutReferralPointsInput = {
   id?: string
-  code: string
+  code?: string | null
   name: string
   description?: string | null
   startDate: Date | string
@@ -765,7 +765,7 @@ export type CampaignUpdateToOneWithWhereWithoutReferralPointsInput = {
 
 export type CampaignUpdateWithoutReferralPointsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -780,7 +780,7 @@ export type CampaignUpdateWithoutReferralPointsInput = {
 
 export type CampaignUncheckedUpdateWithoutReferralPointsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  code?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -925,7 +925,7 @@ export type $CampaignPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    code: string
+    code: string | null
     name: string
     description: string | null
     startDate: Date
