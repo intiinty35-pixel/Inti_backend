@@ -69,17 +69,72 @@ export class ReferralsService {
     private readonly campaignTracker: CampaignPointsTracker,
   ) {}
 
+  /**
+   * Rango de fechas del registro del referido. `to` es inclusivo: se compara
+   * contra el inicio del dia siguiente.
+   */
+  private createdAtRange(query: Pick<ReferralQueryDto, 'from' | 'to'>) {
+    const range: Prisma.DateTimeFilter = {};
+    if (query.from) range.gte = new Date(`${query.from.slice(0, 10)}T00:00:00.000-05:00`);
+    if (query.to) {
+      const end = new Date(`${query.to.slice(0, 10)}T00:00:00.000-05:00`);
+      end.setDate(end.getDate() + 1);
+      range.lt = end;
+    }
+    return query.from || query.to ? range : undefined;
+  }
+
+  /** Miembros visibles (no ocultos) que cumplen la busqueda y el rango de fechas. */
+  private referrerFilter(
+    query: Pick<ReferralQueryDto, 'search' | 'from' | 'to'>,
+  ): Prisma.ReferrerWhereInput {
+    const range = this.createdAtRange(query);
+    const search = query.search?.trim();
+
+    return {
+      deletedAt: null,
+      ...(range ? { referrals: { some: { createdAt: range } } } : {}),
+      ...(search
+        ? {
+            OR: [
+              { name: { contains: search, mode: 'insensitive' } },
+              { email: { contains: search, mode: 'insensitive' } },
+              { code: { contains: search, mode: 'insensitive' } },
+              { referrals: { some: { name: { contains: search, mode: 'insensitive' } } } },
+            ],
+          }
+        : {}),
+    };
+  }
+
+  /** Referidos incluidos por miembro: solo los del rango cuando hay fechas. */
+  private referralsIncludeFor(query: Pick<ReferralQueryDto, 'from' | 'to'>) {
+    const range = this.createdAtRange(query);
+    return {
+      referrals: {
+        ...(range ? { where: { createdAt: range } } : {}),
+        orderBy: { createdAt: 'asc' as const },
+        include: {
+          project: { select: { id: true, name: true } },
+          history: { orderBy: { createdAt: 'asc' as const } },
+        },
+      },
+    } as const;
+  }
+
   async list(query: ReferralQueryDto) {
     const page = query.page ?? 1;
     const pageSize = query.pageSize ?? 20;
+    const where = this.referrerFilter(query);
     const [referrers, total, statusPoints] = await Promise.all([
       this.prisma.referrer.findMany({
+        where,
         orderBy: { createdAt: 'desc' },
         skip: (page - 1) * pageSize,
         take: pageSize,
-        include: this.referralsInclude(),
+        include: this.referralsIncludeFor(query),
       }),
-      this.prisma.referrer.count(),
+      this.prisma.referrer.count({ where }),
       this.prisma.referralStatusPoint.findMany(),
     ]);
 
@@ -124,6 +179,7 @@ export class ReferralsService {
     return this.toReferrerResponse(referrer);
   }
 
+  /** Oculta al miembro (baja logica): se conserva todo su historial de referidos y puntos. */
   async deleteReferrer(id: string) {
     const referrer = await this.prisma.referrer.findUnique({
       where: { id },
@@ -131,31 +187,17 @@ export class ReferralsService {
     });
     if (!referrer) throw new NotFoundException('Referente no encontrado');
 
-    await this.prisma.$transaction(async (tx) => {
-      const referrals = await tx.referral.findMany({
-        where: { referrerId: id },
-        select: { id: true },
-      });
-      const referralIds = referrals.map((referral) => referral.id);
-
-      if (referralIds.length > 0) {
-        await tx.referralStatusHistory.deleteMany({
-          where: { referralId: { in: referralIds } },
-        });
-        await tx.referral.deleteMany({ where: { id: { in: referralIds } } });
-      }
-
-      await tx.pointMovement.deleteMany({ where: { referrerId: id } });
-      await tx.redemption.deleteMany({ where: { referrerId: id } });
-      await tx.referrer.delete({ where: { id } });
+    await this.prisma.referrer.update({
+      where: { id },
+      data: { deletedAt: new Date() },
     });
 
     return { id, deleted: true };
   }
 
   async getReferrerByCode(code: string) {
-    const referrer = await this.prisma.referrer.findUnique({
-      where: { code: code.toUpperCase() },
+    const referrer = await this.prisma.referrer.findFirst({
+      where: { code: code.toUpperCase(), deletedAt: null },
       select: { id: true, name: true, email: true, phone: true },
     });
     return referrer;
@@ -176,8 +218,8 @@ export class ReferralsService {
       };
     }
 
-    const referrer = await this.prisma.referrer.findUnique({
-      where: { code: normalized },
+    const referrer = await this.prisma.referrer.findFirst({
+      where: { code: normalized, deletedAt: null },
       select: { id: true, code: true, name: true },
     });
 
@@ -228,6 +270,56 @@ export class ReferralsService {
     };
   }
 
+  /**
+   * Puntos adicionales de un proyecto Ariz para un estado. Solo aplican a proyectos
+   * creados por ARIZ (con registro de proyecto de administrador); cualquier otro
+   * proyecto, o ninguno, suma 0.
+   */
+  private async arizProjectExtraPoints(
+    client: Prisma.TransactionClient | PrismaService,
+    projectId: string | null | undefined,
+    status: ReferralStatus,
+  ): Promise<number> {
+    if (!projectId) return 0;
+    const config = await client.projectPointsConfig.findFirst({
+      where: { projectId, project: { adminProject: { isNot: null }, isDeleted: false } },
+    });
+    if (!config) return 0;
+    if (status === ReferralStatus.CONTACTED) return config.contactedPoints;
+    if (status === ReferralStatus.VISIT) return config.visitPoints;
+    if (status === ReferralStatus.OPERATION_COMPLETED) return config.operationCompletedPoints;
+    return 0;
+  }
+
+  /** Proyectos Ariz publicados con sus puntos adicionales, para el registro de referidos. */
+  async listArizProjectsWithPoints() {
+    const adminProjects = await this.prisma.adminProject.findMany({
+      where: { project: { status: 'PUBLISHED', isDeleted: false } },
+      include: { project: { select: { id: true, name: true, slug: true } } },
+      orderBy: { project: { name: 'asc' } },
+    });
+    const configs = await this.prisma.projectPointsConfig.findMany({
+      where: { projectId: { in: adminProjects.map((item) => item.project.id) } },
+    });
+    const byProject = new Map(configs.map((config) => [config.projectId, config]));
+
+    return adminProjects.map((item) => {
+      const config = byProject.get(item.project.id);
+      const points = {
+        CONTACTED: config?.contactedPoints ?? 0,
+        VISIT: config?.visitPoints ?? 0,
+        OPERATION_COMPLETED: config?.operationCompletedPoints ?? 0,
+      };
+      return {
+        id: item.project.id,
+        name: item.project.name,
+        slug: item.project.slug,
+        points,
+        totalExtraPoints: points.CONTACTED + points.VISIT + points.OPERATION_COMPLETED,
+      };
+    });
+  }
+
   async referrerExistsByEmail(email: string): Promise<boolean> {
     const referrer = await this.prisma.referrer.findFirst({
       where: { email: email.trim().toLowerCase() },
@@ -244,6 +336,13 @@ export class ReferralsService {
       throw new ConflictException(
         'No existe configuración para el estado inicial',
       );
+
+    const extraInitialPoints = await this.arizProjectExtraPoints(
+      this.prisma,
+      dto.projectId,
+      ReferralStatus.CONTACTED,
+    );
+    const initialPoints = points.points + extraInitialPoints;
 
     const referrerCode = dto.referrerCode?.trim().toUpperCase();
     const referrerEmail = dto.referrerEmail.trim().toLowerCase();
@@ -278,6 +377,13 @@ export class ReferralsService {
           });
         }
 
+        if (referrer?.deletedAt) {
+          referrer = await tx.referrer.update({
+            where: { id: referrer.id },
+            data: { deletedAt: null },
+          });
+        }
+
         if (!referrer) {
           referrer = await tx.referrer.create({
             data: {
@@ -308,7 +414,7 @@ export class ReferralsService {
             history: {
               create: {
                 toStatus: ReferralStatus.CONTACTED,
-                pointsAwarded: points.points,
+                pointsAwarded: initialPoints,
                 changedById,
               },
             },
@@ -339,7 +445,7 @@ export class ReferralsService {
       });
       const totalPoints =
         persisted?.history.reduce((sum, item) => sum + item.pointsAwarded, 0) ??
-        points.points;
+        initialPoints;
 
       if (isNewReferrer) {
         await this.mail.sendReferrerWelcome({
@@ -369,7 +475,7 @@ export class ReferralsService {
           String(created.availability),
       });
 
-      return { ...created, points: points.points, totalPoints };
+      return { ...created, points: initialPoints, totalPoints };
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -408,7 +514,10 @@ export class ReferralsService {
           'No existe configuración para el estado seleccionado',
         );
 
-      const pointsAwarded = reached ? 0 : configured.points;
+      const extraPoints = reached
+        ? 0
+        : await this.arizProjectExtraPoints(tx, current.projectId, status);
+      const pointsAwarded = reached ? 0 : configured.points + extraPoints;
       await tx.referral.update({ where: { id }, data: { status } });
       if (!reached) {
         await tx.referralStatusHistory.create({
@@ -585,18 +694,126 @@ export class ReferralsService {
     return exists ? this.uniqueCode(prefix) : code;
   }
 
-  async exportExcel(): Promise<Buffer> {
+  /** Metodos de pago que el miembro registro, para la columna "Tipo de pago". */
+  private paymentTypeLabel(referrer: {
+    bankAccount: string | null;
+    yape: string | null;
+    plin: string | null;
+  }) {
+    const types = [
+      referrer.yape ? 'Yape' : null,
+      referrer.plin ? 'Plin' : null,
+      referrer.bankAccount ? 'Cuenta bancaria' : null,
+    ].filter(Boolean);
+    return types.length > 0 ? types.join(' / ') : 'Sin registrar';
+  }
+
+  /**
+   * Ranking de miembros por cantidad de referidos (en el rango de fechas, si lo hay).
+   * Incluye datos de contacto para poder llamarlos.
+   */
+  async ranking(query: Pick<ReferralQueryDto, 'search' | 'from' | 'to'> & { limit?: number }) {
     const referrers = await this.prisma.referrer.findMany({
+      where: this.referrerFilter(query),
+      include: this.referralsIncludeFor(query),
+    });
+
+    const rows = referrers
+      .map((referrer) => {
+        const referrals = referrer.referrals;
+        const points = referrals.reduce(
+          (sum, referral) =>
+            sum + referral.history.reduce((inner, item) => inner + item.pointsAwarded, 0),
+          0,
+        );
+        const lastReferralAt = referrals.reduce<Date | null>(
+          (latest, referral) =>
+            !latest || referral.createdAt > latest ? referral.createdAt : latest,
+          null,
+        );
+        return {
+          id: referrer.id,
+          code: referrer.code,
+          name: referrer.name,
+          email: referrer.email,
+          phone: referrer.phone,
+          paymentType: this.paymentTypeLabel(referrer),
+          referralsCount: referrals.length,
+          completedCount: referrals.filter(
+            (referral) => referral.status === ReferralStatus.OPERATION_COMPLETED,
+          ).length,
+          visitCount: referrals.filter((referral) => referral.status === ReferralStatus.VISIT)
+            .length,
+          points,
+          lastReferralAt,
+        };
+      })
+      .sort(
+        (a, b) =>
+          b.referralsCount - a.referralsCount ||
+          b.points - a.points ||
+          a.name.localeCompare(b.name),
+      )
+      .map((row, index) => ({ ...row, rank: index + 1 }));
+
+    const totals = {
+      members: rows.length,
+      referrals: rows.reduce((sum, row) => sum + row.referralsCount, 0),
+      completed: rows.reduce((sum, row) => sum + row.completedCount, 0),
+      points: rows.reduce((sum, row) => sum + row.points, 0),
+    };
+
+    return {
+      generatedAt: new Date(),
+      totals,
+      items: query.limit ? rows.slice(0, query.limit) : rows,
+    };
+  }
+
+  async exportRankingExcel(
+    query: Pick<ReferralQueryDto, 'search' | 'from' | 'to'>,
+  ): Promise<Buffer> {
+    const { items } = await this.ranking(query);
+    const data = items.map((row) => ({
+      Puesto: row.rank,
+      Miembro: row.name,
+      'Código Miembro': row.code,
+      Teléfono: row.phone,
+      Email: row.email,
+      'Tipo de pago': row.paymentType,
+      Referidos: row.referralsCount,
+      'En visita': row.visitCount,
+      Concretados: row.completedCount,
+      Puntos: row.points,
+      'Último referido': row.lastReferralAt
+        ? new Date(row.lastReferralAt).toLocaleDateString('es-PE')
+        : '-',
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    worksheet['!cols'] = [
+      { wch: 8 },
+      { wch: 28 },
+      { wch: 18 },
+      { wch: 15 },
+      { wch: 30 },
+      { wch: 22 },
+      { wch: 11 },
+      { wch: 11 },
+      { wch: 13 },
+      { wch: 10 },
+      { wch: 15 },
+    ];
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Quienes más refirieron');
+    return XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+  }
+
+  async exportExcel(query: Pick<ReferralQueryDto, 'search' | 'from' | 'to'> = {}): Promise<Buffer> {
+    const referrers = await this.prisma.referrer.findMany({
+      where: this.referrerFilter(query),
       orderBy: { createdAt: 'desc' },
-      include: {
-        referrals: {
-          orderBy: { createdAt: 'asc' },
-          include: {
-            project: { select: { id: true, name: true } },
-            history: { orderBy: { createdAt: 'asc' } },
-          },
-        },
-      },
+      include: this.referralsIncludeFor(query),
     });
 
     const data: any[] = [];
@@ -615,10 +832,11 @@ export class ReferralsService {
             : 'Sin estado';
 
         data.push({
-          'Código Referrer': referrer.code,
-          'Nombre Referrer': referrer.name,
-          'Email Referrer': referrer.email,
-          'Teléfono Referrer': referrer.phone,
+          'Código Miembro': referrer.code,
+          Miembro: referrer.name,
+          'Email Miembro': referrer.email,
+          'Teléfono Miembro': referrer.phone,
+          'Tipo de pago': this.paymentTypeLabel(referrer),
           'Código Referido': referral.code,
           'Nombre Referido': referral.name,
           'Email Referido': referral.email,
@@ -641,13 +859,14 @@ export class ReferralsService {
 
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Referidos');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Miembros y puntos');
 
     const colWidths = [
       { wch: 18 },
       { wch: 25 },
       { wch: 30 },
       { wch: 15 },
+      { wch: 22 },
       { wch: 18 },
       { wch: 25 },
       { wch: 30 },
@@ -664,18 +883,11 @@ export class ReferralsService {
     return XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
   }
 
-  async exportPdf(): Promise<Buffer> {
+  async exportPdf(query: Pick<ReferralQueryDto, 'search' | 'from' | 'to'> = {}): Promise<Buffer> {
     const referrers = await this.prisma.referrer.findMany({
+      where: this.referrerFilter(query),
       orderBy: { createdAt: 'desc' },
-      include: {
-        referrals: {
-          orderBy: { createdAt: 'asc' },
-          include: {
-            project: { select: { id: true, name: true } },
-            history: { orderBy: { createdAt: 'asc' } },
-          },
-        },
-      },
+      include: this.referralsIncludeFor(query),
     });
 
     return new Promise((resolve, reject) => {
@@ -693,7 +905,7 @@ export class ReferralsService {
       doc
         .fontSize(18)
         .font('Helvetica-Bold')
-        .text('Reporte de Referidos', { align: 'center' });
+        .text('Reporte de Miembros y puntos', { align: 'center' });
       doc.moveDown(0.2);
       doc
         .fontSize(9)
@@ -708,8 +920,8 @@ export class ReferralsService {
       const tableWidth = doc.page.width - left - doc.page.margins.right;
       const colWidths = columnRatios.map((ratio) => tableWidth * ratio);
       const headers = [
-        'Código Ref.',
-        'Referente',
+        'Código Miembro',
+        'Miembro',
         'Código Refdo.',
         'Referido',
         'Estado',

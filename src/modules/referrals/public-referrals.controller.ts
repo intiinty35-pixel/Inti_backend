@@ -17,6 +17,11 @@ export class PublicReferralsController {
     return this.referrals.create(dto);
   }
 
+  @Get('ariz-projects')
+  arizProjects() {
+    return this.referrals.listArizProjectsWithPoints();
+  }
+
   @Get('validate-code')
   async validateReferrerCode(@Query('code') code: string) {
     if (!code) return { valid: false };

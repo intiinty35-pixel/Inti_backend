@@ -35,10 +35,28 @@ export class ReferralsController {
     return this.referrals.list(query);
   }
 
+  @Get('ranking')
+  ranking(@Query() query: ReferralQueryDto) {
+    return this.referrals.ranking(query);
+  }
+
+  @Get('ranking/export/excel')
+  async exportRankingExcel(@Query() query: ReferralQueryDto, @Res() res: Response) {
+    const buffer = await this.referrals.exportRankingExcel(query);
+
+    res.set({
+      'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'Content-Disposition': `attachment; filename="quienes-mas-refirieron-${new Date().toISOString().split('T')[0]}.xlsx"`,
+      'Content-Length': buffer.length,
+    });
+
+    res.send(buffer);
+  }
+
   @Get('export/excel')
-  async exportExcel(@Res() res: Response) {
-    const buffer = await this.referrals.exportExcel();
-    const filename = `referidos-${new Date().toISOString().split('T')[0]}.xlsx`;
+  async exportExcel(@Query() query: ReferralQueryDto, @Res() res: Response) {
+    const buffer = await this.referrals.exportExcel(query);
+    const filename = `miembros-y-puntos-${new Date().toISOString().split('T')[0]}.xlsx`;
 
     res.set({
       'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -50,12 +68,12 @@ export class ReferralsController {
   }
 
   @Get('export/pdf')
-  async exportPdf(@Res() res: Response) {
-    const buffer = await this.referrals.exportPdf();
+  async exportPdf(@Query() query: ReferralQueryDto, @Res() res: Response) {
+    const buffer = await this.referrals.exportPdf(query);
 
     res.set({
       'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment; filename="referidos-${new Date().toISOString().split('T')[0]}.pdf"`,
+      'Content-Disposition': `attachment; filename="miembros-y-puntos-${new Date().toISOString().split('T')[0]}.pdf"`,
       'Content-Length': buffer.length,
     });
 
