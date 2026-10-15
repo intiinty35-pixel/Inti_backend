@@ -327,9 +327,19 @@ export class ReferralsService {
     });
     if (!referrer) throw new NotFoundException('Referente no encontrado');
 
+    // El correo es unico: se libera al ocultar al miembro para que, si vuelve a
+    // registrarse, empiece como miembro nuevo (otro codigo y 0 puntos). El correo
+    // original queda dentro del valor para poder consultarlo.
+    const hidden = await this.prisma.referrer.findUniqueOrThrow({
+      where: { id },
+      select: { email: true },
+    });
     await this.prisma.referrer.update({
       where: { id },
-      data: { deletedAt: new Date() },
+      data: {
+        deletedAt: new Date(),
+        email: `eliminado+${Date.now()}+${hidden.email}`.slice(0, 250),
+      },
     });
 
     return { id, deleted: true };
@@ -517,11 +527,16 @@ export class ReferralsService {
           });
         }
 
+        // Un miembro eliminado no se reactiva: se registra uno nuevo. Si se ocultó
+        // antes de liberar su correo, se libera aquí para evitar el choque de unicidad.
         if (referrer?.deletedAt) {
-          referrer = await tx.referrer.update({
-            where: { id: referrer.id },
-            data: { deletedAt: null },
-          });
+          if (referrer.email === referrerEmail) {
+            await tx.referrer.update({
+              where: { id: referrer.id },
+              data: { email: `eliminado+${Date.now()}+${referrer.email}`.slice(0, 250) },
+            });
+          }
+          referrer = null;
         }
 
         if (!referrer) {
