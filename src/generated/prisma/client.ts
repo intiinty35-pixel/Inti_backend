@@ -150,6 +150,11 @@ export type Redemption = Prisma.RedemptionModel
  */
 export type PointMovement = Prisma.PointMovementModel
 /**
+ * Model RegistrationReferral
+ * 
+ */
+export type RegistrationReferral = Prisma.RegistrationReferralModel
+/**
  * Model AdminProject
  * 
  */

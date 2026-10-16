@@ -73,6 +73,7 @@ export const ModelName = {
   Incentive: 'Incentive',
   Redemption: 'Redemption',
   PointMovement: 'PointMovement',
+  RegistrationReferral: 'RegistrationReferral',
   AdminProject: 'AdminProject',
   ProjectLocation: 'ProjectLocation',
   ProjectLot: 'ProjectLot',
@@ -495,6 +496,18 @@ export const PointMovementScalarFieldEnum = {
 } as const
 
 export type PointMovementScalarFieldEnum = (typeof PointMovementScalarFieldEnum)[keyof typeof PointMovementScalarFieldEnum]
+
+
+export const RegistrationReferralScalarFieldEnum = {
+  id: 'id',
+  newReferrerId: 'newReferrerId',
+  inviterId: 'inviterId',
+  inviterCode: 'inviterCode',
+  pointsAwarded: 'pointsAwarded',
+  createdAt: 'createdAt'
+} as const
+
+export type RegistrationReferralScalarFieldEnum = (typeof RegistrationReferralScalarFieldEnum)[keyof typeof RegistrationReferralScalarFieldEnum]
 
 
 export const AdminProjectScalarFieldEnum = {

@@ -356,6 +356,8 @@ model Referrer {
   redemptions    Redemption[]
   pointMovements PointMovement[]
   campaignPoints CampaignReferralPoints[]
+  invitedBy      RegistrationReferral?      @relation("ReferrerInvitedBy")
+  invitedOthers  RegistrationReferral[]     @relation("ReferrerInvitedOthers")
 
   @@map("referrers")
 }
@@ -477,6 +479,20 @@ model PointMovement {
 
   @@index([referrerId, createdAt])
   @@map("point_movements")
+}
+
+model RegistrationReferral {
+  id            String   @id @default(uuid())
+  newReferrerId String   @unique
+  newReferrer   Referrer @relation("ReferrerInvitedBy", fields: [newReferrerId], references: [id], onDelete: Cascade)
+  inviterId     String
+  inviter       Referrer @relation("ReferrerInvitedOthers", fields: [inviterId], references: [id], onDelete: Restrict)
+  inviterCode   String
+  pointsAwarded Int      @default(50)
+  createdAt     DateTime @default(now())
+
+  @@index([inviterId, createdAt])
+  @@map("registration_referrals")
 }
 
 model AdminProject {

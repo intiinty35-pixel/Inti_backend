@@ -48,6 +48,11 @@ export class ReferralsController {
     return this.referrals.listRecords(query);
   }
 
+  @Get('registrations')
+  registrations(@Query() query: ReferralQueryDto) {
+    return this.referrals.listRegistrationReferrals(query);
+  }
+
   @Patch('records/:id/points')
   setRecordPoints(@Param('id', ParseUUIDPipe) id: string, @Body() dto: SetReferralPointsDto,
     @CurrentUser() user: AuthUser) {

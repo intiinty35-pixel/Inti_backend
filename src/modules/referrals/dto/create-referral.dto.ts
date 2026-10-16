@@ -74,4 +74,9 @@ export class CreateReferralDto {
   @IsString()
   @MaxLength(30)
   campaignCode?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(30)
+  invitedByCode?: string;
 }

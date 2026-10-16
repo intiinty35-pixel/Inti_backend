@@ -13,7 +13,7 @@ import { PrismaService } from '../../database/prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
 import { CampaignsService } from '../campaigns/campaigns.service';
 import { CampaignPointsTracker } from '../campaigns/campaign-points-tracker';
-import { ReferralStatus } from '../../generated/prisma/enums';
+import { ReferralStatus, PointMovementType } from '../../generated/prisma/enums';
 import { ReferralAvailability } from '../../generated/prisma/enums';
 import { CreateReferralDto } from './dto/create-referral.dto';
 import { ReferralQueryDto } from './dto/referral-query.dto';
@@ -478,6 +478,68 @@ export class ReferralsService {
     return !!referrer;
   }
 
+  async listRegistrationReferrals(query: ReferralQueryDto) {
+    const page = query.page ?? 1;
+    const pageSize = query.pageSize ?? 20;
+    const search = query.search?.trim();
+    const range = this.createdAtRange(query);
+
+    const where = {
+      ...(range ? { createdAt: range } : {}),
+      ...(search
+        ? {
+            OR: [
+              { newReferrer: { name: { contains: search, mode: 'insensitive' as const } } },
+              { newReferrer: { email: { contains: search, mode: 'insensitive' as const } } },
+              { inviter: { name: { contains: search, mode: 'insensitive' as const } } },
+              { inviter: { code: { contains: search, mode: 'insensitive' as const } } },
+            ],
+          }
+        : {}),
+    };
+
+    const [items, total, pointsAgg] = await Promise.all([
+      this.prisma.registrationReferral.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        include: {
+          newReferrer: {
+            select: { id: true, name: true, email: true, phone: true },
+          },
+          inviter: {
+            select: { id: true, name: true, email: true, code: true },
+          },
+        },
+      }),
+      this.prisma.registrationReferral.count({ where }),
+      this.prisma.registrationReferral.aggregate({
+        where,
+        _sum: { pointsAwarded: true },
+      }),
+    ]);
+
+    return {
+      generatedAt: new Date(),
+      page,
+      pageSize,
+      total,
+      totals: {
+        registrations: total,
+        points: pointsAgg._sum.pointsAwarded ?? 0,
+      },
+      items: items.map((item) => ({
+        id: item.id,
+        newReferrer: item.newReferrer,
+        inviter: item.inviter,
+        inviterCode: item.inviterCode,
+        pointsAwarded: item.pointsAwarded,
+        createdAt: item.createdAt,
+      })),
+    };
+  }
+
   async create(dto: CreateReferralDto, changedById?: string | null) {
     const points = await this.prisma.referralStatusPoint.findUnique({
       where: { status: ReferralStatus.CONTACTED },
@@ -499,6 +561,16 @@ export class ReferralsService {
     const referralCode = await this.uniqueCode('RFD');
     let isNewReferrer = false;
     let campaignId: string | null = null;
+
+    const invitedByCode = dto.invitedByCode?.trim().toUpperCase();
+    let inviter: { id: string; code: string; email: string } | null = null;
+
+    if (invitedByCode) {
+      inviter = await this.prisma.referrer.findFirst({
+        where: { code: invitedByCode, deletedAt: null },
+        select: { id: true, code: true, email: true },
+      });
+    }
 
     // Validar código de campaña si se proporciona
     if (dto.campaignCode) {
@@ -552,6 +624,25 @@ export class ReferralsService {
             },
           });
           isNewReferrer = true;
+
+          if (inviter && inviter.email.toLowerCase() !== referrerEmail) {
+            await tx.registrationReferral.create({
+              data: {
+                newReferrerId: referrer.id,
+                inviterId: inviter.id,
+                inviterCode: inviter.code,
+                pointsAwarded: 50,
+              },
+            });
+            await tx.pointMovement.create({
+              data: {
+                referrerId: inviter.id,
+                points: 50,
+                type: PointMovementType.POINTS_EARNED,
+                description: `Recompensa por registro con código ${inviter.code}`,
+              },
+            });
+          }
         }
 
         const referral = await tx.referral.create({
