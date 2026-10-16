@@ -25,6 +25,7 @@ import { UsersModule } from './modules/users/users.module';
 import { InvestmentOpportunitiesModule } from './modules/investment-opportunities/investment-opportunities.module';
 import { ReferralsModule } from './modules/referrals/referrals.module';
 import { IncentivesModule } from './modules/incentives/incentives.module';
+import { PromotionsModule } from './modules/promotions/promotions.module';
 import { RedemptionsModule } from './modules/redemptions/redemptions.module';
 import { ContactReportsModule } from './modules/contact-reports/contact-reports.module';
 import { ClaimsModule } from './modules/claims/claims.module';
@@ -58,6 +59,7 @@ import { CampaignsModule } from './modules/campaigns/campaigns.module';
     InvestmentOpportunitiesModule,
     ReferralsModule,
     IncentivesModule,
+    PromotionsModule,
     RedemptionsModule,
     ContactReportsModule,
     ClaimsModule,
