@@ -901,3 +901,18 @@ model CampaignReferralPoints {
   @@unique([campaignId, referralId, status])
   @@map("campaign_referral_points")
 }
+
+model Promotion {
+  id        String   @id @default(uuid())
+  title     String
+  imageUrl  String
+  publicId  String?
+  startsAt  DateTime
+  endsAt    DateTime
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, startsAt, endsAt])
+  @@map("promotions")
+}
