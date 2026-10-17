@@ -4,6 +4,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { v2 as cloudinary } from 'cloudinary';
 import { Prisma } from '../../generated/prisma/client';
 import {
   ApprovalStatus,
@@ -70,7 +72,57 @@ type ProjectSummaryWithRelations = Prisma.ProjectGetPayload<{
 
 @Injectable()
 export class ProjectsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly config: ConfigService,
+  ) {}
+
+  private async validateTourVideo(value?: string) {
+    if (!value) return;
+    const url = new URL(value);
+    if (
+      url.hostname !== 'res.cloudinary.com' ||
+      !url.pathname.includes('/video/upload/')
+    )
+      return;
+    const credentials = new URL(this.config.getOrThrow<string>('CLOUDINARY_URL'));
+    const prefix = `/${credentials.hostname}/video/upload/`;
+    if (!url.pathname.startsWith(prefix)) {
+      throw new BadRequestException(
+        'El video debe pertenecer a la biblioteca del proyecto',
+      );
+    }
+    const publicId = decodeURIComponent(url.pathname.slice(prefix.length))
+      .replace(/^v\d+\//, '')
+      .replace(/\.[^/.]+$/, '');
+    let duration: unknown;
+    try {
+      const resource = (await cloudinary.api.resource(publicId, {
+        resource_type: 'video',
+        media_metadata: true,
+        cloud_name: credentials.hostname,
+        api_key: decodeURIComponent(credentials.username),
+        api_secret: decodeURIComponent(credentials.password),
+      })) as { duration?: number | string };
+      duration = typeof resource.duration === 'string' && resource.duration.trim() !== ''
+        ? Number(resource.duration)
+        : resource.duration;
+    } catch {
+      throw new BadRequestException('No se pudo verificar el video local');
+    }
+    if (
+      typeof duration !== 'number' ||
+      !Number.isFinite(duration) ||
+      duration <= 0
+    ) {
+      throw new BadRequestException('No se pudo leer la duración del video local. Intenta guardar nuevamente.');
+    }
+    if (duration > 120) {
+      throw new BadRequestException(
+        'El video local debe durar como máximo 2 minutos',
+      );
+    }
+  }
 
   async listPublic(query: ProjectQueryDto) {
     await this.expireMembershipIfNeeded();
@@ -252,6 +304,7 @@ export class ProjectsService {
    * que una publicacion editada sigue visible.
    */
   async update(user: AuthUser, id: string, dto: CreateProjectDto) {
+    await this.validateTourVideo(dto.tourUrl);
     const project = await this.prisma.project.findUnique({
       where: { id },
       include: { agentProfile: true, adminProject: true },
@@ -337,6 +390,7 @@ export class ProjectsService {
     dto: CreateProjectDto,
     owner: { agentProfileId?: string; createdByAdminId?: string },
   ) {
+    await this.validateTourVideo(dto.tourUrl);
     const project = await this.prisma.project.create({
       data: {
         agentProfileId: owner.agentProfileId,

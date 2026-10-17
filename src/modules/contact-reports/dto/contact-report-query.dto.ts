@@ -13,5 +13,5 @@ export class ContactReportQueryDto {
   @IsInt()
   @Min(1)
   @Max(50)
-  pageSize?: number = 20;
+  pageSize?: number = 10;
 }

@@ -419,6 +419,7 @@ export const ModelName = {
   Incentive: 'Incentive',
   Redemption: 'Redemption',
   PointMovement: 'PointMovement',
+  RegistrationReferral: 'RegistrationReferral',
   AdminProject: 'AdminProject',
   ProjectLocation: 'ProjectLocation',
   ProjectLot: 'ProjectLot',
@@ -450,7 +451,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "notificationSettings" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "investmentType" | "lead" | "contactReport" | "claim" | "campaign" | "campaignPoint" | "campaignProject" | "projectPointsConfig" | "campaignReferralPoints" | "promotion"
+    modelProps: "user" | "notificationSettings" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "registrationReferral" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "investmentType" | "lead" | "contactReport" | "claim" | "campaign" | "campaignPoint" | "campaignProject" | "projectPointsConfig" | "campaignReferralPoints" | "promotion"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2082,6 +2083,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    RegistrationReferral: {
+      payload: Prisma.$RegistrationReferralPayload<ExtArgs>
+      fields: Prisma.RegistrationReferralFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RegistrationReferralFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RegistrationReferralFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>
+        }
+        findFirst: {
+          args: Prisma.RegistrationReferralFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RegistrationReferralFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>
+        }
+        findMany: {
+          args: Prisma.RegistrationReferralFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>[]
+        }
+        create: {
+          args: Prisma.RegistrationReferralCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>
+        }
+        createMany: {
+          args: Prisma.RegistrationReferralCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RegistrationReferralCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>[]
+        }
+        delete: {
+          args: Prisma.RegistrationReferralDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>
+        }
+        update: {
+          args: Prisma.RegistrationReferralUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>
+        }
+        deleteMany: {
+          args: Prisma.RegistrationReferralDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RegistrationReferralUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RegistrationReferralUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>[]
+        }
+        upsert: {
+          args: Prisma.RegistrationReferralUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegistrationReferralPayload>
+        }
+        aggregate: {
+          args: Prisma.RegistrationReferralAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRegistrationReferral>
+        }
+        groupBy: {
+          args: Prisma.RegistrationReferralGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RegistrationReferralGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RegistrationReferralCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RegistrationReferralCountAggregateOutputType> | number
+        }
+      }
+    }
     AdminProject: {
       payload: Prisma.$AdminProjectPayload<ExtArgs>
       fields: Prisma.AdminProjectFieldRefs
@@ -3695,6 +3770,18 @@ export const PointMovementScalarFieldEnum = {
 export type PointMovementScalarFieldEnum = (typeof PointMovementScalarFieldEnum)[keyof typeof PointMovementScalarFieldEnum]
 
 
+export const RegistrationReferralScalarFieldEnum = {
+  id: 'id',
+  newReferrerId: 'newReferrerId',
+  inviterId: 'inviterId',
+  inviterCode: 'inviterCode',
+  pointsAwarded: 'pointsAwarded',
+  createdAt: 'createdAt'
+} as const
+
+export type RegistrationReferralScalarFieldEnum = (typeof RegistrationReferralScalarFieldEnum)[keyof typeof RegistrationReferralScalarFieldEnum]
+
+
 export const AdminProjectScalarFieldEnum = {
   id: 'id',
   projectId: 'projectId',
@@ -4588,6 +4675,7 @@ export type GlobalOmitConfig = {
   incentive?: Prisma.IncentiveOmit
   redemption?: Prisma.RedemptionOmit
   pointMovement?: Prisma.PointMovementOmit
+  registrationReferral?: Prisma.RegistrationReferralOmit
   adminProject?: Prisma.AdminProjectOmit
   projectLocation?: Prisma.ProjectLocationOmit
   projectLot?: Prisma.ProjectLotOmit

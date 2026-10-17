@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Query } from '@nestjs/common';
 import { Public } from '../../common/decorators/public.decorator';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { Role } from '../../generated/prisma/enums';
@@ -14,6 +14,12 @@ export class ContactReportsController {
   @Post('contact-reports')
   create(@Body() dto: CreateContactReportDto) {
     return this.reports.create(dto);
+  }
+
+  @Roles(Role.ADMIN)
+  @Delete('admin/contact-reports/:id')
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.reports.remove(id);
   }
 
   @Roles(Role.ADMIN)

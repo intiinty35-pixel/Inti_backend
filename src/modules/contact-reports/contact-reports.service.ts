@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
 import { CreateContactReportDto } from './dto/create-contact-report.dto';
@@ -57,21 +57,33 @@ export class ContactReportsService {
     };
   }
 
+  async remove(id: string) {
+    const changed = await this.prisma.$executeRaw`
+      UPDATE "contact_reports"
+      SET "status" = 'DELETED', "updatedAt" = CURRENT_TIMESTAMP
+      WHERE "id" = ${id} AND "status" <> 'DELETED'
+    `;
+    if (changed === 0) throw new NotFoundException('Reporte no encontrado');
+    return { id };
+  }
+
   async list(query: ContactReportQueryDto) {
     const page = query.page ?? 1;
-    const pageSize = query.pageSize ?? 20;
+    const pageSize = query.pageSize ?? 10;
     const offset = (page - 1) * pageSize;
 
     const [items, totalRows] = await Promise.all([
       this.prisma.$queryRaw<ContactReportRecord[]>`
         SELECT "id", "name", "email", "phone", "topic", "message", "status", "createdAt", "updatedAt"
         FROM "contact_reports"
-        ORDER BY "createdAt" DESC
+        WHERE "status" <> 'DELETED'
+        ORDER BY "createdAt" DESC, "id" DESC
         LIMIT ${pageSize} OFFSET ${offset}
       `,
       this.prisma.$queryRaw<Array<{ count: bigint }>>`
         SELECT COUNT(*)::bigint AS count
         FROM "contact_reports"
+        WHERE "status" <> 'DELETED'
       `,
     ]);
 
