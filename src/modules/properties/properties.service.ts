@@ -462,12 +462,14 @@ export class PropertiesService {
     if (property.agentProfile.userId !== user.id && user.role !== 'ADMIN') {
       throw new ForbiddenException('No puedes eliminar esta propiedad');
     }
-    if (property.isDeleted) return;
+    if (property.isDeleted) return { id, deleted: true };
 
     await this.prisma.property.update({
       where: { id },
       data: { isDeleted: true, deletedAt: new Date() },
     });
+
+    return { id, deleted: true };
   }
 
   /** Baja logica de todas las propiedades de un agente, usada al eliminar su cuenta desde el admin. */

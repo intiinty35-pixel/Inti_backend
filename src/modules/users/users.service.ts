@@ -285,7 +285,7 @@ export class UsersService {
       select: { id: true, userId: true, isDeleted: true },
     });
     if (!profile) throw new NotFoundException('Perfil profesional no encontrado');
-    if (profile.isDeleted) return;
+    if (profile.isDeleted) return { id: profileId, deleted: true };
 
     const now = new Date();
     await this.prisma.$transaction([
@@ -306,6 +306,8 @@ export class UsersService {
         data: { isDeleted: true, deletedAt: now },
       }),
     ]);
+
+    return { id: profileId, deleted: true };
   }
 
   async notifyProfessional(profileId: string, dto: NotifyProfessionalDto = {}) {

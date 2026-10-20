@@ -500,12 +500,14 @@ export class ProjectsService {
     if (!isOwner && user.role !== 'ADMIN') {
       throw new ForbiddenException('No puedes eliminar este proyecto');
     }
-    if (project.isDeleted) return;
+    if (project.isDeleted) return { id, deleted: true };
 
     await this.prisma.project.update({
       where: { id },
       data: { isDeleted: true, deletedAt: new Date() },
     });
+
+    return { id, deleted: true };
   }
 
   async removeAdminProject(user: AuthUser, id: string) {
