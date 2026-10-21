@@ -435,7 +435,8 @@ export const ModelName = {
   CampaignProject: 'CampaignProject',
   ProjectPointsConfig: 'ProjectPointsConfig',
   CampaignReferralPoints: 'CampaignReferralPoints',
-  Promotion: 'Promotion'
+  Promotion: 'Promotion',
+  ProjectSitePlan: 'ProjectSitePlan'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -451,7 +452,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "notificationSettings" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "registrationReferral" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "investmentType" | "lead" | "contactReport" | "claim" | "campaign" | "campaignPoint" | "campaignProject" | "projectPointsConfig" | "campaignReferralPoints" | "promotion"
+    modelProps: "user" | "notificationSettings" | "professionalProfile" | "plan" | "planSubscription" | "favorite" | "priceAlert" | "searchAlert" | "property" | "propertyLocation" | "propertyDetails" | "amenity" | "propertyAmenity" | "propertyMedia" | "project" | "referrer" | "referral" | "referralStatusPoint" | "referralStatusHistory" | "incentive" | "redemption" | "pointMovement" | "registrationReferral" | "adminProject" | "projectLocation" | "projectLot" | "projectMilestone" | "projectMedia" | "investmentOpportunity" | "investmentType" | "lead" | "contactReport" | "claim" | "campaign" | "campaignPoint" | "campaignProject" | "projectPointsConfig" | "campaignReferralPoints" | "promotion" | "projectSitePlan"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -3341,6 +3342,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ProjectSitePlan: {
+      payload: Prisma.$ProjectSitePlanPayload<ExtArgs>
+      fields: Prisma.ProjectSitePlanFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProjectSitePlanFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProjectSitePlanFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>
+        }
+        findFirst: {
+          args: Prisma.ProjectSitePlanFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProjectSitePlanFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>
+        }
+        findMany: {
+          args: Prisma.ProjectSitePlanFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>[]
+        }
+        create: {
+          args: Prisma.ProjectSitePlanCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>
+        }
+        createMany: {
+          args: Prisma.ProjectSitePlanCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProjectSitePlanCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>[]
+        }
+        delete: {
+          args: Prisma.ProjectSitePlanDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>
+        }
+        update: {
+          args: Prisma.ProjectSitePlanUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProjectSitePlanDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProjectSitePlanUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProjectSitePlanUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProjectSitePlanUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProjectSitePlanPayload>
+        }
+        aggregate: {
+          args: Prisma.ProjectSitePlanAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProjectSitePlan>
+        }
+        groupBy: {
+          args: Prisma.ProjectSitePlanGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectSitePlanGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProjectSitePlanCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProjectSitePlanCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -4036,6 +4111,18 @@ export const PromotionScalarFieldEnum = {
 export type PromotionScalarFieldEnum = (typeof PromotionScalarFieldEnum)[keyof typeof PromotionScalarFieldEnum]
 
 
+export const ProjectSitePlanScalarFieldEnum = {
+  projectId: 'projectId',
+  draft: 'draft',
+  published: 'published',
+  revision: 'revision',
+  publishedAt: 'publishedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectSitePlanScalarFieldEnum = (typeof ProjectSitePlanScalarFieldEnum)[keyof typeof ProjectSitePlanScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -4692,6 +4779,7 @@ export type GlobalOmitConfig = {
   projectPointsConfig?: Prisma.ProjectPointsConfigOmit
   campaignReferralPoints?: Prisma.CampaignReferralPointsOmit
   promotion?: Prisma.PromotionOmit
+  projectSitePlan?: Prisma.ProjectSitePlanOmit
 }
 
 /* Types for Logging */

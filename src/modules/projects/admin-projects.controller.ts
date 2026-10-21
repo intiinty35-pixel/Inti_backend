@@ -27,9 +27,14 @@ export class AdminProjectsController {
     return this.projects.listAdminProjects(query);
   }
 
+  @Get('all')
+  all(@Query() query: AdminProjectQueryDto) {
+    return this.projects.listAdminProjects(query, true);
+  }
+
   @Get(':id')
   detail(@Param('id', ParseUUIDPipe) id: string) {
-    return this.projects.getAdminProject(id);
+    return this.projects.getAdminProject(id, true);
   }
 
   @Post()

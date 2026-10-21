@@ -89,7 +89,8 @@ export const ModelName = {
   CampaignProject: 'CampaignProject',
   ProjectPointsConfig: 'ProjectPointsConfig',
   CampaignReferralPoints: 'CampaignReferralPoints',
-  Promotion: 'Promotion'
+  Promotion: 'Promotion',
+  ProjectSitePlan: 'ProjectSitePlan'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -762,6 +763,18 @@ export const PromotionScalarFieldEnum = {
 } as const
 
 export type PromotionScalarFieldEnum = (typeof PromotionScalarFieldEnum)[keyof typeof PromotionScalarFieldEnum]
+
+
+export const ProjectSitePlanScalarFieldEnum = {
+  projectId: 'projectId',
+  draft: 'draft',
+  published: 'published',
+  revision: 'revision',
+  publishedAt: 'publishedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProjectSitePlanScalarFieldEnum = (typeof ProjectSitePlanScalarFieldEnum)[keyof typeof ProjectSitePlanScalarFieldEnum]
 
 
 export const SortOrder = {

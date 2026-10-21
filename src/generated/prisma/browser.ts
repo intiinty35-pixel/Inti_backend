@@ -212,3 +212,8 @@ export type CampaignReferralPoints = Prisma.CampaignReferralPointsModel
  * 
  */
 export type Promotion = Prisma.PromotionModel
+/**
+ * Model ProjectSitePlan
+ * 
+ */
+export type ProjectSitePlan = Prisma.ProjectSitePlanModel

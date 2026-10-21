@@ -48,6 +48,7 @@ const PROJECT_SUMMARY_INCLUDE = {
 const PROJECT_INCLUDE = {
   ...PROJECT_SUMMARY_INCLUDE,
   milestones: { orderBy: { position: 'asc' } },
+  sitePlan: { select: { projectId: true, publishedAt: true } },
   adminProject: {
     include: {
       createdByAdmin: {
@@ -213,11 +214,11 @@ export class ProjectsService {
     };
   }
 
-  async listAdminProjects(query: AdminProjectQueryDto) {
+  async listAdminProjects(query: AdminProjectQueryDto, all = false) {
     const page = query.page ?? 1;
     const pageSize = Math.min(query.pageSize ?? 9, 50);
     const where: Prisma.ProjectWhereInput = {
-      adminProject: { isNot: null },
+      ...(all ? {} : { adminProject: { isNot: null } }),
       status: query.status,
       isDeleted: false,
     };
@@ -241,9 +242,9 @@ export class ProjectsService {
     };
   }
 
-  async getAdminProject(id: string) {
+  async getAdminProject(id: string, all = false) {
     const project = await this.prisma.project.findFirst({
-      where: { id, adminProject: { isNot: null }, isDeleted: false },
+      where: { id, ...(all ? {} : { adminProject: { isNot: null } }), isDeleted: false },
       include: PROJECT_INCLUDE,
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
@@ -329,7 +330,8 @@ export class ProjectsService {
     const location = this.normalizeLocation(dto.location);
 
     const updated = await this.prisma.$transaction(async (tx) => {
-      await tx.projectLot.deleteMany({ where: { projectId: id } });
+      const managedPlan = await tx.projectSitePlan.findUnique({ where: { projectId: id }, select: { projectId: true } });
+      if (!managedPlan) await tx.projectLot.deleteMany({ where: { projectId: id } });
       await tx.projectMilestone.deleteMany({ where: { projectId: id } });
       await tx.projectMedia.deleteMany({ where: { projectId: id } });
 
@@ -347,14 +349,14 @@ export class ProjectsService {
           downPayment: dto.downPayment ?? null,
           monthlyPayment: dto.monthlyPayment ?? null,
           financing: dto.financing ?? ['cash'],
-          totalBlocks: dto.totalBlocks ?? null,
-          totalLots: dto.totalLots ?? null,
+          totalBlocks: managedPlan ? project.totalBlocks : dto.totalBlocks ?? null,
+          totalLots: managedPlan ? project.totalLots : dto.totalLots ?? null,
           social: (dto.social as Prisma.InputJsonValue | undefined) ?? Prisma.DbNull,
           services: dto.services ?? [],
           urbanizationName: dto.urbanizationName ?? null,
           registryEntry: dto.registryEntry ?? null,
           amenities: dto.amenities ?? [],
-          lotMode: dto.lotMode,
+          lotMode: managedPlan ? project.lotMode : dto.lotMode,
           constructionStart: dto.constructionStart
             ? new Date(dto.constructionStart)
             : null,
@@ -375,7 +377,7 @@ export class ProjectsService {
               },
             },
           },
-          lots: { create: this.buildLotRows(dto) },
+          ...(!managedPlan ? { lots: { create: this.buildLotRows(dto) } } : {}),
           milestones: { create: this.buildMilestoneRows(dto) },
           media: { create: this.buildMediaRows(dto) },
         },
@@ -1035,6 +1037,8 @@ export class ProjectsService {
   private toDetail(project: ProjectWithRelations) {
     return {
       ...this.toSummary(project),
+      hasSitePlan: Boolean(project.sitePlan),
+      hasPublishedSitePlan: Boolean(project.sitePlan?.publishedAt),
       ruc: project.ruc,
       businessName: project.businessName,
       downPayment: project.downPayment ? Number(project.downPayment) : null,

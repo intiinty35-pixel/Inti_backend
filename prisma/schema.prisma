@@ -332,6 +332,7 @@ model Project {
   leads             Lead[]
   referrals         Referral[]
   campaignProjects  CampaignProject[]
+  sitePlan          ProjectSitePlan?
   pointsConfig      ProjectPointsConfig?
 
   @@index([status, featured, publishedAt])
@@ -931,4 +932,15 @@ model Promotion {
 
   @@index([isActive, startsAt, endsAt])
   @@map("promotions")
+}
+
+model ProjectSitePlan {
+  projectId String @id
+  draft Json
+  published Json?
+  revision Int @default(1)
+  publishedAt DateTime?
+  updatedAt DateTime @updatedAt
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  @@map("project_site_plans")
 }

@@ -30,6 +30,7 @@ COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
 COPY --from=build /app/certs ./certs
+COPY --from=build /app/assets ./assets
 COPY --from=build /app/package.json ./package.json
 RUN mkdir -p /app/uploads && chown nestjs:nodejs /app/uploads
 USER nestjs
