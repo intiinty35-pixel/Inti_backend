@@ -32,6 +32,11 @@ export class AdminProjectsController {
     return this.projects.listAdminProjects(query, true);
   }
 
+  @Get('portfolio-summary')
+  summary() {
+    return this.projects.adminPortfolioSummary();
+  }
+
   @Get(':id')
   detail(@Param('id', ParseUUIDPipe) id: string) {
     return this.projects.getAdminProject(id, true);

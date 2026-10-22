@@ -377,6 +377,10 @@ describe('Excel lot base and downloadable PDF', () => {
     const pdf = await service.pdf('prueba', lotId);
     expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
     expect(pdf.toString('latin1')).toContain('/Subtype /Image');
+    expect(prisma.project.findUniqueOrThrow).toHaveBeenCalledWith({
+      where: { slug: 'prueba' },
+      include: { location: true },
+    });
   });
   it('includes the project logo too and converts WebP logos to PNG before embedding them', async () => {
     const { service, tx, prisma } = setup();

@@ -8,7 +8,7 @@ import { PrismaService } from '../../database/prisma/prisma.service';
 import { Prisma } from '../../generated/prisma/client';
 import { SaveSitePlanDto, SitePlanDto } from './dto/site-plan.dto';
 import ExcelJS from 'exceljs';
-import PDFDocument from 'pdfkit';
+import { renderLotSheetPdf } from './lot-sheet-pdf';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { validPolygon } from './site-plan-geometry';
@@ -361,6 +361,7 @@ export class SitePlansService {
     if (!plan) throw new NotFoundException('Lote no encontrado');
     const project = await this.prisma.project.findUniqueOrThrow({
       where: { slug },
+      include: { location: true },
     });
     return this.renderLotPdf(plan, project, lotId);
   }
@@ -372,7 +373,7 @@ export class SitePlansService {
 
   private async renderLotPdf(
     plan: SitePlanDto,
-    project: { name: string; currency: string },
+    project: Parameters<typeof renderLotSheetPdf>[0]['project'],
     lotId: string,
     draft = false,
   ) {
@@ -387,87 +388,18 @@ export class SitePlansService {
       throw new BadRequestException(
         'Sube el logo a la biblioteca del proyecto',
       );
-    const doc = new PDFDocument({ margin: 48, size: 'A4' });
-    const chunks: Buffer[] = [];
-    const done = new Promise<Buffer>((resolve, reject) => {
-      doc.on('data', (chunk) => chunks.push(chunk));
-      doc.on('end', () => resolve(Buffer.concat(chunks)));
-      doc.on('error', reject);
-    });
-    // The application logo is a bundled asset; remote project logos are restricted to Cloudinary.
-    const appLogo = await readFile(
-      join(process.cwd(), 'assets/ariz-logo.png'),
-    ).catch(() => null);
-    if (appLogo) doc.image(appLogo, 48, 38, { fit: [100, 55] });
-    else doc.fontSize(22).fillColor('#143d36').text('ARIZ', 48, 48);
+    const appLogo = await readFile(join(process.cwd(), 'assets/ariz-logo.png')).catch(() => null);
+    let projectLogo: Buffer | null = null;
     if (plan.logoUrl) {
       try {
-        const pngUrl = plan.logoUrl.replace(
-          '/image/upload/',
-          '/image/upload/f_png,w_500,c_limit/',
-        );
-        const response = await fetch(pngUrl, {
-          redirect: 'error',
-          signal: AbortSignal.timeout(5000),
-        });
+        const pngUrl = plan.logoUrl.replace('/image/upload/', '/image/upload/f_png,w_500,c_limit/');
+        const response = await fetch(pngUrl, { redirect: 'error', signal: AbortSignal.timeout(5000) });
         const bytes = Buffer.from(await response.arrayBuffer());
-        if (response.ok && bytes.length < 5_000_000)
-          doc.image(bytes, 390, 38, { fit: [150, 55] });
+        if (response.ok && bytes.length < 5_000_000) projectLogo = bytes;
       } catch {
-        /* Project name below always identifies the project. */
+        // Project details remain available even if its optional logo cannot load.
       }
     }
-    doc
-      .fillColor('#143d36')
-      .fontSize(23)
-      .text(project.name, 48, 112, { width: 500 });
-    doc.fontSize(17).text(`Ficha del lote ${lot.code}`).moveDown();
-    if (draft)
-      doc.fontSize(10).text('Ficha administrativa · borrador').moveDown();
-    const money = (n: number) =>
-      `${project.currency === 'USD' ? 'US$' : 'S/'} ${n.toLocaleString('es-PE', { minimumFractionDigits: 2 })}`;
-    const labels = {
-      AVAILABLE: 'Disponible',
-      RESERVED: 'Reservado',
-      SOLD: 'Vendido',
-      BLOCKED: 'Bloqueado',
-    };
-    const rows = [
-      ['Estado', labels[lot.status]],
-      ['Manzana / calle', [lot.block, lot.street].filter(Boolean).join(' / ')],
-      ['Dirección', lot.address],
-      ['Tipo', lot.type],
-      ['Área', `${lot.areaM2} m²`],
-      ['Perímetro', `${lot.perimeterM} m`],
-      [
-        'Dimensiones / frente',
-        `${lot.dimensions || 'Sin especificar'} / ${lot.frontM} m`,
-      ],
-      ['Precio por m²', money(lot.priceM2)],
-      ['Al contado', lot.cashAllowed ? money(lot.price) : 'No disponible'],
-      [
-        'Financiamiento',
-        lot.financingAllowed
-          ? `Total ${money(lot.interestRateMonthly ? lot.downPayment + lot.installments * lot.monthlyPayment : lot.financedPrice)}; inicial ${money(lot.downPayment)}; ${lot.installments} cuotas de ${money(lot.monthlyPayment)}${lot.interestRateMonthly ? `; tasa mensual ${lot.interestRateMonthly}%` : ''}`
-          : 'No disponible',
-      ],
-      ['Observaciones', lot.notes || '—'],
-    ];
-    for (const [label, value] of rows) {
-      doc.fontSize(10).fillColor('#687780').text(label);
-      doc
-        .fontSize(12)
-        .fillColor('#172c35')
-        .text(value || '—')
-        .moveDown(0.7);
-    }
-    doc
-      .fontSize(9)
-      .fillColor('#687780')
-      .text(
-        `Emitido: ${new Date().toLocaleDateString('es-PE', { timeZone: 'America/Lima' })}. Disponibilidad y condiciones sujetas a confirmación.`,
-      );
-    doc.end();
-    return done;
+    return renderLotSheetPdf({ lot, project, draft, appLogo, projectLogo });
   }
 }

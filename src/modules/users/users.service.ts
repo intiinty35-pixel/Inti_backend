@@ -24,6 +24,13 @@ export class UsersService {
     private readonly mail: MailService,
   ) {}
 
+  async profileDistribution() {
+    const groups = await this.prisma.professionalProfile.groupBy({
+      by: ['type'], where: { isDeleted: false }, _count: { _all: true },
+    });
+    return groups.map(group => ({ type: group.type, count: group._count._all }));
+  }
+
   async listProfessionals(
     status?: ApprovalStatus,
     page?: number,

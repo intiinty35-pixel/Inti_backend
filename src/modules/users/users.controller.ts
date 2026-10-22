@@ -32,6 +32,11 @@ export class UsersController {
     return this.users.listProfessionals(status, query.page, query.pageSize);
   }
 
+  @Get('distribution')
+  distribution() {
+    return this.users.profileDistribution();
+  }
+
   @Patch(':id/status')
   setStatus(
     @Param('id', ParseUUIDPipe) id: string,

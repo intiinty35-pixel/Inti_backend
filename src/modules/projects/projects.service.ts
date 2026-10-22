@@ -24,6 +24,7 @@ import { PrismaService } from '../../database/prisma/prisma.service';
 import { CreateProjectDto, ProjectLocationDto } from './dto/create-project.dto';
 import { OwnerProjectQueryDto } from './dto/owner-project-query.dto';
 import { AdminProjectQueryDto } from './dto/admin-project-query.dto';
+import { summarizePortfolio } from './portfolio-summary';
 import { ProjectQueryDto, ProjectSort } from './dto/project-query.dto';
 
 const PROJECT_SUMMARY_INCLUDE = {
@@ -212,6 +213,14 @@ export class ProjectsService {
       pageSize,
       hasMore: page * pageSize < total,
     };
+  }
+
+  async adminPortfolioSummary() {
+    const projects = await this.prisma.project.findMany({
+      where: { isDeleted: false },
+      select: { status: true, lots: { select: { status: true } }, sitePlan: { select: { draft: true } } },
+    });
+    return summarizePortfolio(projects);
   }
 
   async listAdminProjects(query: AdminProjectQueryDto, all = false) {
