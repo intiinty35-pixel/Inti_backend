@@ -34,7 +34,7 @@ export class PlanImageDto {
 }
 export class PlanZoneDto {
   @IsUUID() id: string;
-  @IsIn(['BLOCK', 'STREET', 'CONTOUR']) kind: 'BLOCK' | 'STREET' | 'CONTOUR';
+  @IsIn(['BLOCK', 'STREET', 'PARK', 'CONTOUR']) kind: 'BLOCK' | 'STREET' | 'PARK' | 'CONTOUR';
   @IsString() @MaxLength(100) name: string;
   @IsArray()
   @ArrayMinSize(3)
