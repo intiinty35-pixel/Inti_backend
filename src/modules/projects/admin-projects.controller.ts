@@ -16,11 +16,20 @@ import { Role } from '../../generated/prisma/enums';
 import { CreateProjectDto, ProjectLocationDto } from './dto/create-project.dto';
 import { AdminProjectQueryDto } from './dto/admin-project-query.dto';
 import { ProjectsService } from './projects.service';
+import { SitePlansService } from './site-plans.service';
 
 @Roles(Role.ADMIN)
 @Controller('admin/projects')
 export class AdminProjectsController {
-  constructor(private readonly projects: ProjectsService) {}
+  constructor(
+    private readonly projects: ProjectsService,
+    private readonly sitePlans: SitePlansService,
+  ) {}
+
+  @Get('site-plan-access-codes')
+  sitePlanAccessCodes() {
+    return this.sitePlans.listAccessCodes();
+  }
 
   @Get()
   list(@Query() query: AdminProjectQueryDto) {

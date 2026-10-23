@@ -3,20 +3,23 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   ParseUUIDPipe,
   Post,
+  Delete,
   Put,
   Res,
   UploadedFile,
   UseInterceptors,
   BadRequestException,
+  Headers,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import type { Response } from 'express';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { Public } from '../../common/decorators/public.decorator';
 import { Role } from '../../generated/prisma/enums';
-import { SaveSitePlanDto, SitePlanDto } from './dto/site-plan.dto';
+import { SaveSitePlanDto, SitePlanAccessCodeDto, SitePlanDto } from './dto/site-plan.dto';
 import { SitePlansService } from './site-plans.service';
 import { exportLotTable } from './site-plan-export';
 
@@ -48,6 +51,15 @@ export class AdminSitePlansController {
   }
   @Get() get(@Param('id', ParseUUIDPipe) id: string) {
     return this.plans.admin(id);
+  }
+  @Post('access-code') generateAccessCode(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: SitePlanAccessCodeDto,
+  ) {
+    return this.plans.generateAccessCode(id, dto.expiresInDays);
+  }
+  @Delete('access-code') revokeAccessCode(@Param('id', ParseUUIDPipe) id: string) {
+    return this.plans.revokeAccessCode(id);
   }
   @Put() save(
     @Param('id', ParseUUIDPipe) id: string,
@@ -85,17 +97,21 @@ export class AdminSitePlansController {
 @Controller('projects/:slug/site-plan')
 export class PublicSitePlansController {
   constructor(private readonly plans: SitePlansService) {}
-  @Public() @Get() get(@Param('slug') slug: string) {
-    return this.plans.publicPlan(slug);
+  @Public() @Get() get(
+    @Param('slug') slug: string,
+    @Headers('x-site-plan-code') code?: string,
+  ) {
+    return this.plans.publicPlan(slug, code);
   }
   @Public() @Get('lots/:lotId/pdf') async pdf(
     @Param('slug') slug: string,
     @Param('lotId', ParseUUIDPipe) lotId: string,
+    @Headers('x-site-plan-code') code: string | undefined,
     @Res() res: Response,
   ) {
     res
       .type('application/pdf')
       .attachment(`ficha-lote-${lotId}.pdf`)
-      .send(await this.plans.pdf(slug, lotId));
+      .send(await this.plans.pdf(slug, lotId, code));
   }
 }

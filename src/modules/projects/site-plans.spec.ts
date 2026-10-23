@@ -1,6 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
 import ExcelJS from 'exceljs';
+import * as argon2 from 'argon2';
 import { PrismaService } from '../../database/prisma/prisma.service';
 import { SitePlansService } from './site-plans.service';
 import { SaveSitePlanDto, SitePlanDto } from './dto/site-plan.dto';
@@ -68,6 +69,7 @@ function setup() {
         id: projectId,
         location: { latitude: -12, longitude: -77 },
       }),
+      findMany: jest.fn().mockResolvedValue([]),
       update: jest.fn(),
     },
     projectSitePlan: {
@@ -247,6 +249,78 @@ describe('Site plans: draft, publication and inventory', () => {
       include: { sitePlan: true },
     });
   });
+  it('requires a configured project code before returning public plan data', async () => {
+    const { service, tx } = setup();
+    tx.project.findFirst.mockResolvedValue({
+      sitePlanAccessCodeHash: null,
+      sitePlan: { published: plan() },
+    } as never);
+    await expect(service.publicPlan('published-project')).rejects.toThrow(
+      'código coordinado',
+    );
+  });
+  it('allows public plan access only with the configured project code', async () => {
+    const { service, tx } = setup();
+    const accessCode = 'ABCDEF0123456789AB';
+    tx.project.findFirst.mockResolvedValue({
+      sitePlanAccessCodeHash: await argon2.hash(accessCode),
+      sitePlanAccessCodeExpiresAt: new Date(Date.now() + 60_000),
+      currency: 'PEN',
+      sitePlan: { published: plan() },
+    } as never);
+    await expect(service.publicPlan('published-project', 'incorrecta')).rejects.toThrow(
+      'código coordinado',
+    );
+    await expect(service.publicPlan('published-project', accessCode)).resolves.toMatchObject({
+      currency: 'PEN',
+      lots: expect.any(Array),
+    });
+  });
+  it('rejects codes after their expiry time', async () => {
+    const { service, tx } = setup();
+    tx.project.findFirst.mockResolvedValue({
+      sitePlanAccessCodeHash: await argon2.hash('ABCDEF0123456789AB'),
+      sitePlanAccessCodeExpiresAt: new Date(Date.now() - 60_000),
+      sitePlan: { published: plan() },
+    } as never);
+    await expect(service.publicPlan('published-project', 'ABCDEF0123456789AB')).rejects.toThrow(
+      'código coordinado',
+    );
+  });
+  it('lists access-code status without exposing stored hashes', async () => {
+    const { service, tx } = setup();
+    tx.project.findMany.mockResolvedValue([
+      {
+        id: projectId,
+        name: 'Proyecto de prueba',
+        slug: 'prueba',
+        status: 'PUBLISHED',
+        sitePlanAccessCodeHash: 'argon2-hash',
+        sitePlanAccessCodeExpiresAt: new Date(Date.now() + 60_000),
+      },
+    ] as never);
+    const [row] = await service.listAccessCodes();
+    expect(row).toMatchObject({
+      id: projectId,
+      configured: true,
+    });
+    expect(row).not.toHaveProperty('sitePlanAccessCodeHash');
+  });
+  it('generates expiring random codes and stores only their hash', async () => {
+    const { service, tx } = setup();
+    const result = await service.generateAccessCode(projectId, 7);
+    expect(result.code).toMatch(/^[A-F0-9]{18}$/);
+    expect(result.expiresAt.getTime()).toBeGreaterThan(Date.now());
+    const savedHash = tx.project.update.mock.calls[0][0].data.sitePlanAccessCodeHash;
+    expect(savedHash).not.toBe(result.code);
+    expect(await argon2.verify(savedHash!, result.code)).toBe(true);
+    expect(tx.project.update.mock.calls[0][0].data.sitePlanAccessCodeExpiresAt).toEqual(result.expiresAt);
+    await expect(service.revokeAccessCode(projectId)).resolves.toEqual({ revoked: true });
+    expect(tx.project.update.mock.calls[1][0].data).toEqual({
+      sitePlanAccessCodeHash: null,
+      sitePlanAccessCodeExpiresAt: null,
+    });
+  });
 });
 
 describe('Site plan validation and polygons', () => {
@@ -366,7 +440,10 @@ describe('Excel lot base and downloadable PDF', () => {
   });
   it('creates a real PDF from the published lot and includes the bundled ARIZ logo', async () => {
     const { service, tx, prisma } = setup();
+    const accessCode = 'CLAVE-PRUEBA';
     tx.project.findFirst.mockResolvedValue({
+      sitePlanAccessCodeHash: await argon2.hash(accessCode),
+      sitePlanAccessCodeExpiresAt: new Date(Date.now() + 60_000),
       sitePlan: { published: plan() },
     } as never);
     Object.assign(prisma.project, {
@@ -374,7 +451,7 @@ describe('Excel lot base and downloadable PDF', () => {
         .fn()
         .mockResolvedValue({ name: 'Proyecto de prueba', currency: 'PEN' }),
     });
-    const pdf = await service.pdf('prueba', lotId);
+    const pdf = await service.pdf('prueba', lotId, accessCode);
     expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
     expect(pdf.toString('latin1')).toContain('/Subtype /Image');
     expect(prisma.project.findUniqueOrThrow).toHaveBeenCalledWith({
@@ -384,10 +461,13 @@ describe('Excel lot base and downloadable PDF', () => {
   });
   it('includes the project logo too and converts WebP logos to PNG before embedding them', async () => {
     const { service, tx, prisma } = setup();
+    const accessCode = 'CLAVE-PRUEBA';
     const published = plan();
     published.logoUrl =
       'https://res.cloudinary.com/test/image/upload/v1/project.webp';
     tx.project.findFirst.mockResolvedValue({
+      sitePlanAccessCodeHash: await argon2.hash(accessCode),
+      sitePlanAccessCodeExpiresAt: new Date(Date.now() + 60_000),
       sitePlan: { published },
     } as never);
     Object.assign(prisma.project, {
@@ -408,7 +488,7 @@ describe('Excel lot base and downloadable PDF', () => {
         ),
       );
     try {
-      const pdf = await service.pdf('prueba', lotId);
+      const pdf = await service.pdf('prueba', lotId, accessCode);
       expect(
         (pdf.toString('latin1').match(/\/Subtype \/Image/g) ?? []).length,
       ).toBeGreaterThanOrEqual(2);

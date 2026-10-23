@@ -333,6 +333,8 @@ model Project {
   referrals         Referral[]
   campaignProjects  CampaignProject[]
   sitePlan          ProjectSitePlan?
+  sitePlanAccessCodeHash String?
+  sitePlanAccessCodeExpiresAt DateTime?
   pointsConfig      ProjectPointsConfig?
 
   @@index([status, featured, publishedAt])

@@ -377,7 +377,9 @@ export const ProjectScalarFieldEnum = {
   updatedAt: 'updatedAt',
   publishedAt: 'publishedAt',
   isDeleted: 'isDeleted',
-  deletedAt: 'deletedAt'
+  deletedAt: 'deletedAt',
+  sitePlanAccessCodeHash: 'sitePlanAccessCodeHash',
+  sitePlanAccessCodeExpiresAt: 'sitePlanAccessCodeExpiresAt'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]

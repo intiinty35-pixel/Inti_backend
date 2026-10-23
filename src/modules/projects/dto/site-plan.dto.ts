@@ -95,3 +95,6 @@ export class SaveSitePlanDto {
   @IsDefined() @ValidateNested() @Type(() => SitePlanDto) plan: SitePlanDto;
   @IsBoolean() publish: boolean;
 }
+export class SitePlanAccessCodeDto {
+  @IsIn([1, 7, 30]) expiresInDays: 1 | 7 | 30;
+}

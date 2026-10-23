@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -12,6 +13,8 @@ import { renderLotSheetPdf } from './lot-sheet-pdf';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { validPolygon } from './site-plan-geometry';
+import * as argon2 from 'argon2';
+import { randomBytes } from 'node:crypto';
 
 @Injectable()
 export class SitePlansService {
@@ -44,18 +47,95 @@ export class SitePlansService {
     };
   }
 
-  async publicPlan(slug: string) {
+  async publicPlan(slug: string, code?: string) {
     const project = await this.prisma.project.findFirst({
       where: { slug, status: 'PUBLISHED', isDeleted: false },
       include: { sitePlan: true },
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
-    return project.sitePlan?.published
-      ? {
-          ...(project.sitePlan.published as Prisma.JsonObject),
-          currency: project.currency,
-        }
-      : null;
+    if (!project.sitePlan?.published) return null;
+    await this.requirePublicAccess(
+      project.sitePlanAccessCodeHash,
+      project.sitePlanAccessCodeExpiresAt,
+      code,
+    );
+    return {
+      ...(project.sitePlan.published as Prisma.JsonObject),
+      currency: project.currency,
+    };
+  }
+
+  async listAccessCodes() {
+    const projects = await this.prisma.project.findMany({
+      where: { isDeleted: false },
+      orderBy: { name: 'asc' },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        status: true,
+        sitePlanAccessCodeHash: true,
+        sitePlanAccessCodeExpiresAt: true,
+      },
+    });
+    return projects.map(project => ({
+      id: project.id,
+      name: project.name,
+      slug: project.slug,
+      status: project.status,
+      configured: Boolean(
+        project.sitePlanAccessCodeHash &&
+        project.sitePlanAccessCodeExpiresAt &&
+        project.sitePlanAccessCodeExpiresAt > new Date(),
+      ),
+      expiresAt: project.sitePlanAccessCodeExpiresAt,
+    }));
+  }
+
+  async generateAccessCode(id: string, expiresInDays: 1 | 7 | 30) {
+    const project = await this.prisma.project.findFirst({
+      where: { id, isDeleted: false },
+      select: { id: true },
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    const code = randomBytes(9).toString('hex').toUpperCase();
+    const expiresAt = new Date(Date.now() + expiresInDays * 24 * 60 * 60 * 1000);
+    const sitePlanAccessCodeHash = await argon2.hash(code);
+    await this.prisma.project.update({
+      where: { id },
+      data: { sitePlanAccessCodeHash, sitePlanAccessCodeExpiresAt: expiresAt },
+    });
+    return { code, expiresAt };
+  }
+
+  async revokeAccessCode(id: string) {
+    const project = await this.prisma.project.findFirst({
+      where: { id, isDeleted: false },
+      select: { id: true },
+    });
+    if (!project) throw new NotFoundException('Proyecto no encontrado');
+    await this.prisma.project.update({
+      where: { id },
+      data: { sitePlanAccessCodeHash: null, sitePlanAccessCodeExpiresAt: null },
+    });
+    return { revoked: true };
+  }
+
+  private async requirePublicAccess(
+    hash: string | null,
+    expiresAt: Date | null,
+    code?: string,
+  ) {
+    const normalized = code?.trim().toUpperCase();
+    if (
+      !hash ||
+      !expiresAt ||
+      expiresAt <= new Date() ||
+      !normalized ||
+      !/^[A-F0-9]{18}$/.test(normalized) ||
+      !(await argon2.verify(hash, normalized))
+    )
+      throw new ForbiddenException('Ingresa el código coordinado con un asesor para ver el plano');
   }
 
   async save(id: string, dto: SaveSitePlanDto) {
@@ -356,8 +436,8 @@ export class SitePlansService {
     return { rows };
   }
 
-  async pdf(slug: string, lotId: string) {
-    const plan = (await this.publicPlan(slug)) as unknown as SitePlanDto | null;
+  async pdf(slug: string, lotId: string, code?: string) {
+    const plan = (await this.publicPlan(slug, code)) as unknown as SitePlanDto | null;
     if (!plan) throw new NotFoundException('Lote no encontrado');
     const project = await this.prisma.project.findUniqueOrThrow({
       where: { slug },
