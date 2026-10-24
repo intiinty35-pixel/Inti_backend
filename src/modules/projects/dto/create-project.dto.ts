@@ -246,7 +246,7 @@ export class CreateProjectDto {
   lotMode!: LotMode;
 
   @IsArray()
-  @ArrayMinSize(1)
+  @ArrayMinSize(0)
   @ValidateNested({ each: true })
   @Type(() => ProjectLotDto)
   lots!: ProjectLotDto[];

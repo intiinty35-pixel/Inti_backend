@@ -15,6 +15,7 @@ import { join } from 'node:path';
 import { validPolygon } from './site-plan-geometry';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'node:crypto';
+import { validateApartmentPlan } from './apartment-plan-validation';
 
 @Injectable()
 export class SitePlansService {
@@ -33,6 +34,7 @@ export class SitePlansService {
       project: {
         id,
         name: project.name,
+        category: project.category,
         currency: project.currency,
         location: project.location,
         status: project.status,
@@ -139,9 +141,13 @@ export class SitePlansService {
   }
 
   async save(id: string, dto: SaveSitePlanDto) {
+    const crop = dto.plan.image?.crop;
+    if (crop && (crop.left >= crop.right || crop.top >= crop.bottom)) throw new BadRequestException('El recorte del plano debe tener ancho y alto mayores que cero');
+    const apartments = dto.plan.mode === 'APARTMENTS';
+    const activeLots = apartments ? [] : dto.plan.lots;
     if (dto.plan.image?.sourcePdfUrl && !/^https:\/\/res\.cloudinary\.com\/[^/]+\/raw\/upload\//.test(dto.plan.image.sourcePdfUrl)) throw new BadRequestException('Sube el PDF original a la biblioteca del proyecto');
     if (
-      !dto.plan.image &&
+      !apartments && !dto.plan.image &&
       (dto.publish ||
         dto.plan.zones.length > 0 ||
         dto.plan.lots.some((lot) => lot.path.length > 0))
@@ -151,7 +157,7 @@ export class SitePlansService {
       );
     const codes = new Set<string>();
     const ids = new Set<string>();
-    for (const lot of dto.plan.lots) {
+    for (const lot of activeLots) {
       const code = `${lot.block.trim().toLowerCase()}|${lot.code.trim().toLowerCase()}`;
       if (!lot.code.trim() || codes.has(code) || ids.has(lot.id))
         throw new BadRequestException(
@@ -193,6 +199,7 @@ export class SitePlansService {
         throw new BadRequestException(`Revisa el polígono de ${zone.name}`);
       ids.add(zone.id);
     }
+    const apartmentCount = validateApartmentPlan(dto.plan, apartments && dto.publish, ids);
     for (const url of [dto.plan.logoUrl, dto.plan.image?.url].filter(
       Boolean,
     ) as string[]) {
@@ -210,6 +217,8 @@ export class SitePlansService {
             include: { location: true },
           });
           if (!project) throw new NotFoundException('Proyecto no encontrado');
+          if (project.category && apartments !== (project.category === 'DEPARTAMENTOS'))
+            throw new BadRequestException('El tipo del plano no coincide con el proyecto. Elige Lotes o Departamentos en Editar proyecto antes de cambiar de editor.');
           if (
             dto.publish &&
             (project.location?.latitude == null ||
@@ -233,7 +242,7 @@ export class SitePlansService {
               );
           }
           if (dto.publish) {
-            if (!dto.plan.lots.some((lot) => lot.path.length >= 3))
+            if (!apartments && !activeLots.some((lot) => lot.path.length >= 3))
               throw new BadRequestException(
                 'Dibuja al menos un lote antes de publicar',
               );
@@ -244,7 +253,7 @@ export class SitePlansService {
             // Stable IDs keep links and existing lot assignments intact across publications.
             const foreign = await tx.projectLot.count({
               where: {
-                id: { in: dto.plan.lots.map((lot) => lot.id) },
+                id: { in: activeLots.map((lot) => lot.id) },
                 projectId: { not: id },
               },
             });
@@ -253,8 +262,8 @@ export class SitePlansService {
                 'Un lote pertenece a otro proyecto',
               );
             await tx.projectLot.deleteMany({ where: { projectId: id } });
-            await tx.projectLot.createMany({
-              data: dto.plan.lots.map((lot, position) => ({
+            if (activeLots.length) await tx.projectLot.createMany({
+              data: activeLots.map((lot, position) => ({
                 id: lot.id,
                 projectId: id,
                 lotNumber: lot.code.trim(),
@@ -270,8 +279,9 @@ export class SitePlansService {
             await tx.project.update({
               where: { id },
               data: {
-                totalLots: dto.plan.lots.length,
-                totalBlocks: dto.plan.zones.filter(
+                ...(apartments ? { category: 'DEPARTAMENTOS' as const } : {}),
+                totalLots: apartments ? apartmentCount : activeLots.length,
+                totalBlocks: apartments ? (dto.plan.buildings?.length ?? 0) : dto.plan.zones.filter(
                   (zone) => zone.kind === 'BLOCK',
                 ).length,
                 lotMode: 'INDIVIDUAL',

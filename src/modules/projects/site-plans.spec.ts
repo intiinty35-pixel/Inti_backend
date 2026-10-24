@@ -65,6 +65,7 @@ function plan(): SitePlanDto {
 function setup() {
   const tx = {
     project: {
+      findUniqueOrThrow: jest.fn(),
       findFirst: jest.fn().mockResolvedValue({
         id: projectId,
         location: { latitude: -12, longitude: -77 },
@@ -148,6 +149,32 @@ describe('Site plans: draft, publication and inventory', () => {
     expect(tx.projectSitePlan.update).not.toHaveBeenCalled();
     expect(tx.projectLot.deleteMany).not.toHaveBeenCalled();
   });
+  it('publishes an apartment building without requiring lot polygons or a terrain image', async () => {
+    const { service, tx } = setup();
+    const snapshot: SitePlanDto = {
+      mode: 'APARTMENTS', logoUrl: '', zones: [], lots: [], buildings: [{
+        id: 'e2f8b8d7-a542-4000-8899-123456789010', name: 'Torre A', path,
+        floors: [{ id: 'e2f8b8d7-a542-4000-8899-123456789011', number: 1, name: 'Piso 1', apartments: [{
+          id: 'e2f8b8d7-a542-4000-8899-123456789012', code: '101', areaM2: 80, price: 150000, operation: 'SALE', status: 'AVAILABLE', maintenanceFee: 200, bedrooms: 2, bathrooms: 2, notes: '',
+          path: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: 1 }, { x: 0, y: 1 }],
+        }] }],
+      }],
+    };
+    await service.save(projectId, { plan: snapshot, revision: 1, publish: true });
+    expect(tx.projectSitePlan.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ published: snapshot }) }));
+    expect(tx.project.update).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ category: 'DEPARTAMENTOS', totalLots: 1, totalBlocks: 1 }) }));
+    expect(tx.projectLot.createMany).not.toHaveBeenCalled();
+    tx.projectSitePlan.update.mockClear(); tx.projectLot.deleteMany.mockClear();
+    await service.save(projectId, { plan: snapshot, revision: 2, publish: false });
+    expect(tx.projectSitePlan.update).not.toHaveBeenCalled();
+    expect(tx.projectLot.deleteMany).not.toHaveBeenCalled();
+    tx.project.findFirst.mockResolvedValue({ id: projectId, category: 'LOTIZACION', location: { latitude: -12, longitude: -77 } } as never);
+    tx.projectSitePlan.updateMany.mockClear();
+    await expect(service.save(projectId, { plan: snapshot, revision: 3, publish: false })).rejects.toThrow('tipo del plano');
+    expect(tx.projectSitePlan.updateMany).not.toHaveBeenCalled();
+    tx.project.findFirst.mockResolvedValue({ id: projectId, category: 'DEPARTAMENTOS', location: { latitude: -12, longitude: -77 } } as never);
+    await expect(service.save(projectId, { plan: plan(), revision: 3, publish: false })).rejects.toThrow('tipo del plano');
+  });
   it('preserves the original PDF and selected page in the saved draft', async () => {
     const { service, tx } = setup();
     const snapshot = plan();
@@ -162,6 +189,20 @@ describe('Site plans: draft, publication and inventory', () => {
     );
     snapshot.image!.sourcePdfUrl = 'https://example.com/plano.pdf';
     await expect(service.save(projectId, { plan: snapshot, revision: 0, publish: false })).rejects.toThrow('PDF original');
+  });
+  it('persists crop metadata and rejects reversed crop bounds before saving', async () => {
+    const { service, tx } = setup();
+    const snapshot = plan();
+    snapshot.image!.crop = { left: .1, top: .2, right: .9, bottom: .8 };
+    const validated = plainToInstance(SaveSitePlanDto, { plan: snapshot, revision: 1, publish: false });
+    expect(await validate(validated, { whitelist: true })).toEqual([]);
+    expect(validated.plan.image!.crop).toEqual(snapshot.image!.crop);
+    await service.save(projectId, validated);
+    expect(tx.projectSitePlan.updateMany).toHaveBeenCalledWith(expect.objectContaining({ data: expect.objectContaining({ draft: snapshot }) }));
+    tx.projectSitePlan.updateMany.mockClear();
+    validated.plan.image!.crop!.left = .95;
+    await expect(service.save(projectId, validated)).rejects.toThrow('recorte');
+    expect(tx.projectSitePlan.updateMany).not.toHaveBeenCalled();
   });
   it('rejects stale revisions before replacing published inventory', async () => {
     const { service, tx } = setup();
@@ -440,7 +481,7 @@ describe('Excel lot base and downloadable PDF', () => {
   });
   it('creates a real PDF from the published lot and includes the bundled ARIZ logo', async () => {
     const { service, tx, prisma } = setup();
-    const accessCode = 'CLAVE-PRUEBA';
+    const accessCode = 'ABCDEF0123456789AB';
     tx.project.findFirst.mockResolvedValue({
       sitePlanAccessCodeHash: await argon2.hash(accessCode),
       sitePlanAccessCodeExpiresAt: new Date(Date.now() + 60_000),
@@ -461,7 +502,7 @@ describe('Excel lot base and downloadable PDF', () => {
   });
   it('includes the project logo too and converts WebP logos to PNG before embedding them', async () => {
     const { service, tx, prisma } = setup();
-    const accessCode = 'CLAVE-PRUEBA';
+    const accessCode = 'ABCDEF0123456789AB';
     const published = plan();
     published.logoUrl =
       'https://res.cloudinary.com/test/image/upload/v1/project.webp';

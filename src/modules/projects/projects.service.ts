@@ -26,8 +26,10 @@ import { OwnerProjectQueryDto } from './dto/owner-project-query.dto';
 import { AdminProjectQueryDto } from './dto/admin-project-query.dto';
 import { summarizePortfolio } from './portfolio-summary';
 import { ProjectQueryDto, ProjectSort } from './dto/project-query.dto';
+import type { SitePlanDto } from './dto/site-plan.dto';
 
 const PROJECT_SUMMARY_INCLUDE = {
+  sitePlan: { select: { published: true } },
   location: true,
   lots: { orderBy: { position: 'asc' } },
   media: { orderBy: [{ isCover: 'desc' }, { position: 'asc' }] },
@@ -49,7 +51,7 @@ const PROJECT_SUMMARY_INCLUDE = {
 const PROJECT_INCLUDE = {
   ...PROJECT_SUMMARY_INCLUDE,
   milestones: { orderBy: { position: 'asc' } },
-  sitePlan: { select: { projectId: true, publishedAt: true } },
+  sitePlan: { select: { projectId: true, publishedAt: true, published: true } },
   adminProject: {
     include: {
       createdByAdmin: {
@@ -347,6 +349,7 @@ export class ProjectsService {
       return tx.project.update({
         where: { id },
         data: {
+          category: dto.category ?? project.category,
           stage: dto.stage,
           name: dto.name,
           description: dto.description,
@@ -461,6 +464,7 @@ export class ProjectsService {
         location: true,
         lots: true,
         media: true,
+        sitePlan: { select: { published: true } },
       },
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
@@ -644,7 +648,7 @@ export class ProjectsService {
 
     const project = await this.prisma.project.findUnique({
       where: { id },
-      include: { adminProject: true, location: true, lots: true, media: true },
+      include: { adminProject: true, location: true, lots: true, media: true, sitePlan: { select: { published: true } } },
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
     if (!project.adminProject) {
@@ -726,21 +730,27 @@ export class ProjectsService {
   }
 
   private validatePublishableProject(project: {
+    category?: ProjectCategory;
+    sitePlan?: { published: unknown } | null;
     location: { latitude?: unknown; longitude?: unknown } | null;
     lots: unknown[];
     media: Array<{ type: MediaType }>;
   }) {
+    const published = project.sitePlan?.published as SitePlanDto | undefined;
+    const hasInventory = project.category === ProjectCategory.DEPARTAMENTOS
+      ? published?.mode === 'APARTMENTS' && (published.buildings ?? []).some(b => b.floors.some(f => f.apartments.length > 0))
+      : project.lots.length > 0;
     if (
       !project.location ||
       project.location.latitude === null ||
       project.location.latitude === undefined ||
       project.location.longitude === null ||
       project.location.longitude === undefined ||
-      project.lots.length === 0 ||
+      !hasInventory ||
       !project.media.some((media) => media.type === MediaType.IMAGE)
     ) {
       throw new BadRequestException(
-        'Falta completar ubicacion con punto en el mapa, lotes o imagenes del proyecto',
+        project.category === ProjectCategory.DEPARTAMENTOS ? 'Completa la ubicación, las imágenes y publica el plano de edificios y departamentos antes de publicar el proyecto' : 'Falta completar ubicacion con punto en el mapa, lotes o imagenes del proyecto',
       );
     }
   }
@@ -952,6 +962,8 @@ export class ProjectsService {
         'Cada grupo debe indicar cuántos lotes cubre',
       );
     }
+    if (dto.category !== ProjectCategory.DEPARTAMENTOS && dto.lots.length === 0)
+      throw new BadRequestException('Agrega al menos un lote al inventario');
     const numbers = dto.lots.map((lot) => lot.lotNumber.trim().toLowerCase());
     if (new Set(numbers).size !== numbers.length) {
       throw new BadRequestException(
@@ -975,8 +987,11 @@ export class ProjectsService {
   private toSummary(project: ProjectSummaryWithRelations) {
     const cover =
       project.media.find((media) => media.isCover) ?? project.media[0];
-    const lotPrices = project.lots.map((lot) => Number(lot.price));
-    const lotAreas = project.lots.map((lot) => Number(lot.areaM2));
+    const published = project.sitePlan?.published as unknown as SitePlanDto | undefined;
+    const apartments = published?.mode === 'APARTMENTS' ? (published.buildings ?? []).flatMap(b => b.floors.flatMap(f => f.apartments)) : [];
+    const saleUnits = apartments.filter(a => a.operation === 'SALE');
+    const lotPrices = apartments.length ? (saleUnits.length ? saleUnits : apartments).map(a => a.price) : project.lots.map((lot) => Number(lot.price));
+    const lotAreas = apartments.length ? apartments.map(a => a.areaM2) : project.lots.map((lot) => Number(lot.areaM2));
     return {
       id: project.id,
       origin:
@@ -994,7 +1009,7 @@ export class ProjectsService {
       priceFrom: Number(project.priceFrom),
       priceTo: Number(project.priceTo),
       totalLots: project.totalLots,
-      lotsCount: project.lots.length,
+      lotsCount: published?.mode === 'APARTMENTS' ? apartments.length : project.category === 'DEPARTAMENTOS' ? project.totalLots ?? 0 : project.lots.length,
       cheapestLotPrice: lotPrices.length ? Math.min(...lotPrices) : undefined,
       areaRange: {
         min: lotAreas.length ? Math.min(...lotAreas) : 0,

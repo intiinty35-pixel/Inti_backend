@@ -170,7 +170,8 @@ export type ReferralAvailability = (typeof ReferralAvailability)[keyof typeof Re
 
 
 export const ProjectCategory = {
-  LOTIZACION: 'LOTIZACION'
+  LOTIZACION: 'LOTIZACION',
+  DEPARTAMENTOS: 'DEPARTAMENTOS'
 } as const
 
 export type ProjectCategory = (typeof ProjectCategory)[keyof typeof ProjectCategory]

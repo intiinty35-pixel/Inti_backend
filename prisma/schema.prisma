@@ -779,6 +779,7 @@ enum ReferralAvailability {
 
 enum ProjectCategory {
   LOTIZACION
+  DEPARTAMENTOS
 }
 
 enum ProjectStage {
