@@ -10,6 +10,7 @@ import { Prisma } from '../../generated/prisma/client';
 import { SaveSitePlanDto, SitePlanDto } from './dto/site-plan.dto';
 import ExcelJS from 'exceljs';
 import { renderLotSheetPdf } from './lot-sheet-pdf';
+import { renderApartmentSheetPdf } from './apartment-sheet-pdf';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { validPolygon } from './site-plan-geometry';
@@ -454,6 +455,20 @@ export class SitePlansService {
       include: { location: true },
     });
     return this.renderLotPdf(plan, project, lotId);
+  }
+
+  async apartmentPdf(slug: string, apartmentId: string, code?: string) {
+    const plan = (await this.publicPlan(slug, code)) as unknown as SitePlanDto | null;
+    if (plan?.mode !== 'APARTMENTS') throw new NotFoundException('Departamento no encontrado');
+    for (const building of plan.buildings ?? []) {
+      for (const floor of building.floors) {
+        const apartment = floor.apartments.find(unit => unit.id === apartmentId);
+        if (!apartment) continue;
+        const project = await this.prisma.project.findUniqueOrThrow({ where: { slug } });
+        return renderApartmentSheetPdf(apartment, project, building.name, floor.name);
+      }
+    }
+    throw new NotFoundException('Departamento no encontrado');
   }
 
   async adminPdf(id: string, lotId: string, plan: SitePlanDto) {

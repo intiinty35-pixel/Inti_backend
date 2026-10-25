@@ -337,11 +337,11 @@ export class ProjectsService {
     if (project.agentProfile && !isAdmin) {
       this.ensureCanManageProjects(project.agentProfile.type);
     }
-    this.validateProject(dto);
     const location = this.normalizeLocation(dto.location);
 
     const updated = await this.prisma.$transaction(async (tx) => {
       const managedPlan = await tx.projectSitePlan.findUnique({ where: { projectId: id }, select: { projectId: true } });
+      this.validateProject(dto, Boolean(managedPlan));
       if (!managedPlan) await tx.projectLot.deleteMany({ where: { projectId: id } });
       await tx.projectMilestone.deleteMany({ where: { projectId: id } });
       await tx.projectMedia.deleteMany({ where: { projectId: id } });
@@ -942,7 +942,7 @@ export class ProjectsService {
     }));
   }
 
-  private validateProject(dto: CreateProjectDto) {
+  private validateProject(dto: CreateProjectDto, managedInventory = false) {
     if (dto.priceTo < dto.priceFrom) {
       throw new BadRequestException(
         'El precio hasta no puede ser menor que el precio desde',
@@ -954,6 +954,7 @@ export class ProjectsService {
     if (!dto.media.some((media) => media.type === MediaType.IMAGE)) {
       throw new BadRequestException('Agrega al menos una imagen del proyecto');
     }
+    if (managedInventory) return;
     if (
       dto.lotMode === LotMode.GROUP &&
       dto.lots.some((lot) => !lot.lotCount)

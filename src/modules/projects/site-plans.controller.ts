@@ -97,6 +97,15 @@ export class AdminSitePlansController {
 @Controller('projects/:slug/site-plan')
 export class PublicSitePlansController {
   constructor(private readonly plans: SitePlansService) {}
+  @Public() @Get('apartments/:apartmentId/pdf') async apartmentPdf(
+    @Param('slug') slug: string,
+    @Param('apartmentId', ParseUUIDPipe) apartmentId: string,
+    @Headers('x-site-plan-code') code: string | undefined,
+    @Res() res: Response,
+  ) {
+    res.type('application/pdf').attachment(`ficha-departamento-${apartmentId}.pdf`)
+      .send(await this.plans.apartmentPdf(slug, apartmentId, code));
+  }
   @Public() @Get() get(
     @Param('slug') slug: string,
     @Headers('x-site-plan-code') code?: string,

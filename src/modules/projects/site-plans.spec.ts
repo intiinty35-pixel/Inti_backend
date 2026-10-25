@@ -479,6 +479,28 @@ describe('Excel lot base and downloadable PDF', () => {
     ).rejects.toThrow('Fila 2');
     expect(tx.projectLot.createMany).not.toHaveBeenCalled();
   });
+  it('downloads a published apartment as PDF and rejects missing or invalid access codes', async () => {
+    const { service, tx, prisma } = setup();
+    const accessCode = 'ABCDEF0123456789AB';
+    const published: SitePlanDto = { ...plan(), mode: 'APARTMENTS', lots: [], buildings: [{
+      id: projectId, name: 'Torre A', path, floors: [{ id: projectId, number: 1, name: 'Primer piso', apartments: [{
+        id: lotId, code: '101', areaM2: 80, price: 150000, operation: 'SALE', status: 'RESERVED',
+        maintenanceFee: 200, bedrooms: 2, bathrooms: 2, notes: 'Vista al parque',
+        path: [{ x: .1, y: .1 }, { x: .5, y: .1 }, { x: .5, y: .5 }, { x: .1, y: .5 }],
+      }] }],
+    }] };
+    tx.project.findFirst.mockResolvedValue({
+      sitePlanAccessCodeHash: await argon2.hash(accessCode),
+      sitePlanAccessCodeExpiresAt: new Date(Date.now() + 60_000),
+      sitePlan: { published },
+    } as never);
+    Object.assign(prisma.project, { findUniqueOrThrow: jest.fn().mockResolvedValue({ name: 'Proyecto de prueba', currency: 'PEN' }) });
+    await expect(service.apartmentPdf('prueba', lotId)).rejects.toThrow();
+    await expect(service.apartmentPdf('prueba', lotId, 'INVALID')).rejects.toThrow();
+    const pdf = await service.apartmentPdf('prueba', lotId, accessCode);
+    expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
+    await expect(service.apartmentPdf('prueba', projectId, accessCode)).rejects.toThrow('Departamento no encontrado');
+  });
   it('creates a real PDF from the published lot and includes the bundled ARIZ logo', async () => {
     const { service, tx, prisma } = setup();
     const accessCode = 'ABCDEF0123456789AB';

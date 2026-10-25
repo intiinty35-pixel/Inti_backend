@@ -32,4 +32,24 @@ describe('Apartment project creation and publication', () => {
     expect(() => service['validatePublishableProject']({ ...project, sitePlan: null })).toThrow('publica el plano');
     expect(() => service['validatePublishableProject']({ ...project, category: 'LOTIZACION' })).toThrow('lotes');
   });
+  it('allows general edits with inventory managed by a site plan while keeping general validation', () => {
+    const dto=draft();dto.category='LOTIZACION';
+    expect(()=>service['validateProject'](dto,true)).not.toThrow();
+    expect(()=>service['validateProject'](dto)).toThrow('al menos un lote');
+    dto.priceTo=dto.priceFrom-1;
+    expect(()=>service['validateProject'](dto,true)).toThrow('precio hasta');
+  });
+  it('saves a location change without deleting or recreating site-plan lots', async () => {
+    const dto=draft();dto.category='LOTIZACION';dto.location.street='Nueva dirección';
+    const tx={projectSitePlan:{findUnique:jest.fn().mockResolvedValue({projectId:'project'})},projectLot:{deleteMany:jest.fn()},projectMilestone:{deleteMany:jest.fn()},projectMedia:{deleteMany:jest.fn()},project:{update:jest.fn().mockResolvedValue({id:'project'})}};
+    const prisma={project:{findUnique:jest.fn().mockResolvedValue({id:'project',isDeleted:false,agentProfile:null,adminProject:{id:'admin'},totalLots:10,totalBlocks:1,lotMode:'INDIVIDUAL',category:'LOTIZACION'})},$transaction:jest.fn(async callback=>callback(tx))};
+    const editService=new ProjectsService(prisma as unknown as PrismaService,{} as ConfigService);
+    jest.spyOn(editService as unknown as {toDetail:(value:unknown)=>unknown},'toDetail').mockImplementation(value=>value);
+    await editService.update({role:'ADMIN'} as Parameters<ProjectsService['update']>[0],'project',dto);
+    expect(tx.projectLot.deleteMany).not.toHaveBeenCalled();
+    const data=tx.project.update.mock.calls[0][0].data;
+    expect(data.location.upsert.update.street).toBe('Nueva dirección');
+    expect(data.totalLots).toBe(10);
+    expect(data).not.toHaveProperty('lots');
+  });
 });
