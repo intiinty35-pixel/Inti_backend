@@ -72,3 +72,30 @@ describe('Apartment plans', () => {
     expect(()=>validateApartmentPlan(dto,false)).toThrow('recorte');
   });
 });
+
+describe('Apartment financing', () => {
+  function financed() {
+    const dto = plan();
+    const unit = dto.buildings![0].floors[0].apartments[0];
+    Object.assign(unit, { operation: 'SALE', status: 'AVAILABLE', financingAllowed: true, financedPrice: 120000, downPayment: 20000, installments: 10, interestRateMonthly: 0, monthlyPayment: 1 });
+    return { dto, unit };
+  }
+  it('preserves credit fields through whitelisting and recalculates the payment', async () => {
+    const { dto } = financed();
+    const saved = plainToInstance(SitePlanDto, dto);
+    expect(await validate(saved, { whitelist: true })).toEqual([]);
+    validateApartmentPlan(saved, true);
+    expect(saved.buildings![0].floors[0].apartments[0]).toMatchObject({ financingAllowed: true, financedPrice: 120000, downPayment: 20000, installments: 10, monthlyPayment: 10000 });
+  });
+  it('calculates amortized monthly interest', () => {
+    const { dto, unit } = financed(); unit.interestRateMonthly = 1;
+    validateApartmentPlan(dto, true);
+    expect(unit.monthlyPayment).toBe(10558.21);
+  });
+  it('rejects missing terms, excessive initial payments and rental financing', () => {
+    for (const patch of [{ installments: 0 }, { downPayment: 120001 }, { financedPrice: undefined }, { operation: 'RENT' }, { interestRateMonthly: -1 }]) {
+      const { dto, unit } = financed(); Object.assign(unit, patch);
+      expect(() => validateApartmentPlan(dto, false)).toThrow();
+    }
+  });
+});

@@ -36,6 +36,14 @@ export function validateApartmentPlan(plan: SitePlanDto, publish: boolean, ids =
         if ((unit.operation === 'SALE' && unit.status === 'RENTED') || (unit.operation === 'RENT' && unit.status === 'SOLD'))
           throw new BadRequestException(`El estado de ${unit.code} no corresponde a su operación`);
         if (publish && unit.price <= 0) throw new BadRequestException(`Completa el precio del departamento ${unit.code}`);
+        if (unit.financingAllowed) {
+          if (unit.operation !== 'SALE' || !Number.isFinite(unit.financedPrice) || !(unit.financedPrice! > 0) || !Number.isFinite(unit.downPayment) || !(unit.downPayment! >= 0) || unit.downPayment! >= unit.financedPrice! || !Number.isInteger(unit.installments) || unit.installments! < 1 || unit.installments! > 1200 || !Number.isFinite(unit.interestRateMonthly ?? 0) || (unit.interestRateMonthly ?? 0) < 0 || (unit.interestRateMonthly ?? 0) > 100)
+            throw new BadRequestException(`Revisa el precio al crédito, inicial, interés y cuotas del departamento ${unit.code}`);
+          const balance = unit.financedPrice! - unit.downPayment!;
+          const rate = (unit.interestRateMonthly ?? 0) / 100;
+          unit.monthlyPayment = Math.round((rate === 0 ? balance / unit.installments! : balance * rate / -Math.expm1(-unit.installments! * Math.log1p(rate))) * 100) / 100;
+          if (unit.monthlyPayment <= 0) throw new BadRequestException(`Revisa las cuotas del departamento ${unit.code}`);
+        }
         total++;
       }
       if (publish && !floor.apartments.length) throw new BadRequestException(`Agrega los departamentos de ${building.name}, ${floor.name}`);

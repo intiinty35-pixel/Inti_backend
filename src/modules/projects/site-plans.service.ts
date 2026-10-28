@@ -465,7 +465,7 @@ export class SitePlansService {
         const apartment = floor.apartments.find(unit => unit.id === apartmentId);
         if (!apartment) continue;
         const project = await this.prisma.project.findUniqueOrThrow({ where: { slug } });
-        return renderApartmentSheetPdf(apartment, project, building.name, floor.name);
+        return renderApartmentSheetPdf(apartment, project, building.name, floor.name, { plan, building, floor });
       }
     }
     throw new NotFoundException('Departamento no encontrado');

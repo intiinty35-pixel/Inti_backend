@@ -91,6 +91,12 @@ export class FloorImageDto {
   @IsNumber() @Min(1) @Max(30000) height: number;
 }
 export class PlanApartmentDto {
+  @IsOptional() @IsBoolean() financingAllowed?: boolean;
+  @IsOptional() @IsNumber() @Min(0) @Max(999999999999) financedPrice?: number;
+  @IsOptional() @IsNumber() @Min(0) @Max(999999999999) downPayment?: number;
+  @IsOptional() @IsInt() @Min(1) @Max(1200) installments?: number;
+  @IsOptional() @IsNumber() @Min(0) @Max(100) interestRateMonthly?: number;
+  @IsOptional() @IsNumber() @Min(0) @Max(9999999999999) monthlyPayment?: number;
   @IsUUID() id: string;
   @IsString() @MaxLength(80) code: string;
   @IsNumber() @Min(0.01) @Max(99999999) areaM2: number;
