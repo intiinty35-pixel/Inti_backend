@@ -11,7 +11,7 @@ const STATUS = { AVAILABLE: 'Disponible', RESERVED: 'Reservado', SOLD: 'Vendido'
 export async function renderLotSheetPdf({ lot, project, draft, appLogo, projectLogo }: {
   lot: PlanLotDto; project: { name: string; currency: string; location?: { street?: string; streetNumber?: string; zone?: string | null; district?: string; province?: string; department?: string; country?: string } | null }; draft: boolean; appLogo: Buffer | null; projectLogo: Buffer | null;
 }): Promise<Buffer> {
-  const doc = new PDFDocument({ size: 'A4', margin: 40, bufferPages: true, info: { Title: `Ficha del lote ${lot.code} - ${project.name}`, Author: 'ARIZ Proyectos', Subject: 'Información comercial y técnica del lote' } });
+  const doc = new PDFDocument({ size: 'A4', margin: 40, bufferPages: true, info: { Title: `Ficha del lote ${lot.code} - ${project.name}`, Author: 'INTI Proyectos', Subject: 'Información comercial y técnica del lote' } });
   const chunks: Buffer[] = [];
   const done = new Promise<Buffer>((resolve, reject) => {
     doc.on('data', chunk => chunks.push(chunk));
@@ -30,7 +30,7 @@ export async function renderLotSheetPdf({ lot, project, draft, appLogo, projectL
     doc.rect(left, 5, 68, 3).fill(GOLD);
     doc.rect(left, 23, width, 62).fillAndStroke('#ffffff', EDGE);
     if (appLogo) doc.image(appLogo, left + 12, 31, { fit: [115, 45] });
-    else text('ARIZ', left, 30, 23, NAVY, true);
+    else text('INTI', left, 30, 23, NAVY, true);
     if (projectLogo) {
       try { doc.image(projectLogo, doc.page.width - 152, 31, { fit: [100, 45], align: 'right' }); }
       catch { /* Keep the lot sheet usable when an optional logo is invalid. */ }
@@ -116,7 +116,7 @@ export async function renderLotSheetPdf({ lot, project, draft, appLogo, projectL
     const bottomMargin = doc.page.margins.bottom;
     doc.page.margins.bottom = 0;
     doc.moveTo(left, doc.page.height - 43).lineTo(left + width, doc.page.height - 43).strokeColor(EDGE).lineWidth(.6).stroke();
-    text(`ARIZ PROYECTOS / ${issued}`, left, doc.page.height - 31, 8, MUTED, false, { lineBreak: false });
+    text(`INTI PROYECTOS / ${issued}`, left, doc.page.height - 31, 8, MUTED, false, { lineBreak: false });
     text(`${index + 1} / ${range.count}`, doc.page.width - 85, doc.page.height - 31, 8, MUTED, false, { lineBreak: false, width: 45, align: 'right' });
     doc.page.margins.bottom = bottomMargin;
   }

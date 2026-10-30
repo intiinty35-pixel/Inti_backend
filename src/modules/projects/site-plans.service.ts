@@ -493,7 +493,7 @@ export class SitePlansService {
       throw new BadRequestException(
         'Sube el logo a la biblioteca del proyecto',
       );
-    const appLogo = await readFile(join(process.cwd(), 'assets/ariz-logo.png')).catch(() => null);
+    const appLogo = await readFile(join(process.cwd(), 'assets/inti-logo.png')).catch(() => null);
     let projectLogo: Buffer | null = null;
     if (plan.logoUrl) {
       try {

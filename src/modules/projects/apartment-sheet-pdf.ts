@@ -18,7 +18,7 @@ export async function renderApartmentSheetPdf(unit: PlanApartmentDto, project: {
   const floorImage = context?.floor.image ?? (context?.plan.image ? { url: context.plan.image.url, width: 1000, height: 1000 * context.plan.image.heightM / context.plan.image.widthM, crop: context.plan.image.crop } : undefined);
   const urls = [...new Set([context?.plan.image?.url, floorImage?.url].filter((url): url is string => Boolean(url)))];
   const images = new Map(await Promise.all(urls.map(async url => [url, await loadImage(url)] as const)));
-  const doc = new PDFDocument({ size: 'A4', margins: { top: 40, bottom: 64, left: 40, right: 40 }, bufferPages: true, info: { Title: `Departamento ${unit.code} - ${project.name}`, Author: 'ARIZ Proyectos' } });
+  const doc = new PDFDocument({ size: 'A4', margins: { top: 40, bottom: 64, left: 40, right: 40 }, bufferPages: true, info: { Title: `Departamento ${unit.code} - ${project.name}`, Author: 'INTI Proyectos' } });
   const chunks: Buffer[] = [];
   const done = new Promise<Buffer>((resolve, reject) => {
     doc.on('data', chunk => chunks.push(chunk));
@@ -30,7 +30,7 @@ export async function renderApartmentSheetPdf(unit: PlanApartmentDto, project: {
   const statuses = { AVAILABLE: 'Disponible', RESERVED: 'Separado', SOLD: 'Vendido', RENTED: 'Alquilado', BLOCKED: 'Bloqueado' };
   const header = (title: string, subtitle: string) => {
     doc.rect(0, 0, doc.page.width, 8).fill(blue);
-    doc.font('Helvetica-Bold').fontSize(23).fillColor(navy).text('ARIZ', 40, 30);
+    doc.font('Helvetica-Bold').fontSize(23).fillColor(navy).text('INTI', 40, 30);
     doc.fontSize(8).fillColor(blue).text('PROYECTOS INMOBILIARIOS', 40, 58);
     doc.fontSize(9).fillColor(muted).text('FICHA DEL DEPARTAMENTO', 310, 37, { width: 245, align: 'right' });
     doc.font('Helvetica-Bold').fontSize(22).fillColor(navy).text(title, 40, 94, { width: 515 });
@@ -151,7 +151,7 @@ export async function renderApartmentSheetPdf(unit: PlanApartmentDto, project: {
     doc.switchToPage(i);
     const bottomMargin = doc.page.margins.bottom;
     doc.page.margins.bottom = 0;
-    doc.font('Helvetica').fontSize(8).fillColor(muted).text(`ARIZ Proyectos \u00b7 Departamento ${unit.code}`, 40, 784, { width: 410, lineBreak: false });
+    doc.font('Helvetica').fontSize(8).fillColor(muted).text(`INTI Proyectos \u00b7 Departamento ${unit.code}`, 40, 784, { width: 410, lineBreak: false });
     doc.text(`${i + 1} / ${range.count}`, 490, 784, { width: 65, align: 'right', lineBreak: false });
     doc.page.margins.bottom = bottomMargin;
   }

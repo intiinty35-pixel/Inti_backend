@@ -501,7 +501,7 @@ describe('Excel lot base and downloadable PDF', () => {
     expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');
     await expect(service.apartmentPdf('prueba', projectId, accessCode)).rejects.toThrow('Departamento no encontrado');
   });
-  it('creates a real PDF from the published lot and includes the bundled ARIZ logo', async () => {
+  it('creates a real PDF from the published lot and includes the bundled INTI logo', async () => {
     const { service, tx, prisma } = setup();
     const accessCode = 'ABCDEF0123456789AB';
     tx.project.findFirst.mockResolvedValue({
