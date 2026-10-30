@@ -20,6 +20,8 @@ services:
     environment:
       NODE_ENV: production
       PORT: 4000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"   # PostgreSQL instalado en el VPS
     ports:
       - "127.0.0.1:3103:4000"
     networks:
