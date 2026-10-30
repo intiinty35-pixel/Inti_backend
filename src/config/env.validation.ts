@@ -19,6 +19,8 @@ function isPlaceholder(value: string) {
   return PLACEHOLDER_PATTERNS.some((pattern) => pattern.test(value));
 }
 
+const LOCAL_DB_HOSTS = new Set(['localhost', '127.0.0.1', '[::1]', 'host.docker.internal']);
+
 /**
  * `no-verify` desactiva la validacion del certificado TLS del servidor y deja
  * la conexion a la base de datos expuesta a un ataque man-in-the-middle.
@@ -40,6 +42,12 @@ function assertSecureDatabaseUrls(config: Record<string, unknown>, isProduction:
     if (parsed.protocol !== 'postgresql:' && parsed.protocol !== 'postgres:') {
       throw new Error(`${key} debe usar el esquema postgresql://`);
     }
+
+    // Postgres en la misma maquina (por ejemplo el del VPS visto desde Docker como
+    // host.docker.internal): el trafico no sale del servidor y no hay certificado
+    // que verificar. Solo se exime a estos hosts; cualquier base remota sigue
+    // obligada a usar TLS verificado.
+    if (LOCAL_DB_HOSTS.has(parsed.hostname)) continue;
 
     const sslmode = parsed.searchParams.get('sslmode');
     if (sslmode === 'disable' || sslmode === 'no-verify') {
