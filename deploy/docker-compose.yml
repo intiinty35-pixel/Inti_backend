@@ -1,0 +1,30 @@
+# Backend (NestJS) — despliegue independiente.
+# Solo es accesible dentro de la red Docker "ariz-net" (el frontend lo llama como http://ariz_backend:4000)
+# y, para comprobaciones desde el servidor, en 127.0.0.1:3103. No se publica en internet.
+# Antes del primer despliegue: docker network create ariz-net
+
+name: ariz-web-backend
+
+services:
+  backend:
+    build:
+      context: ..
+    container_name: ariz_backend
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    env_file: ../.env
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+    ports:
+      - "127.0.0.1:3103:4000"
+    networks:
+      - ariz-net
+
+networks:
+  ariz-net:
+    external: true
