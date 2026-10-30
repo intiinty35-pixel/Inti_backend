@@ -162,7 +162,7 @@ export class MailService {
       replyTo: { email: input.leadEmail, name: input.leadName },
       subject: `Nueva consulta por ${input.publicationTitle}`,
       html: this.layout({
-        preheader: 'Tienes una nueva consulta desde ARIZ.',
+        preheader: 'Tienes una nueva consulta desde INTI.',
         title: `Nueva consulta por tu ${input.publicationType}`,
         intro: `Hola ${this.escape(input.ownerName)}, alguien quiere comunicarse por tu publicación.`,
         content: `
@@ -211,19 +211,19 @@ export class MailService {
   async sendWelcome(input: WelcomeInput) {
     return this.send({
       to: [{ email: input.email, name: input.name }],
-      subject: 'Bienvenido a ARIZ',
+      subject: 'Bienvenido a INTI',
       html: this.layout({
-        preheader: 'Tu cuenta en ARIZ ya esta lista.',
+        preheader: 'Tu cuenta en INTI ya esta lista.',
         title: `Bienvenido, ${this.escape(input.name)}`,
         intro: input.isProfessional
           ? 'Tu cuenta profesional fue creada correctamente. Completa tu perfil y prepara tus publicaciones.'
           : 'Tu cuenta fue creada correctamente. Ya puedes guardar propiedades, crear alertas y contactar anunciantes.',
         content: `
           <p style="margin:0;color:${BRAND.muted};line-height:1.7;">
-            Gracias por confiar en ARIZ. Hemos preparado una experiencia clara y ordenada para que encuentres o publiques oportunidades inmobiliarias con mayor confianza.
+            Gracias por confiar en INTI. Hemos preparado una experiencia clara y ordenada para que encuentres o publiques oportunidades inmobiliarias con mayor confianza.
           </p>
         `,
-        button: { label: 'Ir a ARIZ', url: this.frontendUrl() },
+        button: { label: 'Ir a INTI', url: this.frontendUrl() },
       }),
     });
   }
@@ -231,7 +231,7 @@ export class MailService {
   async sendPasswordReset(input: PasswordResetInput) {
     return this.send({
       to: [{ email: input.email, name: input.name }],
-      subject: 'Recupera tu contraseña de ARIZ',
+      subject: 'Recupera tu contraseña de INTI',
       html: this.layout({
         preheader: `Tu enlace para crear una contraseña nueva vence en ${input.minutes} minutos.`,
         title: 'Restablece tu contraseña',
@@ -282,10 +282,10 @@ export class MailService {
   async sendReferralStatusUpdated(input: ReferralStatusUpdatedInput) {
     return this.send({
       to: [{ email: input.referrerEmail, name: input.referrerName }],
-      subject: `Actualización de tu referido en ARIZ: ${input.status}`,
+      subject: `Actualización de tu referido en INTI: ${input.status}`,
       html: this.layout({
         preheader: 'Tu referido avanzó y tus puntos fueron actualizados.',
-        title: 'Tus puntos en ARIZ fueron actualizados',
+        title: 'Tus puntos en INTI fueron actualizados',
         intro: `Hola ${this.escape(input.referrerName)}, el estado de tu referido fue actualizado correctamente.`,
         content: `
           ${this.infoRow('Interés', input.interestLabel)}
@@ -295,10 +295,10 @@ export class MailService {
           ${this.infoRow('Puntos acumulados del referido', String(input.referralPoints))}
           ${this.infoRow('Total acumulado de tus referidos', String(input.totalPoints))}
           <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
-            Gracias por confiar en ARIZ y ayudarnos a conectar más personas con nuevas oportunidades inmobiliarias.
+            Gracias por confiar en INTI y ayudarnos a conectar más personas con nuevas oportunidades inmobiliarias.
           </p>
         `,
-        button: { label: 'Conocer ARIZ', url: this.frontendUrl() },
+        button: { label: 'Conocer INTI', url: this.frontendUrl() },
       }),
     });
   }
@@ -306,11 +306,11 @@ export class MailService {
   async sendReferrerWelcome(input: ReferrerWelcomeInput) {
     return this.send({
       to: [{ email: input.referrerEmail, name: input.referrerName }],
-      subject: '¡Bienvenido al Ariz Club!',
+      subject: '¡Bienvenido al Inti Club!',
       html: this.layout({
         preheader: 'Tu código de referente está listo para usar.',
-        title: '¡Bienvenido al Ariz Club!',
-        intro: `Hola ${this.escape(input.referrerName)}, gracias por unirte al Ariz Club.`,
+        title: '¡Bienvenido al Inti Club!',
+        intro: `Hola ${this.escape(input.referrerName)}, gracias por unirte al Inti Club.`,
         content: `
           <p style="margin:0 0 18px;color:${BRAND.muted};line-height:1.7;">
             Tu registro fue exitoso. A partir de ahora puedes referir personas a nuestros proyectos inmobiliarios y acumular puntos con cada referido.
@@ -329,7 +329,7 @@ export class MailService {
             • Los puntos se acumulan por cada referido exitoso
           </p>
         `,
-        button: { label: 'Conocer más sobre ARIZ', url: this.frontendUrl() },
+        button: { label: 'Conocer más sobre INTI', url: this.frontendUrl() },
       }),
     });
   }
@@ -337,15 +337,15 @@ export class MailService {
   async sendAdminNotice(input: AdminNoticeInput) {
     const message =
       input.message ??
-      'Estamos revisando tu cuenta y tus publicaciones para mantener la calidad de la plataforma. Si necesitas actualizar datos o corregir informacion, ingresa a tu panel de ARIZ.';
+      'Estamos revisando tu cuenta y tus publicaciones para mantener la calidad de la plataforma. Si necesitas actualizar datos o corregir informacion, ingresa a tu panel de INTI.';
 
     return this.send({
       to: [{ email: input.email, name: input.name }],
-      subject: input.subject ?? 'Notificacion administrativa de ARIZ',
+      subject: input.subject ?? 'Notificacion administrativa de INTI',
       html: this.layout({
-        preheader: 'Tienes una notificacion administrativa de ARIZ.',
+        preheader: 'Tienes una notificacion administrativa de INTI.',
         title: 'Notificacion administrativa',
-        intro: `Hola ${this.escape(input.name)}, el equipo de ARIZ te envia este aviso desde el panel administrativo.`,
+        intro: `Hola ${this.escape(input.name)}, el equipo de INTI te envia este aviso desde el panel administrativo.`,
         content: `
           <div style="margin-top:4px;padding:16px;border-radius:12px;background:${BRAND.canvas};color:${BRAND.ink};line-height:1.65;">
             ${this.escape(message).replace(/\n/g, '<br>')}
@@ -370,14 +370,14 @@ export class MailService {
     }
 
     return this.send({
-      to: [{ email: recipient, name: 'ARIZ' }],
+      to: [{ email: recipient, name: 'INTI' }],
       replyTo: { email: input.email, name: input.name },
       subject: `Nueva consulta de contacto: ${input.topic}`,
       html: this.layout({
         preheader: 'Se registro una consulta desde la pagina de contacto.',
         title: 'Nueva consulta desde Contacto',
         intro:
-          'Un usuario envio el formulario de contacto de Ariz Inmobiliaria. El reporte quedo registrado en el panel admin.',
+          'Un usuario envio el formulario de contacto de Inti Inmobiliaria. El reporte quedo registrado en el panel admin.',
         content: `
           ${this.infoRow('Reporte', input.reportId)}
           ${this.infoRow('Nombre', input.name)}
@@ -399,18 +399,18 @@ export class MailService {
   async sendContactReportConfirmation(input: ContactReportConfirmationInput) {
     return this.send({
       to: [{ email: input.email, name: input.name }],
-      subject: 'Recibimos tu consulta - ARIZ',
+      subject: 'Recibimos tu consulta - INTI',
       html: this.layout({
-        preheader: 'Tu consulta fue recibida por ARIZ.',
+        preheader: 'Tu consulta fue recibida por INTI.',
         title: 'Recibimos tu consulta',
-        intro: `Hola ${this.escape(input.name)}, gracias por contactar a Ariz Inmobiliaria.`,
+        intro: `Hola ${this.escape(input.name)}, gracias por contactar a Inti Inmobiliaria.`,
         content: `
           ${this.infoRow('Tema', input.topic)}
           <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
             Nuestro equipo revisara tu solicitud y se comunicara contigo por correo, telefono o WhatsApp segun los datos enviados.
           </p>
         `,
-        button: { label: 'Ir a ARIZ', url: this.frontendUrl() },
+        button: { label: 'Ir a INTI', url: this.frontendUrl() },
       }),
     });
   }
@@ -418,7 +418,7 @@ export class MailService {
   async sendRedemptionRequested(input: RedemptionRequestedInput) {
     return this.send({
       to: [{ email: input.referrerEmail, name: input.referrerName }],
-      subject: 'Solicitud de canje recibida - ARIZ',
+      subject: 'Solicitud de canje recibida - INTI',
       html: this.layout({
         preheader: 'Tu solicitud de canje ha sido recibida.',
         title: 'Solicitud de canje recibida',
@@ -445,7 +445,7 @@ export class MailService {
   async sendRedemptionApproved(input: RedemptionApprovedInput) {
     return this.send({
       to: [{ email: input.referrerEmail, name: input.referrerName }],
-      subject: '¡Tu canje ha sido aprobado! - ARIZ',
+      subject: '¡Tu canje ha sido aprobado! - INTI',
       html: this.layout({
         preheader: 'Tu canje ha sido aprobado.',
         title: '¡Canje aprobado!',
@@ -457,7 +457,7 @@ export class MailService {
             Tu recompensa está siendo preparada. Pronto nos pondremos en contacto contigo para coordinar la entrega.
           </p>
           <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
-            ¡Gracias por ser parte del Ariz Club!
+            ¡Gracias por ser parte del Inti Club!
           </p>
         `,
         button: { label: 'Ver mis canjes', url: `${this.frontendUrl()}/rewards/my` },
@@ -468,7 +468,7 @@ export class MailService {
   async sendRedemptionRejected(input: RedemptionRejectedInput) {
     return this.send({
       to: [{ email: input.referrerEmail, name: input.referrerName }],
-      subject: 'Actualización sobre tu canje - ARIZ',
+      subject: 'Actualización sobre tu canje - INTI',
       html: this.layout({
         preheader: 'Tu solicitud de canje ha sido revisada.',
         title: 'Solicitud de canje revisada',
@@ -493,7 +493,7 @@ export class MailService {
   async sendRedemptionDelivered(input: RedemptionDeliveredInput) {
     return this.send({
       to: [{ email: input.referrerEmail, name: input.referrerName }],
-      subject: '¡Tu recompensa ha sido entregada! - ARIZ',
+      subject: '¡Tu recompensa ha sido entregada! - INTI',
       html: this.layout({
         preheader: 'Tu recompensa ha sido entregada.',
         title: '¡Recompensa entregada!',
@@ -501,7 +501,7 @@ export class MailService {
         content: `
           ${this.infoRow('Recompensa', input.incentiveName)}
           <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
-            Esperamos que disfrutes tu recompensa. ¡Gracias por ser parte del Ariz Club!
+            Esperamos que disfrutes tu recompensa. ¡Gracias por ser parte del Inti Club!
           </p>
           <p style="margin:18px 0 0;color:${BRAND.muted};line-height:1.7;">
             Sigue refiriendo personas para acumular más puntos y desbloquear nuevas recompensas.
@@ -513,7 +513,7 @@ export class MailService {
   }
 
   /**
-   * Notifica al equipo de ARIZ (arizcenter@...) el ingreso de un nuevo referido,
+   * Notifica al equipo de INTI (arizcenter@...) el ingreso de un nuevo referido,
    * con TODOS los datos del registro: quién refiere (referente) y quién es el
    * referido, además del interés y la disponibilidad declarados.
    */
@@ -531,11 +531,11 @@ export class MailService {
     }
 
     return this.send({
-      to: [{ email: recipient, name: 'ARIZ' }],
+      to: [{ email: recipient, name: 'INTI' }],
       replyTo: { email: input.referralEmail, name: input.referralName },
       subject: `Nuevo referido registrado: ${input.referralName}`,
       html: this.layout({
-        preheader: 'Se registró un nuevo referido desde el programa de ARIZ.',
+        preheader: 'Se registró un nuevo referido desde el programa de INTI.',
         title: 'Nuevo referido registrado',
         intro: 'Se registró un nuevo referido a través del formulario público de referidos.',
         content: `
@@ -565,7 +565,7 @@ export class MailService {
   private async send(input: SendMailInput) {
     const apiKey = this.config.get<string>('BREVO_API_KEY');
     const senderEmail = this.config.get<string>('BREVO_SENDER_EMAIL');
-    const senderName = this.config.get<string>('BREVO_SENDER_NAME', 'ARIZ');
+    const senderName = this.config.get<string>('BREVO_SENDER_NAME', 'INTI');
 
     if (!apiKey || !senderEmail) {
       this.logger.warn('Brevo no configurado: correo omitido');
@@ -640,12 +640,12 @@ export class MailService {
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:640px;background:#ffffff;border:1px solid #dde1ec;border-radius:18px;overflow:hidden;">
                   <tr>
                     <td style="background:${BRAND.primary};padding:26px 28px;">
-                      <img src="${logo}" alt="ARIZ" style="height:40px;width:auto;display:block;background:#ffffff;border-radius:8px;padding:6px;" />
+                      <img src="${logo}" alt="INTI" style="height:40px;width:auto;display:block;background:#ffffff;border-radius:8px;padding:6px;" />
                     </td>
                   </tr>
                   <tr>
                     <td style="padding:30px 28px 10px;">
-                      <p style="margin:0 0 10px;color:${BRAND.accent};font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;">ARIZ Proyectos</p>
+                      <p style="margin:0 0 10px;color:${BRAND.accent};font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;">INTI Proyectos</p>
                       <h1 style="margin:0;color:${BRAND.primary};font-size:28px;line-height:1.2;font-weight:800;">${title}</h1>
                       <p style="margin:14px 0 0;color:${BRAND.muted};font-size:15px;line-height:1.7;">${intro}</p>
                     </td>
@@ -660,7 +660,7 @@ export class MailService {
                   }
                 </table>
                 <p style="max-width:640px;margin:16px auto 0;color:${BRAND.muted};font-size:12px;line-height:1.5;">
-                  Este correo fue enviado automaticamente por ARIZ.
+                  Este correo fue enviado automaticamente por INTI.
                 </p>
               </td>
             </tr>
