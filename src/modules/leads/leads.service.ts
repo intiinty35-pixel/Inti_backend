@@ -138,7 +138,7 @@ export class LeadsService {
       (target.agentProfile
         ? `${target.agentProfile.user.firstName} ${target.agentProfile.user.lastName ?? ''}`.trim()
         : `${adminCreator?.firstName ?? ''} ${adminCreator?.lastName ?? ''}`.trim() ||
-          'ARIZ Proyectos');
+          'INTI Proyectos');
 
     const lead = await this.prisma.lead.create({
       data: {

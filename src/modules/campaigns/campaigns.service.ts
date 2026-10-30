@@ -304,7 +304,7 @@ export class CampaignsService {
     });
 
     if (!adminProject) {
-      throw new NotFoundException('Proyecto ARIZ no encontrado');
+      throw new NotFoundException('Proyecto INTI no encontrado');
     }
 
     const config = await this.prisma.projectPointsConfig.upsert({

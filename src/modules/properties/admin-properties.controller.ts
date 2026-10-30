@@ -36,7 +36,7 @@ class AdminPropertyQueryDto {
   status?: PropertyStatus;
 }
 
-/** Propiedades ARIZ: las crea y publica el administrador, sin pago ni membresia. */
+/** Propiedades INTI: las crea y publica el administrador, sin pago ni membresia. */
 @Roles(Role.ADMIN)
 @Controller('admin/properties')
 export class AdminPropertiesController {

@@ -302,7 +302,7 @@ export class ProjectsService {
   async createAdminDraft(user: AuthUser, dto: CreateProjectDto) {
     if (user.role !== 'ADMIN') {
       throw new ForbiddenException(
-        'Solo un administrador puede crear proyectos de ARIZ',
+        'Solo un administrador puede crear proyectos de INTI',
       );
     }
     this.validateProject(dto);
@@ -332,7 +332,7 @@ export class ProjectsService {
       throw new ForbiddenException('No puedes editar este proyecto');
     }
     if (!isAdmin && project.adminProject !== null) {
-      throw new ForbiddenException('Este proyecto lo administra ARIZ');
+      throw new ForbiddenException('Este proyecto lo administra INTI');
     }
     if (project.agentProfile && !isAdmin) {
       this.ensureCanManageProjects(project.agentProfile.type);
@@ -437,7 +437,7 @@ export class ProjectsService {
         tourUrl: dto.tourUrl,
         contactName:
           dto.contactName ??
-          (owner.createdByAdminId ? 'ARIZ Proyectos' : undefined),
+          (owner.createdByAdminId ? 'INTI Proyectos' : undefined),
         contactEmail: dto.contactEmail,
         contactPhone: dto.contactPhone,
         contactWhatsapp: dto.contactWhatsapp,
@@ -528,7 +528,7 @@ export class ProjectsService {
   async removeAdminProject(user: AuthUser, id: string) {
     if (user.role !== 'ADMIN') {
       throw new ForbiddenException(
-        'Solo un administrador puede eliminar proyectos de ARIZ',
+        'Solo un administrador puede eliminar proyectos de INTI',
       );
     }
 
@@ -540,7 +540,7 @@ export class ProjectsService {
       throw new NotFoundException('Proyecto no encontrado');
     }
     if (!project.adminProject) {
-      throw new ForbiddenException('Este proyecto no pertenece a ARIZ');
+      throw new ForbiddenException('Este proyecto no pertenece a INTI');
     }
 
     await this.prisma.project.update({
@@ -642,7 +642,7 @@ export class ProjectsService {
   async publishAdminProject(user: AuthUser, id: string) {
     if (user.role !== 'ADMIN') {
       throw new ForbiddenException(
-        'Solo un administrador puede publicar proyectos de ARIZ',
+        'Solo un administrador puede publicar proyectos de INTI',
       );
     }
 
@@ -652,7 +652,7 @@ export class ProjectsService {
     });
     if (!project) throw new NotFoundException('Proyecto no encontrado');
     if (!project.adminProject) {
-      throw new ForbiddenException('Este proyecto no pertenece a ARIZ');
+      throw new ForbiddenException('Este proyecto no pertenece a INTI');
     }
     this.validatePublishableProject(project);
 
@@ -684,7 +684,7 @@ export class ProjectsService {
   async updateAdminLocation(user: AuthUser, id: string, dto: ProjectLocationDto) {
     if (user.role !== 'ADMIN') {
       throw new ForbiddenException(
-        'Solo un administrador puede editar proyectos de ARIZ',
+        'Solo un administrador puede editar proyectos de INTI',
       );
     }
 
@@ -696,7 +696,7 @@ export class ProjectsService {
       throw new NotFoundException('Proyecto no encontrado');
     }
     if (!project.adminProject) {
-      throw new ForbiddenException('Este proyecto no pertenece a ARIZ');
+      throw new ForbiddenException('Este proyecto no pertenece a INTI');
     }
 
     return this.saveLocation(id, dto);
@@ -774,7 +774,7 @@ export class ProjectsService {
 
   /**
    * "ADMIN" = creado desde el panel de admin O publicado por un perfil con
-   * el privilegio isOfficialDeveloper (desarrolladoras oficiales de Ariz).
+   * el privilegio isOfficialDeveloper (desarrolladoras oficiales de Inti).
    * "AGENT" es todo lo demas.
    */
   private buildOriginFilter(
@@ -1021,7 +1021,7 @@ export class ProjectsService {
         project.agentProfile?.businessName ??
         (project.agentProfile
           ? `${project.agentProfile.user.firstName} ${project.agentProfile.user.lastName ?? ''}`.trim()
-          : 'ARIZ Proyectos'),
+          : 'INTI Proyectos'),
       estimatedDelivery: project.estimatedDelivery.toISOString(),
       location: project.location
         ? {
@@ -1134,7 +1134,7 @@ export class ProjectsService {
         : {
             id: null,
             name:
-              project.contactName ?? project.businessName ?? 'ARIZ Proyectos',
+              project.contactName ?? project.businessName ?? 'INTI Proyectos',
             type: 'ADMIN',
             status: 'APPROVED',
             whatsapp: project.contactWhatsapp,

@@ -147,10 +147,10 @@ export class PropertiesService {
     return this.createDraftRecord(agent.id, dto);
   }
 
-  /** Crea una propiedad ARIZ: la publica el administrador, sin membresia ni limites. */
+  /** Crea una propiedad INTI: la publica el administrador, sin membresia ni limites. */
   async createAdminDraft(user: AuthUser, dto: CreatePropertyDto) {
     if (user.role !== 'ADMIN') {
-      throw new ForbiddenException('Solo un administrador puede publicar propiedades de ARIZ');
+      throw new ForbiddenException('Solo un administrador puede publicar propiedades de INTI');
     }
     const owner = await this.getOrCreateArizOwner(user.id, dto.location.district);
     return this.createDraftRecord(owner.id, dto);
@@ -417,7 +417,7 @@ export class PropertiesService {
       );
     }
 
-    // Las propiedades ARIZ las publica el administrador sin membresia ni limite de plan.
+    // Las propiedades INTI las publica el administrador sin membresia ni limite de plan.
     if (this.isArizProperty(property)) {
       const published = await this.prisma.property.update({
         where: { id },
@@ -608,7 +608,7 @@ export class PropertiesService {
     return agent;
   }
 
-  /** Perfil "ARIZ Proyectos" del administrador: es el anunciante de las propiedades ARIZ. */
+  /** Perfil "INTI Proyectos" del administrador: es el anunciante de las propiedades INTI. */
   private async getOrCreateArizOwner(userId: string, district: string) {
     const profile = await this.prisma.professionalProfile.findUnique({ where: { userId } });
     if (profile) return profile;
@@ -618,14 +618,14 @@ export class PropertiesService {
         userId,
         type: ProfessionalType.INDIVIDUAL_OWNER,
         status: ApprovalStatus.APPROVED,
-        businessName: 'ARIZ Proyectos',
+        businessName: 'INTI Proyectos',
         city: district,
         slug: `ariz-proyectos-${userId}`,
       },
     });
   }
 
-  /** Propiedades publicadas por un administrador (propiedades ARIZ). */
+  /** Propiedades publicadas por un administrador (propiedades INTI). */
   private isArizProperty(property: { agentProfile: { user?: { role: string } | null } }) {
     return property.agentProfile.user?.role === 'ADMIN';
   }
