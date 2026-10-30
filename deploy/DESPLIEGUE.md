@@ -24,9 +24,9 @@ Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend va
 1. **DNS:** registros A `@` (y `www`) → IP del servidor. Comprueba que `intinmobiliaria.com` es el dominio correcto antes de seguir.
 2. **Clonar** (en el servidor):
    ```bash
-   mkdir -p ~/ariz-web && cd ~/ariz-web
-   git clone https://github.com/arizcenter-web/Ariz_Web_Backend.git
-   git clone https://github.com/arizcenter-web/Ariz_Web_frontend.git
+   mkdir -p ~/inti-web && cd ~/inti-web
+   git clone https://github.com/intiinty35-pixel/Inti_backend.git
+   git clone https://github.com/intiinty35-pixel/Inti_frontend.git
    docker network create ariz-net
    ```
 3. **Backend `.env`** (`cp .env.example .env && chmod 600 .env`). Exigencias de producción del backend:
@@ -40,16 +40,16 @@ Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend va
    pnpm db:deploy          # o: pnpm db:deploy:direct si el pooler se cuelga
    pnpm db:seed            # solo la primera vez (admin + planes)
    ```
-5. **Backend:** `cd ~/ariz-web/Ariz_Web_Backend && sh deploy/deploy.sh`. Comprobar: `curl -s http://127.0.0.1:3103/promotions/current` (devuelve JSON; el backend responde **sin** `/api`).
+5. **Backend:** `cd ~/inti-web/Inti_backend && sh deploy/deploy.sh`. Comprobar: `curl -s http://127.0.0.1:3103/promotions/current` (devuelve JSON; el backend responde **sin** `/api`).
 6. **Frontend `.env`:** `cp .env.example .env` y completar:
    - `NEXT_PUBLIC_FIREBASE_*` (obligatorias para compilar), Google Maps y datos de pago.
    - `NEXT_PUBLIC_API_URL=/api`
    - `NEXT_PUBLIC_SITE_URL=https://intinmobiliaria.com`
    - `BACKEND_URL=http://ariz_backend:4000` (no `localhost`, no el dominio público)
-7. **Frontend:** `cd ~/ariz-web/Ariz_Web_frontend && sh deploy/deploy.sh` (~3 min). Comprobar: `curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3102/` → 200.
+7. **Frontend:** `cd ~/inti-web/Inti_frontend && sh deploy/deploy.sh` (~3 min). Comprobar: `curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3102/` → 200.
 8. **Nginx + HTTPS:**
    ```bash
-   sudo cp ~/ariz-web/Ariz_Web_frontend/deploy/nginx/intinmobiliaria.com.conf /etc/nginx/sites-available/intinmobiliaria.com
+   sudo cp ~/inti-web/Inti_frontend/deploy/nginx/intinmobiliaria.com.conf /etc/nginx/sites-available/intinmobiliaria.com
    sudo ln -s /etc/nginx/sites-available/intinmobiliaria.com /etc/nginx/sites-enabled/
    sudo nginx -t && sudo systemctl reload nginx
    sudo certbot --nginx -d intinmobiliaria.com -d www.intinmobiliaria.com   # elegir "redirigir HTTP a HTTPS"
