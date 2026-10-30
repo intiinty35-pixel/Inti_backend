@@ -6,9 +6,9 @@ Frontend y API salen por **un solo dominio**: `https://intinmobiliaria.com` (fro
 ```
 Internet ──► Nginx (443) ── intinmobiliaria.com/      ──► 127.0.0.1:3102 ─► ariz_frontend (Next.js)
                          └─ intinmobiliaria.com/api/  ──► 127.0.0.1:3103 ─► ariz_backend  (NestJS)
-                                                                              │
+                                                                              │ host.docker.internal:5432
                                                                               ▼
-                                                                  Supabase (Postgres, verify-full)
+                                                           PostgreSQL instalado en el VPS (base inti_web)
 
 Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend van a http://ariz_backend:4000.
 ```
@@ -29,25 +29,54 @@ Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend va
    git clone https://github.com/intiinty35-pixel/Inti_frontend.git
    docker network create ariz-net
    ```
-3. **Backend `.env`** (`cp .env.example .env && chmod 600 .env`). Exigencias de producción del backend:
-   - `DATABASE_URL` y `DIRECT_URL` con `sslmode=verify-full&sslrootcert=certs/prod-ca-2021.crt`
+3. **Base de datos PostgreSQL en el VPS** (el servidor ya tiene Postgres por el CRM; se crea una base y un usuario **nuevos**, sin tocar los del CRM):
+   ```bash
+   openssl rand -hex 24                    # genera la clave y guardala
+   sudo -u postgres psql
+   ```
+   Dentro de `psql`:
+   ```sql
+   CREATE USER inti_user WITH PASSWORD 'LA_CLAVE';
+   CREATE DATABASE inti_web OWNER inti_user;
+   \q
+   ```
+   Permitir que los contenedores lleguen a esa base (Postgres ya escucha en `172.17.0.1` por el CRM; solo falta autorizar el usuario nuevo):
+   ```bash
+   ls /etc/postgresql                       # version instalada (16 en el CRM)
+   echo "host  inti_web  inti_user  172.16.0.0/12  scram-sha-256" | sudo tee -a /etc/postgresql/16/main/pg_hba.conf
+   sudo systemctl reload postgresql         # reload, no restart: no interrumpe el CRM
+   ss -tlnp | grep 5432                     # debe verse 127.0.0.1 y 172.17.0.1, NUNCA 0.0.0.0
+   PGPASSWORD='LA_CLAVE' psql -h 127.0.0.1 -U inti_user -d inti_web -c "select 1;"
+   ```
+   El puerto 5432 ya está abierto solo para redes Docker (`ufw allow from 172.16.0.0/12 to any port 5432`); no se abre al público.
+4. **Backend `.env`** (`cp .env.example .env && chmod 600 .env`). Exigencias de producción del backend:
+   - `DATABASE_URL` y `DIRECT_URL` (los dos iguales): `postgresql://inti_user:LA_CLAVE@host.docker.internal:5432/inti_web?schema=public`. Sin `sslmode`: el backend exime de TLS solo a `localhost`, `127.0.0.1` y `host.docker.internal`; una base remota sigue exigiendo `sslmode=verify-full`.
    - `FRONTEND_URL=https://intinmobiliaria.com` (debe ser `https`)
    - `JWT_SECRET` aleatorio (`node -e "console.log(require('crypto').randomBytes(64).toString('base64url'))"`), sin valores de ejemplo
    - `CLOUDINARY_URL`, `FIREBASE_PROJECT_ID`, `BREVO_*`, etc.
    - `NODE_ENV` y `PORT` los fija el compose.
-4. **Migraciones** (desde tu PC, con `.env` apuntando a Supabase; la imagen no incluye el CLI de Prisma):
-   ```bash
-   pnpm db:deploy          # o: pnpm db:deploy:direct si el pooler se cuelga
-   pnpm db:seed            # solo la primera vez (admin + planes)
+5. **Migraciones y seed** (la imagen no incluye el CLI de Prisma, así que se corren desde tu PC por un **túnel SSH** a la base del VPS, que no es accesible desde internet):
+   ```powershell
+   # Terminal 1 (se queda abierta mientras dura el proceso):
+   ssh -L 5433:127.0.0.1:5432 desarrollador@209.145.62.118
+
+   # Terminal 2, en la carpeta del backend:
+   $env:DIRECT_URL = "postgresql://inti_user:LA_CLAVE@localhost:5433/inti_web?schema=public"
+   $env:DATABASE_URL = $env:DIRECT_URL
+   $env:ADMIN_EMAIL = "correo-del-admin@dominio.com"
+   $env:ADMIN_PASSWORD = "UNA_CLAVE_FUERTE"
+   pnpm db:deploy          # aplica las migraciones (crea todas las tablas)
+   pnpm db:seed            # primera vez: crea el admin y los planes por defecto
+   Remove-Item Env:DIRECT_URL, Env:DATABASE_URL, Env:ADMIN_EMAIL, Env:ADMIN_PASSWORD
    ```
-5. **Backend:** `cd ~/inti-web/Inti_backend && sh deploy/deploy.sh`. Comprobar: `curl -s http://127.0.0.1:3103/promotions/current` (devuelve JSON; el backend responde **sin** `/api`).
-6. **Frontend `.env`:** `cp .env.example .env` y completar:
+6. **Backend:** `cd ~/inti-web/Inti_backend && sh deploy/deploy.sh`. Comprobar: `curl -s http://127.0.0.1:3103/promotions/current` (devuelve JSON; el backend responde **sin** `/api`).
+7. **Frontend `.env`:** `cp .env.example .env` y completar:
    - `NEXT_PUBLIC_FIREBASE_*` (obligatorias para compilar), Google Maps y datos de pago.
    - `NEXT_PUBLIC_API_URL=/api`
    - `NEXT_PUBLIC_SITE_URL=https://intinmobiliaria.com`
    - `BACKEND_URL=http://ariz_backend:4000` (no `localhost`, no el dominio público)
-7. **Frontend:** `cd ~/inti-web/Inti_frontend && sh deploy/deploy.sh` (~3 min). Comprobar: `curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3102/` → 200.
-8. **Nginx + HTTPS:**
+8. **Frontend:** `cd ~/inti-web/Inti_frontend && sh deploy/deploy.sh` (~3 min). Comprobar: `curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3102/` → 200.
+9. **Nginx + HTTPS:**
    ```bash
    sudo cp ~/inti-web/Inti_frontend/deploy/nginx/intinmobiliaria.com.conf /etc/nginx/sites-available/intinmobiliaria.com
    sudo ln -s /etc/nginx/sites-available/intinmobiliaria.com /etc/nginx/sites-enabled/
@@ -56,7 +85,7 @@ Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend va
    sudo certbot renew --dry-run                                              # comprueba la renovación automática
    ```
    El DNS debe resolver ya a la IP del servidor, o Certbot fallará al validar.
-9. **Firebase:** añadir `intinmobiliaria.com` en Authentication → Settings → Authorized domains.
+10. **Firebase:** añadir `intinmobiliaria.com` en Authentication → Settings → Authorized domains.
 
 ## Verificación desde el dominio
 
@@ -79,7 +108,7 @@ Y en el navegador: abrir `https://intinmobiliaria.com`, iniciar sesión (F12 →
 ```
 local: commit + push a main ─► servidor: sh deploy/deploy.sh (en el repo que cambió)
 ```
-- Con migraciones nuevas: `pnpm db:deploy` desde tu PC **antes** de desplegar el backend, y con backup de Supabase.
+- Con migraciones nuevas: corre `pnpm db:deploy` por el túnel SSH (paso 5) **antes** de desplegar el backend, y haz un backup con `pg_dump` primero.
 - Cambios en backend y frontend a la vez: primero backend, luego frontend.
 - Las variables `NEXT_PUBLIC_*` y `BACKEND_URL` se fijan al compilar: si cambian, vuelve a correr `deploy.sh` del frontend.
 - Cambios en Nginx: edita `/etc/nginx/sites-available/intinmobiliaria.com`, luego `sudo nginx -t && sudo systemctl reload nginx` (Certbot ya habrá modificado ese archivo para el HTTPS; no lo sobrescribas con el de `deploy/`).
