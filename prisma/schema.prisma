@@ -64,7 +64,7 @@ model ProfessionalProfile {
   website       String?
   socialLinks   String?
   slug          String?            @unique
-  /** Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin. */
+  /** Privilegio especial: sus proyectos publicados cuentan como "Proyectos Inti" en el home, igual que los creados desde el panel de admin. */
   isOfficialDeveloper Boolean      @default(false)
   isDeleted     Boolean            @default(false)
   deletedAt     DateTime?

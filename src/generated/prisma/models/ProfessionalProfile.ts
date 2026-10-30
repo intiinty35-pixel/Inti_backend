@@ -1528,7 +1528,7 @@ export type $ProfessionalProfilePayload<ExtArgs extends runtime.Types.Extensions
     socialLinks: string | null
     slug: string | null
     /**
-     * * Privilegio especial: sus proyectos publicados cuentan como "Proyectos Ariz" en el home, igual que los creados desde el panel de admin.
+     * * Privilegio especial: sus proyectos publicados cuentan como "Proyectos Inti" en el home, igual que los creados desde el panel de admin.
      */
     isOfficialDeveloper: boolean
     isDeleted: boolean
