@@ -55,20 +55,13 @@ Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend va
    - `JWT_SECRET` aleatorio (`node -e "console.log(require('crypto').randomBytes(64).toString('base64url'))"`), sin valores de ejemplo
    - `CLOUDINARY_URL`, `FIREBASE_PROJECT_ID`, `BREVO_*`, etc.
    - `NODE_ENV` y `PORT` los fija el compose.
-5. **Migraciones y seed** (la imagen no incluye el CLI de Prisma, así que se corren desde tu PC por un **túnel SSH** a la base del VPS, que no es accesible desde internet):
-   ```powershell
-   # Terminal 1 (se queda abierta mientras dura el proceso):
-   ssh -L 5433:127.0.0.1:5432 desarrollador@209.145.62.118
-
-   # Terminal 2, en la carpeta del backend:
-   $env:DIRECT_URL = "postgresql://inti_user:LA_CLAVE@localhost:5433/inti_web?schema=public"
-   $env:DATABASE_URL = $env:DIRECT_URL
-   $env:ADMIN_EMAIL = "correo-del-admin@dominio.com"
-   $env:ADMIN_PASSWORD = "UNA_CLAVE_FUERTE"
-   pnpm db:deploy          # aplica las migraciones (crea todas las tablas)
-   pnpm db:seed            # primera vez: crea el admin y los planes por defecto
-   Remove-Item Env:DIRECT_URL, Env:DATABASE_URL, Env:ADMIN_EMAIL, Env:ADMIN_PASSWORD
+5. **Migraciones y seed, en el servidor, con Docker** (no hace falta instalar Node ni pnpm: se usa el servicio `migrate`, que corre la etapa `build` del Dockerfile con la misma base y variables del `.env`). Antes, deja en el `.env` `ADMIN_EMAIL` y `ADMIN_PASSWORD` (el correo y la clave con que entrarás al panel como administrador).
+   ```bash
+   cd ~/inti-web/Inti_backend/deploy
+   docker compose --profile tools run --rm migrate pnpm db:deploy   # crea las 36 migraciones (tablas)
+   docker compose --profile tools run --rm migrate pnpm db:seed     # primera vez: admin + planes por defecto
    ```
+   La primera vez construye la imagen (~2 min). `db:deploy` debe terminar en "All migrations have been successfully applied" y mostrar `database "inti_web"`; `db:seed` dice "Administrador listo". Cada migración nueva se aplica igual, **antes** de desplegar el backend.
 6. **Backend:** `cd ~/inti-web/Inti_backend && sh deploy/deploy.sh`. Comprobar: `curl -s http://127.0.0.1:3103/promotions/current` (devuelve JSON; el backend responde **sin** `/api`).
 7. **Frontend `.env`:** `cp .env.example .env` y completar:
    - `NEXT_PUBLIC_FIREBASE_*` (obligatorias para compilar), Google Maps y datos de pago.
@@ -108,7 +101,7 @@ Y en el navegador: abrir `https://intinmobiliaria.com`, iniciar sesión (F12 →
 ```
 local: commit + push a main ─► servidor: sh deploy/deploy.sh (en el repo que cambió)
 ```
-- Con migraciones nuevas: corre `pnpm db:deploy` por el túnel SSH (paso 5) **antes** de desplegar el backend, y haz un backup con `pg_dump` primero.
+- Con migraciones nuevas: corre `docker compose --profile tools run --rm migrate pnpm db:deploy` en el servidor (paso 5) **antes** de desplegar el backend, y haz un backup con `pg_dump` primero.
 - Cambios en backend y frontend a la vez: primero backend, luego frontend.
 - Las variables `NEXT_PUBLIC_*` y `BACKEND_URL` se fijan al compilar: si cambian, vuelve a correr `deploy.sh` del frontend.
 - Cambios en Nginx: edita `/etc/nginx/sites-available/intinmobiliaria.com`, luego `sudo nginx -t && sudo systemctl reload nginx` (Certbot ya habrá modificado ese archivo para el HTTPS; no lo sobrescribas con el de `deploy/`).

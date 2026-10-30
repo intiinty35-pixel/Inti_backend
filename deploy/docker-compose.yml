@@ -27,6 +27,22 @@ services:
     networks:
       - ariz-net
 
+  # Herramientas de base de datos (migraciones y seed). No arranca con `up`:
+  #   docker compose --profile tools run --rm migrate pnpm db:deploy
+  # Usa la etapa "build" del Dockerfile, que trae Prisma, el codigo y las dependencias
+  # de desarrollo (la imagen final de produccion no las incluye).
+  migrate:
+    profiles: ["tools"]
+    build:
+      context: ..
+      target: build
+    image: ariz-backend-tools
+    env_file: ../.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - ariz-net
+
 networks:
   ariz-net:
     external: true
