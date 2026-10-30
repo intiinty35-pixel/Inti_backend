@@ -230,14 +230,14 @@ export class ReferralsService {
       orderBy: [{ createdAt: 'desc' }, { id: 'desc' }],
     });
     const workbook = new Workbook();
-    workbook.creator = 'Ariz Inmobiliaria';
+    workbook.creator = 'Inti Inmobiliaria';
     const sheet = workbook.addWorksheet('Referidos', {
       views: [{ state: 'frozen', ySplit: 4, showGridLines: false }],
     });
-    const headers = ['Código', 'Referido', 'Teléfono', 'Email', 'Miembro Ariz', 'Código Miembro Ariz', 'Estado', 'Interés', 'Disponibilidad', 'Proyecto', 'Puntos', 'Fecha de registro'];
+    const headers = ['Código', 'Referido', 'Teléfono', 'Email', 'Miembro Inti', 'Código Miembro Inti', 'Estado', 'Interés', 'Disponibilidad', 'Proyecto', 'Puntos', 'Fecha de registro'];
     sheet.columns = headers.map((key) => ({ key, width: key === 'Email' ? 34 : 26 }));
     sheet.mergeCells('A1:L1');
-    sheet.getCell('A1').value = 'ARIZ · CONTROL DE REFERIDOS';
+    sheet.getCell('A1').value = 'INTI · CONTROL DE REFERIDOS';
     sheet.getRow(1).height = 40;
     sheet.mergeCells('A2:L2');
     sheet.getCell('A2').value = `Periodo: ${query.from || 'Inicio'} al ${query.to || 'Hoy'} · Estado: ${query.status ? STATUS_LABELS[query.status] : 'Todos'} · ${rows.length} referidos${query.search ? ` · Búsqueda: ${query.search}` : ''}`;
@@ -302,7 +302,7 @@ export class ReferralsService {
   /** Actualiza los datos de contacto y pago del miembro. */
   async updateReferrer(id: string, dto: UpdateReferrerDto) {
     const existing = await this.prisma.referrer.findUnique({ where: { id }, select: { deletedAt: true } });
-    if (!existing || existing.deletedAt) throw new NotFoundException('Miembro Ariz no encontrado');
+    if (!existing || existing.deletedAt) throw new NotFoundException('Miembro Inti no encontrado');
     try {
       await this.prisma.referrer.update({ where: { id }, data: {
         name: dto.name, email: dto.email, phone: dto.phone,
@@ -313,7 +313,7 @@ export class ReferralsService {
       return { id, updated: true };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-        throw new ConflictException('Este correo ya pertenece a otro miembro Ariz');
+        throw new ConflictException('Este correo ya pertenece a otro miembro Inti');
       }
       throw error;
     }
@@ -421,8 +421,8 @@ export class ReferralsService {
   }
 
   /**
-   * Puntos adicionales de un proyecto Ariz para un estado. Solo aplican a proyectos
-   * creados por ARIZ (con registro de proyecto de administrador); cualquier otro
+   * Puntos adicionales de un proyecto Inti para un estado. Solo aplican a proyectos
+   * creados por INTI (con registro de proyecto de administrador); cualquier otro
    * proyecto, o ninguno, suma 0.
    */
   private async arizProjectExtraPoints(
@@ -441,7 +441,7 @@ export class ReferralsService {
     return 0;
   }
 
-  /** Proyectos Ariz publicados con sus puntos adicionales, para el registro de referidos. */
+  /** Proyectos Inti publicados con sus puntos adicionales, para el registro de referidos. */
   async listArizProjectsWithPoints() {
     const adminProjects = await this.prisma.adminProject.findMany({
       where: { project: { status: 'PUBLISHED', isDeleted: false } },
@@ -1025,8 +1025,8 @@ export class ReferralsService {
     const { items } = await this.ranking(query);
     const data = items.map((row) => ({
       Puesto: row.rank,
-      'Miembro Ariz': row.name,
-      'Código Miembro Ariz': row.code,
+      'Miembro Inti': row.name,
+      'Código Miembro Inti': row.code,
       Teléfono: row.phone,
       Email: row.email,
       'Tipo de pago': row.paymentType,
@@ -1087,10 +1087,10 @@ export class ReferralsService {
             : 'Sin estado';
 
         data.push({
-          'Código Miembro Ariz': referrer.code,
-          'Miembro Ariz': referrer.name,
-          'Email Miembro Ariz': referrer.email,
-          'Teléfono Miembro Ariz': referrer.phone,
+          'Código Miembro Inti': referrer.code,
+          'Miembro Inti': referrer.name,
+          'Email Miembro Inti': referrer.email,
+          'Teléfono Miembro Inti': referrer.phone,
           'Tipo de pago': this.paymentTypeLabel(referrer),
           'Cuenta bancaria': referrer.bankAccount ?? '',
           'Número de Yape': referrer.yape ?? '',
@@ -1116,14 +1116,14 @@ export class ReferralsService {
     });
 
     const workbook = new Workbook();
-    workbook.creator = 'Ariz Inmobiliaria';
+    workbook.creator = 'Inti Inmobiliaria';
     workbook.created = new Date();
-    const worksheet = workbook.addWorksheet('Miembros Ariz y puntos', {
+    const worksheet = workbook.addWorksheet('Miembros Inti y puntos', {
       views: [{ state: 'frozen', xSplit: 2, ySplit: 6, showGridLines: false }],
       pageSetup: { orientation: 'landscape', paperSize: 9, fitToPage: true, fitToWidth: 1, fitToHeight: 0 },
     });
     const headers = [
-      'Código Miembro Ariz', 'Miembro Ariz', 'Email Miembro Ariz', 'Teléfono Miembro Ariz',
+      'Código Miembro Inti', 'Miembro Inti', 'Email Miembro Inti', 'Teléfono Miembro Inti',
       'Tipo de pago', 'Cuenta bancaria', 'Número de Yape', 'Número de Plin',
       'Código Referido', 'Nombre Referido', 'Email Referido', 'Teléfono Referido',
       'Interés', 'Disponibilidad', 'Último Estado', 'Puntos', 'Proyecto', 'Fecha Registro',
@@ -1141,13 +1141,13 @@ export class ReferralsService {
       cell.font = { name: 'Aptos', size, bold: row === 1, color: { argb: 'FFFFFFFF' } };
       cell.alignment = { vertical: 'middle', indent: 1 };
     };
-    banner(1, 'MIEMBROS ARIZ · REFERIDOS Y PUNTOS', navy, 22);
+    banner(1, 'MIEMBROS INTI · REFERIDOS Y PUNTOS', navy, 22);
     worksheet.getRow(1).height = 44;
     banner(2, 'Programa de referidos · Reporte de seguimiento', navy, 12);
     worksheet.getRow(2).height = 26;
     banner(3, `Periodo: ${query.from || 'Inicio'} al ${query.to || 'Hoy'}${query.search ? ` · Búsqueda: ${query.search}` : ''}`, teal, 11);
     worksheet.getRow(3).height = 26;
-    banner(4, `${referrers.length} miembros Ariz · ${data.length} referidos · ${data.reduce((sum, row) => sum + Number(row.Puntos), 0)} puntos · Emitido: ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' })}`, teal, 11);
+    banner(4, `${referrers.length} miembros Inti · ${data.length} referidos · ${data.reduce((sum, row) => sum + Number(row.Puntos), 0)} puntos · Emitido: ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' })}`, teal, 11);
     worksheet.getRow(4).height = 26;
     worksheet.addRow([]);
     const header = worksheet.addRow(headers);
@@ -1176,7 +1176,7 @@ export class ReferralsService {
     });
     worksheet.autoFilter = { from: { row: 6, column: 1 }, to: { row: 6 + data.length, column: headers.length } };
     worksheet.pageSetup.printTitlesRow = '1:6';
-    worksheet.headerFooter.oddFooter = 'Ariz Inmobiliaria | Página &P de &N';
+    worksheet.headerFooter.oddFooter = 'Inti Inmobiliaria | Página &P de &N';
     return Buffer.from(await workbook.xlsx.writeBuffer());
   }
 

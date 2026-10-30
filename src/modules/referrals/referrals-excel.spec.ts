@@ -46,6 +46,6 @@ describe('Referral Excel export', () => {
     const sheet = workbook.worksheets[0];
     expect(sheet.getCell('F6').value).toBe('Cuenta bancaria');
     expect(sheet.getCell('G6').value).toBe('Número de Yape');
-    expect(sheet.getCell('A4').value).toContain('0 miembros Ariz · 0 referidos · 0 puntos');
+    expect(sheet.getCell('A4').value).toContain('0 miembros Inti · 0 referidos · 0 puntos');
   });
 });

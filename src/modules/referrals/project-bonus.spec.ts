@@ -7,7 +7,7 @@ jest.mock('../../database/prisma/prisma.service', () => ({ PrismaService: class 
 jest.mock('../mail/mail.service', () => ({ MailService: class {} }));
 jest.mock('../campaigns/campaign-points-tracker', () => ({ CampaignPointsTracker: class {} }));
 
-describe('Ariz project bonus points', () => {
+describe('Inti project bonus points', () => {
   const projectId = 'project';
   const config = { projectId, contactedPoints: 20, visitPoints: 30, operationCompletedPoints: 50 };
   const prisma = {
@@ -18,7 +18,7 @@ describe('Ariz project bonus points', () => {
   const referrals = new ReferralsService(prisma as never, {} as never, campaigns, {} as never);
   beforeEach(() => {
     jest.clearAllMocks();
-    prisma.adminProject.findMany.mockResolvedValue([{ project: { id: projectId, name: 'Proyecto Ariz', slug: 'ariz' } }]);
+    prisma.adminProject.findMany.mockResolvedValue([{ project: { id: projectId, name: 'Proyecto Inti', slug: 'ariz' } }]);
     prisma.adminProject.findFirst.mockResolvedValue({ projectId });
     prisma.projectPointsConfig.findMany.mockResolvedValue([config]);
     prisma.projectPointsConfig.findFirst.mockResolvedValue(config);

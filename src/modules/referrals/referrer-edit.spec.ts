@@ -26,9 +26,9 @@ describe('Editing members', () => {
   it('rejects missing or deleted members', async () => {
     const dto = { name: 'Ana', email: 'ana@example.com', phone: '900000001' };
     findUnique.mockResolvedValue(null);
-    await expect(service.updateReferrer('missing', dto)).rejects.toThrow('Miembro Ariz no encontrado');
+    await expect(service.updateReferrer('missing', dto)).rejects.toThrow('Miembro Inti no encontrado');
     findUnique.mockResolvedValue({ deletedAt: new Date() });
-    await expect(service.updateReferrer('deleted', dto)).rejects.toThrow('Miembro Ariz no encontrado');
+    await expect(service.updateReferrer('deleted', dto)).rejects.toThrow('Miembro Inti no encontrado');
     expect(update).not.toHaveBeenCalled();
   });
   it('normalizes contact input and rejects blank names and invalid emails', async () => {

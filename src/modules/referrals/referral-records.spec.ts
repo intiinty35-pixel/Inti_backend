@@ -22,7 +22,7 @@ describe('Referral records', () => {
   const row = {
     id: 'referral', code: 'R001', name: 'Referido', phone: '099123456', email: 'ref@example.com',
     status: 'VISIT', interest: 'VENTA', availability: 'INMEDIATA', createdAt: new Date('2026-10-10T12:00:00Z'),
-    referrer: { id: 'member', code: 'M001', name: 'Miembro Ariz' }, project: null,
+    referrer: { id: 'member', code: 'M001', name: 'Miembro Inti' }, project: null,
     history: [{ pointsAwarded: 5 }, { pointsAwarded: 20 }],
   };
   beforeEach(() => {
@@ -39,7 +39,7 @@ describe('Referral records', () => {
     expect(count.mock.calls[0][0]).toEqual({ where: options.where });
     expect(aggregate.mock.calls[0][0].where).toEqual({ referral: options.where });
     expect(result).toMatchObject({ total: 30, page: 2, pageSize: 12, totals: { points: 1000 },
-      items: [{ name: 'Referido', points: 25, statusLabel: 'Visita', referrer: { name: 'Miembro Ariz' } }] });
+      items: [{ name: 'Referido', points: 25, statusLabel: 'Visita', referrer: { name: 'Miembro Inti' } }] });
   });
   it('exports all filtered referrals with distinct referral and member columns, preserving phone numbers', async () => {
     const query = Object.assign(new ReferralRecordsQueryDto(), { page: 2, status: 'VISIT' });
@@ -50,7 +50,7 @@ describe('Referral records', () => {
     expect(findMany.mock.calls[0][0].where.status).toBe('VISIT');
     expect(sheet.getCell('B5').value).toBe('Referido');
     expect(sheet.getCell('C5').value).toBe('099123456');
-    expect(sheet.getCell('E5').value).toBe('Miembro Ariz');
+    expect(sheet.getCell('E5').value).toBe('Miembro Inti');
     expect(sheet.getCell('K5').value).toBe(25);
   });
 
