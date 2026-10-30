@@ -4,17 +4,18 @@ Mismo esquema que el CRM: cada repo se construye en el servidor con `deploy/depl
 Frontend y API salen por **un solo dominio**: `https://intinmobiliaria.com` (frontend) y `https://intinmobiliaria.com/api/` (backend).
 
 ```
-Internet ──► Nginx (443) ── intinmobiliaria.com/      ──► 127.0.0.1:3102 ─► ariz_frontend (Next.js)
-                         └─ intinmobiliaria.com/api/  ──► 127.0.0.1:3103 ─► ariz_backend  (NestJS)
+Internet ──► Nginx (443) ── intinmobiliaria.com/      ──► 127.0.0.1:3102 ─► inti_frontend (Next.js)
+                         └─ intinmobiliaria.com/api/  ──► 127.0.0.1:3103 ─► inti_backend  (NestJS)
                                                                               │ host.docker.internal:5432
                                                                               ▼
                                                            PostgreSQL instalado en el VPS (base inti_web)
 
-Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend van a http://ariz_backend:4000.
+Dentro de Docker (red inti-net), las llamadas del servidor de Next al backend van a http://inti_backend:4000.
 ```
 
 - **El prefijo `/api` lo quita Nginx.** El backend no tiene prefijo global: `/api/auth/login` debe llegar como `/auth/login`. Por eso el `proxy_pass` del bloque `/api/` termina en `/` (`proxy_pass http://127.0.0.1:3103/;`). Sin la barra final llegaría `/api/auth/login` y daría 404.
 - El navegador llama siempre a `/api/...` (`NEXT_PUBLIC_API_URL=/api`), mismo origen que el frontend: la cookie de sesión funciona sin CORS.
+- Los contenedores se llaman `inti_backend` e `inti_frontend` y la red `inti-net`: los nombres `ariz_*` ya los usa el CRM del mismo servidor y no deben reutilizarse.
 - Puertos en `127.0.0.1`: 3102 (frontend) y 3103 (backend). No chocan con el CRM (3100/3101) ni con el 3001 de otro proyecto.
 - El backend usa `trust proxy` para ver la IP real del visitante (necesario para el límite de peticiones).
 - Cambiar de dominio: `frontend/deploy/nginx/*.conf`, `NEXT_PUBLIC_SITE_URL` y `FRONTEND_URL` del backend.
@@ -27,7 +28,7 @@ Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend va
    mkdir -p ~/inti-web && cd ~/inti-web
    git clone https://github.com/intiinty35-pixel/Inti_backend.git
    git clone https://github.com/intiinty35-pixel/Inti_frontend.git
-   docker network create ariz-net
+   docker network create inti-net
    ```
 3. **Base de datos PostgreSQL en el VPS** (el servidor ya tiene Postgres por el CRM; se crea una base y un usuario **nuevos**, sin tocar los del CRM):
    ```bash
@@ -67,7 +68,7 @@ Dentro de Docker (red ariz-net), las llamadas del servidor de Next al backend va
    - `NEXT_PUBLIC_FIREBASE_*` (obligatorias para compilar), Google Maps y datos de pago.
    - `NEXT_PUBLIC_API_URL=/api`
    - `NEXT_PUBLIC_SITE_URL=https://intinmobiliaria.com`
-   - `BACKEND_URL=http://ariz_backend:4000` (no `localhost`, no el dominio público)
+   - `BACKEND_URL=http://inti_backend:4000` (no `localhost`, no el dominio público)
 8. **Frontend:** `cd ~/inti-web/Inti_frontend && sh deploy/deploy.sh` (~3 min). Comprobar: `curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:3102/` → 200.
 9. **Nginx + HTTPS:**
    ```bash
@@ -110,10 +111,10 @@ local: commit + push a main ─► servidor: sh deploy/deploy.sh (en el repo que
 | Síntoma | Causa | Solución |
 |---|---|---|
 | `/api/...` da 404 del backend | `proxy_pass` sin la barra final, o el prefijo llega duplicado | debe ser `proxy_pass http://127.0.0.1:3103/;` (con `/` al final) |
-| `/api/...` da 502 | backend caído o puerto distinto | `docker logs ariz_backend`; `curl http://127.0.0.1:3103/promotions/current` |
+| `/api/...` da 502 | backend caído o puerto distinto | `docker logs inti_backend`; `curl http://127.0.0.1:3103/promotions/current` |
 | Login falla pero la API responde | `NODE_ENV` sin `production` o sitio servido por HTTP (la cookie es `Secure`) | usar HTTPS y `NODE_ENV=production` (lo fija el compose) |
 | Error "Too Many Requests" con pocos usuarios | backend sin `trust proxy` (todos comparten IP) | usar la versión con `app.set('trust proxy', 1)` en `main.ts` |
-| Backend en `Restarting` | `.env` no pasa la validación (placeholder, `FRONTEND_URL` sin https, falta `sslrootcert`) | `docker logs ariz_backend` indica la variable |
-| `network ariz-net not found` | no se creó la red | `docker network create ariz-net` (deploy.sh ya lo hace) |
+| Backend en `Restarting` | `.env` no pasa la validación (placeholder, `FRONTEND_URL` sin https, falta `sslrootcert`) | `docker logs inti_backend` indica la variable |
+| `network inti-net not found` | no se creó la red | `docker network create inti-net` (deploy.sh ya lo hace) |
 | Error de Firebase en el navegador | dominio no autorizado o `NEXT_PUBLIC_FIREBASE_*` vacías al compilar | ver paso 9 y 6; reconstruir |
 | Certbot falla | el DNS aún no apunta al servidor, o el puerto 80 está bloqueado | `dig intinmobiliaria.com`, revisar `ufw` |

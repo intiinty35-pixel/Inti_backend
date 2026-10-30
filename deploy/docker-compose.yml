@@ -1,15 +1,15 @@
 # Backend (NestJS) — despliegue independiente.
-# Solo es accesible dentro de la red Docker "ariz-net" (el frontend lo llama como http://ariz_backend:4000)
+# Solo es accesible dentro de la red Docker "inti-net" (el frontend lo llama como http://inti_backend:4000)
 # y, para comprobaciones desde el servidor, en 127.0.0.1:3103. No se publica en internet.
-# Antes del primer despliegue: docker network create ariz-net
+# Antes del primer despliegue: docker network create inti-net
 
-name: ariz-web-backend
+name: inti-web-backend
 
 services:
   backend:
     build:
       context: ..
-    container_name: ariz_backend
+    container_name: inti_backend
     restart: unless-stopped
     logging:
       driver: json-file
@@ -25,7 +25,7 @@ services:
     ports:
       - "127.0.0.1:3103:4000"
     networks:
-      - ariz-net
+      - inti-net
 
   # Herramientas de base de datos (migraciones y seed). No arranca con `up`:
   #   docker compose --profile tools run --rm migrate pnpm db:deploy
@@ -36,13 +36,13 @@ services:
     build:
       context: ..
       target: build
-    image: ariz-backend-tools
+    image: inti-backend-tools
     env_file: ../.env
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
-      - ariz-net
+      - inti-net
 
 networks:
-  ariz-net:
+  inti-net:
     external: true

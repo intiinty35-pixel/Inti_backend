@@ -4,7 +4,7 @@
 set -e
 cd "$(dirname "$0")"
 git pull --ff-only
-docker network inspect ariz-net >/dev/null 2>&1 || docker network create ariz-net
+docker network inspect inti-net >/dev/null 2>&1 || docker network create inti-net
 docker compose up -d --build
 docker image prune -f >/dev/null
 # Libera cache de build con mas de 24 h (mantiene la reciente para builds rapidos)
