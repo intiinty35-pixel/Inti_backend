@@ -6,9 +6,9 @@ RUN apk add --no-cache openssl
 RUN corepack enable
 
 FROM base AS deps
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY prisma ./prisma
-RUN pnpm install --frozen-lockfile --dangerously-allow-all-builds
+RUN pnpm install --frozen-lockfile
 
 FROM deps AS build
 COPY . .
@@ -17,9 +17,9 @@ ENV DIRECT_URL="postgresql://user:password@localhost:5432/app?schema=public"
 RUN pnpm db:generate && pnpm build
 
 FROM base AS prod-deps
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY prisma ./prisma
-RUN pnpm install --frozen-lockfile --dangerously-allow-all-builds
+RUN pnpm install --frozen-lockfile
 
 FROM node:22-alpine AS runner
 WORKDIR /app
