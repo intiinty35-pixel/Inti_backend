@@ -161,7 +161,7 @@ export class ClaimsService {
 
       doc.fontSize(20).font('Helvetica-Bold').fillColor('#0f2e5c').text('Libro de Reclamaciones', { align: 'center' });
       doc.moveDown(0.2);
-      doc.fontSize(9).font('Helvetica').fillColor('#555555').text(`Generado: ${new Date().toLocaleDateString('es-PE')}`, { align: 'center' });
+      doc.fontSize(9).font('Helvetica').fillColor('#555555').text(`Generado: ${new Date().toLocaleDateString('es-BO')}`, { align: 'center' });
       doc.moveDown(1.5);
 
       let currentY = doc.y;
@@ -189,7 +189,7 @@ export class ClaimsService {
           claim.fullName,
           typeLabels[claim.type] || claim.type,
           claim.assetType,
-          new Date(claim.createdAt).toLocaleDateString('es-PE'),
+          new Date(claim.createdAt).toLocaleDateString('es-BO'),
         ];
 
         let xPos = startX;

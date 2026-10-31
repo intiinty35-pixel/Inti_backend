@@ -165,7 +165,7 @@ async function main() {
         title: seed.title,
         description: `${seed.title}. Propiedad de prueba generada para revisar el panel del profesional. Ubicada en ${seed.district}, cuenta con ${seed.totalArea} m² y excelente acceso.`,
         price: seed.price,
-        currency: Currency.PEN,
+        currency: Currency.BOB,
         status: seed.status,
         publishedAt,
         createdAt: new Date(Date.now() - (seed.daysAgo + 1) * 86_400_000),

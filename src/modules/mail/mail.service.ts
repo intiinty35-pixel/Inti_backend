@@ -252,7 +252,7 @@ export class MailService {
 
   async sendMembershipApproved(input: MembershipApprovedInput) {
     const expires = input.expiresAt
-      ? new Intl.DateTimeFormat('es-PE', { dateStyle: 'long' }).format(
+      ? new Intl.DateTimeFormat('es-BO', { dateStyle: 'long' }).format(
           input.expiresAt,
         )
       : null;

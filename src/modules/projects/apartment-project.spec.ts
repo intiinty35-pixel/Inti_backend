@@ -14,7 +14,7 @@ jest.mock('../../generated/prisma/client', () => ({ Prisma: {} }));
 describe('Apartment project creation and publication', () => {
   const service = new ProjectsService({} as PrismaService, {} as ConfigService);
   const draft = () => plainToInstance(CreateProjectDto, {
-    category: 'DEPARTAMENTOS', stage: 'PRE_SALE', currency: 'PEN', name: 'Torres del Parque', description: 'Proyecto de edificios',
+    category: 'DEPARTAMENTOS', stage: 'PRE_SALE', currency: 'BOB', name: 'Torres del Parque', description: 'Proyecto de edificios',
     priceFrom: 200000, priceTo: 400000, lotMode: 'INDIVIDUAL', lots: [], estimatedDelivery: '2027-12-31',
     location: { department: 'Lima', province: 'Lima', district: 'Lima', latitude: -12, longitude: -77 },
     media: [{ type: 'IMAGE', url: 'https://res.cloudinary.com/test/image/upload/cover.jpg', isCover: true }],

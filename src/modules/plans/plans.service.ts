@@ -277,7 +277,7 @@ export class PlansService {
         name,
         slug,
         price,
-        currency: 'PEN',
+        currency: 'BOB',
         durationDays,
         propertyLimit,
         projectLimit: 0,
@@ -289,7 +289,7 @@ export class PlansService {
       update: {
         name,
         price,
-        currency: 'PEN',
+        currency: 'BOB',
         durationDays,
         propertyLimit,
         features,

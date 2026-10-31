@@ -5,7 +5,7 @@ const unit: PlanApartmentDto = { id: 'unit', code: '109', areaM2: 85, price: 150
 const floor: PlanFloorDto = { id: 'floor', name: 'Piso 1', number: 1, apartments: [unit] };
 const building: PlanBuildingDto = { id: 'building', name: 'Torre A', path: [{ lat: -12, lng: -77 }, { lat: -12, lng: -76.999 }, { lat: -12.001, lng: -76.999 }], floors: [floor] };
 const plan: SitePlanDto = { mode: 'APARTMENTS', logoUrl: '', lots: [], zones: [], buildings: [building] };
-const project = { name: 'Proyecto de prueba', currency: 'PEN' };
+const project = { name: 'Proyecto de prueba', currency: 'BOB' };
 
 describe('Apartment PDF sheet', () => {
   afterEach(() => jest.restoreAllMocks());

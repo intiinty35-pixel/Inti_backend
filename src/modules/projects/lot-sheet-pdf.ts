@@ -21,7 +21,7 @@ export async function renderLotSheetPdf({ lot, project, draft, appLogo, projectL
   const left = 40;
   const width = doc.page.width - 80;
   let y = 0;
-  const money = (amount: number) => `${project.currency === 'USD' ? 'US$' : 'S/'} ${amount.toLocaleString('es-PE', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+  const money = (amount: number) => `${project.currency === 'USD' ? 'US$' : 'Bs'} ${amount.toLocaleString('es-BO', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   const text = (value: string, x: number, top: number, size = 10, color = INK, bold = false, options: PDFKit.Mixins.TextOptions = {}) => {
     doc.font(bold ? 'Helvetica-Bold' : 'Helvetica').fontSize(size).fillColor(color).text(value, x, top, options);
   };
@@ -87,7 +87,7 @@ export async function renderLotSheetPdf({ lot, project, draft, appLogo, projectL
   text('PRECIO DE VENTA', left + 15, metricsY + 12, 8, MUTED, true);
   text(lot.cashAllowed ? money(lot.price) : lot.financingAllowed ? money(lot.financedPrice) : 'Consultar', left + 15, metricsY + 31, 19, NAVY, true, { width: half - 30 });
   text('ÁREA DEL LOTE', left + half + 27, metricsY + 12, 8, MUTED, true);
-  text(`${lot.areaM2.toLocaleString('es-PE', { maximumFractionDigits: 2 })} m²`, left + half + 27, metricsY + 31, 19, NAVY, true, { width: half - 30 });
+  text(`${lot.areaM2.toLocaleString('es-BO', { maximumFractionDigits: 2 })} m²`, left + half + 27, metricsY + 31, 19, NAVY, true, { width: half - 30 });
   y = metricsY + 70;
   section('Características del lote');
   [
@@ -110,7 +110,7 @@ export async function renderLotSheetPdf({ lot, project, draft, appLogo, projectL
   text('Disponibilidad y condiciones sujetas a confirmación.', left, y, 9, MUTED, false, { width });
   if (draft) text('Documento administrativo de borrador. No acredita publicación ni reserva.', left, y + 16, 8, MUTED, false, { width });
   const range = doc.bufferedPageRange();
-  const issued = new Intl.DateTimeFormat('es-PE', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'America/Lima' }).format(new Date());
+  const issued = new Intl.DateTimeFormat('es-BO', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'America/La_Paz' }).format(new Date());
   for (let index = range.start; index < range.start + range.count; index++) {
     doc.switchToPage(index);
     const bottomMargin = doc.page.margins.bottom;

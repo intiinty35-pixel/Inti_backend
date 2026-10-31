@@ -133,7 +133,7 @@ export class InvestmentOpportunitiesService {
       investmentKind: dto.investmentKind?.trim() || 'Inversión inmobiliaria',
       assetType: dto.assetType?.trim() || 'Proyecto',
       initialInvestment: dto.initialInvestment,
-      currency: Currency.PEN,
+      currency: Currency.BOB,
       roiPercent: dto.roiPercent,
       estimatedReturnLabel: dto.estimatedReturnLabel?.trim() || null,
       estimatedTermMonths: dto.estimatedTermMonths ?? null,

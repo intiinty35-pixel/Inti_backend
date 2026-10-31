@@ -249,7 +249,7 @@ export class ReferralsService {
       STATUS_LABELS[row.status], INTEREST_LABELS[row.interest] ?? row.interest,
       AVAILABILITY_LABELS[row.availability] ?? row.availability, row.project?.name ?? 'Sin proyecto',
       row.history.reduce((sum, item) => sum + item.pointsAwarded, 0),
-      row.createdAt.toLocaleDateString('es-PE', { timeZone: 'America/Lima' }),
+      row.createdAt.toLocaleDateString('es-BO', { timeZone: 'America/La_Paz' }),
     ]));
     sheet.eachRow((row, index) => {
       row.eachCell({ includeEmpty: true }, (cell, column) => {
@@ -1038,7 +1038,7 @@ export class ReferralsService {
       Concretados: row.completedCount,
       Puntos: row.points,
       'Último referido': row.lastReferralAt
-        ? new Date(row.lastReferralAt).toLocaleDateString('es-PE')
+        ? new Date(row.lastReferralAt).toLocaleDateString('es-BO')
         : '-',
     }));
 
@@ -1109,7 +1109,7 @@ export class ReferralsService {
           Puntos: totalPoints,
           Proyecto: referral.project?.name ?? 'Sin proyecto',
           'Fecha Registro': new Date(referral.createdAt).toLocaleDateString(
-            'es-PE',
+            'es-BO',
           ),
         });
       });
@@ -1147,7 +1147,7 @@ export class ReferralsService {
     worksheet.getRow(2).height = 26;
     banner(3, `Periodo: ${query.from || 'Inicio'} al ${query.to || 'Hoy'}${query.search ? ` · Búsqueda: ${query.search}` : ''}`, teal, 11);
     worksheet.getRow(3).height = 26;
-    banner(4, `${referrers.length} miembros Inti · ${data.length} referidos · ${data.reduce((sum, row) => sum + Number(row.Puntos), 0)} puntos · Emitido: ${new Date().toLocaleString('es-PE', { timeZone: 'America/Lima' })}`, teal, 11);
+    banner(4, `${referrers.length} miembros Inti · ${data.length} referidos · ${data.reduce((sum, row) => sum + Number(row.Puntos), 0)} puntos · Emitido: ${new Date().toLocaleString('es-BO', { timeZone: 'America/La_Paz' })}`, teal, 11);
     worksheet.getRow(4).height = 26;
     worksheet.addRow([]);
     const header = worksheet.addRow(headers);
@@ -1207,7 +1207,7 @@ export class ReferralsService {
       doc
         .fontSize(9)
         .font('Helvetica')
-        .text(`Generado: ${new Date().toLocaleDateString('es-PE')}`, {
+        .text(`Generado: ${new Date().toLocaleDateString('es-BO')}`, {
           align: 'center',
         });
       doc.moveDown(1);

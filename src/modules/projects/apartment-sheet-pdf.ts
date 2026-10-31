@@ -26,7 +26,7 @@ export async function renderApartmentSheetPdf(unit: PlanApartmentDto, project: {
     doc.on('error', reject);
   });
   const navy = '#122b50', blue = '#195cc4', muted = '#69788e', gold = '#d49a19';
-  const money = (value: number) => new Intl.NumberFormat('es-PE', { style: 'currency', currency: project.currency }).format(value);
+  const money = (value: number) => new Intl.NumberFormat('es-BO', { style: 'currency', currency: project.currency }).format(value);
   const statuses = { AVAILABLE: 'Disponible', RESERVED: 'Separado', SOLD: 'Vendido', RENTED: 'Alquilado', BLOCKED: 'Bloqueado' };
   const header = (title: string, subtitle: string) => {
     doc.rect(0, 0, doc.page.width, 8).fill(blue);

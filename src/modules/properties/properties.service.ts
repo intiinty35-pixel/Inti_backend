@@ -717,7 +717,7 @@ export class PropertiesService {
         name: 'Primera propiedad gratis',
         slug: 'ariz-particular-prueba-30-dias',
         price: 0,
-        currency: 'PEN',
+        currency: 'BOB',
         durationDays: 30,
         propertyLimit: 1,
         projectLimit: 0,

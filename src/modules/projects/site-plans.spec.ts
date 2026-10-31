@@ -118,7 +118,7 @@ describe('Site plans: draft, publication and inventory', () => {
     tx.project.findFirst.mockResolvedValue({
       id: projectId,
       name: 'Proyecto',
-      currency: 'PEN',
+      currency: 'BOB',
       status: 'DRAFT',
       sitePlan: null,
       location: null,
@@ -306,14 +306,14 @@ describe('Site plans: draft, publication and inventory', () => {
     tx.project.findFirst.mockResolvedValue({
       sitePlanAccessCodeHash: await argon2.hash(accessCode),
       sitePlanAccessCodeExpiresAt: new Date(Date.now() + 60_000),
-      currency: 'PEN',
+      currency: 'BOB',
       sitePlan: { published: plan() },
     } as never);
     await expect(service.publicPlan('published-project', 'incorrecta')).rejects.toThrow(
       'código coordinado',
     );
     await expect(service.publicPlan('published-project', accessCode)).resolves.toMatchObject({
-      currency: 'PEN',
+      currency: 'BOB',
       lots: expect.any(Array),
     });
   });
@@ -424,7 +424,7 @@ describe('Excel lot base and downloadable PDF', () => {
   it('paginates a complete lot list as a real PDF', async () => {
     const snapshot = plan();
     snapshot.lots = Array.from({ length: 70 }, (_, i) => ({ ...snapshot.lots[0], code: `L-${i}` }));
-    const bytes = await exportLotTable(snapshot, { name: 'Proyecto', currency: 'PEN' }, 'pdf');
+    const bytes = await exportLotTable(snapshot, { name: 'Proyecto', currency: 'BOB' }, 'pdf');
     expect(bytes.subarray(0, 5).toString()).toBe('%PDF-');
     expect((bytes.toString('latin1').match(/\/Type \/Page\b/g) || []).length).toBeGreaterThan(1);
   });
@@ -433,7 +433,7 @@ describe('Excel lot base and downloadable PDF', () => {
     jest
       .spyOn(service, 'admin')
       .mockResolvedValue({
-        project: { id: projectId, name: 'Proyecto borrador', currency: 'PEN' },
+        project: { id: projectId, name: 'Proyecto borrador', currency: 'BOB' },
         plan: plan(),
         revision: 0,
       } as never);
@@ -447,7 +447,7 @@ describe('Excel lot base and downloadable PDF', () => {
     jest
       .spyOn(service, 'admin')
       .mockResolvedValue({
-        project: { name: 'Proyecto', currency: 'PEN' },
+        project: { name: 'Proyecto', currency: 'BOB' },
       } as never);
     const draft = plan();
     draft.logoUrl = 'http://127.0.0.1/private';
@@ -494,7 +494,7 @@ describe('Excel lot base and downloadable PDF', () => {
       sitePlanAccessCodeExpiresAt: new Date(Date.now() + 60_000),
       sitePlan: { published },
     } as never);
-    Object.assign(prisma.project, { findUniqueOrThrow: jest.fn().mockResolvedValue({ name: 'Proyecto de prueba', currency: 'PEN' }) });
+    Object.assign(prisma.project, { findUniqueOrThrow: jest.fn().mockResolvedValue({ name: 'Proyecto de prueba', currency: 'BOB' }) });
     await expect(service.apartmentPdf('prueba', lotId)).rejects.toThrow();
     await expect(service.apartmentPdf('prueba', lotId, 'INVALID')).rejects.toThrow();
     const pdf = await service.apartmentPdf('prueba', lotId, accessCode);
@@ -512,7 +512,7 @@ describe('Excel lot base and downloadable PDF', () => {
     Object.assign(prisma.project, {
       findUniqueOrThrow: jest
         .fn()
-        .mockResolvedValue({ name: 'Proyecto de prueba', currency: 'PEN' }),
+        .mockResolvedValue({ name: 'Proyecto de prueba', currency: 'BOB' }),
     });
     const pdf = await service.pdf('prueba', lotId, accessCode);
     expect(pdf.subarray(0, 5).toString()).toBe('%PDF-');

@@ -72,6 +72,7 @@ export type PropertyType = (typeof PropertyType)[keyof typeof PropertyType]
 
 
 export const Currency = {
+  BOB: 'BOB',
   PEN: 'PEN',
   USD: 'USD'
 } as const
